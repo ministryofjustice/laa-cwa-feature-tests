@@ -1,3 +1,3 @@
-Before do |scenario|
-  puts "I'm running"
-end
+require 'capybara/cucumber'
+
+Capybara.default_driver = :selenium
