@@ -18,3 +18,6 @@ Run a single feature -
 
 `bundle exec cucumber features/my_feature.feature`
 
+## Environments
+
+Currently the tests are configured to run against the Test environment, this environment is only accessible when inside the MoJ network. (http://portal.tst.legalservices.gov.uk)
