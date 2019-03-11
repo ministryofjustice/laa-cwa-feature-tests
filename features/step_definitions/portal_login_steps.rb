@@ -3,12 +3,12 @@ When('I visit the portal url') do
 end
 
 Then('I see the portal login page') do
-  page.has_content?('To sign in to the Online Portal')
+  expect(page).to have_content('To sign in to the Online Portal')
 end
 
 Given('user is on the portal login page') do
   visit('http://portal.tst.legalservices.gov.uk')
-  page.has_content?('To sign in to the Online Portal')
+  expect(page).to have_content('To sign in to the Online Portal')
 end
 
 When('user Logs in') do
@@ -18,5 +18,5 @@ When('user Logs in') do
 end
 
 Then('Portal application page is displayed') do
-  page.has_content?('Welcome to the Online Portal.')
+  expect(page).to have_content('Welcome to the Online Portal.')
 end

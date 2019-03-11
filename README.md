@@ -4,6 +4,10 @@ Feature tests for CWA in order to replace some of the manual testing.  This work
 
 ## Setup
 
+Install geckodriver
+
+`brew install geckodriver`
+
 Clone the repo
 
 Run `bundle`
