@@ -19,6 +19,7 @@ module OutcomePage
     page.fill_in 'LinesDFF7', with: values[:procurement_area]
     procurement_area = page.find_by_id('LinesDFF7')
     procurement_area.send_keys :tab
+    sleep(2)
     # Access Point
     page.fill_in 'LinesDFF8', with: values[:access_point]
     # Client Forename
