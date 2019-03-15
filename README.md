@@ -24,21 +24,30 @@ Run a single feature -
 
 ## Environments and users
 
-Currently the tests are configured to run against the Test environment, this environment is only accessible when inside the MoJ network. (http://portal.tst.legalservices.gov.uk)
+Set the environment variable `TEST_ENV` with
 
-The log in test logs in using the USERNAME and PASSWORD environment
-variables which you should set before running the test.  You also need to ensure that the user exists in the test environment.  
+`export TEST_ENV=dev`
 
-For the CWA open provider submission feature you will need to set the firm details as well.  
-
-Examples of values given below, please note value must match data already present in the environment.
+Portal environment specific variables are set in `portal_env.yml` in the following format:
 
 ```
-export USERNAME=test
-export PASSWORD=password
-export FIRMNAME="EXAMPLE SOLICITORS"
-export ACCOUNT_NUMBER=0A123B
-export PERIOD=DEC-2010
-export AREA_OF_LAW="LEGAL HELP"
-export SUBMISSION_REF=0A123B/11.2
+dev:
+  url: portal-url
+  username: username
+  password: password
 ```
+
+The details in this file should match the details in the Portal environment.
+
+CWA environment specific variables are set in `cwa_env.yml` in the following format:
+
+```
+dev:
+  firmname:
+  account_number:
+  submission_period:
+  area_of_law:
+  submission_ref:
+```
+
+The details in this file should match the details in the CWA environment.
