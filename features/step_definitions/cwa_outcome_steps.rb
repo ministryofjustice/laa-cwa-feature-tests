@@ -132,14 +132,13 @@ When('user adds a valid outcome with {string}, {string}, {string} and {string}')
   OutcomePage.add_outcome(values, page)
 end
 
-Then('the outcome saves sucessfully') do
+Then('the outcome saves sucessfully with {string}') do |ufn|
   expect(page).to_not have_content('Error')
   expect(page).to_not have_content('Warning')
-  expect(page).to have_content('010719/001')
+  expect(page).to have_content(ufn)
 end
 
 Then('the outcome does not save and gives an error') do
   expect(page).to have_content('Error')
   expect(page).to have_content('The Category of Law, Procurement Area and Access Point combination that has been used is not valid for the date that has been recorded.')
-  expect(page).to_not have_content('010719/002')
 end
