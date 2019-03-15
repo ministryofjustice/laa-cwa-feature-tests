@@ -1,1 +1,1 @@
-features/support/environments.yml filter=git-crypt diff=git-crypt
+features/support/*.yml filter=git-crypt diff=git-crypt

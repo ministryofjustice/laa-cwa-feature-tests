@@ -1,5 +1,5 @@
 When('I visit the portal url') do
-  visit($portal['url'])
+  visit(PortalEnv.url)
 end
 
 Then('I see the portal login page') do
@@ -7,13 +7,13 @@ Then('I see the portal login page') do
 end
 
 Given('user is on the portal login page') do
-  visit($portal['url'])
+  visit(PortalEnv.url)
   expect(page).to have_content('To sign in to the Online Portal')
 end
 
 When('user Logs in') do
-  fill_in 'username', with: $portal['username']
-  fill_in 'password', with: $portal['password']
+  fill_in 'username', with: PortalEnv.username
+  fill_in 'password', with: PortalEnv.password
   click_button 'Log in'
 end
 
