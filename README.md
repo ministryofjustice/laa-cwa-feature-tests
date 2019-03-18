@@ -33,8 +33,8 @@ Portal environment specific variables are set in `portal_env.yml` in the followi
 ```
 dev:
   url: portal-url
-  username: username
-  password: password
+  cwa_provider_user: username
+  cwa_provider_user_password: password
 ```
 
 The details in this file should match the details in the Portal environment.

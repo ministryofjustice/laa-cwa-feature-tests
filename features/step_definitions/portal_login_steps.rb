@@ -12,8 +12,8 @@ Given('user is on the portal login page') do
 end
 
 When('user Logs in') do
-  fill_in 'username', with: PortalEnv.username
-  fill_in 'password', with: PortalEnv.password
+  fill_in 'username', with: PortalEnv.cwa_provider_user
+  fill_in 'password', with: PortalEnv.cwa_provider_user_password
   click_button 'Log in'
 end
 
