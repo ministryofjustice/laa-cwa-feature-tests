@@ -30,13 +30,13 @@ Given('user is on the sumission search page') do
 end
 
 When('user searches for their provider submission') do
-  fill_in 'SearchFirmName', with: ENV['FIRMNAME']
-  fill_in 'SearchLscAccountNo', with: ENV['ACCOUNTNUMBER']
-  fill_in 'SearchOfficeName', with: ENV['FIRMNAME']
-  page.select ENV['AREA_OF_LAW'], from: 'AreaOfLawSearch'
-  fill_in 'SearchSubmissionPeriod', with: ENV['PERIOD']
+  fill_in 'SearchFirmName', with: CWAProvider.firmname
+  fill_in 'SearchLscAccountNo', with: CWAProvider.account_number
+  fill_in 'SearchOfficeName', with: CWAProvider.firmname
+  page.select CWAProvider.area_of_law, from: 'AreaOfLawSearch'
+  fill_in 'SearchSubmissionPeriod', with: CWAProvider.submission_period
   click_button 'Go'
-  expect(page).to have_content(ENV['SUBMISSION_REF'])
+  expect(page).to have_content(CWAProvider.submission_ref)
   click_link 'N3:Update:0'
 end
 

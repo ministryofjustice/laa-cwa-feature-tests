@@ -18,7 +18,7 @@ end
 When('user adds a valid outcome') do
   values = {
     matter_type: 'FAMA:FADV',
-    submission_reference: ENV['SUBMISSION_REF'],
+    submission_reference: CWAProvider.submission_ref,
     case_ref_number: 'TestCaseRef',
     case_start_date: '01-Jul-2019',
     case_id: '001',
@@ -57,7 +57,7 @@ end
 When('user adds a invalid outcome') do
   values = {
     matter_type: 'FAMA:FADV',
-    submission_reference: ENV['SUBMISSION_REF'],
+    submission_reference: CWAProvider.submission_ref,
     case_ref_number: 'TestCaseRef',
     case_start_date: '01-Jun-2019',
     case_id: '002',
@@ -93,10 +93,10 @@ When('user adds a invalid outcome') do
   OutcomePage.add_outcome(values, page)
 end
 
-When('user adds a valid outcome with {string}, {string}, {string} and {string}') do |case_id, case_start_date, procurement_area, access_point|
+When('user adds an outcome with {string}, {string}, {string} and {string}') do |case_id, case_start_date, procurement_area, access_point|
   values = {
     matter_type: 'FAMA:FADV',
-    submission_reference: ENV['SUBMISSION_REF'],
+    submission_reference: CWAProvider.submission_ref,
     case_ref_number: 'TestCaseRef',
     case_start_date: case_start_date,
     case_id: case_id,

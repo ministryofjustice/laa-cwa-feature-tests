@@ -2,7 +2,7 @@ Feature: Check procurement area and access point validation
 
 Scenario Outline: Add an outcome sucessfully
   Given user is on their sumission details page
-  When user adds a valid outcome with <case_id>, <case_start_date>, <procurement_area> and <access_point>
+  When user adds an outcome with <case_id>, <case_start_date>, <procurement_area> and <access_point>
   Then the outcome saves sucessfully with <ufn>
 
 Examples:
@@ -16,7 +16,7 @@ Examples:
 
 Scenario Outline: Check it errors with invalid combinations
   Given user is on their sumission details page
-  When user adds a valid outcome with <case_id>, <case_start_date>, <procurement_area> and <access_point>
+  When user adds an outcome with <case_id>, <case_start_date>, <procurement_area> and <access_point>
   Then the outcome does not save and gives an error
 
 Examples:
