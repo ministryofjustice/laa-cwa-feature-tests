@@ -2,6 +2,12 @@ require 'capybara/cucumber'
 require 'rspec/expectations'
 require 'byebug'
 require 'awesome_print'
+require 'selenium-webdriver'
+
+Capybara.register_driver :selenium do |app|
+  capabilities = Selenium::WebDriver::Remote::W3C::Capabilities.firefox(accept_insecure_certs: true)
+  Capybara::Selenium::Driver.new(app, browser: :firefox, marionette: true, desired_capabilities: capabilities)
+end
 
 Capybara.default_driver = :selenium
 
