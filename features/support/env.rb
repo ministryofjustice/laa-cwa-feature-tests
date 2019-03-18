@@ -9,7 +9,7 @@ Capybara.default_driver = :selenium
 module PortalEnv
   path = File.join(File.dirname(__FILE__), 'portal_env.yml')
   environment = YAML.safe_load(File.read(path))
-  @portal = environment[ENV.fetch('TEST_ENV').downcase]
+  @portal = environment.fetch(ENV.fetch('TEST_ENV').downcase)
 
   def self.url
     @portal['url']
@@ -27,7 +27,7 @@ end
 module CWAProvider
   path = File.join(File.dirname(__FILE__), 'cwa_env.yml')
   environment = YAML.safe_load(File.read(path))
-  @cwa = environment[ENV.fetch('TEST_ENV').downcase]
+  @cwa = environment.fetch(ENV.fetch('TEST_ENV').downcase)
 
   def self.firmname
     @cwa['firmname']
