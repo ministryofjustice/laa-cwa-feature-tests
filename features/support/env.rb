@@ -24,7 +24,6 @@ module PortalEnv
   end
 end
 
-# Set CWA environment specific variables
 module CWAProvider
   path = File.join(File.dirname(__FILE__), 'cwa_env.yml')
   environment = YAML.safe_load(File.read(path))
