@@ -1,5 +1,6 @@
 Feature: Check procurement area and access point validation
 
+@delete_outcome_after
 Scenario Outline: Add an outcome sucessfully
   Given user is on their sumission details page
   When user adds an outcome with <case_id>, <case_start_date>, <procurement_area> and <access_point>
