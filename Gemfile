@@ -1,7 +1,11 @@
 source 'http://rubygems.org'
-gem 'cucumber'
-gem 'capybara'
-gem 'selenium-webdriver'
-gem 'rspec'
-gem 'byebug'
-gem 'awesome_print'
+
+group :test do
+  gem 'awesome_print'
+  gem 'byebug'
+  gem 'cucumber'
+  gem 'capybara'
+  gem 'rspec'
+  gem 'selenium-webdriver'
+  gem 'site_prism'
+end

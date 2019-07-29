@@ -30,13 +30,13 @@ Given('user is on the sumission search page') do
 end
 
 When('user searches for their provider submission') do
-  fill_in 'SearchFirmName', with: CWAProvider.firmname
+  fill_in 'SearchFirmName', with: CWAProvider.firm_name
   fill_in 'SearchLscAccountNo', with: CWAProvider.account_number
-  fill_in 'SearchOfficeName', with: CWAProvider.firmname
-  page.select CWAProvider.area_of_law, from: 'AreaOfLawSearch'
-  fill_in 'SearchSubmissionPeriod', with: CWAProvider.submission_period
+  page.select CWAProvider.legal_help_submission.area_of_law, from: 'AreaOfLawSearch'
+  sleep(0.75)
+  fill_in 'SearchSubmissionPeriod', with: CWAProvider.legal_help_submission.period
   click_button 'Go'
-  expect(page).to have_content(CWAProvider.submission_ref)
+  expect(page).to have_content(CWAProvider.legal_help_submission.reference)
   click_link 'N3:Update:0'
 end
 

@@ -43,11 +43,13 @@ CWA environment specific variables are set in `cwa_env.yml` in the following for
 
 ```
 dev:
-  firmname:
+  url:
+  firm_name:
   account_number:
-  submission_period:
-  area_of_law:
-  submission_ref:
+  submissions:
+    - area_of_law:
+      period:
+      reference:
 ```
 
 The details in this file should match the details in the CWA environment.

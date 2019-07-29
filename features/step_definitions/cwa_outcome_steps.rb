@@ -18,7 +18,7 @@ end
 When('user adds a valid outcome') do
   values = {
     matter_type: 'FAMA:FADV',
-    submission_reference: CWAProvider.submission_ref,
+    submission_reference: CWAProvider.legal_help_submission.reference,
     case_ref_number: 'TestCaseRef',
     case_start_date: '01-Jul-2019',
     case_id: '001',
@@ -57,7 +57,7 @@ end
 When('user adds a invalid outcome') do
   values = {
     matter_type: 'FAMA:FADV',
-    submission_reference: CWAProvider.submission_ref,
+    submission_reference: CWAProvider.legal_help_submission.reference,
     case_ref_number: 'TestCaseRef',
     case_start_date: '01-Jun-2019',
     case_id: '002',
@@ -96,7 +96,7 @@ end
 When('user adds an outcome with {string}, {string}, {string} and {string}') do |case_id, case_start_date, procurement_area, access_point|
   values = {
     matter_type: 'FAMA:FADV',
-    submission_reference: CWAProvider.submission_ref,
+    submission_reference: CWAProvider.legal_help_submission.reference,
     case_ref_number: 'TestCaseRef',
     case_start_date: case_start_date,
     case_id: case_id,
