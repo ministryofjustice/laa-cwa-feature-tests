@@ -74,7 +74,7 @@ module CWAProvider
   def self.submission_for(area_of_law)
     submissions.find do |submission|
       submission['area_of_law'] == area_of_law.to_s.upcase.tr('_', ' ')
-    end.tap(&OpenStruct.method(:new))
+    end
   end
 end
 

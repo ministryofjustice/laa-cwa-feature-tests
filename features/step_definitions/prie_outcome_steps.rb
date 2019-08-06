@@ -1,4 +1,4 @@
-Given("user bulk loaded a file with PRIE outcomes") do
+Given('user bulk loaded a file with PRIE outcomes') do
   file = :'prie-bulkload-file.csv'
   steps %{
     Given user is on CWA Navigation page
@@ -10,7 +10,7 @@ Given("user bulk loaded a file with PRIE outcomes") do
   $bulk_loaded_flag ||= file
 end
 
-Given("user deleted any existing outcomes for the test firm") do
+Given('user deleted any existing outcomes for the test firm') do
   navigator = NavigatorPage.new
   navigator.roles.cwa_activity_report_manager_internal_role.click
   navigator.content.submission_list.click
@@ -44,7 +44,7 @@ Given("user deleted any existing outcomes for the test firm") do
   end
 end
 
-Given("user is on the pricing outcome details page") do
+Given('user is on the pricing outcome details page') do
   with_retry(20, PricingUnavailableError ||= Class.new(StandardError)) do |retried|
     navigator = NavigatorPage.new
     navigator.load
@@ -74,19 +74,19 @@ Given("user is on the pricing outcome details page") do
   end
 end
 
-When("user is looking at outcome {string}") do |ufn|
+When('user is looking at outcome {string}') do |ufn|
   @current_outcome = @submission_details_page.outcomes.find do |outcome|
     outcome.ufn.text == ufn
   end
 end
 
-Then("user should see the outcome priced at {string}") do |price|
+Then('user should see the outcome priced at {string}') do |price|
   expect(@current_outcome.stage_reached.text).to eq('PRIE')
   expect(@current_outcome.value.text).to eq(price)
 end
 
-Then("the Escape Fee flag is {string}") do |flag|
-  if flag == "Y"
+Then('the Escape Fee flag is {string}') do |flag|
+  if flag == 'Y'
     expect(@current_outcome.escape_fee_img['title']).to eq('Escape Fee Case')
   else
     expect(@current_outcome.escape_fee_img['title']).to be_empty

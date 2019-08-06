@@ -18,12 +18,12 @@ Scenario Outline: PRIE outcome pricing
 
   Examples:
     |        UFN | Profit ex. VAT | Waiting ex. VAT | Disbursements ex. VAT | Disbursements VAT | Fixed Fee ex. VAT | Fixed Fee VAT |    Price | Escape Fee |
-    | 180719/001 |          49.81 |            0.00 |                  0.00 |              0.00 |              0.00 |          0.00 |    49.81 |          N | # Start date before 19/7/2019
-    | 190719/002 |          49.81 |            0.00 |                  0.00 |              0.00 |              0.00 |          0.00 |     0.00 |          N | # Net Profit between £0 and £49.81 without Disbursements
-    | 190719/003 |          49.81 |            0.00 |                100.00 |             20.00 |              0.00 |          0.00 |     0.00 |          N | # Net Profit between £0 and £49.81 with Disbursements
-    | 190719/004 |          49.82 |          884.11 |                  0.00 |              0.00 |            437.21 |         87.44 |   524.65 |          N | # Net Profit between £49.82 and £999_999 and (Net Profit + Net Waiting) between £0 and £933.93 without Disbursements
-    | 190719/005 |          49.82 |          884.11 |                100.00 |             20.00 |            437.21 |         87.44 |   644.65 |          N | # Net Profit between £49.82 and £999_999 and (Net Profit + Net Waiting) between £0 and £933.93 with Disbursements
-    | 190719/006 |          49.82 |          884.12 |                  0.00 |              0.00 |           1454.44 |        290.89 | 1,745.33 |          N | # Net Profit between £49.82 and £999_999 and (Net Profit + Net Waiting) between £933.94 and £999_999 without Disbursements
-    | 190719/007 |          49.82 |          884.12 |                100.00 |             20.00 |           1454.44 |        290.89 | 1,865.33 |          N | # Net Profit between £49.82 and £999_999 and (Net Profit + Net Waiting) between £933.94 and £999_999 with Disbursements
-    | 190719/008 |          49.82 |         4312.71 |                  0.00 |              0.00 |           1454.44 |        290.89 | 1,745.33 |          N | # (Net Profit + Net Waiting) between £0 and £4362.53
-    | 190719/009 |          49.82 |         4312.72 |                  0.00 |              0.00 |           1454.44 |        290.89 | 1,745.33 |          Y | # (Net Profit + Net Waiting) between £4362.54 and £999_999
+    | 180719/001 |          49.81 |            0.00 |                  0.00 |              0.00 |              0.00 |          0.00 |    49.81 |          N |
+    | 190719/002 |          49.81 |            0.00 |                  0.00 |              0.00 |              0.00 |          0.00 |     0.00 |          N |
+    | 190719/003 |          49.81 |            0.00 |                100.00 |             20.00 |              0.00 |          0.00 |     0.00 |          N |
+    | 190719/004 |          49.82 |          884.11 |                  0.00 |              0.00 |            437.21 |         87.44 |   524.65 |          N |
+    | 190719/005 |          49.82 |          884.11 |                100.00 |             20.00 |            437.21 |         87.44 |   644.65 |          N |
+    | 190719/006 |          49.82 |          884.12 |                  0.00 |              0.00 |           1454.44 |        290.89 | 1,745.33 |          N |
+    | 190719/007 |          49.82 |          884.12 |                100.00 |             20.00 |           1454.44 |        290.89 | 1,865.33 |          N |
+    | 190719/008 |          49.82 |         4312.71 |                  0.00 |              0.00 |           1454.44 |        290.89 | 1,745.33 |          N |
+    | 190719/009 |          49.82 |         4312.72 |                  0.00 |              0.00 |           1454.44 |        290.89 | 1,745.33 |          Y |

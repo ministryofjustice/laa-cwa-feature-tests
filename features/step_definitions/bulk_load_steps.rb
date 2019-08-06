@@ -1,4 +1,4 @@
-When("user bulk loads {string} for the test firm") do |file|
+When('user bulk loads {string} for the test firm') do |file|
   navigator = NavigatorPage.new
   navigator.load
   navigator.roles.cwa_activity_report_manager_internal_role.click
@@ -18,16 +18,16 @@ When("user bulk loads {string} for the test firm") do |file|
   with_delay(0.75) { @bulk_load_page.next_button.click }
 end
 
-Then("user should see a validation error") do
+Then('user should see a validation error') do
   expect(@bulk_load_page.errors).to have_text(/Error in CSV upload/)
 end
 
-Then("user should see the outcome results page") do
+Then('user should see the outcome results page') do
   @bulk_load_results_page = BulkLoadResultsPage.new
   expect(@bulk_load_results_page).to be_loaded
 end
 
-Then("the following summary for the submission:") do |table|
+Then('the following summary for the submission:') do |table|
   table_to_hash_array(table).each.with_index do |row, index|
     row.each_pair do |element_name, expected_value|
       actual_row = @bulk_load_results_page.summary[index]
@@ -37,7 +37,7 @@ Then("the following summary for the submission:") do |table|
   end
 end
 
-Then("the following errors:") do |table|
+Then('the following errors:') do |table|
   table_to_hash_array(table).each.with_index do |row, index|
     row.each_pair do |element_name, expected_value|
       actual_row = @bulk_load_results_page.errors[index]
@@ -47,14 +47,15 @@ Then("the following errors:") do |table|
   end
 end
 
-When("user confirms the submission") do
+When('user confirms the submission') do
   @bulk_load_results_page.confirm_submission.click
 end
 
-Then("user should see the submission reference in the submission list page") do
+Then('user should see the submission reference in the submission list page') do
   matches_reference = ->(submission) do
     submission.schedule_submission_reference.text ==
       CWAProvider.legal_help_submission.reference
   end
-  expect(@bulk_load_results_page.submissions.any?(&matches_reference)).to eq(true)
+  expect(@bulk_load_results_page.submissions.any?(&matches_reference))
+    .to eq(true)
 end
