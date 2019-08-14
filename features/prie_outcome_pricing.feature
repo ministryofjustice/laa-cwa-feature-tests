@@ -1,14 +1,14 @@
 Feature: PRIE outcome pricing
   Rules:
-    • New PRIE should price the same as existing PRIC
-    • Fixed fee starts from 19/7/2019, which is part of the UFN date
-    • If profit < 49.82 then price = £0.00
-    • If profit costs > 49.81 and (profit + waiting < 933.94) then price = (437.21 + VAT) + disbursements + disbursements VAT
-    • If profit costs > 49.81 and (profit + waiting > 933.93) then price = (1454.44 + VAT) + disbursements + disbursements VAT
-    • If profit + waiting > 4362.53 then flag as Escape Fee case
+    • New Stage reached code `PRIE` should price the same as existing `PRIC`
+    • Fixed fee starts from 19/7/2019, which is part of the Unique File Number (UFN) date
+    • If profit < £49.82 then price = £0.00
+    • If profit costs > £49.81 and (profit + waiting < £933.94) then price = (£437.21 + VAT) + disbursements + disbursements VAT
+    • If profit costs > £49.81 and (profit + waiting > £933.93) then price = (£1454.44 + VAT) + disbursements + disbursements VAT
+    • If profit + waiting > £4362.53 then flag as Escape Fee case
 
 Background: User bulk loads a file with PRIE outcomes
-  Given user bulk loaded a file with PRIE outcomes
+  Given user bulk loads monthly statement with reconsideration hearing (PRIE) outcomes
   And user is on the pricing outcome details page
 
 Scenario Outline: PRIE outcome pricing

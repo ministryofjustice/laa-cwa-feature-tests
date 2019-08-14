@@ -1,7 +1,7 @@
-Given('user bulk loaded a file with PRIE outcomes') do
+Given('user bulk loads monthly statement with reconsideration hearing \(PRIE) outcomes') do
   file = :'prie-bulkload-file.csv'
   steps %{
-    Given user is on CWA Navigation page
+    Given a test firm user is logged in CWA
     And user deleted any existing outcomes for the test firm
     When user bulk loads "#{file}" for the test firm
     Then user should see the outcome results page

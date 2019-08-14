@@ -1,13 +1,13 @@
 Feature: Provider Bulk load
 
 Scenario: Bulk load invalid file
-  Given user is on CWA Navigation page
+  Given a test firm user is logged in CWA
   When user bulk loads "invalid-bulkload-file.csv" for the test firm
   Then user should see a validation error
 
 @delete_outcome_after
 Scenario: Bulk load valid file
-  Given user is on CWA Navigation page
+  Given a test firm user is logged in CWA
   When user bulk loads "valid-bulkload-file.csv" for the test firm
   Then user should see the outcome results page
   And the following summary for the submission:

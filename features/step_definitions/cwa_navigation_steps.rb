@@ -1,6 +1,6 @@
-Given('user is on CWA Navigation page') do
+Given('a test firm user is logged in CWA') do
   steps %(
-    Given user is on the portal login page
+    Given a test firm user is on the portal login page
     When user Logs in
     Then Portal application page is displayed
     When user clicks on CWA link
@@ -19,7 +19,7 @@ end
 
 Given('user is on the sumission search page') do
   steps %(
-    Given user is on the portal login page
+    Given a test firm user is on the portal login page
     When user Logs in
     Then Portal application page is displayed
     When user clicks on CWA link
@@ -29,7 +29,7 @@ Given('user is on the sumission search page') do
   )
 end
 
-When('user searches for their provider submission') do
+When('user searches for their legal help submission') do
   fill_in 'SearchFirmName', with: CWAProvider.firm_name
   fill_in 'SearchLscAccountNo', with: CWAProvider.account_number
   page.select CWAProvider.legal_help_submission.area_of_law, from: 'AreaOfLawSearch'

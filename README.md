@@ -54,7 +54,7 @@ dev:
 
 The details in this file should match the details in the CWA environment.
 
-## Extras
+## Runtime configuration
 
 ### Run tests in Headless mode
 
