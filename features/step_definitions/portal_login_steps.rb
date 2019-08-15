@@ -6,7 +6,7 @@ Then('I see the portal login page') do
   expect(page).to have_content('To sign in to the Online Portal')
 end
 
-Given('user is on the portal login page') do
+Given('a test firm user is on the portal login page') do
   visit(PortalEnv.url)
   expect(page).to have_content('To sign in to the Online Portal')
 end
@@ -23,7 +23,7 @@ end
 
 Given('user is on the portal home page') do
   steps %(
-    Given user is on the portal login page
+    Given a test firm user is on the portal login page
     When user Logs in
     Then Portal application page is displayed
   )

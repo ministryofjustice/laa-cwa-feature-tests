@@ -1,6 +1,6 @@
-Given('user is on CWA Navigation page') do
+Given('a test firm user is logged in CWA') do
   steps %(
-    Given user is on the portal login page
+    Given a test firm user is on the portal login page
     When user Logs in
     Then Portal application page is displayed
     When user clicks on CWA link
@@ -19,7 +19,7 @@ end
 
 Given('user is on the sumission search page') do
   steps %(
-    Given user is on the portal login page
+    Given a test firm user is on the portal login page
     When user Logs in
     Then Portal application page is displayed
     When user clicks on CWA link
@@ -29,14 +29,13 @@ Given('user is on the sumission search page') do
   )
 end
 
-When('user searches for their provider submission') do
-  fill_in 'SearchFirmName', with: CWAProvider.firmname
+When('user searches for their legal help submission') do
+  fill_in 'SearchFirmName', with: CWAProvider.firm_name
   fill_in 'SearchLscAccountNo', with: CWAProvider.account_number
-  fill_in 'SearchOfficeName', with: CWAProvider.firmname
-  page.select CWAProvider.area_of_law, from: 'AreaOfLawSearch'
-  fill_in 'SearchSubmissionPeriod', with: CWAProvider.submission_period
+  page.select CWAProvider.legal_help_submission.area_of_law, from: 'AreaOfLawSearch'
+  fill_in 'SearchSubmissionPeriod', with: CWAProvider.legal_help_submission.period
   click_button 'Go'
-  expect(page).to have_content(CWAProvider.submission_ref)
+  expect(page).to have_content(CWAProvider.legal_help_submission.reference)
   click_link 'N3:Update:0'
 end
 

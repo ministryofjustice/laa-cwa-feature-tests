@@ -5,6 +5,6 @@ Scenario: Visit the Portal
   Then I see the portal login page
 
 Scenario: Log in to Portal
-  Given user is on the portal login page
-  When user Logs in 
+  Given a test firm user is on the portal login page
+  When user Logs in
   Then Portal application page is displayed

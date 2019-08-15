@@ -3,14 +3,14 @@ include OutcomePage
 
 Given('user is on their sumission details page') do
   steps %(
-    Given user is on the portal login page
+    Given a test firm user is on the portal login page
     When user Logs in
     Then Portal application page is displayed
     When user clicks on CWA link
     Then CWA application page is displayed
     When user navigates to Submissions page
     Then Submission Search Page displayed
-    When user searches for their provider submission
+    When user searches for their legal help submission
     Then their submission details are displayed
   )
 end
@@ -18,7 +18,7 @@ end
 When('user adds a valid outcome') do
   values = {
     matter_type: 'FAMA:FADV',
-    submission_reference: CWAProvider.submission_ref,
+    submission_reference: CWAProvider.legal_help_submission.reference,
     case_ref_number: 'TestCaseRef',
     case_start_date: '01-Jul-2019',
     case_id: '001',
@@ -57,7 +57,7 @@ end
 When('user adds a invalid outcome') do
   values = {
     matter_type: 'FAMA:FADV',
-    submission_reference: CWAProvider.submission_ref,
+    submission_reference: CWAProvider.legal_help_submission.reference,
     case_ref_number: 'TestCaseRef',
     case_start_date: '01-Jun-2019',
     case_id: '002',
@@ -96,7 +96,7 @@ end
 When('user adds an outcome with {string}, {string}, {string} and {string}') do |case_id, case_start_date, procurement_area, access_point|
   values = {
     matter_type: 'FAMA:FADV',
-    submission_reference: CWAProvider.submission_ref,
+    submission_reference: CWAProvider.legal_help_submission.reference,
     case_ref_number: 'TestCaseRef',
     case_start_date: case_start_date,
     case_id: case_id,
