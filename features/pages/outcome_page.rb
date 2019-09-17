@@ -12,7 +12,7 @@ module OutcomePage
       Then their submission details are displayed
     )
     page.click_link 'Select All'
-    page.click_button 'Delete'
+    page.find('#Delete').click
     page.click_button 'Yes'
   end
 end

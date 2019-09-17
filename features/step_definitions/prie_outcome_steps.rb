@@ -7,7 +7,7 @@ Given('user bulk loads monthly statement with reconsideration hearing \(PRIE) ou
     Then user should see the outcome results page
     And user confirms the submission
   } unless $bulk_loaded_flag == file
-  $bulk_loaded_flag ||= file
+  $bulk_loaded_flag = file
 end
 
 Given('user deleted any existing outcomes for the test firm') do
