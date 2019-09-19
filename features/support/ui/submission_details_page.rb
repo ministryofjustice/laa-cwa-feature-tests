@@ -1,8 +1,8 @@
 class SubmissionDetailsOutcomeSection < SitePrism::Section
-  element :ufn, :xpath, './/td[2]'
-  element :stage_reached, :xpath, './/td[6]'
-  element :value, :xpath, './/td[9]'
-  element :escape_fee_img, :xpath, './/td[10]/img'
+  element :ufn, :xpath, ".//*[contains(@title,'UFN')]"
+  element :stage_reached, :xpath, ".//*[contains(@title,'Stage Reached')]"
+  element :value, :xpath, ".//*[contains(@title,'Value')]"
+  element :escape_fee_img, :xpath, ".//*[contains(@title,'Escape Fee Case')]"
 end
 
 class SubmissionDetailsPage < SitePrism::Page

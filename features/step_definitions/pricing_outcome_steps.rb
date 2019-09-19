@@ -1,8 +1,8 @@
-Given('user bulk loads monthly statement with reconsideration hearing \(PRIE) outcomes') do
-  file = :'prie-bulkload-file.csv'
+Given('user bulk loads monthly statement with {string} - {string} outcomes') do |category_of_law, outcome_type|
+  file = bulkload_file(category_of_law, outcome_type)
   steps %{
     Given a test firm user is logged in CWA
-    And user deleted any existing outcomes for the test firm
+    And user deleted any existing "#{category_of_law}" outcomes for the test firm
     When user bulk loads "#{file}" for the test firm
     Then user should see the outcome results page
     And user confirms the submission
@@ -10,7 +10,7 @@ Given('user bulk loads monthly statement with reconsideration hearing \(PRIE) ou
   $bulk_loaded_flag = file
 end
 
-Given('user deleted any existing outcomes for the test firm') do
+Given('user deleted any existing {string} outcomes for the test firm') do |category_of_law|
   navigator = NavigatorPage.new
   navigator.roles.cwa_activity_report_manager_internal_role.click
   navigator.content.submission_list.click
@@ -22,7 +22,7 @@ Given('user deleted any existing outcomes for the test firm') do
   submission_list_page.wait_until_submissions_visible(wait: 10)
   existing_submission = submission_list_page.submissions.find do |submission|
     submission.schedule_submission_reference.text ==
-      CWAProvider.crime_lower_submission.reference
+      load_submission(category_of_law).reference
   end
 
   next unless existing_submission
@@ -44,7 +44,7 @@ Given('user deleted any existing outcomes for the test firm') do
   end
 end
 
-Given('user is on the pricing outcome details page') do
+Given('user is on the {string} pricing outcome details page') do |category_of_law|
   with_retry(20, PricingUnavailableError ||= Class.new(StandardError)) do |retried|
     navigator = NavigatorPage.new
     navigator.load
@@ -58,7 +58,7 @@ Given('user is on the pricing outcome details page') do
     submission_list_page.wait_until_submissions_visible(wait: 10)
     submission_list_page.submissions.find do |submission|
       submission.schedule_submission_reference.text ==
-        CWAProvider.crime_lower_submission.reference
+        load_submission(category_of_law).reference
     end.update_button.click
 
     @submission_details_page = SubmissionDetailsPage.new
@@ -67,7 +67,7 @@ Given('user is on the pricing outcome details page') do
 
     STDOUT.puts "(#{retried}) Checking for pricing completion..." if retried > 0
 
-    price_unavailable = ->(outcome) { outcome.value.text.empty? }
+    price_unavailable = ->(outcome) { outcome.has_no_value?(wait: 0) }
     if @submission_details_page.outcomes.any?(&price_unavailable)
       raise PricingUnavailableError
     end
@@ -80,15 +80,14 @@ When('user is looking at outcome {string}') do |ufn|
   end
 end
 
+Then('user should see the outcome with stage reached {string}') do |code|
+  expect(@current_outcome.stage_reached.text).to eq(code)
+end
+
 Then('user should see the outcome priced at {string}') do |price|
-  expect(@current_outcome.stage_reached.text).to eq('PRIE')
   expect(@current_outcome.value.text).to eq(price)
 end
 
 Then('the Escape Fee flag is {string}') do |flag|
-  if flag == 'Y'
-    expect(@current_outcome.escape_fee_img['title']).to eq('Escape Fee Case')
-  else
-    expect(@current_outcome.escape_fee_img['title']).to be_empty
-  end
+  expect(@current_outcome.has_escape_fee_img?(wait: 0)).to eq(flag == 'Y' && true || false)
 end
