@@ -1,2 +1,2 @@
 features/support/*.yml filter=git-crypt diff=git-crypt
-features/support/fixtures/*.csv filter=git-crypt diff=git-crypt
+features/support/fixtures/bulkload/**/*.csv filter=git-crypt diff=git-crypt
