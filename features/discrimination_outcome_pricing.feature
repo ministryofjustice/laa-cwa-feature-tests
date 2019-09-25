@@ -22,7 +22,7 @@ Feature: Discrimination outcome pricing
         When user is looking at outcome "<UFN>"
         Then user should see the outcome with stage reached "QA"
         And user should see the outcome priced at "£ <Price>"
-        And the Escape Fee flag is "<Escape Fee>"
+        # And the Escape Fee flag is "<Escape Fee>"
 
         Examples:
             | UFN        | Profit ex. VAT | Counsel ex. VAT | Vat Indicator | Disbursements ex. VAT | Disbursements VAT | Price  | Escape Fee |
