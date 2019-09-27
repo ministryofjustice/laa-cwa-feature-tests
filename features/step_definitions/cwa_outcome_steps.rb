@@ -1,4 +1,4 @@
-Given('user is on their sumission details page') do
+Given('user is on their submission details page') do
   steps %(
     Given a test firm user is on the portal login page
     When user Logs in
@@ -183,7 +183,7 @@ When('user adds an outcome with {string}, {string}, {string} and {string}') do |
   page.add_outcome(values)
 end
 
-Then(/^the outcome saves sucessfully(?: with \"(.*)\")?$/) do |ufn|
+Then(/^the outcome saves successfully(?: with \"(.*)\")?$/) do |ufn|
   page = SubmissionDetailsPage.new
   expect(page).to_not have_content('Error')
   expect(page).to_not have_content('Warning')

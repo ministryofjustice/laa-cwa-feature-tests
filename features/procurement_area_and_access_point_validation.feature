@@ -2,9 +2,9 @@ Feature: Check procurement area and access point validation
 
   @delete_outcome_after
   Scenario Outline: Add an outcome sucessfully
-    Given user is on their sumission details page
+    Given user is on their submission details page
     When user adds an outcome with "<case_id>", "<case_start_date>", "<procurement_area>" and "<access_point>"
-    Then the outcome saves sucessfully with "<ufn>"
+    Then the outcome saves successfully with "<ufn>"
 
     Examples:
       | case_id | case_start_date | procurement_area | access_point | ufn        |
@@ -16,7 +16,7 @@ Feature: Check procurement area and access point validation
       | 016     | 05-Jun-2019     | PA00125          | AP00000      | 050619/016 |
 
   Scenario Outline: Check it errors with invalid combinations
-    Given user is on their sumission details page
+    Given user is on their submission details page
     When user adds an outcome with "<case_id>", "<case_start_date>", "<procurement_area>" and "<access_point>"
     Then the outcome does not save and gives an error
 
