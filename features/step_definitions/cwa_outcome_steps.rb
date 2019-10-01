@@ -1,7 +1,4 @@
-require_relative '../pages/outcome_page.rb'
-include OutcomePage
-
-Given('user is on their sumission details page') do
+Given('user is on their submission details page') do
   steps %(
     Given a test firm user is on the portal login page
     When user Logs in
@@ -16,23 +13,27 @@ Given('user is on their sumission details page') do
 end
 
 When('user adds a valid outcome') do
+  submission_list_page = SubmissionListPage.new
+  submission_list_page.add_outcome_button.click
+
+  page = AddOutcomePage.new
   values = {
     matter_type: 'FAMA:FADV',
-    submission_reference: CWAProvider.legal_help_submission.reference,
-    case_ref_number: 'TestCaseRef',
+    schedule_reference: CWAProvider.legal_help_submission.reference,
+    case_reference_number: 'TestCaseRef',
     case_start_date: '01-Jul-2019',
     case_id: '001',
     procurement_area: 'PA00002',
     access_point: 'AP00000',
     client_forename: 'Test',
     client_surname: 'Person',
-    client_dob: '01-May-1980',
+    client_date_of_birth: '01-May-1980',
     ucn: '01051980/T/PERS',
     postal_application_accepted: 'N',
     gender: 'Male',
     ethnicity: '00-Other',
     disability: 'NCD-Not Considered Disabled',
-    postcode: 'SW1H 9AJ',
+    client_postcode: 'SW1H 9AJ',
     case_concluded_date: '05-Jul-2019',
     advice_time: '0',
     travel_time: '0',
@@ -51,27 +52,31 @@ When('user adds a valid outcome') do
     case_stage_level: 'FPL01-Priv',
     exemption_criteria_satisfied: 'DV001'
   }
-  OutcomePage.add_outcome(values, page)
+  page.add_outcome(values)
 end
 
 When('user adds a invalid outcome') do
+  submission_list_page = SubmissionListPage.new
+  submission_list_page.add_outcome_button.click
+
+  page = AddOutcomePage.new
   values = {
     matter_type: 'FAMA:FADV',
-    submission_reference: CWAProvider.legal_help_submission.reference,
-    case_ref_number: 'TestCaseRef',
+    schedule_reference: CWAProvider.legal_help_submission.reference,
+    case_reference_number: 'TestCaseRef',
     case_start_date: '01-Jun-2019',
     case_id: '002',
     procurement_area: 'PA00002',
     access_point: 'AP00000',
     client_forename: 'Test',
     client_surname: 'Person',
-    client_dob: '01-May-1980',
+    client_date_of_birth: '01-May-1980',
     ucn: '01051980/T/PERS',
     postal_application_accepted: 'N',
     gender: 'Male',
     ethnicity: '00-Other',
     disability: 'NCD-Not Considered Disabled',
-    postcode: 'SW1H 9AJ',
+    client_postcode: 'SW1H 9AJ',
     case_concluded_date: '05-Jun-2019',
     advice_time: '0',
     travel_time: '0',
@@ -90,27 +95,73 @@ When('user adds a invalid outcome') do
     case_stage_level: 'FPL01-Priv',
     exemption_criteria_satisfied: 'DV001'
   }
-  OutcomePage.add_outcome(values, page)
+  page.add_outcome(values)
+end
+
+When('user adds a valid outcome for Discrimination') do
+  submission_list_page = SubmissionListPage.new
+  submission_list_page.add_outcome_button.click
+
+  page = AddOutcomePage.new
+  values = {
+    matter_type: 'QPRO:QAGE',
+    schedule_reference: CWAProvider.legal_help_submission.reference,
+    case_reference_number: 'TestCaseRef',
+    case_start_date: '01-Sep-2019',
+    case_id: '099',
+    procurement_area: 'PA00180',
+    access_point: 'AP00000',
+    client_forename: 'Test',
+    client_surname: 'Person',
+    client_date_of_birth: '01-May-1980',
+    ucn: '01051980/T/PERS',
+    postal_application_accepted: 'N',
+    gender: 'Male',
+    ethnicity: '00-Other',
+    disability: 'NCD-Not Considered Disabled',
+    client_postcode: 'SW1H 9AJ',
+    case_concluded_date: '01-Sep-2019',
+    advice_time: '0',
+    travel_time: '0',
+    waiting_time: '0',
+    profit_costs_excluding_vat: '100.00',
+    disbursements_excluding_vat: '0',
+    counsel_costs_excluding_vat: '0',
+    disbursements_vat_amount: '0',
+    profit_and_counsel_vat_indicator: 'No',
+    tolerance_indicator: 'No',
+    travel_and_waiting_costs_excluding_vat: '0',
+    stage_reached: 'QA-First meeting',
+    outcome_for_client: 'QM-Matter concluded otherwise',
+    exemption_criteria_satisfied: nil,
+    exceptional_case_funding_reference: nil,
+    transfer_date: nil
+  }
+  page.add_outcome(values)
 end
 
 When('user adds an outcome with {string}, {string}, {string} and {string}') do |case_id, case_start_date, procurement_area, access_point|
+  submission_list_page = SubmissionListPage.new
+  submission_list_page.add_outcome_button.click
+
+  page = AddOutcomePage.new
   values = {
     matter_type: 'FAMA:FADV',
-    submission_reference: CWAProvider.legal_help_submission.reference,
-    case_ref_number: 'TestCaseRef',
+    schedule_reference: CWAProvider.legal_help_submission.reference,
+    case_reference_number: 'TestCaseRef',
     case_start_date: case_start_date,
     case_id: case_id,
     procurement_area: procurement_area,
     access_point: access_point,
     client_forename: 'Test',
     client_surname: 'Person',
-    client_dob: '01-May-1980',
+    client_date_of_birth: '01-May-1980',
     ucn: '01051980/T/PERS',
     postal_application_accepted: 'N',
     gender: 'Male',
     ethnicity: '00-Other',
     disability: 'NCD-Not Considered Disabled',
-    postcode: 'SW1H 9AJ',
+    client_postcode: 'SW1H 9AJ',
     case_concluded_date: '05-Jul-2019',
     advice_time: '0',
     travel_time: '0',
@@ -129,16 +180,18 @@ When('user adds an outcome with {string}, {string}, {string} and {string}') do |
     case_stage_level: 'FPL01-Priv',
     exemption_criteria_satisfied: 'DV001'
   }
-  OutcomePage.add_outcome(values, page)
+  page.add_outcome(values)
 end
 
-Then('the outcome saves sucessfully with {string}') do |ufn|
+Then(/^the outcome saves successfully(?: with \"(.*)\")?$/) do |ufn|
+  page = SubmissionDetailsPage.new
   expect(page).to_not have_content('Error')
   expect(page).to_not have_content('Warning')
-  expect(page).to have_content(ufn)
+  expect(page).to have_content(ufn) if ufn
 end
 
 Then('the outcome does not save and gives an error') do
+  page = AddOutcomePage.new
   expect(page).to have_content('Error')
   expect(page).to have_content('The Category of Law, Procurement Area and Access Point combination that has been used is not valid for the date that has been recorded.')
 end

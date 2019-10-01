@@ -9,12 +9,17 @@ Given('a test firm user is logged in CWA') do
 end
 
 When('user navigates to Submissions page') do
-  click_link('CWA Activity Reporter Manager (Internal) role')
-  click_link('Submission List')
+  navigator = NavigatorPage.new
+  navigator.load
+  navigator.roles.cwa_activity_report_manager_internal_role.click
+  navigator.content.submission_list.click
 end
 
 Then('Submission Search Page displayed') do
-  expect(page).to have_content('Submission Search')
+  submission_list_page = SubmissionListPage.new
+  submission_list_page.firm_name.set(CWAProvider.firm_name)
+  submission_list_page.search_button.click
+  expect(submission_list_page).to have_content('Submission Search')
 end
 
 Given('user is on the sumission search page') do
