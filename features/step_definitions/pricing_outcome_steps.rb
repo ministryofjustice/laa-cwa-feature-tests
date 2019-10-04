@@ -81,9 +81,7 @@ When('user is looking at outcome {string}') do |ufn|
 end
 
 Then("user should see the outcome with one of these stage reached codes:") do |table|
-  # table is a Cucumber::MultilineArgument::DataTable
   @stage_reached_codes = table.raw
-  puts(@current_outcome.stage_reached.text)
   @stage_reached_codes.include?(@current_outcome.stage_reached.text)
 end
 
