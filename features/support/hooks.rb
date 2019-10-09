@@ -1,7 +1,7 @@
 require_relative '../pages/outcome_page.rb'
 include OutcomePage
 
-After('@delete_outcome_after') do
+After('@delete_outcome_after')
   delete_all_outcomes
 end
 
