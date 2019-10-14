@@ -38,6 +38,7 @@ When('user searches for their legal help submission') do
   fill_in 'SearchFirmName', with: CWAProvider.firm_name
   fill_in 'SearchLscAccountNo', with: CWAProvider.account_number
   page.select CWAProvider.legal_help_submission.area_of_law, from: 'AreaOfLawSearch'
+  sleep 0.5
   fill_in 'SearchSubmissionPeriod', with: CWAProvider.legal_help_submission.period
   click_button 'Go'
   expect(page).to have_content(CWAProvider.legal_help_submission.reference)
