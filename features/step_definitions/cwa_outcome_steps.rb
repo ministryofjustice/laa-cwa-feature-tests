@@ -186,7 +186,6 @@ end
 Then(/^the outcome saves successfully(?: with \"(.*)\")?$/) do |ufn|
   page = SubmissionDetailsPage.new
   expect(page).to_not have_content('Error')
-  expect(page).to_not have_content('Warning')
   expect(page).to have_content(ufn) if ufn
 end
 
