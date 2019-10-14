@@ -19,7 +19,8 @@ Feature: Check ECF Validation for Education claims
     When user adds an outcome for Education with "<matter type>", "<ecf ref>", "<case start date>", "<pa>", "<ap>" and "<case id>"
     Then the outcome saves successfully
 
-    Examples: Submission validation after 01-Sep-2019
+    Examples: Submission
+     validation after 01-Sep-2019
     Providers can submit some Education claims without an ECF reference
 
     | case id |	matter type	|	ecf ref |	case start date	|	pa	|	ap |
@@ -52,10 +53,13 @@ Feature: Check ECF Validation for Education claims
     Claims are invalid if these Education matter types have no ECF reference
 
     | case id |	matter type	|	ecf ref |	case start date	|	pa	|	ap |
-    | 009 |	ESEN:EDSC	|		|	01/09/19	|	PA20000	|	AP20000	|
-    | 010 |	EDDA:EPRU	|		|	01/09/19	|	PA20000	|	AP20000	|
-    | 011 |	EEQU:ECOL	|		|	01/09/19	|	PA20000	|	AP20000	|
-    | 012 |	EDJR:EUNI	|		|	01/09/19	|	PA20000	|	AP20000	|
+    | 009 |	ENEG:EDSC	|		|	01/09/19	|	PA20000	|	AP20000	|
+    | 010 |	EXEC:EPRU	|		|	01/09/19	|	PA20000	|	AP20000	|
+    | 011 |	EDOT:ECOL	|		|	01/09/19	|	PA20000	|	AP20000	|
+    | 012 |	EADM:EUNI	|		|	01/09/19	|	PA20000	|	AP20000	|
+    | 013 |	EGTO:EUNI	|		|	01/09/19	|	PA20000	|	AP20000	|
+    | 014 |	EPRO:EUNI	|		|	01/09/19	|	PA20000	|	AP20000	|
+    | 015 |	EREO:EUNI	|		|	01/09/19	|	PA20000	|	AP20000	|
 
   Scenario Outline: Add a valid outcome for Education where case start date between '01-APR-2013' and '01-Sep-2019'
     When user adds an outcome for Education with "<matter type>", "<ecf ref>", "<case start date>", "<pa>", "<ap>" and "<case id>"
@@ -65,26 +69,26 @@ Feature: Check ECF Validation for Education claims
     Education claims are valid if these Education matter types have an ECF reference
 
     | case id |	matter type	|	ecf ref |	case start date	|	pa	|	ap |
-    | 013 |	ESEN:EPRU	|	1234567AB	|	31/08/19	|	PA20000	|	AP20000	|
-    | 014 |	EDDA:EPRU	|	1234567AB	|	31/08/19	|	PA20000	|	AP20000	|
-    | 015 |	EEQU:ECOL	|	1234567AB	|	31/08/19	|	PA20000	|	AP20000	|
-    | 016 |	ENEG:EUNI	|	1234567AB	|	31/08/19	|	PA20000	|	AP20000	|
-    | 017 |	EXCE:EUNI	|	1234567AB	|	31/08/19	|	PA20000	|	AP20000	|
-    | 018 |	EDOT:EAAP	|	1234567AB	|	31/08/19	|	PA20000	|	AP20000	|
-    | 019 |	EADM:EAAP	|	1234567AB	|	31/08/19	|	PA20000	|	AP20000	|
-    | 020 |	EGTO:ELOC	|	1234567AB	|	31/08/19	|	PA20000	|	AP20000	|
-    | 021 |	EPRO:ELOC	|	1234567AB	|	31/08/19	|	PA20000	|	AP20000	|
-    | 022 |	EREO:EIAP	|	1234567AB	|	31/08/19	|	PA20000	|	AP20000	|
-    | 023 |	ESEN:EPRU	|	1234567AB	|	01/04/13	|	PA20000	|	AP20000	|
-    | 024 |	EDDA:EPRU	|	1234567AB	|	01/04/13	|	PA20000	|	AP20000	|
-    | 025 |	EEQU:ECOL	|	1234567AB	|	01/04/13	|	PA20000	|	AP20000	|
-    | 027 |	ENEG:EUNI	|	1234567AB	|	01/04/13	|	PA20000	|	AP20000	|
-    | 028 |	EXCE:EUNI	|	1234567AB	|	01/04/13	|	PA20000	|	AP20000	|
-    | 029 |	EDOT:EAAP	|	1234567AB	|	01/04/13	|	PA20000	|	AP20000	|
-    | 030 |	EADM:EAAP	|	1234567AB	|	01/04/13	|	PA20000	|	AP20000	|
-    | 031 |	EGTO:ELOC	|	1234567AB	|	01/04/13	|	PA20000	|	AP20000	|
-    | 032 |	EPRO:ELOC	|	1234567AB	|	01/04/13	|	PA20000	|	AP20000	|
-    | 033 |	EREO:EIAP	|	1234567AB	|	01/04/13	|	PA20000	|	AP20000	|
+    | 016 |	ESEN:EPRU	|	1234567AB	|	31/08/19	|	PA20000	|	AP20000	|
+    | 017 |	EDDA:EPRU	|	1234567AB	|	31/08/19	|	PA20000	|	AP20000	|
+    | 018 |	EEQU:ECOL	|	1234567AB	|	31/08/19	|	PA20000	|	AP20000	|
+    | 019 |	ENEG:EUNI	|	1234567AB	|	31/08/19	|	PA20000	|	AP20000	|
+    | 020 |	EXCE:EUNI	|	1234567AB	|	31/08/19	|	PA20000	|	AP20000	|
+    | 021 |	EDOT:EAAP	|	1234567AB	|	31/08/19	|	PA20000	|	AP20000	|
+    | 022 |	EADM:EAAP	|	1234567AB	|	31/08/19	|	PA20000	|	AP20000	|
+    | 023 |	EGTO:ELOC	|	1234567AB	|	31/08/19	|	PA20000	|	AP20000	|
+    | 024 |	EPRO:ELOC	|	1234567AB	|	31/08/19	|	PA20000	|	AP20000	|
+    | 025 |	EREO:EIAP	|	1234567AB	|	31/08/19	|	PA20000	|	AP20000	|
+    | 026 |	ESEN:EPRU	|	1234567AB	|	01/04/13	|	PA20000	|	AP20000	|
+    | 027 |	EDDA:EPRU	|	1234567AB	|	01/04/13	|	PA20000	|	AP20000	|
+    | 028 |	EEQU:ECOL	|	1234567AB	|	01/04/13	|	PA20000	|	AP20000	|
+    | 029 |	ENEG:EUNI	|	1234567AB	|	01/04/13	|	PA20000	|	AP20000	|
+    | 030 |	EXCE:EUNI	|	1234567AB	|	01/04/13	|	PA20000	|	AP20000	|
+    | 031 |	EDOT:EAAP	|	1234567AB	|	01/04/13	|	PA20000	|	AP20000	|
+    | 032 |	EADM:EAAP	|	1234567AB	|	01/04/13	|	PA20000	|	AP20000	|
+    | 033 |	EGTO:ELOC	|	1234567AB	|	01/04/13	|	PA20000	|	AP20000	|
+    | 034 |	EPRO:ELOC	|	1234567AB	|	01/04/13	|	PA20000	|	AP20000	|
+    | 035 |	EREO:EIAP	|	1234567AB	|	01/04/13	|	PA20000	|	AP20000	|
 
   Scenario Outline: Add an invalid outcome for Education where case start date between '01-APR-2013' and '01-Sep-2019'
     When user adds an outcome for Education with "<matter type>", "<ecf ref>", "<case start date>", "<pa>", "<ap>" and "<case id>"
@@ -96,19 +100,19 @@ Feature: Check ECF Validation for Education claims
     Examples: ECF validation between 01-Apr-2013 and 01-Sep-2019
     Education claims are invalid if these matter types have no ECF reference
     | case id |	matter type	|	ecf ref |	case start date	|	pa	|	ap |
-    | 034 |	ESEN:ENUR	|		|	31/08/19	|	PA20000	|	AP20000	|
-    | 035 |	EDDA:ENUR	|		|	31/08/19	|	PA20000	|	AP20000	|
-    | 036 |	EEQU:ENUR	|		|	31/08/19	|	PA20000	|	AP20000	|
-    | 038 |	ENEG:ENUR	|		|	31/08/19	|	PA20000	|	AP20000	|
-    | 039 |	EXCE:ENUR	|		|	31/08/19	|	PA20000	|	AP20000	|
-    | 040 |	EDOT:ENUR	|		|	31/08/19	|	PA20000	|	AP20000	|
-    | 041 |	EADM:ENUR	|		|	31/08/19	|	PA20000	|	AP20000	|
-    | 042 |	EGTO:ENUR	|		|	31/08/19	|	PA20000	|	AP20000	|
-    | 043 |	EPRO:ENUR	|		|	31/08/19	|	PA20000	|	AP20000	|
-    | 044 |	EREO:ENUR	|		|	31/08/19	|	PA20000	|	AP20000	|
-    | 045 |	ESEN:ENUR	|		|	01/04/13	|	PA20000	|	AP20000	|
-    | 046 |	EDDA:ENUR	|		|	01/04/13	|	PA20000	|	AP20000	|
-    | 047 |	EEQU:ENUR	|		|	01/04/13	|	PA20000	|	AP20000	|
+    | 036 |	ESEN:ENUR	|		|	31/08/19	|	PA20000	|	AP20000	|
+    | 037 |	EDDA:ENUR	|		|	31/08/19	|	PA20000	|	AP20000	|
+    | 038 |	EEQU:ENUR	|		|	31/08/19	|	PA20000	|	AP20000	|
+    | 039 |	ENEG:ENUR	|		|	31/08/19	|	PA20000	|	AP20000	|
+    | 040 |	EXCE:ENUR	|		|	31/08/19	|	PA20000	|	AP20000	|
+    | 041 |	EDOT:ENUR	|		|	31/08/19	|	PA20000	|	AP20000	|
+    | 042 |	EADM:ENUR	|		|	31/08/19	|	PA20000	|	AP20000	|
+    | 043 |	EGTO:ENUR	|		|	31/08/19	|	PA20000	|	AP20000	|
+    | 044 |	EPRO:ENUR	|		|	31/08/19	|	PA20000	|	AP20000	|
+    | 045 |	EREO:ENUR	|		|	31/08/19	|	PA20000	|	AP20000	|
+    | 046 |	ESEN:ENUR	|		|	01/04/13	|	PA20000	|	AP20000	|
+    | 047 |	EDDA:ENUR	|		|	01/04/13	|	PA20000	|	AP20000	|
+    | 048 |	EEQU:ENUR	|		|	01/04/13	|	PA20000	|	AP20000	|
     | 049 |	ENEG:ENUR	|		|	01/04/13	|	PA20000	|	AP20000	|
     | 050 |	EXCE:ENUR	|		|	01/04/13	|	PA20000	|	AP20000	|
     | 051 |	EDOT:ENUR	|		|	01/04/13	|	PA20000	|	AP20000	|
@@ -127,12 +131,12 @@ Feature: Check ECF Validation for Education claims
     Examples: EDJR validation before 01-SEP-2019
     The EDJR Education Matter Type I Code cannot be used before 01-SEP-2019
     | case id |	matter type	|	ecf ref |	case start date	|	pa	|	ap |
-    | 056 |	EECJ:ENUR	|	1234567AB	|	31/08/19	|	PA20000	|	AP20000	|
-    | 057 |	EDJR:ENUR	|		|	31/03/13	|	PA00167	|	AP00000	|
-    | 058 |	EDJR:ENUR	|	1234567AB	|	01/04/13	|	PA20000	|	AP20000	|
-    | 059 |	EDJR:ENUR	|		|	01/04/13	|	PA00167	|	AP00000	|
-    | 060 |	EDJR:ENUR	|	1234567AB	|	31/03/13	|	PA20000	|	AP20000	|
-    | 061 |	EDJR:ENUR	|		|	31/03/13	|	PA00167	|	AP00000	|
+    | 056 |	EDJR:ENUR	|	1234567AB	  |	31/08/19	|	PA20000	|	AP20000	|
+    | 057 |	EDJR:ENUR	|		          |	31/08/19	|	PA00167	|	AP00000	|
+    | 058 |	EDJR:ENUR	|	1234567AB	  |	01/04/13	|	PA20000	|	AP20000	|
+    | 059 |	EDJR:ENUR	|		          |	01/04/13	|	PA00167	|	AP00000	|
+    | 060 |	EDJR:ENUR	|	1234567AB	  |	31/03/13	|	PA20000	|	AP20000	|
+    | 061 |	EDJR:ENUR	|		          |	31/03/13	|	PA00167	|	AP00000	|
 
   Scenario Outline: Add a valid outcome for Education where case start date before '01-APR-2013'
     When user adds an outcome for Education with "<matter type>", "<ecf ref>", "<case start date>", "<pa>", "<ap>" and "<case id>"
