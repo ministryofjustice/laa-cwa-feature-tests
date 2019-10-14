@@ -9,8 +9,8 @@ class AddOutcomePage < SitePrism::Page
     ]
   end
 
+  element :default_form, :xpath, '//*[@id="DefaultFormName"]'
   element :matter_type, :xpath, '//*[@id="MatterType"]'
-
   element :schedule_reference, *field("Schedule Reference", :input)
   element :case_reference_number, *field("Case Reference Number", :input)
   element :case_start_date, *field("Case Start Date", :input)
@@ -47,8 +47,36 @@ class AddOutcomePage < SitePrism::Page
   element :exemption_criteria_satisfied, *field("Exemption Criteria Satisfied", :select)
   element :exceptional_case_funding_reference, *field("Exceptional Case Funding Reference", :input)
   element :transfer_date, *field("Transfer Date", :input)
-
   element :save_button, :xpath, '//*[@id="Apply_uixr"]'
+
+  def form_reloaded?
+    default_form['reloading'] == '0'
+  end
+
+  WAIT_FORM_RELOAD_JS = <<-JS
+(function(){
+  var oldSubmitForm = submitForm
+  submitForm = function(saveForm, saveDoValidate, saveParameters) {
+      var defaultForm = document.querySelector('#DefaultFormName')
+      defaultForm.setAttribute('reloading', 1)
+      return new Promise((resolve, _reject) => {
+        resolve(oldSubmitForm(saveForm, saveDoValidate, saveParameters))
+        if (saveParameters['PageReload']) {
+          defaultForm.setAttribute('reloading', 0)
+        }
+      })
+  }
+})();
+JS
+
+  def set_value_sync(element, value)
+    page.execute_script(WAIT_FORM_RELOAD_JS)
+    element.set(value)
+    element.send_keys(:tab)
+    25.times do
+      sleep(0.1) && form_reloaded? || next
+    end
+  end
 
   def add_outcome(values)
     matter_type.set(values[:matter_type])
@@ -58,11 +86,8 @@ class AddOutcomePage < SitePrism::Page
     case_reference_number.set(values[:case_reference_number])
     case_start_date.set(values[:case_start_date])
     case_id.set(values[:case_id])
-    procurement_area.set(values[:procurement_area])
-    procurement_area.send_keys(:tab)
-    access_point.set(values[:access_point])
-    access_point.send_keys(:tab)
-    sleep 1
+    set_value_sync(procurement_area, values[:procurement_area])
+    set_value_sync(access_point, values[:access_point])
     client_forename.set(values[:client_forename])
     client_surname.set(values[:client_surname])
     client_date_of_birth.set(values[:client_date_of_birth])
