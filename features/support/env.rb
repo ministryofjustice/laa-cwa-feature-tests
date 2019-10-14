@@ -5,12 +5,23 @@ require 'awesome_print'
 require 'selenium-webdriver'
 require 'site_prism'
 
+Capybara.register_driver :chrome do |app|
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless') if ENV['HEADLESS'] == 'true'
+  options.add_argument('--ignore-certificate-errors')
+  Capybara::Selenium::Driver.new(
+    app,
+    browser: :chrome,
+    options: options
+  )
+end
+
 Capybara.register_driver :firefox do |app|
-  capabilities = Selenium::WebDriver::Remote::W3C::Capabilities.firefox(
+  capabilities = Selenium::WebDriver::Remote::Capabilities.firefox(
     accept_insecure_certs: true
   )
-  options = Selenium::WebDriver::Firefox::Options.new()
-  options.args << '--headless' if ENV['HEADLESS'] == 'true'
+  options = Selenium::WebDriver::Firefox::Options.new
+  options.add_argument('--headless') if ENV['HEADLESS'] == 'true'
   Capybara::Selenium::Driver.new(
     app,
     browser: :firefox,
@@ -20,7 +31,7 @@ Capybara.register_driver :firefox do |app|
   )
 end
 
-Capybara.default_driver = :firefox
+Capybara.default_driver = ENV['BROWSER'].to_sym || :firefox
 Capybara.default_max_wait_time = 15
 
 # Set portal environment specific variables

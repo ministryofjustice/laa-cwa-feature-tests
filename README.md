@@ -56,6 +56,11 @@ The details in this file should match the details in the CWA environment.
 
 ## Runtime configuration
 
+### Browser
+
+Currently there are two configured selenium drivers, for Firefox (`BROWSER=firefox`) and Chrome (`BROWSER=chrome`).
+By default Firefox is used.
+
 ### Run tests in Headless mode
 
 You can you set the `HEADLESS=true` env if you want to run tests in headless mode,
