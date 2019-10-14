@@ -196,7 +196,8 @@ Then('the outcome does not save and gives an error') do
   expect(page).to have_content('The Category of Law, Procurement Area and Access Point combination that has been used is not valid for the date that has been recorded.')
 end
 
-When ('user adds an outcome for Education with {string}, {string}, {string}, {string} and {string}') do |matter_type, ecf_ref, case_start_date, pa, ap |
+When ('user adds an outcome for Education with {string}, {string}, {string}, {string}, {string} and {string}') \
+do |matter_type, ecf_ref, case_start_date, pa, ap, case_id |
   submission_list_page = SubmissionListPage.new
   submission_list_page.add_outcome_button.click
 
@@ -206,7 +207,7 @@ When ('user adds an outcome for Education with {string}, {string}, {string}, {st
     schedule_reference: CWAProvider.legal_help_submission.reference,
     case_reference_number: 'TestCaseRef',
     case_start_date: case_start_date,
-    case_id: '001',
+    case_id: case_id,
     procurement_area: pa,
     access_point: ap,
     client_forename: 'Test',
