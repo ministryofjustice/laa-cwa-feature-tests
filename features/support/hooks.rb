@@ -6,7 +6,7 @@ After('@delete_outcome_after') do
 end
 
 After do
-  visit('https://portal.tst.legalservices.gov.uk/oam/server/logout?')
+  visit("#{PortalEnv.url}/oam/server/logout?")
 end
 
 After do |scenario|
