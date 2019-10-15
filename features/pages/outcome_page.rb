@@ -11,7 +11,6 @@ module OutcomePage
       When user searches for their legal help submission
       Then their submission details are displayed
     )
-    #if there is nothing to delete i.e. no outcomes saved then there is no Select All link
     return if page.has_no_link?('Select All')
     page.click_link 'Select All'
     page.find('#Delete').click
