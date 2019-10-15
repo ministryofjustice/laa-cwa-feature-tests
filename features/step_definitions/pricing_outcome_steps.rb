@@ -1,7 +1,7 @@
 Given('user bulk loads monthly statement with {string} - {string} outcomes') do |category_of_law, outcome_type|
   file = bulkload_file(category_of_law, outcome_type)
+  step 'a test firm user is logged in CWA'
   steps %{
-    Given a test firm user is logged in CWA
     And user deleted any existing "#{category_of_law}" outcomes for the test firm
     When user bulk loads "#{file}" for the test firm
     Then user should see the outcome results page
