@@ -80,6 +80,11 @@ When('user is looking at outcome {string}') do |ufn|
   end
 end
 
+Then("user should see the outcome with one of these stage reached codes:") do |table|
+  stage_reached_codes = table.raw
+  stage_reached_codes.include?(@current_outcome.stage_reached.text)
+end
+
 Then('user should see the outcome with stage reached {string}') do |code|
   expect(@current_outcome.stage_reached.text).to eq(code)
 end
