@@ -12,14 +12,16 @@ Before do
   end
 end
 
+Before do
+  # Logout from CWA _and_ Portal before each scenario is run
+  visit("#{CWAProvider.url}/OA_HTML/OALogout.jsp?")
+  visit("#{PortalEnv.url}/oam/server/logout?")
+end
+
 After('@delete_outcome_after') do |scenario|
   if scenario.passed?
     delete_all_outcomes
   end
-end
-
-After do
-  visit('https://portal.tst.legalservices.gov.uk/oam/server/logout?')
 end
 
 After do |scenario|
