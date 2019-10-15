@@ -16,7 +16,7 @@ Given('user deleted any existing {string} outcomes for the test firm') do |categ
   navigator.content.submission_list.click
 
   submission_list_page = SubmissionListPage.new
-  submission_list_page.firm_name.set(CWAProvider.firm_name)
+  submission_list_page.account_number.set(CWAProvider.account_number)
   submission_list_page.search_button.click
 
   submission_list_page.wait_until_submissions_visible(wait: 10)
@@ -52,7 +52,7 @@ Given('user is on the {string} pricing outcome details page') do |category_of_la
     navigator.content.submission_list.click
 
     submission_list_page = SubmissionListPage.new
-    submission_list_page.firm_name.set(CWAProvider.firm_name)
+    submission_list_page.account_number.set(CWAProvider.account_number)
     submission_list_page.search_button.click
 
     submission_list_page.wait_until_submissions_visible(wait: 10)
