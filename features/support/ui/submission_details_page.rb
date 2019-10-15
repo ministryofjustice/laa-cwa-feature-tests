@@ -8,7 +8,7 @@ end
 class SubmissionDetailsPage < SitePrism::Page
   set_url '/OA_HTML/OA.jsp?page=/xxlsc/oracle/apps/xxlsc/am/webui/SubmissionListPG&*'
 
-  sections :outcomes, SubmissionDetailsOutcomeSection, :xpath, '/html/body/form/span[2]/div[1]/div[3]/span[1]/table[2]/tbody/tr/following-sibling::tr[position() > 0]'
+  sections :outcomes, SubmissionDetailsOutcomeSection, :xpath, '//*[@id="SubmissionTable"]/table[2]/tbody/tr[1]/following-sibling::tr[position() > 0]'
   element :select_all, :xpath, '//*[@id="SubmissionTable"]/table[1]/tbody/tr[3]/td/table/tbody/tr/td/a[1]'
   element :delete_button, :xpath, '//*[@id="Delete"]'
   element :confirm_delete_button, :xpath, '//*[@id="Yes"]'

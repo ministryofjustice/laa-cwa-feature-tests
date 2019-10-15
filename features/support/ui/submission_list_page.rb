@@ -10,5 +10,5 @@ class SubmissionListPage < SitePrism::Page
   element :search_button, :xpath, '/html/body/form/span[2]/div[1]/div[3]/span/div/table[2]/tbody/tr[2]/td[2]/table/tbody/tr[2]/td[3]/button[1]'
   element :add_outcome_button, :xpath, '//*[@id="AddOutcome"]'
 
-  sections :submissions, SubmissionListSection, :xpath, '/html/body/form/span[2]/div[1]/div[3]/span/div/span[1]/table[2]/tbody/tr/following-sibling::tr[position() > 0]'
+  sections :submissions, SubmissionListSection, :xpath, '//*[@id="SubmissionHeadersTab"]/table[2]/tbody/tr[1]/following-sibling::tr[position() > 0]'
 end
