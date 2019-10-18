@@ -11,6 +11,7 @@ module OutcomePage
       When user searches for their legal help submission
       Then their submission details are displayed
     )
+    return if page.has_no_link?('Select All')
     page.click_link 'Select All'
     page.find('#Delete').click
     page.click_button 'Yes'

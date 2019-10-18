@@ -62,11 +62,11 @@ class AddOutcomePage < SitePrism::Page
     procurement_area.send_keys(:tab)
     access_point.set(values[:access_point])
     access_point.send_keys(:tab)
+    sleep 1
     client_forename.set(values[:client_forename])
     client_surname.set(values[:client_surname])
     client_date_of_birth.set(values[:client_date_of_birth])
     ucn.set(values[:ucn])
-    sleep 1
     postal_application_accepted.select(values[:postal_application_accepted])
     gender.select(values[:gender])
     ethnicity.select(values[:ethnicity])

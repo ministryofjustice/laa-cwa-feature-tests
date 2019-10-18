@@ -195,3 +195,53 @@ Then('the outcome does not save and gives an error') do
   expect(page).to have_content('Error')
   expect(page).to have_content('The Category of Law, Procurement Area and Access Point combination that has been used is not valid for the date that has been recorded.')
 end
+
+When ('user adds an outcome for Education with {string}, {string}, {string}, {string}, {string} and {string}') \
+do |matter_type, ecf_ref, case_start_date, pa, ap, case_id |
+  submission_list_page = SubmissionListPage.new
+  submission_list_page.add_outcome_button.click
+
+  page = AddOutcomePage.new
+  values = {
+    matter_type: matter_type,
+    schedule_reference: CWAProvider.legal_help_submission.reference,
+    case_reference_number: 'TestCaseRef',
+    case_start_date: case_start_date,
+    case_id: case_id,
+    procurement_area: pa,
+    access_point: ap,
+    client_forename: 'Test',
+    client_surname: 'Person',
+    client_date_of_birth: '01-May-1980',
+    ucn: '01051980/T/PERS',
+    postal_application_accepted: 'N',
+    gender: 'Male',
+    ethnicity: '00-Other',
+    disability: 'NCD-Not Considered Disabled',
+    client_postcode: 'SW1H 9AJ',
+    case_concluded_date: '02-Sep-2019',
+    advice_time: '0',
+    travel_time: '0',
+    waiting_time: '0',
+    profit_costs_excluding_vat: '100.00',
+    disbursements_excluding_vat: '0',
+    counsel_costs_excluding_vat: '0',
+    disbursements_vat_amount: '0',
+    profit_and_counsel_vat_indicator: 'No',
+    tolerance_indicator: 'No',
+    travel_and_waiting_costs_excluding_vat: '0',
+    stage_reached: 'EA-First meeting',
+    outcome_for_client: 'EA-Client receives damages',
+    exemption_criteria_satisfied: '',
+    exceptional_case_funding_reference: ecf_ref,
+    transfer_date: ''
+  }
+
+  page.add_outcome(values)
+end
+
+Then("the outcome does not save and gives an error containing:") do |string|
+  page = AddOutcomePage.new
+  expect(page).to have_content('Error')
+  expect(page).to have_content(string)
+end
