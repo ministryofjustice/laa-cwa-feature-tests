@@ -70,7 +70,10 @@ class AddOutcomePage < SitePrism::Page
 JS
 
   def set_value_sync(element, value)
-    page.execute_script(WAIT_FORM_RELOAD_JS)
+    if !defined?(@injected_wait_form_reload_js)
+      page.execute_script(WAIT_FORM_RELOAD_JS)
+      @injected_wait_form_reload_js = true
+    end
     element.set(value)
     element.send_keys(:tab)
     25.times do
