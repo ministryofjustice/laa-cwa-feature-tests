@@ -20,6 +20,8 @@ end
 
 After('@delete_outcome_after') do |scenario|
   if scenario.passed?
+    visit("#{CWAProvider.url}/OA_HTML/OALogout.jsp?")
+    visit("#{PortalEnv.url}/oam/server/logout?")
     delete_all_outcomes
   end
 end
