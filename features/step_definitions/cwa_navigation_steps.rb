@@ -35,13 +35,17 @@ Given('user is on the sumission search page') do
 end
 
 When('user searches for their legal help submission') do
-  fill_in 'SearchFirmName', with: CWAProvider.firm_name
-  fill_in 'SearchLscAccountNo', with: CWAProvider.account_number
-  page.select CWAProvider.legal_help_submission.area_of_law, from: 'AreaOfLawSearch'
-  fill_in 'SearchSubmissionPeriod', with: CWAProvider.legal_help_submission.period
-  click_button 'Go'
-  expect(page).to have_content(CWAProvider.legal_help_submission.reference)
-  click_link 'N3:Update:0'
+  submission_list_page = SubmissionListPage.new
+  submission_list_page.account_number.set(CWAProvider.account_number)
+  submission_list_page.search_button.click
+
+  submission_list_page.wait_until_submissions_visible(wait: 10)
+  existing_submission = submission_list_page.submissions.find do |submission|
+    submission.schedule_submission_reference.text ==
+      load_submission('LEGAL HELP').reference
+  end
+
+  existing_submission.update_button.click
 end
 
 Then('their submission details are displayed') do
