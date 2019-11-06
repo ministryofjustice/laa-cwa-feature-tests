@@ -11,6 +11,7 @@ Capybara.register_driver :firefox do |app|
   )
   options = Selenium::WebDriver::Firefox::Options.new()
   options.args << '--headless' if ENV['HEADLESS'] == 'true'
+  options.args << '--incognito'
   Capybara::Selenium::Driver.new(
     app,
     browser: :firefox,
@@ -21,7 +22,7 @@ Capybara.register_driver :firefox do |app|
 end
 
 Capybara.default_driver = :firefox
-Capybara.default_max_wait_time = 15
+Capybara.default_max_wait_time = 5
 
 # Set portal environment specific variables
 module PortalEnv

@@ -1,7 +1,7 @@
 Given('user bulk loads monthly statement with {string} - {string} outcomes') do |category_of_law, outcome_type|
   file = bulkload_file(category_of_law, outcome_type)
+  step 'a test firm user is logged in CWA'
   steps %{
-    Given a test firm user is logged in CWA
     And user deleted any existing "#{category_of_law}" outcomes for the test firm
     When user bulk loads "#{file}" for the test firm
     Then user should see the outcome results page
@@ -16,7 +16,7 @@ Given('user deleted any existing {string} outcomes for the test firm') do |categ
   navigator.content.submission_list.click
 
   submission_list_page = SubmissionListPage.new
-  submission_list_page.firm_name.set(CWAProvider.firm_name)
+  submission_list_page.account_number.set(CWAProvider.account_number)
   submission_list_page.search_button.click
 
   submission_list_page.wait_until_submissions_visible(wait: 10)
@@ -52,7 +52,7 @@ Given('user is on the {string} pricing outcome details page') do |category_of_la
     navigator.content.submission_list.click
 
     submission_list_page = SubmissionListPage.new
-    submission_list_page.firm_name.set(CWAProvider.firm_name)
+    submission_list_page.account_number.set(CWAProvider.account_number)
     submission_list_page.search_button.click
 
     submission_list_page.wait_until_submissions_visible(wait: 10)

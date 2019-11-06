@@ -3,8 +3,8 @@ class RolesSection < SitePrism::Section
 end
 
 class NavigatorContent < SitePrism::Section
-  element :bulk_load, :xpath, '//*[@id="N55"]'
-  element :submission_list, :xpath, '//*[@id="N61"]'
+  element :bulk_load, :xpath, '//a[text()="Bulk Load"]'
+  element :submission_list, :xpath, '//a[text()="Submission List"]'
 end
 
 class NavigatorPage < SitePrism::Page
