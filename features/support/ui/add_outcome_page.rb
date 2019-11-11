@@ -20,7 +20,8 @@ class AddOutcomePage < SitePrism::Page
   element :client_forename, *field("Client Forename", :input)
   element :client_surname, *field("Client Surname", :input)
   element :client_date_of_birth, *field("Client Date of Birth", :input)
-  element :ucn, *field("UCN", :input)
+  #element :ucn, *field("UCN", :input)
+  element :ucn, 'input[name="LinesDFF14"]'
   element :postal_application_accepted, *field("Postal Application Accepted", :select)
   element :gender, *field("Gender", :select)
   element :ethnicity, *field("Ethnicity", :select)
@@ -48,6 +49,22 @@ class AddOutcomePage < SitePrism::Page
   element :exceptional_case_funding_reference, *field("Exceptional Case Funding Reference", :input)
   element :transfer_date, *field("Transfer Date", :input)
   element :save_button, :xpath, '//*[@id="Apply_uixr"]'
+
+  element :home_office_ucn, 'input[name="LinesDFF16"]'
+  element :legacy_case, *field("Legacy Case", :select)
+  element :ho_interview, *field("HO Interview", :select)
+  element :ait_hearing_centre, *field("AIT Hearing Centre", :select)
+  element :adjourned_hearing_fee, *field("Adjourned Hearing Fee", :select)
+  element :detention_travel_and_waiting_costs_excluding_vat, *field("Detention Travel & Waiting Costs Excluding VAT", :input)
+  element :jr_form_filling_costs_excluding_vat, *field("JR /Form Filling costs excluding VAT", :input)
+  element :cmrh_oral, *field("CMRH Oral", :select)
+  element :cmrh_telephone, *field("CMRH Telephone", :select)
+  element :substantive_hearing, *field("Substantive Hearing", :select)
+  element :disbursement_prior_authority_number, *field("Disbursement Prior Authority Number", :input)
+  element :irc_surgery, *field("IRC Surgery", :select)
+  element :surgery_date, *field("Surgery Date", :input)
+  element :no_of_clients_seen_at_the_surgery, *field("Number of Clients Seen at the Surgery", :input)
+  element :no_of_surgery_clients, *field("Number of Surgery Clients Resulting in a Legal Help Matter Opened", :input)
 
   def form_reloaded?
     default_form['reloading'] == '0'
@@ -119,9 +136,27 @@ JS
     client_type.select(values[:client_type]) if values[:client_type]
     outcome_for_client.select(values[:outcome_for_client])
     case_stage_level.select(values[:case_stage_level]) if values[:case_stage_level]
+
+    home_office_ucn.set(values[:home_office_ucn]) if values [:home_office_ucn]
+    legacy_case.select(values[:legacy_case]) if values[:legacy_case]
+    ho_interview.select(values[:ho_interview]) if values[:ho_interview]
+    ait_hearing_centre.select(values[:ait_hearing_centre]) if values[:ait_hearing_centre]
+    adjourned_hearing_fee.set(values[:adjourned_hearing_fee]) if values[:adjourned_hearing_fee]
+    detention_travel_and_waiting_costs_excluding_vat.set(values[:detention_travel_and_waiting_costs_excluding_vat]) if values[:detention_travel_and_waiting_costs_excluding_vat]
+    jr_form_filling_costs_excluding_vat.set(values[:jr_form_filling_costs_excluding_vat]) if values[:jr_form_filling_costs_excluding_vat]
+    cmrh_oral.select(values[:cmrh_oral]) if values[:cmrh_oral]
+    cmrh_telephone.select(values[:cmrh_telephone]) if values[:cmrh_telephone]
+    substantive_hearing.select(values[:substantive_hearing]) if values[:substantive_hearing]
+    disbursement_prior_authority_number.set(values[:disbursement_prior_authority_number]) if values[:disbursement_prior_authority_number]
+    irc_surgery.select(values[:irc_surgery]) if values[:irc_surgery]
+    surgery_date.set(values[:surgery_date]) if values[:surgery_date]
+    no_of_clients_seen_at_the_surgery.set(values[:no_of_clients_seen_at_the_surgery]) if values[:no_of_clients_seen_at_the_surgery]
+    no_of_surgery_clients.set(values[:no_of_surgery_clients]) if values[:no_of_surgery_clients]
+
     exemption_criteria_satisfied.select(values[:exemption_criteria_satisfied])
     exceptional_case_funding_reference.set(values[:exceptional_case_funding_reference]) if values[:exceptional_case_funding_reference]
     transfer_date.set(values[:transfer_date]) if values[:transfer_date]
+
     save_button.click
   end
 end
