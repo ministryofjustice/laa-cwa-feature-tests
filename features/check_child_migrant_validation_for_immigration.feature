@@ -1,14 +1,30 @@
-Feature: Check Child Migrant Validation for Immigration claims
+Feature: Check Child Migrant Validation for Immigration
 
   Background: On the outcome screen enter an Immigration claim
 
-  All Immigration matter type codes can be used
-  with the child migrant exemption criteria satisfied code (i.e. CM001)
+  All Immigration matter type codes can be used with the child migrant exemption criteria satisfied code (i.e. CM001)
 
-  Given user is on their submission details page
+  @delete_outcome_after @bulkload
+  Scenario: Bulk load valid file
+    Given a test firm user is logged in CWA
+    When user bulk loads "child_migrant_immas.xml" for the test firm
+    Then user should see the outcome results page
+    And the following summary for the submission:
+    | Total Outcomes | Successful Outcomes | Problem Outcomes | Duplicate Outcomes | Invalid Outcomes/NMS |
+    | 87             | 87                  | 0                | 0                  | 0                    |
 
-  @delete_outcome_after
+  @delete_outcome_after @bulkload
+  Scenario: Bulk load valid file
+    Given a test firm user is logged in CWA
+    When user bulk loads "child_migrant_immot.xml" for the test firm
+    Then user should see the outcome results page
+    And the following summary for the submission:
+    | Total Outcomes | Successful Outcomes | Problem Outcomes | Duplicate Outcomes | Invalid Outcomes/NMS |
+    | 90             | 90                  | 0                | 0                  | 0                    |
+
+  @delete_outcome_after @manual_submission
   Scenario Outline: As a provider I want to successfully save a child migrant Immigration and Asylum claim as part of a monthly submission
+    Given user is on their submission details page
     When user adds an outcome for Immigration with "<case id>", "<matter type>", "<exemption criteria satisfied>", "ecf ref", "<case start date>", "<pa>" and "<ap>"
     Then the outcome saves successfully
 
@@ -113,104 +129,105 @@ Feature: Check Child Migrant Validation for Immigration claims
     |	394	|	IAXL:IUAD	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
     |	395	|	IAXL:IUAS	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
 
-    @delete_outcome_after
-    Scenario Outline: As a provider I want to successfully save a child migrant Immigration claim as part of a monthly submission
-      When user adds an outcome for Immigration with "<case id>", "<matter type>", "<exemption criteria satisfied>", "ecf ref", "<case start date>", "<pa>" and "<ap>"
-      Then the outcome saves successfully
+  @delete_outcome_after @manual_submission
+  Scenario Outline: As a provider I want to successfully save a child migrant Immigration claim as part of a monthly submission
+    Given user is on their submission details page
+    When user adds an outcome for Immigration with "<case id>", "<matter type>", "<exemption criteria satisfied>", "ecf ref", "<case start date>", "<pa>" and "<ap>"
+    Then the outcome saves successfully
 
-      Examples: All Immigration (IMMOT) MT1/MT2 codes can be used with the new child migrant code
-      Immigration claims do not require an ECF Ref when submitted as a child migrant case
+    Examples: All Immigration (IMMOT) MT1/MT2 codes can be used with the new child migrant code
+    Immigration claims do not require an ECF Ref when submitted as a child migrant case
 
-      |	 case id 	|	 matter type 	|	 exemption criteria satisfied 	|	ecf ref	|	 case start date 	|	 pa 	|	 ap 	|
-      |	400	|	IMAP:IEMP	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	401	|	IMAP:IEUL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	402	|	IMAP:IFME	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	403	|	IMAP:IFVI	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	404	|	IMAP:IGOL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	405	|	IMAP:IILL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	406	|	IMAP:IIRC	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	407	|	IMAP:IOTH	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	408	|	IMAP:IOUT	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	409	|	IMAP:IRAR	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	410	|	IMAP:IRHO	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	411	|	IMAP:IRVL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	412	|	IMAP:ISTU	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	413	|	IMAP:ITWE	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	414	|	IMCA:ICZN	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	415	|	IMCA:IDOM	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	416	|	IMCA:IEMP	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	417	|	IMCA:IEUL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	418	|	IMCA:IFME	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	419	|	IMCA:IFVI	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	420	|	IMCA:IGOL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	421	|	IMCA:IILL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	422	|	IMCA:IIRC	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	423	|	IMCA:IOTH	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	424	|	IMCA:IOUT	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	425	|	IMCA:IRVL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	426	|	IMCA:ISTU	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	427	|	IMCA:ITWE	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	428	|	IMCB:IDOM	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	429	|	IMCB:IEMP	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	430	|	IMCB:IEUL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	431	|	IMCB:IFME	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	432	|	IMCB:IFVI	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	433	|	IMCB:IGOL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	434	|	IMCB:IILL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	435	|	IMCB:IIRC	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	436	|	IMCB:IOTH	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	437	|	IMCB:IOUT	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	438	|	IMCB:IRVL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	439	|	IMCB:ISTU	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	440	|	IMCB:ITWE	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	441	|	IMLB:ICZN	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	442	|	IMLB:IDOM	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	443	|	IMLB:IEMP	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	444	|	IMLB:IEUL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	445	|	IMLB:IFME	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	446	|	IMLB:IFVI	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	447	|	IMLB:IGOL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	448	|	IMLB:IILL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	449	|	IMLB:IIRC	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	450	|	IMLB:IOTH	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	451	|	IMLB:IOUT	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	452	|	IMLB:IRVL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	453	|	IMLB:ISTU	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	454	|	IMLB:ITWE	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	455	|	IMLH:ICOA	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	456	|	IMLH:ICZN	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	457	|	IMLH:IEMP	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	458	|	IMLH:IEUL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	459	|	IMLH:IFFL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	460	|	IMLH:IFME	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	461	|	IMLH:IFVI	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	462	|	IMLH:IGOL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	463	|	IMLH:IILL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	464	|	IMLH:IIRC	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	465	|	IMLH:IJRA	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	466	|	IMLH:IMER	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	467	|	IMLH:INAS	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	468	|	IMLH:IOTH	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	469	|	IMLH:IOUT	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	470	|	IMLH:IPAS	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	471	|	IMLH:IRVL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	472	|	IMLH:ISTU	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	473	|	IMLH:ITWE	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	474	|	IMXC:IBAI	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	475	|	IMXC:IIRC	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	476	|	IMXC:IOTH	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	477	|	IMXC:IOUT	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	478	|	IMXC:IRAR	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	479	|	IMXC:IREM	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	480	|	IMXC:IRHO	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	481	|	IMXC:IRVL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	482	|	IMXL:IBAI	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	483	|	IMXL:ICOA	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	484	|	IMXL:IFFL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	485	|	IMXL:IIRC	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	486	|	IMXL:IJRA	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	487	|	IMXL:IMER	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	488	|	IMXL:IOTH	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	489	|	IMXL:IOUT	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	490	|	IMXL:IPST	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
-      |	491	|	IMXL:IRVL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	 case id 	|	 matter type 	|	 exemption criteria satisfied 	|	ecf ref	|	 case start date 	|	 pa 	|	 ap 	|
+    |	400	|	IMAP:IEMP	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	401	|	IMAP:IEUL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	402	|	IMAP:IFME	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	403	|	IMAP:IFVI	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	404	|	IMAP:IGOL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	405	|	IMAP:IILL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	406	|	IMAP:IIRC	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	407	|	IMAP:IOTH	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	408	|	IMAP:IOUT	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	409	|	IMAP:IRAR	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	410	|	IMAP:IRHO	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	411	|	IMAP:IRVL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	412	|	IMAP:ISTU	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	413	|	IMAP:ITWE	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	414	|	IMCA:ICZN	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	415	|	IMCA:IDOM	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	416	|	IMCA:IEMP	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	417	|	IMCA:IEUL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	418	|	IMCA:IFME	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	419	|	IMCA:IFVI	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	420	|	IMCA:IGOL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	421	|	IMCA:IILL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	422	|	IMCA:IIRC	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	423	|	IMCA:IOTH	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	424	|	IMCA:IOUT	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	425	|	IMCA:IRVL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	426	|	IMCA:ISTU	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	427	|	IMCA:ITWE	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	428	|	IMCB:IDOM	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	429	|	IMCB:IEMP	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	430	|	IMCB:IEUL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	431	|	IMCB:IFME	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	432	|	IMCB:IFVI	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	433	|	IMCB:IGOL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	434	|	IMCB:IILL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	435	|	IMCB:IIRC	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	436	|	IMCB:IOTH	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	437	|	IMCB:IOUT	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	438	|	IMCB:IRVL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	439	|	IMCB:ISTU	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	440	|	IMCB:ITWE	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	441	|	IMLB:ICZN	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	442	|	IMLB:IDOM	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	443	|	IMLB:IEMP	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	444	|	IMLB:IEUL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	445	|	IMLB:IFME	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	446	|	IMLB:IFVI	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	447	|	IMLB:IGOL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	448	|	IMLB:IILL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	449	|	IMLB:IIRC	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	450	|	IMLB:IOTH	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	451	|	IMLB:IOUT	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	452	|	IMLB:IRVL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	453	|	IMLB:ISTU	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	454	|	IMLB:ITWE	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	455	|	IMLH:ICOA	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	456	|	IMLH:ICZN	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	457	|	IMLH:IEMP	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	458	|	IMLH:IEUL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	459	|	IMLH:IFFL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	460	|	IMLH:IFME	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	461	|	IMLH:IFVI	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	462	|	IMLH:IGOL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	463	|	IMLH:IILL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	464	|	IMLH:IIRC	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	465	|	IMLH:IJRA	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	466	|	IMLH:IMER	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	467	|	IMLH:INAS	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	468	|	IMLH:IOTH	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	469	|	IMLH:IOUT	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	470	|	IMLH:IPAS	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	471	|	IMLH:IRVL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	472	|	IMLH:ISTU	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	473	|	IMLH:ITWE	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	474	|	IMXC:IBAI	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	475	|	IMXC:IIRC	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	476	|	IMXC:IOTH	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	477	|	IMXC:IOUT	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	478	|	IMXC:IRAR	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	479	|	IMXC:IREM	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	480	|	IMXC:IRHO	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	481	|	IMXC:IRVL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	482	|	IMXL:IBAI	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	483	|	IMXL:ICOA	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	484	|	IMXL:IFFL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	485	|	IMXL:IIRC	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	486	|	IMXL:IJRA	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	487	|	IMXL:IMER	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	488	|	IMXL:IOTH	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	489	|	IMXL:IOUT	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	490	|	IMXL:IPST	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    |	491	|	IMXL:IRVL	|	CM001	|		|	01/11/19	|	 PA00140 	|	 AP00198 	|
