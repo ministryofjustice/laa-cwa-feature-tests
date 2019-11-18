@@ -137,7 +137,7 @@ JS
     outcome_for_client.select(values[:outcome_for_client])
     case_stage_level.select(values[:case_stage_level]) if values[:case_stage_level]
 
-    home_office_ucn.set(values[:home_office_ucn]) if values [:home_office_ucn]
+    home_office_ucn.set(values[:home_office_ucn]) if values[:home_office_ucn]
     legacy_case.select(values[:legacy_case]) if values[:legacy_case]
     ho_interview.select(values[:ho_interview]) if values[:ho_interview]
     ait_hearing_centre.select(values[:ait_hearing_centre]) if values[:ait_hearing_centre]
@@ -153,7 +153,7 @@ JS
     no_of_clients_seen_at_the_surgery.set(values[:no_of_clients_seen_at_the_surgery]) if values[:no_of_clients_seen_at_the_surgery]
     no_of_surgery_clients.set(values[:no_of_surgery_clients]) if values[:no_of_surgery_clients]
 
-    exemption_criteria_satisfied.select(values[:exemption_criteria_satisfied])
+    exemption_criteria_satisfied.select(values[:exemption_criteria_satisfied]) if values[:exemption_criteria_satisfied]
     exceptional_case_funding_reference.set(values[:exceptional_case_funding_reference]) if values[:exceptional_case_funding_reference]
     transfer_date.set(values[:transfer_date]) if values[:transfer_date]
 
