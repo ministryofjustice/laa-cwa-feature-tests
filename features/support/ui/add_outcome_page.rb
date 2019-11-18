@@ -20,7 +20,6 @@ class AddOutcomePage < SitePrism::Page
   element :client_forename, *field("Client Forename", :input)
   element :client_surname, *field("Client Surname", :input)
   element :client_date_of_birth, *field("Client Date of Birth", :input)
-  #element :ucn, *field("UCN", :input)
   element :ucn, 'input[name="LinesDFF14"]'
   element :postal_application_accepted, *field("Postal Application Accepted", :select)
   element :gender, *field("Gender", :select)
