@@ -239,7 +239,7 @@ do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date
     substantive_hearing: 'No',
     #disbursement_prior_authority_number: '',
     stage_reached: '',
-    outcome_for_client: 'IA',
+    outcome_for_client: 'IX',
     exemption_criteria_satisfied: exemption_criteria_satisfied,
     exceptional_case_funding_reference: ecf_ref
   }
