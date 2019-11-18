@@ -1,8 +1,8 @@
 Feature: Check Child Migrant Validation for Immigration
 
-  Background: On the outcome screen enter an Immigration claim
-
-  All Immigration matter type codes can be used with the child migrant exemption criteria satisfied code (i.e. CM001)
+  In order to submit child migrant claims
+  As a provider
+  I want to use the new child migrant code
 
   @delete_outcome_after @bulkload
   Scenario: Bulk load valid file for IMMAS combinations
@@ -25,7 +25,7 @@ Feature: Check Child Migrant Validation for Immigration
     And there should be no problem outcomes
 
   @delete_outcome_after @manual_submission
-  Scenario Outline: As a provider I want to enter a child migrant Immigration and Asylum claim
+  Scenario Outline: Add child migrant Immigration and Asylum claims
     Given user is on their submission details page
     When user adds an outcome for Immigration with "<case id>", "<mt>", "<ecs code>", "ecf ref", "<case start date>", "<pa>" and "<ap>"
     Then the outcome saves successfully
@@ -41,7 +41,7 @@ Feature: Check Child Migrant Validation for Immigration
 			| 304 | IAAP:IOTH | CM001 |  | 01/11/19 | PA00140 | AP00198 |
 
   @delete_outcome_after @manual_submission
-  Scenario Outline: As a provider I want to enter a child migrant Immigration claim
+  Scenario Outline: Add child migrant Immigration (non-Asylum) claims
     Given user is on their submission details page
     When user adds an outcome for Immigration with "<case id>", "<mt>", "<ecs code", "ecf ref", "<case start date>", "<pa>" and "<ap>"
     Then the outcome saves successfully
