@@ -195,6 +195,57 @@ Then('the outcome does not save and gives an error') do
   expect(page).to have_content('The Category of Law, Procurement Area and Access Point combination that has been used is not valid for the date that has been recorded.')
 end
 
+When ('user adds an outcome for Immigration with {string}, {string}, {string}, {string}, {string}, {string} and {string}') \
+do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date, pa, ap|
+  submission_list_page = SubmissionListPage.new
+  submission_list_page.add_outcome_button.click
+  page = AddOutcomePage.new
+  values = {
+    matter_type: matter_type,
+    schedule_reference: CWAProvider.legal_help_submission.reference,
+    case_reference_number: 'TestCaseRef',
+    case_start_date: case_start_date,
+    case_id: case_id,
+    procurement_area: pa,
+    access_point: ap,
+    client_forename: 'Test',
+    client_surname: 'Person',
+    client_date_of_birth: '01-Nov-2015',
+    ucn: '01112015/T/PERS',
+    postal_application_accepted: 'N',
+    home_office_ucn: 'A9999999',
+    gender: 'Male',
+    ethnicity: '00-Other',
+    disability: 'NCD-Not Considered Disabled',
+    client_postcode: 'SW1H 9AJ',
+    case_concluded_date: '01-Nov-2019',
+    advice_time: '0',
+    travel_time: '0',
+    waiting_time: '0',
+    profit_costs_excluding_vat: '100.00',
+    disbursements_excluding_vat: '0',
+    counsel_costs_excluding_vat: '0',
+    disbursements_vat_amount: '0',
+    profit_and_counsel_vat_indicator: 'No',
+    legacy_case: 'No',
+    ho_interview: '0',
+    ait_hearing_centre: '16-Other',
+    travel_and_waiting_costs_excluding_vat: '0',
+    adjourned_hearing_fee: '0',
+    detention_travel_and_waiting_costs_excluding_vat: '0',
+    jr_form_filling_costs_excluding_vat: '0',
+    cmrh_oral: '0',
+    cmrh_telephone: '0',
+    substantive_hearing: 'No',
+    #disbursement_prior_authority_number: '',
+    stage_reached: '',
+    outcome_for_client: 'IX',
+    exemption_criteria_satisfied: exemption_criteria_satisfied,
+    exceptional_case_funding_reference: ecf_ref
+  }
+  page.add_outcome(values)
+end
+
 When ('user adds an outcome for Education with {string}, {string}, {string}, {string}, {string} and {string}') \
 do |matter_type, ecf_ref, case_start_date, pa, ap, case_id |
   submission_list_page = SubmissionListPage.new

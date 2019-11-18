@@ -16,6 +16,20 @@ When('user bulk loads {string} for the test firm') do |file|
 
   @bulk_load_page.bulk_load_file.send_keys(load_fixture(file))
   with_delay(0.75) { @bulk_load_page.next_button.click }
+
+end
+
+Then(/successful outcomes should equal (\d*)/) do |num_of_successful_outcomes|
+  expect(@bulk_load_page).to be_loaded
+  expect(@bulk_load_page).to have_summary
+  expect(@bulk_load_page.summary).to have_successful_outcomes
+  expect(@bulk_load_page.summary.successful_outcomes.text).to eq(num_of_successful_outcomes)
+end
+
+Then("there should be no problem outcomes") do
+  @bulk_load_results_page = BulkLoadResultsPage.new
+  expect(@bulk_load_results_page.summary).to have_problem_outcomes
+  expect(@bulk_load_results_page.summary.problem_outcomes.text).to eq(0)
 end
 
 Then('user should see a validation error') do
@@ -25,6 +39,11 @@ end
 Then('user should see the outcome results page') do
   @bulk_load_results_page = BulkLoadResultsPage.new
   expect(@bulk_load_results_page).to be_loaded
+end
+
+Then('user should see the bulk load results page') do
+  @bulk_load_page = BulkLoadPage.new
+  expect(@bulk_load_page).to be_loaded
 end
 
 Then('the following summary for the submission:') do |table|
@@ -48,7 +67,14 @@ Then('the following errors:') do |table|
 end
 
 When('user confirms the submission') do
+  @bulk_load_results_page = BulkLoadResultsPage.new
+  @bulk_load_results_page.wait_until_confirm_submission_visible(wait: 10)
   @bulk_load_results_page.confirm_submission.click
+end
+
+When("user views the submission details") do
+  @bulk_load_results_page = BulkLoadResultsPage.new
+  @bulk_load_results_page.submissions.bulk_load_update_link.click
 end
 
 Then('user should see the submission reference in the submission list page') do
