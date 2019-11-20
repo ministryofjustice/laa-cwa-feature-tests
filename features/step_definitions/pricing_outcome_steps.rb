@@ -80,6 +80,19 @@ When('user is looking at outcome {string}') do |ufn|
   end
 end
 
+Then('user should see the following outcomes:') do |table|
+  outcome_data = table.hashes
+  outcome_data.each do |row|
+    STDOUT.puts("Checking " + row['Matter Type'])
+    current_outcome = @submission_details_page.outcomes.find do |outcome|
+      outcome.ufn.text == row['UFN']
+    end
+    expect(current_outcome).to be_truthy
+    expect(current_outcome.value.text).to eq(row['Value'])
+    expect(current_outcome.has_escape_fee_img?(wait: 0)).to eq(row['Escape Fee'] == 'Y' && true || false)
+  end
+end
+
 Then("user should see the outcome with one of these stage reached codes:") do |table|
   stage_reached_codes = table.raw
   stage_reached_codes.include?(@current_outcome.stage_reached.text)

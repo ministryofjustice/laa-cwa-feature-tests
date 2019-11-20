@@ -27,9 +27,16 @@ Then(/successful outcomes should equal (\d*)/) do |num_of_successful_outcomes|
 end
 
 Then("there should be no problem outcomes") do
-  @bulk_load_results_page = BulkLoadResultsPage.new
-  expect(@bulk_load_results_page.summary).to have_problem_outcomes
-  expect(@bulk_load_results_page.summary.problem_outcomes.text).to eq(0)
+  @bulk_load_page = BulkLoadPage.new
+  expect(@bulk_load_page).to have_summary
+  expect(@bulk_load_page.summary).to have_problem_outcomes
+  expect(@bulk_load_page.summary.problem_outcomes.text).to eq('0')
+end
+
+Then("there should be no duplicate outcomes") do
+  expect(@bulk_load_page).to have_summary
+  expect(@bulk_load_page.summary).to have_duplicate_outcomes
+  expect(@bulk_load_page.summary.duplicate_outcomes.text).to eq('0')
 end
 
 Then('user should see a validation error') do
@@ -66,10 +73,20 @@ Then('the following errors:') do |table|
   end
 end
 
+When('a user successfully bulk loads {string} for the test firm') do |file|
+  steps %{
+    When user bulk loads "#{file}" for the test firm
+    Then user should see the bulk load results page
+    And there should be no problem outcomes
+    And there should be no duplicate outcomes
+    And user confirms the submission
+  }
+end
+
 When('user confirms the submission') do
-  @bulk_load_results_page = BulkLoadResultsPage.new
-  @bulk_load_results_page.wait_until_confirm_submission_visible(wait: 10)
-  @bulk_load_results_page.confirm_submission.click
+  @bulk_load_page = BulkLoadPage.new
+  @bulk_load_page.wait_until_confirm_submission_visible(wait: 10)
+  @bulk_load_page.confirm_submission.click
 end
 
 When("user views the submission details") do
