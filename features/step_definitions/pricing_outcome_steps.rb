@@ -83,11 +83,10 @@ end
 Then('user should see the following outcomes:') do |table|
   outcome_data = table.hashes
   outcome_data.each do |row|
-    STDOUT.puts("Checking " + row['Matter Type'])
+    STDOUT.puts("Checking " + row['UFN'])
     current_outcome = @submission_details_page.outcomes.find do |outcome|
       outcome.ufn.text == row['UFN']
     end
-    expect(current_outcome).to be_truthy
     expect(current_outcome.value.text).to eq(row['Value'])
     expect(current_outcome.has_escape_fee_img?(wait: 0)).to eq(row['Escape Fee'] == 'Y' && true || false)
   end

@@ -47,27 +47,27 @@ Feature: Immigration Standard Fee Scheme Child Migrant Stage 2a(CLR) outcome pri
       And user is on the "LEGAL HELP" pricing outcome details page
       Then user should see the following outcomes:
 			| UFN        | Matter Type | Value | Escape Fee |
-      | 011119/496 | IMCA:ICZN | £ 499.00 | N |
-      | 011119/497 | IMCA:IIRC | £ 500.00 | N |
-      | 011119/498 | IMCA:IDOM | £ 500.00 | Y |
+      | 011119/496 | IMCA:IDOM | £ 499.00 | N |
+      | 310313/497 | IMCA:IGOL | £ 500.00 | N |
+      | 011119/498 | IMCA:IRVL | £ 500.00 | Y |
       | 011119/499 | IMCA:IIRC | £ 499.00 | N |
-      | 310313/500 | IMCA:IGOL | £ 500.00 | N |
+      | 011119/500 | IMCA:IIRC | £ 500.00 | N |
       | 011119/501 | IMCA:IIRC | £ 500.00 | Y |
-      | 011119/502 | IMCA:IOTH | £ 599.00 | N |
-      | 011119/503 | IMCA:IDOM | £ 600.00 | N |
-      | 011119/504 | IMCA:IDOM | £ 600.00 | Y |
-      | 011119/505 | IMCA:IOTH | £ 619.00 | N |
-      | 011119/506 | IMCA:IDOM | £ 620.00 | N |
+      | 011119/502 | IMCA:IIRC | £ 599.00 | N |
+      | 011119/503 | IMCA:IOTH | £ 600.00 | N |
+      | 011119/504 | IMCA:IIRC | £ 600.00 | Y |
+      | 011119/505 | IMCA:IRVL | £ 619.00 | N |
+      | 011119/506 | IMCA:ICZN | £ 620.00 | N |
       | 310313/507 | IMCA:IGOL | £ 620.00 | Y |
-      | 310313/508 | IMCA:IGOL | £ 598.80 | N |
-      | 011119/509 | IMCA:IOTH | £ 600.00 | N |
-      | 011119/510 | IMCA:IOTH | £ 500.00 | Y |
+      | 011119/508 | IMCA:IDOM | £ 598.80 | N |
+      | 011119/509 | IMCA:ICZN | £ 600.00 | N |
+      | 011119/510 | IMCA:IRVL | £ 600.00 | Y |
       | 011119/511 | IMCA:IRVL | £ 598.80 | N |
-      | 011119/512 | IMCA:IRVL | £ 600.00 | N |
-      | 310313/513 | IMCA:IGOL | £ 500.00 | Y |
-      | 011119/514 | IMCA:IDOM | £ 698.80 | N |
-      | 011119/515 | IMCA:IRVL | £ 700.00 | N |
-      | 310313/516 | IMCA:IGOL | £ 600.00 | Y |
-      | 310313/517 | IMCA:IGOL | £ 718.80 | N |
-      | 011119/518 | IMCA:IRVL | £ 720.00 | N |
-      | 011119/519 | IMCA:IDOM | £ 620.00 | Y |
+      | 011119/512 | IMCA:IOTH | £ 600.00 | N |
+      | 011119/513 | IMCA:IOTH | £ 600.00 | Y |
+      | 310313/514 | IMCA:IGOL | £ 698.80 | N |
+      | 011119/515 | IMCA:IIRC | £ 700.00 | N |
+      | 310313/516 | IMCA:IGOL | £ 700.00 | Y |
+      | 011119/517 | IMCA:IDOM | £ 718.80 | N |
+      | 011119/518 | IMCA:IDOM | £ 720.00 | N |
+      | 011119/519 | IMCA:IRVL | £ 720.00 | Y |

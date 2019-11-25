@@ -28,6 +28,7 @@ end
 
 Then("there should be no problem outcomes") do
   @bulk_load_page = BulkLoadPage.new
+  @bulk_load_page.summary(wait: 20)
   expect(@bulk_load_page).to have_summary
   expect(@bulk_load_page.summary).to have_problem_outcomes
   expect(@bulk_load_page.summary.problem_outcomes.text).to eq('0')

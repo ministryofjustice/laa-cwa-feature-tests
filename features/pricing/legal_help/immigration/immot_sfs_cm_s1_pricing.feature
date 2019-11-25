@@ -1,5 +1,5 @@
 @outcomes
-Feature: Immigration Standard Fee Scheme Child Migrant Stage 2b(CLR) outcome pricing
+Feature: Immigration Standard Fee Scheme Child Migrant Stage 1(LH) outcome pricing
 
     In order to price child migrant Immigration cases correctly
     As a business stakeholder
@@ -43,31 +43,31 @@ Feature: Immigration Standard Fee Scheme Child Migrant Stage 2b(CLR) outcome pri
 
     @slow
     Scenario: Bulk load child migrant Immigration claims and have them priced correctly
-      When a user successfully bulk loads "o_sfs_immas_stage2b_clr_cm.xml" for the test firm
+      When a user successfully bulk loads "o_sfs_immot_stage1_lh_cm.xml" for the test firm
       And user is on the "LEGAL HELP" pricing outcome details page
       Then user should see the following outcomes:
 			| UFN        | Matter Type | Value | Escape Fee |
-      | 011119/520 | IMCB:IIRC | £ 499.00 | N |
-      | 011119/521 | IMCB:IOTH | £ 500.00 | N |
-      | 011119/522 | IMCB:IOTH | £ 500.00 | Y |
-      | 011119/523 | IMCB:IOTH | £ 499.00 | N |
-      | 310313/524 | IMCB:IGOL | £ 500.00 | N |
-      | 011119/525 | IMCB:IRVL | £ 500.00 | Y |
-      | 011119/526 | IMCB:IOTH | £ 599.00 | N |
-      | 011119/527 | IMCB:IRVL | £ 600.00 | N |
-      | 310313/528 | IMCB:IGOL | £ 600.00 | Y |
-      | 011119/529 | IMCB:IRVL | £ 619.00 | N |
-      | 011119/530 | IMCB:IRVL | £ 620.00 | N |
-      | 011119/531 | IMCB:IRVL | £ 620.00 | Y |
-      | 011119/532 | IMCB:IILL | £ 598.80 | N |
-      | 011119/533 | IMCB:IOTH | £ 600.00 | N |
-      | 310313/534 | IMCB:IGOL | £ 500.00 | Y |
-      | 011119/535 | IMCB:IOTH | £ 598.80 | N |
-      | 011119/536 | IMCB:IRVL | £ 600.00 | N |
-      | 011119/537 | IMCB:IIRC | £ 500.00 | Y |
-      | 011119/538 | IMCB:IOTH | £ 698.80 | N |
-      | 011119/539 | IMCB:IOTH | £ 700.00 | N |
-      | 011119/540 | IMCB:IRVL | £ 600.00 | Y |
-      | 310313/541 | IMCB:IGOL | £ 718.80 | N |
-      | 011119/542 | IMCB:IIRC | £ 720.00 | N |
-      | 011119/543 | IMCB:IIRC | £ 620.00 | Y |
+      | 011119/472 | IMLB:ICZN | £ 499.00 | N |
+      | 011119/473 | IMLB:IOTH | £ 500.00 | N |
+      | 310313/474 | IMLB:IGOL | £ 500.00 | Y |
+      | 011119/475 | IMLB:IRVL | £ 499.00 | N |
+      | 011119/476 | IMLB:ICZN | £ 500.00 | N |
+      | 011119/477 | IMLB:IOTH | £ 500.00 | Y |
+      | 011119/478 | IMLB:IDOM | £ 599.00 | N |
+      | 310313/479 | IMLB:IGOL | £ 600.00 | N |
+      | 011119/480 | IMLB:IEMP | £ 600.00 | Y |
+      | 011119/481 | IMLB:IOTH | £ 619.00 | N |
+      | 011119/482 | IMLB:IOTH | £ 620.00 | N |
+      | 011119/483 | IMLB:IEMP | £ 620.00 | Y |
+      | 011119/484 | IMLB:IIRC | £ 598.80 | N |
+      | 011119/485 | IMLB:ICZN | £ 600.00 | N |
+      | 011119/486 | IMLB:ICZN | £ 600.00 | Y |
+      | 011119/487 | IMLB:IDOM | £ 598.80 | N |
+      | 011119/488 | IMLB:ICZN | £ 600.00 | N |
+      | 011119/489 | IMLB:IIRC | £ 600.00 | Y |
+      | 011119/490 | IMLB:IEMP | £ 698.80 | N |
+      | 011119/491 | IMLB:IOTH | £ 700.00 | N |
+      | 011119/492 | IMLB:IEMP | £ 700.00 | Y |
+      | 011119/493 | IMLB:ICZN | £ 718.80 | N |
+      | 011119/494 | IMLB:ICZN | £ 720.00 | N |
+      | 011119/495 | IMLB:IRVL | £ 720.00 | Y |

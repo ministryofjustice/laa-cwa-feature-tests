@@ -1,7 +1,7 @@
 @outcomes
-Feature: Immigration Standard Fee Scheme Child Migrant Stage 1(LH) outcome pricing
+Feature: Asylum Standard Fee Scheme Child Migrant Stage 2b(CLR) outcome pricing
 
-    In order to price child migrant Immigration cases correctly
+    In order to price child migrant Asylum cases correctly
     As a business stakeholder
     I want claims priced with hourly rates
 
@@ -42,32 +42,32 @@ Feature: Immigration Standard Fee Scheme Child Migrant Stage 1(LH) outcome prici
       Given a test firm user is logged in CWA
 
     @slow
-    Scenario: Bulk load child migrant Immigration claims and have them priced correctly
-      When a user successfully bulk loads "o_sfs_immot_stage1_lh_cm.xml" for the test firm
+    Scenario: Bulk load child migrant Asylum claims and have them priced correctly
+      When a user successfully bulk loads "o_sfs_immas_stage2b_clr_cm.xml" for the test firm
       And user is on the "LEGAL HELP" pricing outcome details page
       Then user should see the following outcomes:
 			| UFN        | Matter Type | Value | Escape Fee |
-      | 011119/472 | IMLB:ICZN | £ 499.00 | N |
-      | 011119/473 | IMLB:IDOM | £ 500.00 | N |
-      | 310313/474 | IMLB:IGOL | £ 500.00 | Y |
-      | 011119/475 | IMLB:IOTH | £ 499.00 | N |
-      | 011119/476 | IMLB:ICZN | £ 500.00 | N |
-      | 011119/477 | IMLB:IEMP | £ 500.00 | Y |
-      | 011119/478 | IMLB:IRVL | £ 599.00 | N |
-      | 011119/479 | IMLB:IOTH | £ 600.00 | N |
-      | 011119/480 | IMLB:IDOM | £ 600.00 | Y |
-      | 011119/481 | IMLB:IIRC | £ 619.00 | N |
-      | 011119/482 | IMLB:IEMP | £ 620.00 | N |
-      | 310313/483 | IMLB:IGOL | £ 620.00 | Y |
-      | 011119/484 | IMLB:IEMP | £ 598.80 | N |
-      | 011119/485 | IMLB:IIRC | £ 600.00 | N |
-      | 310313/486 | IMLB:IGOL | £ 500.00 | Y |
-      | 310313/487 | IMLB:IGOL | £ 598.80 | N |
-      | 011119/488 | IMLB:IDOM | £ 600.00 | N |
-      | 310313/489 | IMLB:IGOL | £ 500.00 | Y |
-      | 011119/490 | IMLB:IDOM | £ 698.80 | N |
-      | 011119/491 | IMLB:IRVL | £ 700.00 | N |
-      | 011119/492 | IMLB:IDOM | £ 600.00 | Y |
-      | 310313/493 | IMLB:IGOL | £ 718.80 | N |
-      | 011119/494 | IMLB:ICZN | £ 720.00 | N |
-      | 011119/495 | IMLB:IEMP | £ 620.00 | Y |
+      | 310313/448 | IACB:IGOL | £ 499.00 | N |
+      | 011119/449 | IACB:IASY | £ 500.00 | N |
+      | 011119/450 | IACB:IFST | £ 500.00 | Y |
+      | 011119/451 | IACB:ILEA | £ 499.00 | N |
+      | 011119/452 | IACB:IASY | £ 500.00 | N |
+      | 011119/453 | IACB:ILEA | £ 500.00 | Y |
+      | 011119/454 | IACB:IFRA | £ 599.00 | N |
+      | 011119/455 | IACB:ILEA | £ 600.00 | N |
+      | 011119/456 | IACB:IIRC | £ 600.00 | Y |
+      | 011119/457 | IACB:IIRC | £ 619.00 | N |
+      | 011119/458 | IACB:ILEA | £ 620.00 | N |
+      | 011119/459 | IACB:IOTH | £ 620.00 | Y |
+      | 011119/460 | IACB:IASY | £ 598.80 | N |
+      | 011119/461 | IACB:IFST | £ 600.00 | N |
+      | 011119/462 | IACB:IIRC | £ 600.00 | Y |
+      | 011119/463 | IACB:IIRC | £ 598.80 | N |
+      | 011119/464 | IACB:IIRC | £ 600.00 | N |
+      | 011119/465 | IACB:ILEA | £ 600.00 | Y |
+      | 011119/466 | IACB:IASY | £ 698.80 | N |
+      | 011119/467 | IACB:IRVL | £ 700.00 | N |
+      | 011119/468 | IACB:IASY | £ 700.00 | Y |
+      | 011119/469 | IACB:IFST | £ 718.80 | N |
+      | 011119/470 | IACB:ILEA | £ 720.00 | N |
+      | 011119/471 | IACB:ILEA | £ 720.00 | Y |

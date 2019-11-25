@@ -47,27 +47,27 @@ Feature: Asylum Standard Fee Scheme Child Migrant Stage 1(LH) outcome pricing
       And user is on the "LEGAL HELP" pricing outcome details page
       Then user should see the following outcomes:
 			| UFN        | Matter Type | Value | Escape Fee |
-      | 011119/400 | IALB:IIRC | £ 499.00 | N |
-      | 310313/401 | IALB:IGOL | £ 500.00 | N |
+      | 011119/400 | IALB:IOTH | £ 499.00 | N |
+      | 011119/401 | IALB:IFRA | £ 500.00 | N |
       | 011119/402 | IALB:IRVL | £ 500.00 | Y |
-      | 011119/403 | IALB:IOTH | £ 499.00 | N |
-      | 011119/404 | IALB:IASY | £ 500.00 | N |
+      | 011119/403 | IALB:ILEA | £ 499.00 | N |
+      | 310313/404 | IALB:IGOL | £ 500.00 | N |
       | 011119/405 | IALB:IRVL | £ 500.00 | Y |
-      | 011119/406 | IALB:ILEA | £ 599.00 | N |
+      | 011119/406 | IALB:IFRA | £ 599.00 | N |
       | 011119/407 | IALB:ILEA | £ 600.00 | N |
       | 310313/408 | IALB:IGOL | £ 600.00 | Y |
-      | 011119/409 | IALB:IRVL | £ 619.00 | N |
-      | 310313/410 | IALB:IGOL | £ 620.00 | N |
-      | 011119/411 | IALB:ILEA | £ 620.00 | Y |
-      | 011119/412 | IALB:IASY | £ 598.80 | N |
-      | 011119/413 | IALB:IFRA | £ 600.00 | N |
-      | 011119/414 | IALB:IFRA | £ 500.00 | Y |
-      | 011119/415 | IALB:IFRA | £ 598.80 | N |
-      | 011119/416 | IALB:IOTH | £ 600.00 | N |
-      | 011119/417 | IALB:IRVL | £ 500.00 | Y |
-      | 011119/418 | IALB:IOTH | £ 698.80 | N |
-      | 011119/419 | IALB:IASY | £ 700.00 | N |
-      | 011119/420 | IALB:IOTH | £ 600.00 | Y |
-      | 011119/421 | IALB:IIRC | £ 718.80 | N |
-      | 011119/422 | IALB:IIRC | £ 720.00 | N |
-      | 011119/423 | IALB:IIRC | £ 620.00 | Y |
+      | 011119/409 | IALB:ILEA | £ 619.00 | N |
+      | 011119/410 | IALB:IFRA | £ 620.00 | N |
+      | 011119/411 | IALB:IIRC | £ 620.00 | Y |
+      | 011119/412 | IALB:ILEA | £ 598.80 | N |
+      | 011119/413 | IALB:IASY | £ 600.00 | N |
+      | 011119/414 | IALB:IIRC | £ 600.00 | Y |
+      | 011119/415 | IALB:IFST | £ 598.80 | N |
+      | 011119/416 | IALB:IIRC | £ 600.00 | N |
+      | 310313/417 | IALB:IGOL | £ 600.00 | Y |
+      | 310313/418 | IALB:IGOL | £ 698.80 | N |
+      | 310313/419 | IALB:IGOL | £ 700.00 | N |
+      | 011119/420 | IALB:ILEA | £ 700.00 | Y |
+      | 011119/421 | IALB:ILEA | £ 718.80 | N |
+      | 011119/422 | IALB:IFRA | £ 720.00 | N |
+      | 011119/423 | IALB:IIRC | £ 720.00 | Y |
