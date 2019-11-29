@@ -11,7 +11,7 @@ Feature: Check Child Migrant Validation for Immigration
     Given a test firm user is logged in CWA
     When user bulk loads "child_migrant_immas.xml" for the test firm
     Then user should see the bulk load results page
-    And successful outcomes should equal 87
+    And successful outcomes should equal 57
     And there should be no problem outcomes
 
   @delete_outcome_after @bulkload @immot @valid
@@ -21,7 +21,7 @@ Feature: Check Child Migrant Validation for Immigration
     Given a test firm user is logged in CWA
     When user bulk loads "child_migrant_immot.xml" for the test firm
     Then user should see the bulk load results page
-    And successful outcomes should equal 90
+    And successful outcomes should equal 58
     And there should be no problem outcomes
 
   @delete_outcome_after @manual_submission @immas @valid
