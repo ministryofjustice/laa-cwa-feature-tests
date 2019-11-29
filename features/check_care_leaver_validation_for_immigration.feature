@@ -4,79 +4,74 @@ Feature: Check Care Leaver Validation for Immigration claims
   As a provider
   I want to use the new care leaver code with an ecf reference
 
-  Background: On the outcome screen enter an Immigration claim
-
-  The following Immigration MT1 codes can be used
-  with the care leaver exemption criteria satisfied code (i.e. LE001)
-  Immigration and Asylym = IALB, IACA, IACB
-  Immigration = IMLB, IMCA, IMCB
-  These MT1 codes are all priced via Standard Fees.
-
-  @delete_outcome_after @bulkload
-  Scenario Outline: Bulk load valid file
+  @delete_outcome_after @bulkload @immas
+  Scenario: Bulk load valid file for Asylum
     Given a test firm user is logged in CWA
-    When user bulk loads "care_leaver_immas.xml" for the test firm
+    When user bulk loads "o_sfs_immas_stage1_lh.xml" for the test firm
     Then user should see the bulk load results page
-    And successful outcomes should equal 87
+    And successful outcomes should equal 24
     And there should be no problem outcomes
 
-  @delete_outcome_after @bulkload
-  Scenario Outline: Bulk load valid file
+  @delete_outcome_after @bulkload @immot
+  Scenario: Bulk load valid file for Immigration (non-Asylum)
     Given a test firm user is logged in CWA
-    When user bulk loads "care_leaver_immot.xml" for the test firm
+    When user bulk loads "o_sfs_immot_stage1_lh.xml" for the test firm
     Then user should see the bulk load results page
-    And successful outcomes should equal 90
+    And successful outcomes should equal 24
     And there should be no problem outcomes
 
-  @delete_outcome_after @manual_submission
-  Scenario Outline:  Add care leaver Immigration and Asylum claims
+  @delete_outcome_after @manual_submission @immot @invalid
+  Scenario Outline: Reject invalid care leaver Immigration (non-Asylum) claims
+    Given user is on their submission details page
+    When user adds an outcome for Immigration with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+    Then the outcome does not save and an error message appears
+    Examples:
+    | case id | mt | ecs code | ecf ref | case start date | pa | ap |
+		| 401 | IMXL:IRVL | LE001 |           | 01/11/19 | PA00140 | AP00198 |
+		| 402 | IMXL:IRVL | LE001 | 1234567AB | 01/11/19 | PA00140 | AP00198 |
+		| 403 | IMXL:IRVL | LE001 |           | 01/11/19 | PA20000 | AP20000 |
+    | 404 | IMLB:ICZN | LE001 |           | 01/11/19 | PA00140 | AP00198 |
+    | 405 | IMLB:ICZN | LE001 | 1234567AB | 01/11/19 | PA00140 | AP00198 |
+    | 406 | IMLB:ICZN | LE001 |           | 01/11/19 | PA20000 | AP20000 |
+    | 407 | IMXC:IREM | LE001 |           | 01/11/19 | PA00140 | AP00198 |
+    | 408 | IMXC:IREM | LE001 | 1234567AB | 01/11/19 | PA00140 | AP00198 |
+    | 409 | IMXC:IREM | LE001 |           | 01/11/19 | PA20000 | AP20000 |
+
+  @delete_outcome_after @manual_submission @immot @valid
+  Scenario Outline: Add valid care leaver Immigration (non-Asylum) claims
     Given user is on their submission details page
     When user adds an outcome for Immigration with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
     Then the outcome saves successfully
-    |	 case id 	|	mt	|	 ecs code	|	ecf ref	|	 case start date 	|	 pa 	|	 ap 	|
-    |	400	|	IACA:IASY	|	LE001	|	1234567AB	|	01/11/19	|	 PA00140 	|	 AP00198 	|
-    |	401	|	IACA:IFRA	|	LE001	|	1234567AB	|	01/11/19	|	 PA00140 	|	 AP00198 	|
-    |	402	|	IACA:IFST	|	LE001	|	1234567AB	|	01/11/19	|	 PA00140 	|	 AP00198 	|
-    |	404	|	IACA:IIRC	|	LE001	|	1234567AB	|	01/11/19	|	 PA00140 	|	 AP00198 	|
-    |	405	|	IACA:ILEA	|	LE001	|	1234567AB	|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    Examples:
+    | case id | mt | ecs code | ecf ref | case start date | pa | ap |
+    | 410 | IMXL:IRVL | LE001 | 1234567AB | 01/11/19 | PA20000 | AP20000 |
+    | 411 | IMLB:ICZN | LE001 | 1234567AB | 01/11/19 | PA20000 | AP20000 |
+    | 412 | IMXC:IREM | LE001 | 1234567AB | 01/11/19 | PA20000 | AP20000 |
 
-  @delete_outcome_after @manual_submission
-  Scenario Outline: The system must reject care leaver Immigration and Asylym claims without an ecf reference
+  @delete_outcome_after @manual_submission @immas @invalid
+  Scenario Outline: Reject invalid care leaver Asylum claims
     Given user is on their submission details page
     When user adds an outcome for Immigration with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
-    Then the outcome does not save and gives an error containing:
-      """
-      The combination of reporting codes can only be used for cases started on or after 01-APR-2013 if it is reported with an Exceptional Case Funding reference.
-      """
-    |	 case id 	|	mt	|	 ecs code 	|	ecf ref	|	 case start date 	|	 pa 	|	 ap 	|
-    |	500	|	IACA:IASY	|	LE001	|	1234567AB	|	01/11/19	|	 PA00140 	|	 AP00198 	|
-    |	501	|	IACA:IFRA	|	LE001	|	1234567AB	|	01/11/19	|	 PA00140 	|	 AP00198 	|
-    |	502	|	IACA:IFST	|	LE001	|	1234567AB	|	01/11/19	|	 PA00140 	|	 AP00198 	|
-    |	504	|	IACA:IIRC	|	LE001	|	1234567AB	|	01/11/19	|	 PA00140 	|	 AP00198 	|
-    |	505	|	IACA:ILEA	|	LE001	|	1234567AB	|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    Then the outcome does not save and an error message appears
+    Examples:
+    | case id | mt | ecs code | ecf ref | case start date | pa | ap |
+    | 413 | IACA:IFRA | LE001 |           | 01/11/19 | PA00140 | AP00198 |
+		| 414 | IACA:IFRA | LE001 | 1234567AB | 01/11/19 | PA00140 | AP00198 |
+		| 415 | IACA:IFRA | LE001 |           | 01/11/19 | PA20000 | AP20000 |
+    | 416 | IAXL:IOUT | LE001 |           | 01/11/19 | PA00140 | AP00198 |
+    | 417 | IAXL:IOUT | LE001 | 1234567AB | 01/11/19 | PA00140 | AP00198 |
+    | 418 | IAXL:IOUT | LE001 |           | 01/11/19 | PA20000 | AP20000 |
+    | 419 | IACA:IASY | LE001 |           | 01/11/19 | PA00140 | AP00198 |
+    | 420 | IACA:IASY | LE001 | 1234567AB | 01/11/19 | PA00140 | AP00198 |
+    | 421 | IACA:IASY | LE001 |           | 01/11/19 | PA20000 | AP20000 |
 
-  @delete_outcome_after @manual_submission
-  Scenario Outline: Add care leaver Immigration (non-Asylum) claims
+  @delete_outcome_after @manual_submission @immas @valid
+  Scenario Outline: Add valid care leaver Asylum claims
     Given user is on their submission details page
     When user adds an outcome for Immigration with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
     Then the outcome saves successfully
-			| case id | mt | ecs code | ecf ref | case start date | pa | ap |
-			| 600 | IMCA:ICZN | LE001 | 1234567AB | 01/11/19 | PA00140 | AP00198 |
-			| 601 | IMCA:IDOM | LE001 | 1234567AB | 01/11/19 | PA00140 | AP00198 |
-			| 602 | IMCA:IEMP | LE001 | 1234567AB | 01/11/19 | PA00140 | AP00198 |
-			| 603 | IMCA:IEUL | LE001 | 1234567AB | 01/11/19 | PA00140 | AP00198 |
-			| 604 | IMCA:IFME | LE001 | 1234567AB | 01/11/19 | PA00140 | AP00198 |
-
-  @delete_outcome_after
-  Scenario Outline: The system must reject a care leaver Immigration claims without an ecf reference
-    When user adds an outcome for Immigration with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
-    Then the outcome does not save and gives an error containing:
-      """
-      The combination of reporting codes can only be used for cases started on or after 01-APR-2013 if it is reported with an Exceptional Case Funding reference.
-      """
-    |	 case id 	|	 mt	|	 ecs code	|	ecf ref	|	 case start date 	|	 pa 	|	 ap 	|
-    |	700	|	IMCA:ICZN	|	LE001	|	1234567AB	|	01/11/19	|	 PA00140 	|	 AP00198 	|
-    |	701	|	IMCA:IDOM	|	LE001	|	1234567AB	|	01/11/19	|	 PA00140 	|	 AP00198 	|
-    |	702	|	IMCA:IEMP	|	LE001	|	1234567AB	|	01/11/19	|	 PA00140 	|	 AP00198 	|
-    |	703	|	IMCA:IEUL	|	LE001	|	1234567AB	|	01/11/19	|	 PA00140 	|	 AP00198 	|
-    |	704	|	IMCA:IFME	|	LE001	|	1234567AB	|	01/11/19	|	 PA00140 	|	 AP00198 	|
+    Examples:
+    | case id | mt | ecs code | ecf ref | case start date | pa | ap |
+    | 422 | IACA:IFRA | LE001 | 1234567AB | 01/11/19 | PA20000 | AP20000 |
+    | 423 | IAXL:IOUT | LE001 | 1234567AB | 01/11/19 | PA20000 | AP20000 |
+    | 424 | IACA:IASY | LE001 | 1234567AB | 01/11/19 | PA20000 | AP20000 |
