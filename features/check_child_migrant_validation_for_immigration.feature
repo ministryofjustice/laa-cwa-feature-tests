@@ -42,20 +42,20 @@ Feature: Check Child Migrant Validation for Immigration
   Scenario Outline: Reject invalid child migrant Asylum claims
     Given user is on their submission details page
     When user adds an outcome for Immigration with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
-    Then the outcome does not save and an error message appears
+    Then the outcome does not save and the error message "<error message>" appears
 
     Examples:
       Asylum claims must NOT have an ECF Ref or ECF Matter pa/ap when submitted as a child migrant case
-      | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      |
-      | 303     | IACA:IFRA | CM001    | 1234567AB | 01/11/19        | PA20000 | PA20000 |
-      | 304     | IACA:IFRA | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 |
-      | 305     | IACA:IFRA | CM001    |           | 01/11/19        | PA20000 | AP20000 |
-      | 306     | IAXL:IOUT | CM001    | 1234567AB | 01/11/19        | PA20000 | PA20000 |
-      | 307     | IAXL:IOUT | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 |
-      | 308     | IAXL:IOUT | CM001    |           | 01/11/19        | PA20000 | AP20000 |
-      | 309     | IACA:IASY | CM001    | 1234567AB | 01/11/19        | PA20000 | PA20000 |
-      | 310     | IACA:IASY | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 |
-      | 311     | IACA:IASY | CM001    |           | 01/11/19        | PA20000 | AP20000 |
+      | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      | error message                                                                                                                                          |
+      | 303     | IACA:IFRA | CM001    | 1234567AB | 01/11/19        | PA20000 | PA20000 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
+      | 304     | IACA:IFRA | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
+      | 305     | IACA:IFRA | CM001    |           | 01/11/19        | PA20000 | AP20000 | For the case being reported it's not necessary to poulate the PA/AP fields with ECF Matter (PA20000/AP20000). Please choose another PA/AP combination. |
+      | 306     | IAXL:IOUT | CM001    | 1234567AB | 01/11/19        | PA20000 | PA20000 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
+      | 307     | IAXL:IOUT | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
+      | 308     | IAXL:IOUT | CM001    |           | 01/11/19        | PA20000 | AP20000 | For the case being reported it's not necessary to poulate the PA/AP fields with ECF Matter (PA20000/AP20000). Please choose another PA/AP combination. |
+      | 309     | IACA:IASY | CM001    | 1234567AB | 01/11/19        | PA20000 | PA20000 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
+      | 310     | IACA:IASY | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
+      | 311     | IACA:IASY | CM001    |           | 01/11/19        | PA20000 | AP20000 | For the case being reported it's not necessary to poulate the PA/AP fields with ECF Matter (PA20000/AP20000). Please choose another PA/AP combination. |
 
   @delete_outcome_after @manual_submission @immot @valid
   Scenario Outline: Add child migrant Immigration (non-Asylum) claims
@@ -75,17 +75,17 @@ Feature: Check Child Migrant Validation for Immigration
   Scenario Outline: Reject invalid child migrant Immigration (non-Asylum) claims
     Given user is on their submission details page
     When user adds an outcome for Immigration with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
-    Then the outcome does not save and an error message appears
+    Then the outcome does not save and the error message "<error message>" appears
 
     Examples:
       Immigration claims must NOT have an ECF Ref or ECF Matter pa/ap when submitted as a child migrant case
-      | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      |
-      | 315     | IMXL:IRVL | CM001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
-      | 316     | IMXL:IRVL | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 |
-      | 317     | IMXL:IRVL | CM001    |           | 01/11/19        | PA20000 | AP20000 |
-      | 318     | IMLB:ICZN | CM001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
-      | 319     | IMLB:ICZN | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 |
-      | 320     | IMLB:ICZN | CM001    |           | 01/11/19        | PA20000 | AP20000 |
-      | 321     | IMXC:IREM | CM001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
-      | 322     | IMXC:IREM | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 |
-      | 323     | IMXC:IREM | CM001    |           | 01/11/19        | PA20000 | AP20000 |
+      | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      | error message                                                                                                                                          |
+      | 315     | IMXL:IRVL | CM001    | 1234567AB | 01/11/19        | PA20000 | AP20000 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
+      | 316     | IMXL:IRVL | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
+      | 317     | IMXL:IRVL | CM001    |           | 01/11/19        | PA20000 | AP20000 | For the case being reported it's not necessary to poulate the PA/AP fields with ECF Matter (PA20000/AP20000). Please choose another PA/AP combination. |
+      | 318     | IMLB:ICZN | CM001    | 1234567AB | 01/11/19        | PA20000 | AP20000 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
+      | 319     | IMLB:ICZN | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
+      | 320     | IMLB:ICZN | CM001    |           | 01/11/19        | PA20000 | AP20000 | For the case being reported it's not necessary to poulate the PA/AP fields with ECF Matter (PA20000/AP20000). Please choose another PA/AP combination. |
+      | 321     | IMXC:IREM | CM001    | 1234567AB | 01/11/19        | PA20000 | AP20000 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
+      | 322     | IMXC:IREM | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
+      | 323     | IMXC:IREM | CM001    |           | 01/11/19        | PA20000 | AP20000 | For the case being reported it's not necessary to poulate the PA/AP fields with ECF Matter (PA20000/AP20000). Please choose another PA/AP combination. |

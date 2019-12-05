@@ -296,7 +296,8 @@ Then("the outcome does not save and gives an error containing:") do |string|
   expect(page).to have_content(string)
 end
 
-Then("the outcome does not save and an error message appears") do
+Then("the outcome does not save and the error message {string} appears") do |error_message|
   page = AddOutcomePage.new
-  expect(page).to have_content('Error')
+  expect(page).to have_errors
+  expect(page.errors.text).to include(error_message)
 end
