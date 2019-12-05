@@ -20,8 +20,8 @@ When('user bulk loads {string} for the test firm') do |file|
 end
 
 Then(/successful outcomes should equal (\d*)/) do |num_of_successful_outcomes|
-  expect(@bulk_load_page).to be_loaded
-  expect(@bulk_load_page).to have_summary
+  @bulk_load_page = BulkLoadPage.new
+  @bulk_load_page.wait_until_summary_visible(wait: 30)
   expect(@bulk_load_page.summary).to have_successful_outcomes
   expect(@bulk_load_page.summary.successful_outcomes.text).to eq(num_of_successful_outcomes)
 end
