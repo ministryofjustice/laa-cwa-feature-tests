@@ -46,16 +46,16 @@ Feature: Check Child Migrant Validation for Immigration
 
     Examples:
       Asylum claims must NOT have an ECF Ref or ECF Matter pa/ap when submitted as a child migrant case
-      | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      | error message                                                                                                                                          |
-      | 303     | IACA:IFRA | CM001    | 1234567AB | 01/11/19        | PA20000 | PA20000 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
-      | 304     | IACA:IFRA | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
-      | 305     | IACA:IFRA | CM001    |           | 01/11/19        | PA20000 | AP20000 | For the case being reported it's not necessary to poulate the PA/AP fields with ECF Matter (PA20000/AP20000). Please choose another PA/AP combination. |
-      | 306     | IAXL:IOUT | CM001    | 1234567AB | 01/11/19        | PA20000 | PA20000 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
-      | 307     | IAXL:IOUT | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
-      | 308     | IAXL:IOUT | CM001    |           | 01/11/19        | PA20000 | AP20000 | For the case being reported it's not necessary to poulate the PA/AP fields with ECF Matter (PA20000/AP20000). Please choose another PA/AP combination. |
-      | 309     | IACA:IASY | CM001    | 1234567AB | 01/11/19        | PA20000 | PA20000 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
-      | 310     | IACA:IASY | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
-      | 311     | IACA:IASY | CM001    |           | 01/11/19        | PA20000 | AP20000 | For the case being reported it's not necessary to poulate the PA/AP fields with ECF Matter (PA20000/AP20000). Please choose another PA/AP combination. |
+      | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      | error message                                          |
+      | 303     | IACA:IFRA | CM001    | 1234567AB | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is not required. |
+      | 304     | IACA:IFRA | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is not required. |
+      | 305     | IACA:IFRA | CM001    |           | 01/11/19        | PA20000 | AP20000 | Invalid Procurement Area and Access Point.             |
+      | 306     | IAXL:IOUT | CM001    | 1234567AB | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is not required. |
+      | 307     | IAXL:IOUT | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is not required. |
+      | 308     | IAXL:IOUT | CM001    |           | 01/11/19        | PA20000 | AP20000 | Invalid Procurement Area and Access Point.             |
+      | 309     | IACA:IASY | CM001    | 1234567AB | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is not required. |
+      | 310     | IACA:IASY | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is not required. |
+      | 311     | IACA:IASY | CM001    |           | 01/11/19        | PA20000 | AP20000 | Invalid Procurement Area and Access Point.             |
 
   @delete_outcome_after @manual_submission @immot @valid
   Scenario Outline: Add child migrant Immigration (non-Asylum) claims
@@ -79,13 +79,13 @@ Feature: Check Child Migrant Validation for Immigration
 
     Examples:
       Immigration claims must NOT have an ECF Ref or ECF Matter pa/ap when submitted as a child migrant case
-      | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      | error message                                                                                                                                          |
-      | 315     | IMXL:IRVL | CM001    | 1234567AB | 01/11/19        | PA20000 | AP20000 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
-      | 316     | IMXL:IRVL | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
-      | 317     | IMXL:IRVL | CM001    |           | 01/11/19        | PA20000 | AP20000 | For the case being reported it's not necessary to poulate the PA/AP fields with ECF Matter (PA20000/AP20000). Please choose another PA/AP combination. |
-      | 318     | IMLB:ICZN | CM001    | 1234567AB | 01/11/19        | PA20000 | AP20000 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
-      | 319     | IMLB:ICZN | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
-      | 320     | IMLB:ICZN | CM001    |           | 01/11/19        | PA20000 | AP20000 | For the case being reported it's not necessary to poulate the PA/AP fields with ECF Matter (PA20000/AP20000). Please choose another PA/AP combination. |
-      | 321     | IMXC:IREM | CM001    | 1234567AB | 01/11/19        | PA20000 | AP20000 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
-      | 322     | IMXC:IREM | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | For the case being reported it's not necessary to record an Exceptional Case Reference. Please leave the field blank.                                  |
-      | 323     | IMXC:IREM | CM001    |           | 01/11/19        | PA20000 | AP20000 | For the case being reported it's not necessary to poulate the PA/AP fields with ECF Matter (PA20000/AP20000). Please choose another PA/AP combination. |
+      | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      | error message                                          |
+      | 315     | IMXL:IRVL | CM001    | 1234567AB | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is not required. |
+      | 316     | IMXL:IRVL | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is not required. |
+      | 317     | IMXL:IRVL | CM001    |           | 01/11/19        | PA20000 | AP20000 | Invalid Procurement Area and Access Point.             |
+      | 318     | IMLB:ICZN | CM001    | 1234567AB | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is not required. |
+      | 319     | IMLB:ICZN | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is not required. |
+      | 320     | IMLB:ICZN | CM001    |           | 01/11/19        | PA20000 | AP20000 | Invalid Procurement Area and Access Point.             |
+      | 321     | IMXC:IREM | CM001    | 1234567AB | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is not required. |
+      | 322     | IMXC:IREM | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is not required. |
+      | 323     | IMXC:IREM | CM001    |           | 01/11/19        | PA20000 | AP20000 | Invalid Procurement Area and Access Point.             |
