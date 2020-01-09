@@ -65,6 +65,8 @@ class AddOutcomePage < SitePrism::Page
   element :no_of_clients_seen_at_the_surgery, *field("Number of Clients Seen at the Surgery", :input)
   element :no_of_surgery_clients, *field("Number of Surgery Clients Resulting in a Legal Help Matter Opened", :input)
 
+  element :errors, :xpath, '//*[@id="FwkErrorBeanId"]'
+
   def form_reloaded?
     default_form['reloading'] == '0'
   end
