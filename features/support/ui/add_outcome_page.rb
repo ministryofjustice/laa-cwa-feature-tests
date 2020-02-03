@@ -4,8 +4,8 @@ class AddOutcomePage < SitePrism::Page
   def self.field(name, type)
     [
       :xpath,
-      "//span[contains(text(), \"#{name}\")]/ancestor::td[1]/following-sibling::td[2]/#{type}|" +
-      "//span[contains(text(), \"#{name}\")]/ancestor::td[1]/following-sibling::td[2]/*/#{type}"
+      "(//span[contains(text(), \"#{name}\")]/ancestor::td[1]/following-sibling::td[2]/#{type}|" +
+      "//span[contains(text(), \"#{name}\")]/ancestor::td[1]/following-sibling::td[2]/*/#{type})[1]"
     ]
   end
 
@@ -20,7 +20,7 @@ class AddOutcomePage < SitePrism::Page
   element :client_forename, *field("Client Forename", :input)
   element :client_surname, *field("Client Surname", :input)
   element :client_date_of_birth, *field("Client Date of Birth", :input)
-  element :ucn, 'input[name="LinesDFF14"]'
+  element :ucn, *field("UCN", :input)
   element :postal_application_accepted, *field("Postal Application Accepted", :select)
   element :gender, *field("Gender", :select)
   element :ethnicity, *field("Ethnicity", :select)
