@@ -202,6 +202,7 @@ do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date
   page = AddOutcomePage.new
   values = {
     matter_type: matter_type,
+    claim_type: 'Completed Matter Claim',
     schedule_reference: CWAProvider.legal_help_submission.reference,
     case_reference_number: 'TestCaseRef',
     case_start_date: case_start_date,
@@ -252,6 +253,7 @@ do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date
   page = AddOutcomePage.new
   values = {
     matter_type: matter_type,
+    claim_type: 'Completed Matter Claim',
     schedule_reference: CWAProvider.legal_help_submission.reference,
     case_reference_number: 'TestCaseRef',
     case_start_date: case_start_date,
@@ -296,6 +298,7 @@ do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date
   page = AddOutcomePage.new
   values = {
     matter_type: matter_type,
+    claim_type: 'Completed Matter Claim',
     schedule_reference: CWAProvider.legal_help_submission.reference,
     case_reference_number: 'TestCaseRef',
     case_start_date: case_start_date,
@@ -337,6 +340,7 @@ do |matter_type, ecf_ref, case_start_date, pa, ap, case_id |
   page = AddOutcomePage.new
   values = {
     matter_type: matter_type,
+    claim_type: 'Completed Matter Claim',
     schedule_reference: CWAProvider.legal_help_submission.reference,
     case_reference_number: 'TestCaseRef',
     case_start_date: case_start_date,

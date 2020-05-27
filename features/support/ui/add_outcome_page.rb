@@ -11,6 +11,7 @@ class AddOutcomePage < SitePrism::Page
 
   element :default_form, :xpath, '//*[@id="DefaultFormName"]'
   element :matter_type, :xpath, '//*[@id="MatterType"]'
+  element :claim_type, :xpath, '//*[@id="ClaimTypeDropDown"]'
   element :schedule_reference, *field("Schedule Reference", :input)
   element :case_reference_number, *field("Case Reference Number", :input)
   element :case_start_date, *field("Case Start Date", :input)
@@ -101,7 +102,9 @@ JS
 
   def add_outcome(values)
     matter_type.set(values[:matter_type])
-    matter_type.send_keys(:return)
+    matter_type.send_keys(:tab)
+    wait_until_claim_type_visible(wait: 10)
+    claim_type.select(values[:claim_type])
     wait_until_schedule_reference_visible(wait: 10)
     schedule_reference.set(values[:schedule_reference])
     case_reference_number.set(values[:case_reference_number])
