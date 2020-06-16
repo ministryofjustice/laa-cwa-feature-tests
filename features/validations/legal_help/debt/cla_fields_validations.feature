@@ -114,7 +114,7 @@ Feature: Debt Bulk load validations
       | 2 | 15/05/2020      | 1234567        | <blank>       |
       | 3 | 15/05/2020      | 1234567        | <blank>       |
       | 4 | 15/05/2020      | 123456         | <blank>       |
-      | 5 | 15/05/2020      | 123456         | <blank>       |
+      | 5 | 15/05/2020      | 0000000        | <blank>       |
     Then the following results are expected:
       | # | MATTER_TYPE | ERROR_CODE_OR_MESSAGE         |
       | 1 | DIVB:DIBP   | <none>                        |
