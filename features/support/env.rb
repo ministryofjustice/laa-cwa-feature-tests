@@ -76,6 +76,16 @@ module CWAProvider
     end
   end
 
+  def self.legal_help_submission
+    @legal_help_submission ||= OpenStruct.new(submission_for(:legal_help))
+  end
+
+  def self.submission_for(area_of_law)
+    submissions.find do |submission|
+      submission['area_of_law'] == area_of_law.to_s.upcase.tr('_', ' ')
+    end
+  end
+
   def self.errors
     JSON.parse(@shared['errors'].to_json, object_class: OpenStruct)
   end

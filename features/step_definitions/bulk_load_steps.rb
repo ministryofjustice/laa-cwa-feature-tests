@@ -81,31 +81,33 @@ When('user bulk loads {string} for the test firm') do |file|
   navigator.roles.cwa_activity_report_manager_internal_role.click
   navigator.content.bulk_load.click
 
-  submission = CWAProvider.submissions.find { |s| s.area_of_law == 'LEGAL HELP' }
+  submission = CWAProvider.submissions.select { |s| s.area_of_law == 'LEGAL HELP' }[1]
 
   @bulk_load_page = BulkLoadPage.new
   within_popup(@bulk_load_page, ->{ @bulk_load_page.lookup_firm.click }) do
     office_search_page = OfficeSearchPage.new
     within_frame(office_search_page.frame) do
-      office_search_page.search_term.set(submission.firm_name)
+      office_search_page.search_by.select('Account Number')
+      office_search_page.account_number.set(submission.account_number)
       office_search_page.search_button.click
       office_search_page.first_quick_select.click
     end
   end
 
   @bulk_load_page.bulk_load_file.send_keys(bulkload_file_path(file))
-  with_delay(0.75) { @bulk_load_page.next_button.click }
+  with_delay(1.75) { @bulk_load_page.next_button.click }
+  sleep 5
 end
 
 Then(/successful outcomes should equal (\d*)/) do |num_of_successful_outcomes|
-  @bulk_load_page = BulkLoadPage.new
-  @bulk_load_page.wait_until_summary_visible(wait: 30)
+  @bulk_load_page = BulkLoadResultsPage.new
+  @bulk_load_page.wait_until_summary_visible(wait: 60)
   expect(@bulk_load_page.summary).to have_successful_outcomes
   expect(@bulk_load_page.summary.successful_outcomes.text).to eq(num_of_successful_outcomes)
 end
 
 Then("there should be no problem outcomes") do
-  @bulk_load_page = BulkLoadPage.new
+  @bulk_load_page = BulkLoadResultsPage.new
   @bulk_load_page.wait_until_summary_visible(wait: 20)
   expect(@bulk_load_page.summary).to have_problem_outcomes
   expect(@bulk_load_page.summary.problem_outcomes.text).to eq('0')

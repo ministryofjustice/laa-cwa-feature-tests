@@ -19,7 +19,7 @@ When('user adds a valid outcome') do
   page = AddOutcomePage.new
   values = {
     matter_type: 'FAMA:FADV',
-    schedule_reference: CWAProvider.legal_help_submission.reference,
+    schedule_reference: CWAProvider.legal_help_submission.schedule_ref,
     case_reference_number: 'TestCaseRef',
     case_start_date: '01-Jul-2019',
     case_id: '001',
@@ -62,7 +62,7 @@ When('user adds a invalid outcome') do
   page = AddOutcomePage.new
   values = {
     matter_type: 'FAMA:FADV',
-    schedule_reference: CWAProvider.legal_help_submission.reference,
+    schedule_reference: CWAProvider.legal_help_submission.schedule_ref,
     case_reference_number: 'TestCaseRef',
     case_start_date: '01-Jun-2019',
     case_id: '002',
@@ -105,7 +105,7 @@ When('user adds a valid outcome for Discrimination') do
   page = AddOutcomePage.new
   values = {
     matter_type: 'QPRO:QAGE',
-    schedule_reference: CWAProvider.legal_help_submission.reference,
+    schedule_reference: CWAProvider.legal_help_submission.schedule_ref,
     case_reference_number: 'TestCaseRef',
     case_start_date: '01-Sep-2019',
     case_id: '099',
@@ -147,7 +147,7 @@ When('user adds an outcome with {string}, {string}, {string} and {string}') do |
   page = AddOutcomePage.new
   values = {
     matter_type: 'FAMA:FADV',
-    schedule_reference: CWAProvider.legal_help_submission.reference,
+    schedule_reference: CWAProvider.legal_help_submission.schedule_ref,
     case_reference_number: 'TestCaseRef',
     case_start_date: case_start_date,
     case_id: case_id,
@@ -203,7 +203,7 @@ do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date
   values = {
     matter_type: matter_type,
     claim_type: 'Completed Matter Claim',
-    schedule_reference: CWAProvider.legal_help_submission.reference,
+    schedule_reference: CWAProvider.legal_help_submission.schedule_ref,
     case_reference_number: 'TestCaseRef',
     case_start_date: case_start_date,
     case_id: case_id,
@@ -254,7 +254,7 @@ do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date
   values = {
     matter_type: matter_type,
     claim_type: 'Completed Matter Claim',
-    schedule_reference: CWAProvider.legal_help_submission.reference,
+    schedule_reference: CWAProvider.legal_help_submission.schedule_ref,
     case_reference_number: 'TestCaseRef',
     case_start_date: case_start_date,
     case_id: case_id,
@@ -299,7 +299,7 @@ do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date
   values = {
     matter_type: matter_type,
     claim_type: 'Completed Matter Claim',
-    schedule_reference: CWAProvider.legal_help_submission.reference,
+    schedule_reference: CWAProvider.legal_help_submission.schedule_ref,
     case_reference_number: 'TestCaseRef',
     case_start_date: case_start_date,
     case_id: case_id,
@@ -341,7 +341,7 @@ do |matter_type, ecf_ref, case_start_date, pa, ap, case_id |
   values = {
     matter_type: matter_type,
     claim_type: 'Completed Matter Claim',
-    schedule_reference: CWAProvider.legal_help_submission.reference,
+    schedule_reference: CWAProvider.legal_help_submission.schedule_ref,
     case_reference_number: 'TestCaseRef',
     case_start_date: case_start_date,
     case_id: case_id,

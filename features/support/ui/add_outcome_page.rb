@@ -103,8 +103,10 @@ JS
   def add_outcome(values)
     matter_type.set(values[:matter_type])
     matter_type.send_keys(:tab)
-    wait_until_claim_type_visible(wait: 10)
-    claim_type.select(values[:claim_type])
+    if values[:claim_type]
+      wait_until_claim_type_visible(wait: 10)
+      claim_type.select(values[:claim_type])
+    end
     wait_until_schedule_reference_visible(wait: 10)
     schedule_reference.set(values[:schedule_reference])
     case_reference_number.set(values[:case_reference_number])

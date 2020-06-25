@@ -15,15 +15,16 @@ Given('user deleted any existing {string} outcomes for the test firm') do |categ
   navigator.roles.cwa_activity_report_manager_internal_role.click
   navigator.content.submission_list.click
 
+  submission = CWAProvider.submissions.select { |s| s.area_of_law == 'LEGAL HELP' }[1]
+
   submission_list_page = SubmissionListPage.new
-  submission_list_page.account_number.set(CWAProvider.account_number)
+  submission_list_page.account_number.set(submission.account_number)
   submission_list_page.search_button.click
 
   submission_list_page.wait_until_submissions_visible(wait: 10)
-  existing_submission = submission_list_page.submissions.find do |submission|
-    submission.schedule_submission_reference.text ==
-      load_submission(category_of_law).reference
-  end
+  existing_submission = submission_list_page.submissions.find do |sub|
+    sub.schedule_submission_reference.text == submission.schedule_number
+  end.update_button.click
 
   next unless existing_submission
 
@@ -51,14 +52,15 @@ Given('user is on the {string} pricing outcome details page') do |category_of_la
     navigator.roles.cwa_activity_report_manager_internal_role.click
     navigator.content.submission_list.click
 
+    submission = CWAProvider.submissions.select { |s| s.area_of_law == 'LEGAL HELP' }[1]
+
     submission_list_page = SubmissionListPage.new
-    submission_list_page.account_number.set(CWAProvider.account_number)
+    submission_list_page.account_number.set(submission.account_number)
     submission_list_page.search_button.click
 
     submission_list_page.wait_until_submissions_visible(wait: 10)
-    submission_list_page.submissions.find do |submission|
-      submission.schedule_submission_reference.text ==
-        load_submission(category_of_law).reference
+    submission_list_page.submissions.find do |sub|
+      sub.schedule_submission_reference.text == submission.schedule_number
     end.update_button.click
 
     @submission_details_page = SubmissionDetailsPage.new

@@ -23,7 +23,7 @@ end
 
 class BulkLoadResultsPage < SitePrism::Page
   set_url '/OA_HTML/OA.jsp?page=/oracle/apps/fnd/framework/webui/OAProcessingPG&*'
-  sections :summary, BulkLoadResultsSummarySection, :xpath, '//*[@id="BulkSummaryVO"]/table/tbody/tr[2]/td/table/tbody/tr/following-sibling::tr[position() > 0]'
+  section :summary, BulkLoadResultsSummarySection, :xpath, '//*[@id="BulkSummaryVO"]/table/tbody/tr[2]/td/table/tbody/tr/following-sibling::tr[position() > 0]'
   sections :errors, BulkLoadResultsErrorsSection, :xpath, '//*[@id="BulkLoadErrorsVO"]/table/tbody/tr[2]/td/table/tbody/tr/following-sibling::tr[position() > 0]'
   sections :submissions, BulkLoadResultsSubmissionsSection, :xpath, '/html/body/form/span[2]/div[1]/div[5]/span[1]/table[2]/tbody/tr/following-sibling::tr[position() > 0]'
 end
