@@ -77,6 +77,7 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_print
+  builder (~> 3.2)
   byebug
   capybara
   cucumber
@@ -85,4 +86,4 @@ DEPENDENCIES
   site_prism
 
 BUNDLED WITH
-   2.0.2
+   2.1.4

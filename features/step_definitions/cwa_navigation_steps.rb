@@ -17,7 +17,7 @@ end
 
 Then('Submission Search Page displayed') do
   submission_list_page = SubmissionListPage.new
-  submission_list_page.firm_name.set(CWAProvider.firm_name)
+  submission_list_page.account_number.set(CWAProvider.legal_help_submission.account_number)
   submission_list_page.search_button.click
   expect(submission_list_page).to have_content('Submission Search')
 end
@@ -36,13 +36,13 @@ end
 
 When('user searches for their legal help submission') do
   submission_list_page = SubmissionListPage.new
-  submission_list_page.account_number.set(CWAProvider.account_number)
+  submission_list_page.account_number.set(CWAProvider.legal_help_submission.account_number)
   submission_list_page.search_button.click
 
   submission_list_page.wait_until_submissions_visible(wait: 10)
   existing_submission = submission_list_page.submissions.find do |submission|
     submission.schedule_submission_reference.text ==
-      load_submission('LEGAL HELP').reference
+      load_submission('LEGAL HELP').schedule_number
   end
 
   existing_submission.update_button.click

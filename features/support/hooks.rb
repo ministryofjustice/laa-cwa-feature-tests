@@ -29,3 +29,9 @@ end
 After do |scenario|
   byebug if scenario.failed? && ENV['DEBUG_FAILURES'] == 'true'
 end
+
+at_exit do
+  tmp_path = File.expand_path(Helpers::TMP_DIR)
+  tmp_files = Dir.glob("#{tmp_path}/*")
+  FileUtils.rm_f(tmp_files)
+end
