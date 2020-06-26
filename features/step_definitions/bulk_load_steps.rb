@@ -171,7 +171,7 @@ end
 
 When("user views the submission details") do
   @bulk_load_results_page = BulkLoadResultsPage.new
-  @bulk_load_results_page.submissions.bulk_load_update_link.click
+  @bulk_load_results_page.submissions.first.bulk_load_update_link.click
 end
 
 Then('user should see the submission reference in the submission list page') do
