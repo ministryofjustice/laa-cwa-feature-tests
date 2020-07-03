@@ -45,32 +45,34 @@ Given('user deleted any existing {string} outcomes for the test firm') do |categ
   end
 end
 
-Given('user is on the {string} pricing outcome details page') do |category_of_law|
-  with_retry(20, PricingUnavailableError ||= Class.new(StandardError)) do |retried|
+Given(/user is on the pricing outcome details page/) do
+  if !defined?(@submission)
+    raise 'you cannot use this step without selecting a test submission first'
+  end
+
+  with_retry(60, PricingUnavailableError ||= Class.new(StandardError)) do |retried|
     navigator = NavigatorPage.new
     navigator.load
     navigator.roles.cwa_activity_report_manager_internal_role.click
     navigator.content.submission_list.click
 
-    submission = CWAProvider.submissions.select { |s| s.area_of_law == 'LEGAL HELP' }[1]
-
     submission_list_page = SubmissionListPage.new
-    submission_list_page.account_number.set(submission.account_number)
+    submission_list_page.account_number.set(@submission.account_number)
     submission_list_page.search_button.click
 
     submission_list_page.wait_until_submissions_visible(wait: 10)
     submission_list_page.submissions.find do |sub|
-      sub.schedule_submission_reference.text == submission.schedule_number
+      sub.schedule_submission_reference.text == @submission.schedule_number
     end.update_button.click
 
-    @submission_details_page = SubmissionDetailsPage.new
-    expect(@submission_details_page).to be_loaded
-    expect(@submission_details_page).not_to have_text(/No results found./)
+    submission_details_page = SubmissionDetailsPage.new
+    expect(submission_details_page).to be_loaded
+    expect(submission_details_page).not_to have_text(/No results found./)
 
     STDOUT.puts "(#{retried}) Checking for pricing completion..." if retried > 0
 
     price_unavailable = ->(outcome) { outcome.has_no_value?(wait: 0) }
-    if @submission_details_page.outcomes.any?(&price_unavailable)
+    if submission_details_page.outcomes.any?(&price_unavailable)
       raise PricingUnavailableError
     end
   end
@@ -83,6 +85,7 @@ When('user is looking at outcome {string}') do |ufn|
 end
 
 Then('user should see the following outcomes:') do |table|
+  @submission_details_page = SubmissionDetailsPage.new
   outcome_data = table.hashes
   outcome_data.each do |row|
     STDOUT.puts("Checking " + row['UFN'])
