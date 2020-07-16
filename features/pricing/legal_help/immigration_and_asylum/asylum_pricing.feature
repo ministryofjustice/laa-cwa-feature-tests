@@ -53,9 +53,9 @@ Feature: Pricing for Asylum claims
       | IACC:IFRA |
     And the following outcomes are bulkloaded:
       | # | UFN        | CASE_START_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | SUBSTANTIVE_HEARING | ADJOURNED_HEARING_FEE | CMRH_ORAL | CMRH_TELEPHONE | EXEMPTION_CRITERIA_SATISFIED | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT |
-      | 1 | 251019/001 | 25/10/2019      | 100.0       | 400.0        | Y             | N                   | 0                     | 0         | 0              | CM001                        |                      |                   |
-      | 2 | 251019/002 | 25/10/2019      | 100.0       | 400.0        | Y             | Y                   | 0                     | 0         | 0              | CM001                        |                      |                   |
-      | 3 | 251019/003 | 25/10/2019      | 100.0       | 401.0        | Y             | Y                   | 1                     | 0         | 0              | CM001                        |                      |                   |
+      | 1 | 251019/001 | 25/10/2019      | 100.0       | 400.0        | Y             | N                   | 0                     | 0         | 0              | CM001                        | 0                    | 0                 |
+      | 2 | 251019/002 | 25/10/2019      | 100.0       | 400.0        | Y             | Y                   | 0                     | 0         | 0              | CM001                        | 0                    | 0                 |
+      | 3 | 251019/003 | 25/10/2019      | 100.0       | 401.0        | Y             | Y                   | 1                     | 0         | 0              | CM001                        | 0                    | 0                 |
       | 4 | 241019/004 | 24/10/2019      | 100.0       | 500.0        | Y             | N                   | 0                     | 0         | 0              | CM001                        | 100                  | 20                |
     When user confirms the submission
     And user is on the pricing outcome details page

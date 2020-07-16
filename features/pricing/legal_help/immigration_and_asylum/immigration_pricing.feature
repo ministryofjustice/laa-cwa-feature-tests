@@ -18,7 +18,7 @@ Feature: Pricing for Immigration claims
     Escape fee flag: (PROFIT_COST + COUNSEL_COST) > (3 * Base fee £527)
 
     Given the following Matter Types are chosen:
-      | IMCC:ICZN |
+      | IMCC:IDOM |
     And the following outcomes are bulkloaded:
       | # | UFN        | CASE_START_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | SUBSTANTIVE_HEARING | ADJOURNED_HEARING_FEE | CMRH_ORAL | CMRH_TELEPHONE | EXEMPTION_CRITERIA_SATISFIED | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT |
       | 1 | 010419/001 | 01/04/2019      | 100.0       | 500.0        | N             | N                   | 0                     | 0         | 0              | <blank>                      | 0                    | 0                 |

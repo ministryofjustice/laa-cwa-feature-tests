@@ -62,12 +62,18 @@ end
 
 Then('the following results are expected:') do |table|
   @bulk_load_results_page = BulkLoadResultsPage.new
-  table_to_hash_array(table).each do |row|
+  table = @matter_types.map do |matter_type|
+    table_to_hash_array(table).map do |row|
+      row.tap { |r| r[:matter_type] = matter_type }
+    end
+  end.flatten
+  table.each.with_index(1) do |row, i|
+    STDOUT.puts("Testing #{row[:matter_type]}, ##{row[:'#']}")
     expected = row[:error_code_or_message]
     error = @bulk_load_results_page.errors.find do |error|
       matter_type_index = @matter_types.find_index(row[:matter_type])
       raise "Matter type not selected: #{row[:matter_type]}" if matter_type_index.nil?
-      case_id = "%03d" % (row[:'#'].to_i + matter_type_index)
+      case_id = "%03d" % i
       error.client_surname.text.split.last == case_id
     end
     next if error.nil? && expected == '<none>'

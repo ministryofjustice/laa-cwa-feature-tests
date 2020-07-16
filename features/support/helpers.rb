@@ -84,11 +84,13 @@ module Helpers
           areaOfLaw: submission.area_of_law,
           scheduleNum: submission.schedule_number
         ) do |sc|
-          matter_types.each.with_index do |matter_type, i|
+          tot_lines = 0
+          matter_types.each do |matter_type|
             new_lines.each do |new_line|
               sc.outcome(matterType: matter_type) do |o|
+                tot_lines = tot_lines + 1
                 o.outcomeItem(submission.schedule_ref, name: 'SCHEDULE_REF')
-                new_line[:case_id] = "%03d" % (new_line[:'#'].to_i + i)
+                new_line[:case_id] = "%03d" % tot_lines
                 submission.lines.each do |default_line|
                   field = default_line.name
                   value = new_line[field.downcase.to_sym]
