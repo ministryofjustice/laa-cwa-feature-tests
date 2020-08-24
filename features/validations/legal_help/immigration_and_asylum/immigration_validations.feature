@@ -157,3 +157,29 @@ Feature: Immigration Bulk load validations
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE |
       | 1 | <none>                |
+
+  Scenario: Bulkoad Civil Immigration outcomes with CLAIM_TYPE: Stage Disbursment Claim and WORK_CONCLUDED_DATE
+    The 3 month Stage Billing rule is validated between Case Start Date and Claim Date (Work Concluded Date).
+    Given the following Matter Types are chosen:
+      | IMCC:IDOM |
+      | IMCC:IILL |
+      | IMCC:IIRC |
+      | IMCC:IOTH |
+      | IMCC:IOUT |
+      | IMCC:IRVL |
+      | IMCC:ICZN |
+      | IMCC:IEMP |
+      | IMCC:IEUL |
+      | IMCC:IFME |
+      | IMCC:IFVI |
+      | IMCC:IGOL |
+      | IMCC:ISTU |
+      | IMCC:ITWE |
+    And the following outcomes are bulkloaded:
+      | # | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
+      | 1 | DC         | 01/01/2020      | 01/04/2020          | --           |
+      | 2 | DC         | 01/01/2020      | 31/03/2020          | --           |
+    Then the following results are expected:
+      | # | ERROR_CODE_OR_MESSAGE                                                                                                                          |
+      | 1 | <none>                                                                                                                                         |
+      | 2 | Stage disbursement claims can only be claimed where 3 months have elapsed from the date the matter was opened. Please refer to the guidelines. |

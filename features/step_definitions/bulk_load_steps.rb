@@ -62,22 +62,29 @@ end
 
 Then('the following results are expected:') do |table|
   @bulk_load_results_page = BulkLoadResultsPage.new
-  table = @matter_types.map do |matter_type|
+  @bulk_load_results_page.wait_until_summary_visible(wait: 30)
+
+  expected_results = @matter_types.flat_map do |matter_type|
     table_to_hash_array(table).map do |row|
       row.tap { |r| r[:matter_type] = matter_type }
     end
-  end.flatten
-  table.each.with_index(1) do |row, i|
-    STDOUT.puts("Testing #{row[:matter_type]}, ##{row[:'#']}")
-    expected = row[:error_code_or_message]
-    error = @bulk_load_results_page.errors.find do |error|
-      matter_type_index = @matter_types.find_index(row[:matter_type])
-      raise "Matter type not selected: #{row[:matter_type]}" if matter_type_index.nil?
-      case_id = "%03d" % i
-      error.client_surname.text.split.last == case_id
-    end
+  end
+
+  actual_results = @bulk_load_results_page.errors.reduce({}) do |collected, current|
+    case_id = current.client_surname.text.split.last
+    error_message = current.description.text
+    collected.merge({ case_id => error_message })
+  end
+
+  expected_results.each.with_index(1) do |row, i|
+    STDOUT.puts("Testing #{row[:matter_type]}, assertion ##{row[:'#']}")
+
+    case_id = "%03d" % i
+    expected = error_message(row[:error_code_or_message])
+    error = actual_results[case_id]
     next if error.nil? && expected == '<none>'
-    expect(error&.description&.text).to eq(error_message(expected))
+
+    expect(error).to eq(expected)
   end
 end
 
