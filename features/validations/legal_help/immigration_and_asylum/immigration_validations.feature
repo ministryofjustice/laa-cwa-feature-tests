@@ -13,6 +13,12 @@ Feature: Immigration Bulk load validations
       | IMCC:IOTH |
       | IMCC:IOUT |
       | IMCC:IRVL |
+      | IMCD:IDOM |
+      | IMCD:IILL |
+      | IMCD:IIRC |
+      | IMCD:IOTH |
+      | IMCD:IOUT |
+      | IMCD:IRVL |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | EXEMPTION_CRITERIA_SATISFIED |
       | 1 | 01/04/2019      | <blank>                      |
@@ -33,6 +39,13 @@ Feature: Immigration Bulk load validations
       | IMCC:IFVI |
       | IMCC:ISTU |
       | IMCC:ITWE |
+      | IMCD:ICZN |
+      | IMCD:IEMP |
+      | IMCD:IEUL |
+      | IMCD:IFME |
+      | IMCD:IFVI |
+      | IMCD:ISTU |
+      | IMCD:ITWE |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | EXEMPTION_CRITERIA_SATISFIED |
       | 1 | 25/10/2019      | <blank>                      |
@@ -49,6 +62,7 @@ Feature: Immigration Bulk load validations
     Even if the trafficking criteria exemption code applies, this combination should not be valid.
     Given the following Matter Types are chosen:
       | IMCC:IGOL |
+      | IMCD:IGOL |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | EXEMPTION_CRITERIA_SATISFIED |
       | 1 | 25/10/2019      | <blank>                      |
@@ -78,6 +92,19 @@ Feature: Immigration Bulk load validations
       | IMCC:IFVI |
       | IMCC:ISTU |
       | IMCC:ITWE |
+      | IMCD:IDOM |
+      | IMCD:IILL |
+      | IMCD:IIRC |
+      | IMCD:IOTH |
+      | IMCD:IOUT |
+      | IMCD:IRVL |
+      | IMCD:ICZN |
+      | IMCD:IEMP |
+      | IMCD:IEUL |
+      | IMCD:IFME |
+      | IMCD:IFVI |
+      | IMCD:ISTU |
+      | IMCD:ITWE |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | EXEMPTION_CRITERIA_SATISFIED |
       | 1 | 01/04/2019      | TR001                        |
@@ -102,6 +129,19 @@ Feature: Immigration Bulk load validations
       | IMCC:IFVI |
       | IMCC:ISTU |
       | IMCC:ITWE |
+      | IMCD:IDOM |
+      | IMCD:IILL |
+      | IMCD:IIRC |
+      | IMCD:IOTH |
+      | IMCD:IOUT |
+      | IMCD:IRVL |
+      | IMCD:ICZN |
+      | IMCD:IEMP |
+      | IMCD:IEUL |
+      | IMCD:IFME |
+      | IMCD:IFVI |
+      | IMCD:ISTU |
+      | IMCD:ITWE |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | PROCUREMENT_AREA | ACCESS_POINT | EXEMPTION_CRITERIA_SATISFIED | EXCL_CASE_FUNDING_REF |
       | 1 | 01/04/2019      | PA20000          | AP20000      | LE001                        | 1234567AB             |
@@ -122,6 +162,13 @@ Feature: Immigration Bulk load validations
       | IMCC:IFVI |
       | IMCC:ISTU |
       | IMCC:ITWE |
+      | IMCD:ICZN |
+      | IMCD:IEMP |
+      | IMCD:IEUL |
+      | IMCD:IFME |
+      | IMCD:IFVI |
+      | IMCD:ISTU |
+      | IMCD:ITWE |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | PROCUREMENT_AREA | ACCESS_POINT | EXCL_CASE_FUNDING_REF |
       | 1 | 25/10/2019      | PA20000          | AP20000      | 1234567AB             |
@@ -151,6 +198,20 @@ Feature: Immigration Bulk load validations
       | IMCC:IGOL |
       | IMCC:ISTU |
       | IMCC:ITWE |
+      | IMCD:IDOM |
+      | IMCD:IILL |
+      | IMCD:IIRC |
+      | IMCD:IOTH |
+      | IMCD:IOUT |
+      | IMCD:IRVL |
+      | IMCD:ICZN |
+      | IMCD:IEMP |
+      | IMCD:IEUL |
+      | IMCD:IFME |
+      | IMCD:IFVI |
+      | IMCD:IGOL |
+      | IMCD:ISTU |
+      | IMCD:ITWE |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | CLAIM_TYPE | OUTCOME_CODE |
       | 1 | 25/10/2019      | DC         | --           |
@@ -175,6 +236,20 @@ Feature: Immigration Bulk load validations
       | IMCC:IGOL |
       | IMCC:ISTU |
       | IMCC:ITWE |
+      | IMCD:IDOM |
+      | IMCD:IILL |
+      | IMCD:IIRC |
+      | IMCD:IOTH |
+      | IMCD:IOUT |
+      | IMCD:IRVL |
+      | IMCD:ICZN |
+      | IMCD:IEMP |
+      | IMCD:IEUL |
+      | IMCD:IFME |
+      | IMCD:IFVI |
+      | IMCD:IGOL |
+      | IMCD:ISTU |
+      | IMCD:ITWE |
     And the following outcomes are bulkloaded:
       | # | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
       | 1 | DC         | 01/01/2020      | 01/04/2020          | --           |

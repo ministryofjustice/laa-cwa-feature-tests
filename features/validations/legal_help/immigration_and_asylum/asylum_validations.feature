@@ -15,6 +15,14 @@ Feature: Asylum Bulk load validations
       | IACC:IOTH |
       | IACC:IOUT |
       | IACC:IRVL |
+      | IACD:IASY |
+      | IACD:IFRA |
+      | IACD:IFST |
+      | IACD:IIRC |
+      | IACD:ILEA |
+      | IACD:IOTH |
+      | IACD:IOUT |
+      | IACD:IRVL |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE |
       | 1 | 01/04/2019      |
@@ -29,6 +37,7 @@ Feature: Asylum Bulk load validations
     IMCC:IGOL can only be used from 25/10/2019, even if an exemption code applies.
     Given the following Matter Types are chosen:
       | IACC:IGOL |
+      | IACD:IGOL |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | EXEMPTION_CRITERIA_SATISFIED |
       | 1 | 25/10/2019      | <blank>                      |
@@ -51,6 +60,14 @@ Feature: Asylum Bulk load validations
       | IACC:IOTH |
       | IACC:IOUT |
       | IACC:IRVL |
+      | IACD:IASY |
+      | IACD:IFRA |
+      | IACD:IFST |
+      | IACD:IIRC |
+      | IACD:ILEA |
+      | IACD:IOTH |
+      | IACD:IOUT |
+      | IACD:IRVL |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | EXEMPTION_CRITERIA_SATISFIED |
       | 1 | 01/04/2019      | TR001                        |
@@ -72,6 +89,14 @@ Feature: Asylum Bulk load validations
       | IACC:IOTH |
       | IACC:IOUT |
       | IACC:IRVL |
+      | IACD:IASY |
+      | IACD:IFRA |
+      | IACD:IFST |
+      | IACD:IIRC |
+      | IACD:ILEA |
+      | IACD:IOTH |
+      | IACD:IOUT |
+      | IACD:IRVL |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | PROCUREMENT_AREA | ACCESS_POINT | EXEMPTION_CRITERIA_SATISFIED | EXCL_CASE_FUNDING_REF |
       | 1 | 01/04/2019      | PA20000          | AP20000      | LE001                        | 1234567AB             |
@@ -87,6 +112,7 @@ Feature: Asylum Bulk load validations
     Please note: IACC:IGOL cannot be used before 25 October 2019
     Given the following Matter Types are chosen:
       | IACC:IGOL |
+      | IACD:IGOL |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | PROCUREMENT_AREA | ACCESS_POINT | EXCL_CASE_FUNDING_REF |
       | 1 | 25/10/2019      | PA20000          | AP20000      | 1234567AB             |
@@ -109,6 +135,15 @@ Feature: Asylum Bulk load validations
       | IACC:IOUT |
       | IACC:IRVL |
       | IACC:IGOL |
+      | IACD:IASY |
+      | IACD:IFRA |
+      | IACD:IFST |
+      | IACD:IIRC |
+      | IACD:ILEA |
+      | IACD:IOTH |
+      | IACD:IOUT |
+      | IACD:IRVL |
+      | IACD:IGOL |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | CLAIM_TYPE | OUTCOME_CODE |
       | 1 | 25/10/2019      | DC         | --           |
@@ -128,6 +163,15 @@ Feature: Asylum Bulk load validations
       | IACC:IOUT |
       | IACC:IRVL |
       | IACC:IGOL |
+      | IACD:IASY |
+      | IACD:IFRA |
+      | IACD:IFST |
+      | IACD:IIRC |
+      | IACD:ILEA |
+      | IACD:IOTH |
+      | IACD:IOUT |
+      | IACD:IRVL |
+      | IACD:IGOL |
     And the following outcomes are bulkloaded:
       | # | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
       | 1 | DC         | 01/01/2020      | 01/04/2020          | --           |
