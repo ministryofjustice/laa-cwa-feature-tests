@@ -26,16 +26,16 @@ Scenario: Bulkload Civil Asylum outcomes with additional fees, with EXEMPTION_CR
   Given the following Matter Types are chosen:
     | IACC:IFRA |
   And the following outcomes are bulkloaded:
-    | # | UFN        | CASE_START_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | SUBSTANTIVE_HEARING | ADJOURNED_HEARING_FEE | CMRH_ORAL | CMRH_TELEPHONE | EXEMPTION_CRITERIA_SATISFIED | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT |
-    | 1 | 251019/001 | 25/10/2019      | 100.0       | 400.0        | Y             | N                   | 0                     | 0         | 0              | CM001                        | 0                    | 0                 |
-    | 2 | 251019/002 | 25/10/2019      | 100.0       | 400.0        | Y             | Y                   | 0                     | 0         | 0              | CM001                        | 0                    | 0                 |
-    | 3 | 251019/003 | 25/10/2019      | 100.0       | 401.0        | Y             | Y                   | 1                     | 0         | 0              | CM001                        | 0                    | 0                 |
-    | 4 | 251019/004 | 25/10/2019      | 100.0       | 500.0        | Y             | N                   | 0                     | 0         | 0              | CM001                        | 100                  | 20                |
+    | # | UFN        | CASE_START_DATE | PROFIT_COST | COUNSEL_COST | SUBSTANTIVE_HEARING | ADJOURNED_HEARING_FEE | CMRH_ORAL | CMRH_TELEPHONE | EXEMPTION_CRITERIA_SATISFIED | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT |
+    | 1 | 251019/001 | 25/10/2019      | 100.0       | 400.0        | N                   | 0                     | 0         | 0              | CM001                        | 0                    | 0                 |
+    | 2 | 251019/002 | 25/10/2019      | 100.0       | 400.0        | Y                   | 0                     | 0         | 0              | CM001                        | 0                    | 0                 |
+    | 3 | 251019/003 | 25/10/2019      | 100.0       | 401.0        | Y                   | 1                     | 0         | 0              | CM001                        | 0                    | 0                 |
+    | 4 | 251019/004 | 25/10/2019      | 100.0       | 500.0        | N                   | 0                     | 0         | 0              | CM001                        | 100                  | 20                |
   When user confirms the submission
   And user is on the pricing outcome details page
   Then user should see the following outcomes:
     | # | UFN        | Value    | Escape Fee |
-    | 1 | 251019/001 | £ 600.00 | Y          |
-    | 2 | 251019/002 | £ 600.00 | N          |
-    | 3 | 251019/003 | £ 600.00 | Y          |
-    | 4 | 241019/004 | £ 720.00 | Y          |
+    | 1 | 251019/001 | £ 500.00 | N          |
+    | 2 | 251019/002 | £ 500.00 | N          |
+    | 3 | 251019/003 | £ 500.00 | Y          |
+    | 4 | 251019/004 | £ 620.00 | Y          |
