@@ -34,7 +34,7 @@ Feature: Asylum Bulk load validations
 
   Scenario: Bulkload Civil Asylum outcomes with CASE_START_DATE around 25 October 2019
     The following Matter Types can be used from 25/10/2019.
-    IMCC:IGOL can only be used from 25/10/2019, even if an exemption code applies.
+    IMC[C-D]:IGOL can only be used from 25/10/2019, even if an exemption code applies.
     Given the following Matter Types are chosen:
       | IACC:IGOL |
       | IACD:IGOL |
@@ -109,7 +109,7 @@ Feature: Asylum Bulk load validations
   Scenario: Bulkload Civil Asylum outcomes with EXCL_CASE_FUNDING_REF
     The following Matter Types can be brought earlier into scope if an ECF number is provided.
     If the case start date is 1 April 2019, a ECF number must be provided.
-    Please note: IACC:IGOL cannot be used before 25 October 2019
+    Please note: IAC[C-D]:IGOL cannot be used before 25 October 2019
     Given the following Matter Types are chosen:
       | IACC:IGOL |
       | IACD:IGOL |
