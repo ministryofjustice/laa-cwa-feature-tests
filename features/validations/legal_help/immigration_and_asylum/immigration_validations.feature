@@ -59,7 +59,7 @@ Feature: Immigration Bulk load validations
 
   Scenario: Bulkload Civil Immigration outcomes CASE_START_DATE around 25 October 2019 (exceptions)
     Exception: IMC[C-D]:IGOL cannot be used before the 25 October 2019.
-    Even if the trafficking criteria exemption code applies, this combination should not be valid.
+    Even if the trafficking criteria exemption code applies, these combinations should not be valid.
     Given the following Matter Types are chosen:
       | IMCC:IGOL |
       | IMCD:IGOL |

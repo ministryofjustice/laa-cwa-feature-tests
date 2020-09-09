@@ -34,7 +34,7 @@ Feature: Asylum Bulk load validations
 
   Scenario: Bulkload Civil Asylum outcomes with CASE_START_DATE around 25 October 2019
     The following Matter Types can be used from 25/10/2019.
-    IAC[C-D]:IGOL can only be used from 25/10/2019, even if an exemption code applies.
+    Even if the trafficking criteria exemption code applies, these combinations should not be valid.
     Given the following Matter Types are chosen:
       | IACC:IGOL |
       | IACD:IGOL |
