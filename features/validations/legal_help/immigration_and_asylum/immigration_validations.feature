@@ -13,6 +13,12 @@ Feature: Immigration Bulk load validations
       | IMCC:IOTH |
       | IMCC:IOUT |
       | IMCC:IRVL |
+      | IMCD:IDOM |
+      | IMCD:IILL |
+      | IMCD:IIRC |
+      | IMCD:IOTH |
+      | IMCD:IOUT |
+      | IMCD:IRVL |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | EXEMPTION_CRITERIA_SATISFIED |
       | 1 | 01/04/2019      | <blank>                      |
@@ -33,6 +39,13 @@ Feature: Immigration Bulk load validations
       | IMCC:IFVI |
       | IMCC:ISTU |
       | IMCC:ITWE |
+      | IMCD:ICZN |
+      | IMCD:IEMP |
+      | IMCD:IEUL |
+      | IMCD:IFME |
+      | IMCD:IFVI |
+      | IMCD:ISTU |
+      | IMCD:ITWE |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | EXEMPTION_CRITERIA_SATISFIED |
       | 1 | 25/10/2019      | <blank>                      |
@@ -45,10 +58,11 @@ Feature: Immigration Bulk load validations
       | 3 | <none>                    |
 
   Scenario: Bulkload Civil Immigration outcomes CASE_START_DATE around 25 October 2019 (exceptions)
-    Exception: IMCC:IGOL cannot be used before the 25 October 2019.
-    Even if the trafficking criteria exemption code applies, this combination should not be valid.
+    Exception: IMC[C-D]:IGOL cannot be used before the 25 October 2019.
+    Even if the trafficking criteria exemption code applies, these combinations should not be valid.
     Given the following Matter Types are chosen:
       | IMCC:IGOL |
+      | IMCD:IGOL |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | EXEMPTION_CRITERIA_SATISFIED |
       | 1 | 25/10/2019      | <blank>                      |
@@ -56,11 +70,11 @@ Feature: Immigration Bulk load validations
       | 3 | 24/04/2019      | TR001                        |
       | 4 | 25/10/2019      | TR001                        |
     Then the following results are expected:
-      | # | ERROR_CODE_OR_MESSAGE      |
-      | 1 | <none>                     |
-      | 2 | XXLSC_AM_PRE_LAR2_COMB_MSG |
-      | 3 | XXLSC_AM_PRE_LAR2_COMB_MSG |
-  # | 4 | UNIMPLEMETED_SHOULD_ERROR  |
+      | # | ERROR_CODE_OR_MESSAGE                                                                |
+      | 1 | <none>                                                                               |
+      | 2 | XXLSC_AM_PRE_LAR2_COMB_MSG                                                           |
+      | 3 | XXLSC_AM_PRE_LAR2_COMB_MSG                                                           |
+      | 4 | The Exemption Criteria Satisfied code is not valid for this matter type combination. |
 
   Scenario: Bulkload Civil Asylum outcomes with EXEMPTION_CRITERIA_SATISFIED: TR001
     The following Matter Types can be used with the trafficking criteria exemption code.
@@ -78,6 +92,19 @@ Feature: Immigration Bulk load validations
       | IMCC:IFVI |
       | IMCC:ISTU |
       | IMCC:ITWE |
+      | IMCD:IDOM |
+      | IMCD:IILL |
+      | IMCD:IIRC |
+      | IMCD:IOTH |
+      | IMCD:IOUT |
+      | IMCD:IRVL |
+      | IMCD:ICZN |
+      | IMCD:IEMP |
+      | IMCD:IEUL |
+      | IMCD:IFME |
+      | IMCD:IFVI |
+      | IMCD:ISTU |
+      | IMCD:ITWE |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | EXEMPTION_CRITERIA_SATISFIED |
       | 1 | 01/04/2019      | TR001                        |
@@ -102,6 +129,19 @@ Feature: Immigration Bulk load validations
       | IMCC:IFVI |
       | IMCC:ISTU |
       | IMCC:ITWE |
+      | IMCD:IDOM |
+      | IMCD:IILL |
+      | IMCD:IIRC |
+      | IMCD:IOTH |
+      | IMCD:IOUT |
+      | IMCD:IRVL |
+      | IMCD:ICZN |
+      | IMCD:IEMP |
+      | IMCD:IEUL |
+      | IMCD:IFME |
+      | IMCD:IFVI |
+      | IMCD:ISTU |
+      | IMCD:ITWE |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | PROCUREMENT_AREA | ACCESS_POINT | EXEMPTION_CRITERIA_SATISFIED | EXCL_CASE_FUNDING_REF |
       | 1 | 01/04/2019      | PA20000          | AP20000      | LE001                        | 1234567AB             |
@@ -122,6 +162,13 @@ Feature: Immigration Bulk load validations
       | IMCC:IFVI |
       | IMCC:ISTU |
       | IMCC:ITWE |
+      | IMCD:ICZN |
+      | IMCD:IEMP |
+      | IMCD:IEUL |
+      | IMCD:IFME |
+      | IMCD:IFVI |
+      | IMCD:ISTU |
+      | IMCD:ITWE |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | PROCUREMENT_AREA | ACCESS_POINT | EXCL_CASE_FUNDING_REF |
       | 1 | 25/10/2019      | PA20000          | AP20000      | 1234567AB             |
@@ -151,6 +198,20 @@ Feature: Immigration Bulk load validations
       | IMCC:IGOL |
       | IMCC:ISTU |
       | IMCC:ITWE |
+      | IMCD:IDOM |
+      | IMCD:IILL |
+      | IMCD:IIRC |
+      | IMCD:IOTH |
+      | IMCD:IOUT |
+      | IMCD:IRVL |
+      | IMCD:ICZN |
+      | IMCD:IEMP |
+      | IMCD:IEUL |
+      | IMCD:IFME |
+      | IMCD:IFVI |
+      | IMCD:IGOL |
+      | IMCD:ISTU |
+      | IMCD:ITWE |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | CLAIM_TYPE | OUTCOME_CODE |
       | 1 | 25/10/2019      | DC         | --           |
@@ -175,6 +236,20 @@ Feature: Immigration Bulk load validations
       | IMCC:IGOL |
       | IMCC:ISTU |
       | IMCC:ITWE |
+      | IMCD:IDOM |
+      | IMCD:IILL |
+      | IMCD:IIRC |
+      | IMCD:IOTH |
+      | IMCD:IOUT |
+      | IMCD:IRVL |
+      | IMCD:ICZN |
+      | IMCD:IEMP |
+      | IMCD:IEUL |
+      | IMCD:IFME |
+      | IMCD:IFVI |
+      | IMCD:IGOL |
+      | IMCD:ISTU |
+      | IMCD:ITWE |
     And the following outcomes are bulkloaded:
       | # | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
       | 1 | DC         | 01/01/2020      | 01/04/2020          | --           |
