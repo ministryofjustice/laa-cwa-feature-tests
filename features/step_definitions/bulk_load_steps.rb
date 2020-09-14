@@ -48,7 +48,7 @@ Given('the following Matter Types are chosen:') do |table|
   @matter_types = table.raw.flatten
 end
 
-When('the following outcomes are bulkloaded:') do |table|
+When(/^the following outcomes are bulkloaded(\sand\sconfirmed)?:$/) do |confirm, table|
   doc = build_bulkload_xml(
     submission: @submission,
     matter_types: @matter_types,
@@ -58,6 +58,8 @@ When('the following outcomes are bulkloaded:') do |table|
 
   @bulk_load_page.bulk_load_file.send_keys(file_name)
   with_delay(0.75) { @bulk_load_page.next_button.click }
+
+  step('user confirms the submission') if confirm
 end
 
 Then('the following results are expected:') do |table|
