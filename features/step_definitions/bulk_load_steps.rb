@@ -1,35 +1,38 @@
-Given('user prepares to submit outcomes for test provider {string}') do |ref|
+Given(/^user prepares to submit outcomes for test provider "(.*)"(\s+again)?$/) do |ref, again|
   @submission = CWAProvider.submission(ref)
 
   navigator = NavigatorPage.new
   navigator.load
   navigator.roles.cwa_activity_report_manager_internal_role.click
 
-  navigator.content.submission_list.click
+  if !again
+    navigator.content.submission_list.click
 
-  submission_list_page = SubmissionListPage.new
-  submission_list_page.account_number.set(@submission.account_number)
-  submission_list_page.search_button.click
+    submission_list_page = SubmissionListPage.new
+    submission_list_page.account_number.set(@submission.account_number)
+    submission_list_page.search_button.click
 
-  submission_list_page.wait_until_submissions_visible(wait: 10)
-  existing_submission = submission_list_page.submissions.find do |submission|
-    submission.schedule_submission_reference.text == @submission.schedule_number
-  end
-
-  if existing_submission
-    existing_submission.update_button.click
-    submission_details_page = SubmissionDetailsPage.new
-    if !submission_details_page.has_text?(/No results found/)
-      STDOUT.print 'Cleaning existing outcomes for test reference...'
-      submission_details_page.select_all.click
-      submission_details_page.delete_button.click
-      submission_details_page.confirm_delete_button.click
-      STDOUT.puts ' done.'
+    submission_list_page.wait_until_submissions_visible(wait: 10)
+    existing_submission = submission_list_page.submissions.find do |submission|
+      submission.schedule_submission_reference.text == @submission.schedule_number
     end
+
+    if existing_submission
+      existing_submission.update_button.click
+      submission_details_page = SubmissionDetailsPage.new
+      if !submission_details_page.has_text?(/No results found/)
+        STDOUT.print 'Cleaning existing outcomes for test reference...'
+        submission_details_page.select_all.click
+        submission_details_page.delete_button.click
+        submission_details_page.confirm_delete_button.click
+        STDOUT.puts ' done.'
+      end
+    end
+
+    navigator.load
+    navigator.roles.cwa_activity_report_manager_internal_role.click
   end
 
-  navigator.load
-  navigator.roles.cwa_activity_report_manager_internal_role.click
   navigator.content.bulk_load.click
 
   @bulk_load_page = BulkLoadPage.new
