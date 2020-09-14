@@ -31,7 +31,7 @@ After do |scenario|
 end
 
 at_exit do
-  tmp_path = File.expand_path(Helpers::TMP_DIR)
+  tmp_path = File.expand_path(Helpers::Bulkload::TMP_DIR)
   tmp_files = Dir.glob("#{tmp_path}/*")
   FileUtils.rm_f(tmp_files)
 end
