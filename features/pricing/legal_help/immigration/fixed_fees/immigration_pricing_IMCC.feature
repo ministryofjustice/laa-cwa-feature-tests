@@ -34,7 +34,7 @@ Feature: Pricing for Immigration claims
     And user is on the pricing outcome details page
     Then user should see the following outcomes:
       | # | UFN        | Value       |
-      | 1 | 010419/001 | £ 1,515.20  |
+      | 1 | 010419/001 | £ 1,417.20  |
   
   @vat_indicator_fixed_fee
   Scenario: Bulkload Civil Asylum outcomes and test VAT is applied correctly to the fixed fee
