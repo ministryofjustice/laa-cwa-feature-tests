@@ -69,6 +69,8 @@ module Helpers
         client_forename = new_line[:client_forename] || default_field_value('CLIENT_FORENAME')
         client_surname = new_line[:client_surname] || default_field_value('CLIENT_SURNAME')
         case_start_date = new_line[:case_start_date] || default_field_value('CASE_START_DATE')
+        rep_order_date = new_line[:rep_order_date] || default_field_value('REP_ORDER_DATE')
+        ufn = new_line[:ufn] || default_field_value('UFN')
 
         @submission.lines.each do |default_line|
           field = default_line.name
@@ -80,8 +82,12 @@ module Helpers
             when 'CASE_REF_NUMBER', 'CLIENT_SURNAME'
               "#{client_surname} #{case_id}"
             when 'UFN'
-              day, month, year = case_start_date.split('/')
-              "#{day}#{month}#{year[-2..-1]}/#{case_id}"
+              if ufn
+                ufn
+              else
+                day, month, year = (case_start_date ||rep_order_date).split('/')
+                "#{day}#{month}#{year[-2..-1]}/#{case_id}"
+              end
             when 'UCN'
               "#{client_dob.tr('/', '')}/#{client_forename[0].upcase}/#{client_surname[0..3].upcase}"
             else
