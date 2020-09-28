@@ -6,15 +6,25 @@ Feature: PROW code Bulk load validations
     Given the following Matter Types are chosen:
     | PROW |
 
+  @XXLSC_TEST_CURRENT_SUBMISSION_PERIOD
+   Scenario: Bulkload PROW code outcomes with REP_ORDER_DATE after system date or XXLSC_TEST_CURRENT_SUBMISSION_PERIOD
+    And the following outcomes are bulkloaded:
+      | # | UFN        | REP_ORDER_DATE | WORK_CONCLUDED_DATE |
+      | 1 | 181020/001 | 01/11/2020     | 02/11/2020          |
+    Then the following results are expected:
+      | # | ERROR_CODE_OR_MESSAGE      |
+      | 1 | The Representation Order Date must not be after today’s date. Please enter a valid value. |
+
+
   Scenario: Bulkload PROW code outcomes with REP_ORDER_DATE around 19 October 2020
     And the following outcomes are bulkloaded:
      | # | UFN        | REP_ORDER_DATE | WORK_CONCLUDED_DATE |
      | 1 | 181020/001 | 19/10/2020     | 20/10/2020          |
-     | 1 | 181020/002 | 18/10/2020     | 20/10/2020          |
+     | 2 | 181020/002 | 18/10/2020     | 20/10/2020          |
     Then the following results are expected:
      | # | ERROR_CODE_OR_MESSAGE      |
      | 1 | <none>                     |
-     | 2 | The Representation Order Date must be on or after 19-OCT-2020. Please enter a valid value. |
+     | 2 | The Representation Order Date must be on or after 19/10/2020. Please enter a valid value. |
 
   Scenario: Bulkoad Crime Lower outcomes with REP_ORDER_DATE between the UFN date and the WORK_CONCLUDED_DATE
    And the following outcomes are bulkloaded:
@@ -42,7 +52,7 @@ Feature: PROW code Bulk load validations
   | 1 | 181020/001 | <blank>        | 20/10/2020          |
  Then the following results are expected:
   | # | ERROR_CODE_OR_MESSAGE      |
-  | 1 | The Representation Order Date must be entered for this outcome. Please enter a valid date. |
+  | 1 | REP_ORDER_DATE is missing |
 
 Scenario: Bulkoad Crime Lower outcomes with DSCC NUMBER
 And the following outcomes are bulkloaded:
@@ -53,13 +63,17 @@ And the following outcomes are bulkloaded:
 Then the following results are expected:
  | # | ERROR_CODE_OR_MESSAGE      |
  | 1 | <none>                     |
- | 2 | XXLSC_AM_CRIME_DSCC_NUMBER |
+ | 2 | The DSCC Number you have reported is invalid. DSCC Numbers must be 10 characters long and in the format yymmnnnnnl. Please enter a valid value in the DSCC Number field. |
  | 3 | <none>                     |
 
-
-
-#    -- todo: how to test? we can change XXLSC_TEST_CURRENT_SUBMISSION_PERIOD temporarily on DEV/TST/UAT!
-#    Scenario: Bulkoad Crime Lower outcomes with REP_ORDER_DATE after TODAY
-#        Expect: XXLSC_AM_REP_ORD_DATE_MSG3
-#    Scenario: Bulkoad Crime Lower outcomes with REP_ORDER_DATE before TODAY
-#        Expect: None
+ Scenario: Bulkoad Crime Lower outcomes with MAAT_ID
+ And the following outcomes are bulkloaded:
+  | # | UFN        | REP_ORDER_DATE    | WORK_CONCLUDED_DATE | MAAT_ID     |
+  | 1 | 181020/001 | 19/10/2020        | 20/10/2020          | <blank>     |
+  | 2 | 181020/002 | 19/10/2020        | 20/10/2020          | 12345       |
+  | 3 | 181020/003 | 19/10/2020        | 20/10/2020          | 201012345A  |
+ Then the following results are expected:
+  | # | ERROR_CODE_OR_MESSAGE      |
+  | 1 | MAAT_ID is missing |
+  | 2 | <none>                     |
+  | 3 | Value :201012345A is not valid for : MAAT_ID |
