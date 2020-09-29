@@ -13,7 +13,7 @@ Feature: PROW code Bulk load validations
       | 1 | 181020/001 | 01/11/2020     | 02/11/2020          |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE      |
-      | 1 | The Representation Order Date must not be after today’s date. Please enter a valid value. |
+      | 1 | The Representation Order Date must not be after today's date. Please enter a valid value. |
 
 
   Scenario: Bulkload PROW code outcomes with REP_ORDER_DATE around 19 October 2020
