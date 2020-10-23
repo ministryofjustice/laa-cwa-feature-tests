@@ -72,7 +72,7 @@ module CWAProvider
       id, _ = ref.split('#').last
       submissions.find do |submission|
         submission.id.to_s == id
-      end
+      end || raise("Missing #{ref} test submission")
     end
   end
 
