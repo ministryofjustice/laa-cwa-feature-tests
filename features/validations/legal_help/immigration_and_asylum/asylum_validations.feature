@@ -4,8 +4,8 @@ Feature: Asylum Bulk load validations
     Given a test firm user is logged in CWA
     And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#5"
 
-  Scenario: Bulkload Civil Asylum outcomes with CASE_START_DATE around 1 April 2019
-    The following Matter Types are valid only from 01/04/2019.
+  Scenario: Bulkload Civil Asylum outcomes with CASE_START_DATE around 1 April 2013
+    The following Matter Types are valid only from 01/04/2013.
     Given the following Matter Types are chosen:
       | IACC:IASY |
       | IACC:IFRA |
@@ -25,12 +25,12 @@ Feature: Asylum Bulk load validations
       | IACD:IRVL |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE |
-      | 1 | 01/04/2019      |
-      | 2 | 31/03/2019      |
+      | 1 | 01/04/2013      |
+      | 2 | 31/03/2013      |
     Then the following results are expected:
-      | # | ERROR_CODE_OR_MESSAGE      |
-      | 1 | <none>                     |
-      | 2 | XXLSC_AM_PRE_LAR2_COMB_MSG |
+      | # | ERROR_CODE_OR_MESSAGE          |
+      | 1 | <none>                         |
+      | 2 | XXLSC_AM_LAR2_PRIOR_SR_REQ_MSG |
 
   Scenario: Bulkload Civil Asylum outcomes with CASE_START_DATE around 25 October 2019
     The following Matter Types can be used from 25/10/2019.
@@ -42,7 +42,7 @@ Feature: Asylum Bulk load validations
       | # | CASE_START_DATE | EXEMPTION_CRITERIA_SATISFIED |
       | 1 | 25/10/2019      | <blank>                      |
       | 2 | 24/10/2019      | <blank>                      |
-      | 3 | 01/04/2019      | TR001                        |
+      | 3 | 01/04/2013      | TR001                        |
       | 4 | 25/10/2019      | TR001                        |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE                                                                |
@@ -72,8 +72,8 @@ Feature: Asylum Bulk load validations
       | IACD:IRVL |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | EXEMPTION_CRITERIA_SATISFIED |
-      | 1 | 01/04/2019      | TR001                        |
-      | 2 | 01/04/2019      | <blank>                      |
+      | 1 | 01/04/2013      | TR001                        |
+      | 2 | 01/04/2013      | <blank>                      |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE |
       | 1 | <none>                |
@@ -101,8 +101,8 @@ Feature: Asylum Bulk load validations
       | IACD:IRVL |
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | PROCUREMENT_AREA | ACCESS_POINT | EXEMPTION_CRITERIA_SATISFIED | EXCL_CASE_FUNDING_REF |
-      | 1 | 01/04/2019      | PA20000          | AP20000      | LE001                        | 1234567AB             |
-      | 2 | 01/04/2019      | PA20000          | AP20000      | LE001                        | <none>                |
+      | 1 | 01/04/2013      | PA20000          | AP20000      | LE001                        | 1234567AB             |
+      | 2 | 01/04/2013      | PA20000          | AP20000      | LE001                        | <none>                |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE        |
       | 1 | <none>                       |
@@ -110,7 +110,7 @@ Feature: Asylum Bulk load validations
 
   Scenario: Bulkload Civil Asylum outcomes with EXCL_CASE_FUNDING_REF
     The following Matter Types can be brought earlier into scope if an ECF number is provided.
-    If the case start date is 1 April 2019, a ECF number must be provided.
+    If the case start date is 1 April 2013, a ECF number must be provided.
     Please note: IAC[C-D]:IGOL cannot be used before 25 October 2019
     Given the following Matter Types are chosen:
       | IACC:IGOL |
@@ -119,7 +119,7 @@ Feature: Asylum Bulk load validations
       | # | CASE_START_DATE | PROCUREMENT_AREA | ACCESS_POINT | EXCL_CASE_FUNDING_REF |
       | 1 | 25/10/2019      | PA20000          | AP20000      | 1234567AB             |
       | 2 | 25/10/2019      | <default>        | <default>    | <blank>               |
-      | 3 | 01/04/2019      | <default>        | <default>    | <blank>               |
+      | 3 | 01/04/2013      | <default>        | <default>    | <blank>               |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE      |
       | 1 | <none>                     |
