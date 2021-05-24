@@ -38,6 +38,7 @@ Given(/^user prepares to submit outcomes for test provider "(.*)"(\s+again)?$/) 
   @bulk_load_page = BulkLoadPage.new
   within_popup(@bulk_load_page, ->{ @bulk_load_page.lookup_firm.click }) do
     office_search_page = OfficeSearchPage.new
+    sleep 1
     within_frame(office_search_page.frame) do
       office_search_page.search_by.select('Account Number')
       office_search_page.account_number.set(@submission.account_number)
