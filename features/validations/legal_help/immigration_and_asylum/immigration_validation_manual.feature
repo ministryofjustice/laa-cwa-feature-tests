@@ -20,6 +20,15 @@ Feature: Validation for Immigration claims
             | 711     | IMLB:IOUT | TR001    | 1234567AB | 01/11/19        | PA20000 | AP20000 | For the case being reported it is not necessary to record an exemption criterion. Please leave the field blank.                                                                                                                                        |
             | 712     | IMLB:IOUT | TR001    |           | 01/11/19        | PA20000 | AP20000 | The PA (PA20000) and/or AP (AP20000) fields have been populated with ECF Matter. This value can only be used if the ECF Reference field is also populated.                                                                                             |
 
+    @delete_outcome_after @manual_submission @invalid @irc
+    Scenario Outline: Add invalid Immigration claims using IRC
+        Given user is on their submission details page
+        When user adds an outcome for Immigration with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+        Then the outcome does not save and the error message "<error message>" appears
+        Examples:
+            | case id | mt        | ecs code | ecf ref  | case start date | pa      | ap      | error message                                                                                       |
+            | 718     | IMXL:IIRC |          |          | 01/11/19        | PA00188 | AP00186 | Access Point - Value AP00186 for the flexfield segment Access Point does not exist in the value set |
+
     @delete_outcome_after @manual_submission @valid
     Scenario Outline: Add valid Immigration claims
         Given user is on their submission details page
@@ -31,3 +40,13 @@ Feature: Validation for Immigration claims
             | 714     | IMLB:IOUT | CM001    |           | 01/11/19        | PA00136 | AP00137 |
             | 715     | IMLB:IOUT | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
             | 716     | IMLB:IOUT | TR001    |           | 01/11/19        | PA00136 | AP00137 |
+
+    @delete_outcome_after @manual_submission @valid @irc
+    Scenario Outline: Add valid Immigration claims using IRC
+        Given user is on their submission details page
+        When user adds an outcome for Immigration with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+        Then the outcome saves successfully
+        Examples:
+            | case id | mt        | ecs code | ecf ref  | case start date | pa      | ap      |
+            | 717     | IMXL:IIRC |          |          | 01/11/19        | PA00188 | AP00187 |
+          
