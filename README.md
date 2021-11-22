@@ -70,3 +70,9 @@ For more information about the Headless mode please have a look at [this doc](ht
 An optional `DEBUG_FAILURES=true` env can be set to step with the debugger into failed
 scenarios with `byebug`. This can be useful to investigate the context of a failure,
 for instance to be able to look at the latest opened window or instance variables.
+
+### Removing Bulkload files
+
+An optional `BULKLOAD_TMP_DELETE=false` env can be set to ensure that any dynamically
+created bulkload files are not automatically deleted after feature tests have completed.
+These files are found in features\support\bulkload\fixtures\tmp.
