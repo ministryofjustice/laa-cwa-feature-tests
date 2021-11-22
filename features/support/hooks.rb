@@ -33,5 +33,7 @@ end
 at_exit do
   tmp_path = File.expand_path(Helpers::Bulkload::TMP_DIR)
   tmp_files = Dir.glob("#{tmp_path}/*")
-  FileUtils.rm_f(tmp_files)
+  if ENV['BULKLOAD_TMP_DELETE'] == 'true'
+    FileUtils.rm_f(tmp_files)
+  end
 end
