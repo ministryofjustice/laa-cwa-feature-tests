@@ -195,8 +195,31 @@ Then('the outcome does not save and gives an error') do
   expect(page).to have_content('The Category of Law, Procurement Area and Access Point combination that has been used is not valid for the date that has been recorded.')
 end
 
-When ('user adds an outcome for Immigration with {string}, {string}, {string}, {string}, {string}, {string} and {string}') \
-do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date, pa, ap|
+When("user adds outcomes for Immigration with fields like this:") do |table|
+  # table is a Cucumber::MultilineArgument::DataTable
+
+  sr = CWAProvider.legal_help_submission.schedule_ref
+
+  outcome_data = table.hashes
+  @submissions = outcome_data.size
+  outcome_data.each do |row|
+    submission_list_page = SubmissionListPage.new
+    submission_list_page.add_outcome_button.click
+    row["schedule_reference"] = sr
+    io = ImmigrationOutcome.new
+    io.add_values(row)
+    page = AddOutcomePage.new
+    page.add_outcome(io.defaults)
+  end
+
+end
+
+Then("the outcomes save successfully") do
+  puts "check submissions saved equals #{@submissions}"
+end
+
+When ('user adds an outcome for Immigration with {string}, {string}, {string}, {string}, {string}, {string}, {string} and {string}') \
+do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date, pa, ap, ho_ucn|
   submission_list_page = SubmissionListPage.new
   submission_list_page.add_outcome_button.click
   page = AddOutcomePage.new
@@ -214,7 +237,7 @@ do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date
     client_date_of_birth: '01-Nov-2015',
     ucn: '01112015/T/PERS',
     postal_application_accepted: 'N',
-    home_office_ucn: 'A9999999',
+    home_office_ucn: ho_ucn,
     gender: 'Male',
     ethnicity: '00-Other',
     disability: 'NCD-Not Considered Disabled',
@@ -387,4 +410,9 @@ Then("the outcome does not save and the error message {string} appears") do |err
   page = AddOutcomePage.new
   expect(page).to have_errors
   expect(page.errors.text).to include(error_message)
+end
+
+Then("the outcome does not save and this popup error appears:") do |string|
+  expect(page.driver.browser.switch_to.alert.text).to have_content(string)
+  page.driver.browser.switch_to.alert.dismiss
 end
