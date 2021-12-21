@@ -58,11 +58,14 @@ When('the user adds outcomes with:') do |description|
     @lines = [
         { profit_cost: profit_cost, counsel_cost: counsel_cost }
       ]
-  when 'total profit costs according to hourly rates'
-    profit_cost = @config.max_profit_cost
+  when 'profit and counsel costs according to hourly rates'
+    # randomly distribute the max profit costs value between profit and counsel cost
+    profit_costs_offset = rand(20..@config.max_profit_cost-20)
+    profit_cost = @config.max_profit_cost - profit_costs_offset
+    counsel_cost = profit_costs_offset
 
     @lines = [
-        { profit_cost: profit_cost }
+        { profit_cost: profit_cost, counsel_cost: counsel_cost }
       ]
   when 'additional payments'
     profit_cost = @config.max_profit_cost if @standard_fee.nil?
@@ -154,7 +157,7 @@ When('the user adds outcomes with:') do |description|
 
     # randomly distribute the escape_threshold value between profit and counsel costs
     profit_costs_offset = rand(20..escape_threshold-20)
-    profit_cost = escape_threshold - profit_costs_offset
+    profit_cost = escape_threshold - profit_costs_offset + additional_payments_value
     counsel_cost = profit_costs_offset
 
     # randomly add £1.00 to either profit of counsel cost, unless negated in the assertion
@@ -162,7 +165,7 @@ When('the user adds outcomes with:') do |description|
       rand(0..1) == 0 ? (profit_cost += 1) : (counsel_cost += 1)
     end
 
-    gross_total = profit_cost + counsel_cost + additional_payments_value
+    gross_total = profit_cost + counsel_cost
     reduced_total = gross_total - additional_payments_value
 
     STDOUT.puts '-------------------------------------------------------'
@@ -173,7 +176,9 @@ When('the user adds outcomes with:') do |description|
     STDOUT.puts sprintf '%s  %-35s  £%s', '(SF)', 'Standard fee(s)', standard_fees
     STDOUT.puts sprintf '%s  %-35s  £%s', '(AP)', 'Additional payments', additional_payments_value
     STDOUT.puts
-    STDOUT.puts sprintf '%s  %-35s  £%s', '(GT)', 'Gross total = (PC) + (CC) + (AP)', gross_total
+    STDOUT.puts 'Note: Profit cost (PC) includes any additional payment (AP).'
+    STDOUT.puts
+    STDOUT.puts sprintf '%s  %-35s  £%s', '(GT)', 'Gross total = (PC) + (CC)', gross_total
     STDOUT.puts sprintf '%s  %-35s  £%s', '(RT)', 'Reduced total = (GT) - (AP)', reduced_total
     STDOUT.puts sprintf '%s  %-35s  £%s', '(ET)', 'Escape threshold = (SF) * 3', escape_threshold
     STDOUT.puts
@@ -182,10 +187,7 @@ When('the user adds outcomes with:') do |description|
     STDOUT.puts '-------------------------------------------------------'
 
     @lines = [
-      {
-        profit_cost: profit_cost + additional_payments_value,
-        counsel_cost: counsel_cost
-      }.merge(**additional_payments_hash)
+      { profit_cost: profit_cost, counsel_cost: counsel_cost }.merge(**additional_payments_hash)
     ]
   else
     raise "unmapped scenario '#{description}'"

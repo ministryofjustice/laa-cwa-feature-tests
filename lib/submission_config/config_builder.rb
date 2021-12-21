@@ -8,8 +8,6 @@ module SubmissionConfig
       additional_payments
       additional_payment_fees
       additional_payment_combinations
-      claim_types
-      claim_types_additional_payments
     ]
 
     def initialize(
@@ -19,9 +17,7 @@ module SubmissionConfig
       standard_fees:,
       additional_payments:,
       additional_payment_fees:,
-      additional_payment_combinations:,
-      claim_types: nil,
-      claim_types_additional_payments: nil)
+      additional_payment_combinations:)
       build_matter_type1_codes(matter_type1_codes)
       build_matter_type2_codes(matter_type2_codes)
       build_matter_type_code_combinations(matter_type_code_combinations)
@@ -29,8 +25,6 @@ module SubmissionConfig
       build_additional_payments(additional_payments)
       build_additional_payment_fees(additional_payment_fees)
       build_additional_payment_combinations(additional_payment_combinations)
-      # build_claim_types(claim_types)
-      # build_claim_types_additional_payments(claim_types_additional_payments)
     end
 
     def build_matter_type1_codes(matter_type1_codes)
@@ -126,13 +120,5 @@ module SubmissionConfig
         end
       end
     end
-
-    # def build_claim_types(claim_types)
-    #   # TODO: implement
-    # end
-
-    # def build_claim_types_additional_payments(claim_types_additional_payments)
-    #   # TODO: implement
-    # end
   end
 end

@@ -114,10 +114,11 @@ module SubmissionConfig
             IEUL
             IFME
             IFVI
+            IGOL
             IILL
             ISTU
             ITWE
-          ], # TODO: IGOL doesn't seem to trigger escape fee flag properly, add back
+          ],
           IMCC: %i[
             IDOM
             IIRC
@@ -172,7 +173,7 @@ module SubmissionConfig
           # ho_interview: 266,
           cmrh_oral: 166,
           cmrh_telephone: 90,
-          substantive_hearing: 302,
+          substantive_hearing: 237,
           adjourned_hearing_fee: 161,
         })
 

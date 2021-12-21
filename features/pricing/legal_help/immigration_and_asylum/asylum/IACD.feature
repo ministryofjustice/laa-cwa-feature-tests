@@ -11,7 +11,7 @@ Feature: IACD: Asylum – Interim CLR rates (hourly rates with fixed fee for adv
   Scenario: Claims priced with: hourly rates Scheme
     When the user adds outcomes with:
       """
-      total profit costs according to hourly rates
+      profit and counsel costs according to hourly rates
       """
     Then the outcomes are priced at:
       """

@@ -11,7 +11,7 @@ Feature: IMXL: Immigration - LH Work Not Subject to the Standard Fee Scheme pric
   Scenario: Claims priced with: hourly rates Scheme
     When the user adds outcomes with:
       """
-      total profit costs according to hourly rates
+      profit and counsel costs according to hourly rates
       """
     Then the outcomes are priced at:
       """

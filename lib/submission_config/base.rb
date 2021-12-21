@@ -9,8 +9,6 @@ module SubmissionConfig
         additional_payments
         additional_payment_fees
         additional_payment_combinations
-        claim_types
-        claim_types_additional_payments
       ]
 
       def define_matter_type1_codes(hash)
@@ -41,14 +39,6 @@ module SubmissionConfig
         self.additional_payment_combinations = hash
       end
 
-      def define_claim_types(hash)
-        self.claim_types = hash
-      end
-
-      def define_claim_types_additional_payments(hash)
-        self.claim_types_additional_payments = hash
-      end
-
       def load_config
         ConfigBuilder.new(
           matter_type1_codes: @matter_type1_codes,
@@ -58,8 +48,6 @@ module SubmissionConfig
           additional_payments: @additional_payments,
           additional_payment_fees: @additional_payment_fees,
           additional_payment_combinations: @additional_payment_combinations,
-          # claim_types: @claim_types,
-          # claim_types_additional_payments: @claim_types_additional_payments,
         )
       end
     end

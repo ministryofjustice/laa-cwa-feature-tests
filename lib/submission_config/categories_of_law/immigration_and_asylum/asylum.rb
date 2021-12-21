@@ -79,7 +79,7 @@ module SubmissionConfig
         })
 
         define_additional_payment_fees({
-          # ho_interview: 0, # I don't get it priced with IACC, should have been: 266, but I got it added with IALB:ILEA!
+          # ho_interview: 0, # Can't get it priced with IACC, should have been: 266, but I got it added with IALB:ILEA!
           cmrh_oral: 166,
           cmrh_telephone: 90,
           substantive_hearing: 302,
@@ -118,19 +118,6 @@ module SubmissionConfig
 
           IACD: %i[cmrh_oral cmrh_telephone substantive_hearing adjourned_hearing_fee],
         })
-
-
-        # define_claim_types({
-        #   stage_claim: 'Stage Claim',
-        #   stage_disbursement_claim: 'Stage Disbursement Claim',
-        #   completed_matter_claim: 'Completed Matter Claim',
-        # })
-
-        # define_claim_types_additional_payments({
-        #   stage_claim: %i[ho_interview cmrh_oral cmrh_telephone substantive_hearing adjourned_hearing_fee],
-        #   stage_disbursement_claim: %i[ho_interview],
-        #   completed_matter_claim: %i[ho_interview cmrh_oral cmrh_telephone substantive_hearing adjourned_hearing_fee],
-        # })
       end
     end
   end
