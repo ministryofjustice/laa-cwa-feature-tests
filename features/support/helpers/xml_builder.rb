@@ -85,14 +85,14 @@ module Helpers
             when 'CASE_REF_NUMBER', 'CLIENT_SURNAME'
               "#{client_surname} #{case_id}"
             when 'CASE_START_DATE'
-              case_start_date || now.strftime("%m/%d/%Y")
+              case_start_date || now.strftime("%d/%m/%Y")
             when 'WORK_CONCLUDED_DATE'
-              work_concluded_date || now.strftime("%m/%d/%Y")
+              work_concluded_date || now.strftime("%d/%m/%Y")
             when 'UFN'
               if ufn
                 ufn
               else
-                day, month, year = (case_start_date || rep_order_date || now.strftime("%m/%d/%Y")).split('/')
+                day, month, year = (case_start_date || rep_order_date || now.strftime("%d/%m/%Y")).split('/')
                 "#{day}#{month}#{year[-2..-1]}/#{case_id}"
               end
             when 'UCN'
