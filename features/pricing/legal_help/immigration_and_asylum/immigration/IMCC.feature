@@ -11,7 +11,7 @@ Feature: IMCC: Immigration - Stage 2c (CLR) pricing
   Scenario: Claims priced with: Standard Fee Scheme
     When the user adds outcomes with:
       """
-      total profit costs just above or below the standard fee
+      profit + counsel costs exceeding the standard fee of £1.00
       """
     Then the outcomes are priced at:
       """
@@ -58,16 +58,34 @@ Feature: IMCC: Immigration - Stage 2c (CLR) pricing
       hourly rates
       """
 
+  @escape_fee_flag
   Scenario: Claims priced with: Escape Fee Flag
     When the user adds outcomes with:
       """
-      total profit costs (minus additional payments) exceeding three times the standard fee(s)
+      profit + counsel costs exceeding three times the standard fee(s) + £1.00
       """
     Then the outcomes are flagged as escape fee cases
 
-  Scenario: Claims priced with: No Escape Fee Flag
+  @escape_fee_flag
+  Scenario: Claims priced with: NO Escape Fee Flag
     When the user adds outcomes with:
       """
-      total profit costs (minus additional payments) NOT exceeding three times the standard fee(s)
+      profit + counsel costs NOT exceeding three times the standard fee(s) + £1.00
+      """
+    Then the outcomes are NOT flagged as escape fee cases
+
+  @escape_fee_flag
+  Scenario: Claims priced with: Escape Fee Flag (additional payments)
+    When the user adds outcomes with:
+      """
+      profit + counsel costs (minus additional payments) exceeding three times the standard fee(s) + £1.00
+      """
+    Then the outcomes are flagged as escape fee cases
+
+  @escape_fee_flag
+  Scenario: Claims priced with: NO Escape Fee Flag (additional payments)
+    When the user adds outcomes with:
+      """
+      profit + counsel costs (minus additional payments) NOT exceeding three times the standard fee(s) + £1.00
       """
     Then the outcomes are NOT flagged as escape fee cases
