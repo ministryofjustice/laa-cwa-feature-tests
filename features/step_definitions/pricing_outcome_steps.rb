@@ -45,7 +45,7 @@ Given('user deleted any existing {string} outcomes for the test firm') do |categ
   end
 end
 
-Given(/user is on the pricing outcome details page/) do
+Given('user is on the pricing outcome details page') do
   if !defined?(@submission)
     raise 'you cannot use this step without selecting a test submission first'
   end

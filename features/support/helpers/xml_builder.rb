@@ -60,6 +60,8 @@ module Helpers
       def generate_outcome(new_line, tot_outcomes, outcome)
         outcome.outcomeItem(@submission.schedule_ref, name: 'SCHEDULE_REF')
 
+        now = Time.now
+
         case_id = new_line[:case_id] || "%03d" % tot_outcomes
         client_dob = if new_line[:client_date_of_birth] && new_line[:client_date_of_birth] != '<default>'
           new_line[:client_date_of_birth]
@@ -70,6 +72,7 @@ module Helpers
         client_surname = new_line[:client_surname] || default_field_value('CLIENT_SURNAME')
         case_start_date = new_line[:case_start_date] || default_field_value('CASE_START_DATE')
         rep_order_date = new_line[:rep_order_date] || default_field_value('REP_ORDER_DATE')
+        work_concluded_date = new_line[:work_concluded_date] || default_field_value('WORK_CONCLUDED_DATE')
         ufn = new_line[:ufn] || default_field_value('UFN')
 
         @submission.lines.each do |default_line|
@@ -81,11 +84,15 @@ module Helpers
               case_id
             when 'CASE_REF_NUMBER', 'CLIENT_SURNAME'
               "#{client_surname} #{case_id}"
+            when 'CASE_START_DATE'
+              case_start_date || now.strftime("%d/%m/%Y")
+            when 'WORK_CONCLUDED_DATE'
+              work_concluded_date || now.strftime("%d/%m/%Y")
             when 'UFN'
               if ufn
                 ufn
               else
-                day, month, year = (case_start_date ||rep_order_date).split('/')
+                day, month, year = (case_start_date || rep_order_date || now.strftime("%d/%m/%Y")).split('/')
                 "#{day}#{month}#{year[-2..-1]}/#{case_id}"
               end
             when 'UCN'
