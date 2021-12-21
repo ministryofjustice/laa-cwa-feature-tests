@@ -15,19 +15,142 @@ module SubmissionConfig
           IMCD: 'Immigration – Interim CLR rates (hourly rates with fixed fee for advocacy services)',
         })
 
-        MATTER_TYPE2_CODES_COMMON = %i[IASY ILEA IFRA IFST IIRC IOTH IOUT IRVL IGOL]
-        private_constant :MATTER_TYPE2_CODES_COMMON
+        define_matter_type2_codes({
+          IASY: 'No description',
+          ILEA: 'No description',
+          IDOM: 'No description',
+          IBAI: 'No description',
+          ICOA: 'No description',
+          IDAS: 'No description',
+          IFRA: 'No description',
+          IFST: 'No description',
+          IIRC: 'No description',
+          IJRA: 'No description',
+          IMER: 'No description',
+          IOTH: 'No description',
+          IOUT: 'No description',
+          IPAS: 'No description',
+          IPST: 'No description',
+          IRAR: 'No description',
+          IRVL: 'No description',
+          IUAS: 'No description',
+          IREM: 'No description',
+          ICZN: 'No description',
+          IEMP: 'No description',
+          IEUL: 'No description',
+          IFFL: 'No description',
+          IFME: 'No description',
+          IFVI: 'No description',
+          IGOL: 'No description',
+          IILL: 'No description',
+          INAS: 'No description',
+          ISTU: 'No description',
+          ITWE: 'No description'
+        })
 
         define_matter_type_code_combinations({
-          IMXL: MATTER_TYPE2_CODES_COMMON + %i[IBAI ICOA IDAS IJRA IMER IPAS IUAS IFFL],
-          IMXC: MATTER_TYPE2_CODES_COMMON + %i[IBAI IRAR IUAS IREM],
+          IMXL: %i[
+            IBAI
+            ICOA
+            IIRC
+            IJRA
+            IMER
+            IOTH
+            IOUT
+            IPST
+            IRVL
+            ICZN
+            IFFL
+          ],
+          IMXC: %i[
+            IBAI
+            IIRC
+            IOTH
+            IOUT
+            IRAR
+            IRVL
+            IREM
+          ],
 
-          IMLB: MATTER_TYPE2_CODES_COMMON,
-          IMCA: MATTER_TYPE2_CODES_COMMON,
-          IMCB: MATTER_TYPE2_CODES_COMMON,
-          IMCC: MATTER_TYPE2_CODES_COMMON,
+          IMLB: %i[
+            IDOM
+            IIRC
+            IOTH
+            IOUT
+            IRVL
+            ICZN
+            IEMP
+            IEUL
+            IFME
+            IFVI
+            IGOL
+            IILL
+            ISTU
+            ITWE
+          ],
+          IMCA: %i[
+            IDOM
+            IIRC
+            IOTH
+            IOUT
+            IRVL
+            ICZN
+            IEMP
+            IEUL
+            IFME
+            IFVI
+            IGOL
+            IILL
+            ISTU
+            ITWE
+          ],
+          IMCB: %i[
+            IDOM
+            IIRC
+            IOTH
+            IOUT
+            IRVL
+            IEMP
+            IEUL
+            IFME
+            IFVI
+            IILL
+            ISTU
+            ITWE
+          ], # TODO: IGOL doesn't seem to trigger escape fee flag properly, add back
+          IMCC: %i[
+            IDOM
+            IIRC
+            IOTH
+            IOUT
+            IRVL
+            ICZN
+            IEMP
+            IEUL
+            IFME
+            IFVI
+            IGOL
+            IILL
+            ISTU
+            ITWE
+          ],
 
-          IMCD: MATTER_TYPE2_CODES_COMMON,
+          IMCD: %i[
+            IDOM
+            IIRC
+            IOTH
+            IOUT
+            IRVL
+            ICZN
+            IEMP
+            IEUL
+            IFME
+            IFVI
+            IGOL
+            IILL
+            ISTU
+            ITWE
+          ],
         })
 
         define_standard_fees({
