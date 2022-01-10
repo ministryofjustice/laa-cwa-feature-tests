@@ -7,7 +7,7 @@ require 'site_prism'
 require 'builder'
 
 Capybara.register_driver :firefox do |app|
-  capabilities = Selenium::WebDriver::Remote::W3C::Capabilities.firefox(
+  capabilities = Selenium::WebDriver::Remote::Capabilities.firefox(
     accept_insecure_certs: true
   )
   options = Selenium::WebDriver::Firefox::Options.new()
