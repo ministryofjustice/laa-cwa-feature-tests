@@ -1,4 +1,4 @@
-Feature: IAXL: Asylum - LH Work Not Subject to the Standard Fee Scheme pricing
+Feature: Pricing: IAXL: Asylum - LH Work Not Subject to the Standard Fee Scheme
 
   Background:
     Given a test firm user is logged in CWA

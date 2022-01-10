@@ -1,4 +1,4 @@
-Feature: IMCB: Immigration - Stage 2b (CLR) pricing
+Feature: Pricing: IMCB: Immigration - Stage 2b (CLR)
 
   Background:
     Given a test firm user is logged in CWA
@@ -62,7 +62,7 @@ Feature: IMCB: Immigration - Stage 2b (CLR) pricing
   Scenario: Claims priced with: Escape Fee Flag
     When the user adds outcomes with:
       """
-      profit + counsel costs exceeding three times the standard fee(s) + £1.00
+      profit + counsel costs exceeding the escape threshold
       """
     Then the outcomes are flagged as escape fee cases
 
@@ -70,7 +70,7 @@ Feature: IMCB: Immigration - Stage 2b (CLR) pricing
   Scenario: Claims priced with: NO Escape Fee Flag
     When the user adds outcomes with:
       """
-      profit + counsel costs NOT exceeding three times the standard fee(s) + £1.00
+      profit + counsel costs NOT exceeding the escape threshold
       """
     Then the outcomes are NOT flagged as escape fee cases
 
@@ -78,7 +78,7 @@ Feature: IMCB: Immigration - Stage 2b (CLR) pricing
   Scenario: Claims priced with: Escape Fee Flag (additional payments)
     When the user adds outcomes with:
       """
-      profit + counsel costs (minus additional payments) exceeding three times the standard fee(s) + £1.00
+      profit + counsel costs (minus additional payments) exceeding the escape threshold
       """
     Then the outcomes are flagged as escape fee cases
 
@@ -86,6 +86,6 @@ Feature: IMCB: Immigration - Stage 2b (CLR) pricing
   Scenario: Claims priced with: NO Escape Fee Flag (additional payments)
     When the user adds outcomes with:
       """
-      profit + counsel costs (minus additional payments) NOT exceeding three times the standard fee(s) + £1.00
+      profit + counsel costs (minus additional payments) NOT exceeding the escape threshold
       """
     Then the outcomes are NOT flagged as escape fee cases

@@ -1,4 +1,4 @@
-Feature: IMXC: Immigration - CLR Work Not Subject to the Standard Fee Scheme pricing
+Feature: Pricing: IMXC: Immigration - CLR Work Not Subject to the Standard Fee Scheme
 
   Background:
     Given a test firm user is logged in CWA

@@ -1,4 +1,4 @@
-Feature: IMCD: Immigration – Interim CLR rates (hourly rates with fixed fee for advocacy services) pricing
+Feature: Pricing: IMCD: Immigration – Interim CLR rates (hourly rates with fixed fee for advocacy services)
 
   Background:
     Given a test firm user is logged in CWA
