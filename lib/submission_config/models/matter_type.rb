@@ -22,6 +22,10 @@ module SubmissionConfig
       def additional_payments
         @matter_type1.additional_payments
       end
+
+      def escape_fee_threshold
+        @matter_type1.escape_fee_threshold
+      end
     end
   end
 end

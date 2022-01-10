@@ -48,110 +48,23 @@ module SubmissionConfig
           ITWE: 'No description'
         })
 
+        MATTER_TYPE2_CODES_SET1 = %i[IBAI ICOA IIRC IJRA IMER IOTH IOUT IPST IRVL ICZN IFFL]
+        MATTER_TYPE2_CODES_SET2 = %i[IBAI IIRC IOTH IOUT IRAR IRVL IREM]
+        MATTER_TYPE2_CODES_SET3 = %i[IDOM IIRC IOTH IOUT IRVL ICZN IEMP IEUL IFME IFVI IGOL IILL ISTU ITWE]
+        MATTER_TYPE2_CODES_SET4 = %i[IDOM IIRC IOTH IOUT IRVL IEMP IEUL IFME IFVI IGOL IILL ISTU ITWE]
+        private_constant :MATTER_TYPE2_CODES_SET1,
+                        :MATTER_TYPE2_CODES_SET2,
+                        :MATTER_TYPE2_CODES_SET3,
+                        :MATTER_TYPE2_CODES_SET4
+
         define_matter_type_code_combinations({
-          IMXL: %i[
-            IBAI
-            ICOA
-            IIRC
-            IJRA
-            IMER
-            IOTH
-            IOUT
-            IPST
-            IRVL
-            ICZN
-            IFFL
-          ],
-          IMXC: %i[
-            IBAI
-            IIRC
-            IOTH
-            IOUT
-            IRAR
-            IRVL
-            IREM
-          ],
-
-          IMLB: %i[
-            IDOM
-            IIRC
-            IOTH
-            IOUT
-            IRVL
-            ICZN
-            IEMP
-            IEUL
-            IFME
-            IFVI
-            IGOL
-            IILL
-            ISTU
-            ITWE
-          ],
-          IMCA: %i[
-            IDOM
-            IIRC
-            IOTH
-            IOUT
-            IRVL
-            ICZN
-            IEMP
-            IEUL
-            IFME
-            IFVI
-            IGOL
-            IILL
-            ISTU
-            ITWE
-          ],
-          IMCB: %i[
-            IDOM
-            IIRC
-            IOTH
-            IOUT
-            IRVL
-            IEMP
-            IEUL
-            IFME
-            IFVI
-            IGOL
-            IILL
-            ISTU
-            ITWE
-          ],
-          IMCC: %i[
-            IDOM
-            IIRC
-            IOTH
-            IOUT
-            IRVL
-            ICZN
-            IEMP
-            IEUL
-            IFME
-            IFVI
-            IGOL
-            IILL
-            ISTU
-            ITWE
-          ],
-
-          IMCD: %i[
-            IDOM
-            IIRC
-            IOTH
-            IOUT
-            IRVL
-            ICZN
-            IEMP
-            IEUL
-            IFME
-            IFVI
-            IGOL
-            IILL
-            ISTU
-            ITWE
-          ],
+          IMXL: MATTER_TYPE2_CODES_SET1,
+          IMXC: MATTER_TYPE2_CODES_SET2,
+          IMLB: MATTER_TYPE2_CODES_SET3,
+          IMCA: MATTER_TYPE2_CODES_SET3,
+          IMCB: MATTER_TYPE2_CODES_SET4,
+          IMCC: MATTER_TYPE2_CODES_SET3,
+          IMCD: MATTER_TYPE2_CODES_SET3,
         })
 
         define_standard_fees({
@@ -200,6 +113,8 @@ module SubmissionConfig
 
           IMCD: %i[cmrh_oral cmrh_telephone substantive_hearing adjourned_hearing_fee],
         })
+
+        define_escape_fee_threshold_formula 'standard_fee * 3 + 1.00'
 
         # define_claim_types({
         #   stage_claim: 'Stage Claim',

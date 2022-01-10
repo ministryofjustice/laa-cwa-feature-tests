@@ -8,6 +8,10 @@ require_relative './submission_config/models'
 module SubmissionConfig
   def self.by_category_of_law(name)
     case name.downcase.to_sym
+    when :discrimination
+      CategoriesOfLaw::Discrimination.new
+    when :education
+      CategoriesOfLaw::Education.new
     when :asylum
       CategoriesOfLaw::ImmigrationAndAsylum::Asylum.new
     when :immigration

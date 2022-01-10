@@ -9,6 +9,8 @@ module SubmissionConfig
         additional_payments
         additional_payment_fees
         additional_payment_combinations
+        escape_fee_threshold_formula
+        max_price_cap
       ]
 
       def define_matter_type1_codes(hash)
@@ -39,6 +41,14 @@ module SubmissionConfig
         self.additional_payment_combinations = hash
       end
 
+      def define_escape_fee_threshold_formula(string)
+        self.escape_fee_threshold_formula = string
+      end
+
+      def define_max_price_cap(string)
+        self.max_price_cap = string.to_f
+      end
+
       def load_config
         ConfigBuilder.new(
           matter_type1_codes: @matter_type1_codes,
@@ -48,6 +58,8 @@ module SubmissionConfig
           additional_payments: @additional_payments,
           additional_payment_fees: @additional_payment_fees,
           additional_payment_combinations: @additional_payment_combinations,
+          escape_fee_threshold_formula: @escape_fee_threshold_formula,
+          max_price_cap: @max_price_cap,
         )
       end
     end
@@ -64,6 +76,14 @@ module SubmissionConfig
 
     def available_matter_types
       @config.matter_type_code_combinations
+    end
+
+    def escape_fee_threshold_formula
+      @config.escape_fee_threshold_formula
+    end
+
+    def max_price_cap
+      @config.max_price_cap
     end
 
     def max_profit_cost

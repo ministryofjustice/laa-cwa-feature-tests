@@ -118,6 +118,8 @@ module SubmissionConfig
 
           IACD: %i[cmrh_oral cmrh_telephone substantive_hearing adjourned_hearing_fee],
         })
+
+        define_escape_fee_threshold_formula 'standard_fee * 3 + 1.00'
       end
     end
   end
