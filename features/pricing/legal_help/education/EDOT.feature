@@ -5,7 +5,7 @@ Feature: Pricing: EDOT: Other
     And the user prepares to add outcomes in the "Education" category of law
     And the user wants to add outcomes with any Matter Type 1 from:
       """
-      Other
+      EDOT: Other
       """
 
   Scenario: Claims priced with: Standard Fee Scheme

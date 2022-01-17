@@ -5,7 +5,7 @@ Feature: Pricing: EXCE: Exclusion/refusal to provide full time education (non-SE
     And the user prepares to add outcomes in the "Education" category of law
     And the user wants to add outcomes with any Matter Type 1 from:
       """
-      Exclusion/refusal to provide full time education (non-SEN and non-DDA)
+      EXCE: Exclusion/refusal to provide full time education (non-SEN and non-DDA)
       """
 
   Scenario: Claims priced with: Standard Fee Scheme

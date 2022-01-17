@@ -5,7 +5,7 @@ Feature: Pricing: EEQU: Contravention of Equality 2010 (non-Disability Discrimin
     And the user prepares to add outcomes in the "Education" category of law
     And the user wants to add outcomes with any Matter Type 1 from:
       """
-      Contravention of Equality 2010 (non-Disability Discrimination)
+      EEQU: Contravention of Equality 2010 (non-Disability Discrimination)
       """
 
   Scenario: Claims priced with: Standard Fee Scheme

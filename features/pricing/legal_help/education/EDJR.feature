@@ -5,7 +5,7 @@ Feature: Pricing: EDJR: Initial advice on a judicial review (including challenge
     And the user prepares to add outcomes in the "Education" category of law
     And the user wants to add outcomes with any Matter Type 1 from:
       """
-      Initial advice on a judicial review (including challenges about adminssions and exclusions)
+      EDJR: Initial advice on a judicial review (including challenges about adminssions and exclusions)
       """
 
   Scenario: Claims priced with: Standard Fee Scheme

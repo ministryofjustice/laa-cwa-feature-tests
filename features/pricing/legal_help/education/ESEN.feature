@@ -5,7 +5,7 @@ Feature: Pricing: ESEN: Special educational needs and/or children unable to atte
     And the user prepares to add outcomes in the "Education" category of law
     And the user wants to add outcomes with any Matter Type 1 from:
       """
-      Special educational needs and/or children unable to attend school
+      ESEN: Special educational needs and/or children unable to attend school
       """
 
   Scenario: Claims priced with: Standard Fee Scheme

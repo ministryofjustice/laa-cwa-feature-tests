@@ -5,7 +5,7 @@ Feature: Pricing: IMCD: Immigration – Interim CLR rates (hourly rates with fix
     And the user prepares to add outcomes in the "Immigration" category of law
     And the user wants to add outcomes with any Matter Type 1 from:
       """
-      Immigration – Interim CLR rates (hourly rates with fixed fee for advocacy services)
+      IMCD: Immigration – Interim CLR rates (hourly rates with fixed fee for advocacy services)
       """
 
   Scenario: Claims priced with: hourly rates Scheme

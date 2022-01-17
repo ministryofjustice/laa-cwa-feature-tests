@@ -5,7 +5,7 @@ Feature: Pricing: IMCC: Immigration - Stage 2c (CLR)
     And the user prepares to add outcomes in the "Immigration" category of law
     And the user wants to add outcomes with any Matter Type 1 from:
       """
-      Immigration - Stage 2c (CLR)
+      IMCC: Immigration - Stage 2c (CLR)
       """
 
   Scenario: Claims priced with: Standard Fee Scheme

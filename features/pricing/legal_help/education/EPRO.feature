@@ -5,7 +5,7 @@ Feature: Pricing: EPRO: Non-attendance and proceedings against parents
     And the user prepares to add outcomes in the "Education" category of law
     And the user wants to add outcomes with any Matter Type 1 from:
       """
-      Non-attendance and proceedings against parents
+      EPRO: Non-attendance and proceedings against parents
       """
 
   Scenario: Claims priced with: Standard Fee Scheme

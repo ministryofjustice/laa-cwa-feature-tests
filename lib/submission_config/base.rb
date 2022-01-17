@@ -69,8 +69,10 @@ module SubmissionConfig
     end
 
     def matter_types_by_matter_type1_description(description)
+      name, description = description.split(': ')
       available_matter_types.select do |matter_types|
-        matter_types.matter_type1.description == description
+        matter_types.matter_type1.name == name &&
+          matter_types.matter_type1.description == description
       end
     end
 

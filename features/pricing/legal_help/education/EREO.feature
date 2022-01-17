@@ -5,7 +5,7 @@ Feature: Pricing: EREO: Institution establishment/reorganisation (opening, closi
     And the user prepares to add outcomes in the "Education" category of law
     And the user wants to add outcomes with any Matter Type 1 from:
       """
-      Institution establishment/reorganisation (opening, closing, merging etc)
+      EREO: Institution establishment/reorganisation (opening, closing, merging etc)
       """
 
   Scenario: Claims priced with: Standard Fee Scheme

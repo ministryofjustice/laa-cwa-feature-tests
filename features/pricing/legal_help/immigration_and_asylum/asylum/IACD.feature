@@ -5,7 +5,7 @@ Feature: Pricing: IACD: Asylum – Interim CLR rates (hourly rates with fixed fe
     And the user prepares to add outcomes in the "Asylum" category of law
     And the user wants to add outcomes with any Matter Type 1 from:
       """
-      Asylum – Interim CLR rates (hourly rates with fixed fee for advocacy services)
+      IACD: Asylum – Interim CLR rates (hourly rates with fixed fee for advocacy services)
       """
 
   Scenario: Claims priced with: hourly rates Scheme

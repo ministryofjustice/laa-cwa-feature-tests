@@ -5,7 +5,7 @@ Feature: Pricing: IMLB: Immigration - Stage 1 (LH)
     And the user prepares to add outcomes in the "Immigration" category of law
     And the user wants to add outcomes with any Matter Type 1 from:
       """
-      Immigration - Stage 1 (LH)
+      IMLB: Immigration - Stage 1 (LH)
       """
 
   Scenario: Claims priced with: Standard Fee Scheme

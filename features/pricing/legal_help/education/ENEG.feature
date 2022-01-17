@@ -5,7 +5,7 @@ Feature: Pricing: ENEG: Concern over level or quality of education, bullying or 
     And the user prepares to add outcomes in the "Education" category of law
     And the user wants to add outcomes with any Matter Type 1 from:
       """
-      Concern over level or quality of education, bullying or other professional negligence
+      ENEG: Concern over level or quality of education, bullying or other professional negligence
       """
 
   Scenario: Claims priced with: Standard Fee Scheme

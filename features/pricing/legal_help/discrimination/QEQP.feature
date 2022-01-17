@@ -5,7 +5,7 @@ Feature: Pricing: QEQP: Equality of terms/Equal pay
     And the user prepares to add outcomes in the "Discrimination" category of law
     And the user wants to add outcomes with any Matter Type 1 from:
       """
-      Equality of terms/Equal pay
+      QEQP: Equality of terms/Equal pay
       """
 
   Scenario: Claims priced with: hourly rates Scheme

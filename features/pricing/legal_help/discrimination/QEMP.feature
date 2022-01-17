@@ -5,7 +5,7 @@ Feature: Pricing: QEMP: Employment
     And the user prepares to add outcomes in the "Discrimination" category of law
     And the user wants to add outcomes with any Matter Type 1 from:
       """
-      Employment
+      QEMP: Employment
       """
 
   Scenario: Claims priced with: hourly rates Scheme

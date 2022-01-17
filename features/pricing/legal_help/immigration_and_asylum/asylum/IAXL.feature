@@ -5,7 +5,7 @@ Feature: Pricing: IAXL: Asylum - LH Work Not Subject to the Standard Fee Scheme
     And the user prepares to add outcomes in the "Asylum" category of law
     And the user wants to add outcomes with any Matter Type 1 from:
       """
-      Asylum - LH Work Not Subject to the Standard Fee Scheme
+      IAXL: Asylum - LH Work Not Subject to the Standard Fee Scheme
       """
 
   Scenario: Claims priced with: hourly rates Scheme

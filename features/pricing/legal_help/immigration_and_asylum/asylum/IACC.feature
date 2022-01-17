@@ -5,7 +5,7 @@ Feature: Pricing: IACC: Asylum - Stage 2c (CLR)
     And the user prepares to add outcomes in the "Asylum" category of law
     And the user wants to add outcomes with any Matter Type 1 from:
       """
-      Asylum - Stage 2c (CLR)
+      IACC: Asylum - Stage 2c (CLR)
       """
 
   Scenario: Claims priced with: Standard Fee Scheme

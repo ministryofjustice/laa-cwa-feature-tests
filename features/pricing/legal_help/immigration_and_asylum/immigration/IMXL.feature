@@ -5,7 +5,7 @@ Feature: Pricing: IMXL: Immigration - LH Work Not Subject to the Standard Fee Sc
     And the user prepares to add outcomes in the "Immigration" category of law
     And the user wants to add outcomes with any Matter Type 1 from:
       """
-      Immigration - LH Work Not Subject to the Standard Fee Scheme
+      IMXL: Immigration - LH Work Not Subject to the Standard Fee Scheme
       """
 
   Scenario: Claims priced with: hourly rates Scheme

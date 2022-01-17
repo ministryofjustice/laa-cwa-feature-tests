@@ -5,7 +5,7 @@ Feature: Pricing: QPRO: Provision of goods and services
     And the user prepares to add outcomes in the "Discrimination" category of law
     And the user wants to add outcomes with any Matter Type 1 from:
       """
-      Provision of goods and services
+      QPRO: Provision of goods and services
       """
 
   Scenario: Claims priced with: hourly rates Scheme

@@ -5,7 +5,7 @@ Feature: Pricing: QPUB: Public sector equality duty
     And the user prepares to add outcomes in the "Discrimination" category of law
     And the user wants to add outcomes with any Matter Type 1 from:
       """
-      Public sector equality duty
+      QPUB: Public sector equality duty
       """
 
   Scenario: Claims priced with: hourly rates Scheme

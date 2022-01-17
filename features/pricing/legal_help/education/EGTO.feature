@@ -5,7 +5,7 @@ Feature: Pricing: EGTO: Grants, transport and other local education authority se
     And the user prepares to add outcomes in the "Education" category of law
     And the user wants to add outcomes with any Matter Type 1 from:
       """
-      Grants, transport and other local education authority services
+      EGTO: Grants, transport and other local education authority services
       """
 
   Scenario: Claims priced with: Standard Fee Scheme
