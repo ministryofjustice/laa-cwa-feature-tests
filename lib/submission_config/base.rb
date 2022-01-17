@@ -5,6 +5,7 @@ module SubmissionConfig
         matter_type1_codes
         matter_type2_codes
         matter_type_code_combinations
+        standard_fee
         standard_fees
         additional_payments
         additional_payment_fees
@@ -23,6 +24,10 @@ module SubmissionConfig
 
       def define_matter_type_code_combinations(hash)
         self.matter_type_code_combinations = hash
+      end
+
+      def define_standard_fee(string)
+        self.standard_fee = string.to_i
       end
 
       def define_standard_fees(hash)
@@ -46,7 +51,7 @@ module SubmissionConfig
       end
 
       def define_max_price_cap(string)
-        self.max_price_cap = string.to_f
+        self.max_price_cap = string.to_i
       end
 
       def load_config
@@ -54,6 +59,7 @@ module SubmissionConfig
           matter_type1_codes: @matter_type1_codes,
           matter_type2_codes: @matter_type2_codes,
           matter_type_code_combinations: @matter_type_code_combinations,
+          standard_fee: @standard_fee,
           standard_fees: @standard_fees,
           additional_payments: @additional_payments,
           additional_payment_fees: @additional_payment_fees,
@@ -82,6 +88,10 @@ module SubmissionConfig
 
     def escape_fee_threshold_formula
       @config.escape_fee_threshold_formula
+    end
+
+    def standard_fee
+      @config.standard_fee
     end
 
     def max_price_cap

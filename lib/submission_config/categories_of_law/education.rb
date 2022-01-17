@@ -48,20 +48,7 @@ module SubmissionConfig
         EXCE: MATTER_TYPE2_CODES_SET2,
       })
 
-      define_standard_fees({
-        EEQU: 272,
-        EDJR: 272,
-        EADM: 272,
-        EDDA: 272,
-        EDOT: 272,
-        EGTO: 272,
-        ENEG: 272,
-        EPRO: 272,
-        EREO: 272,
-        ESEN: 272,
-        EXCE: 272,
-      })
-
+      define_standard_fee 272
       define_escape_fee_threshold_formula 'standard_fee * 3'
     end
   end

@@ -26,7 +26,7 @@ Given('the user wants to add outcomes with any Matter Type 1 from:') do |descrip
   raise "no matter types available for '#{description}'" unless sample_matter_type
 
   @matter_type_code = sample_matter_type.name
-  @standard_fee = sample_matter_type.standard_fee&.value
+  @standard_fee = sample_matter_type.standard_fee&.value || @config.standard_fee&.value
   @max_price_cap = @config.max_price_cap
   @escape_fee_threshold = sample_matter_type.escape_fee_threshold
   @escape_fee_threshold_formula = @config.escape_fee_threshold_formula
@@ -35,8 +35,8 @@ Given('the user wants to add outcomes with any Matter Type 1 from:') do |descrip
   log '-------------------------------------------------------'
   log '  This test will use a random existing configuration:'
   log sprintf '%25s  %s', 'Matter Type', sample_matter_type.name
-  log sprintf '%25s  £%s', 'Standard Fee', sample_matter_type.standard_fee&.value||'none (hourly rates?)'
-  log sprintf '%25s  £%s', 'Max Price Cap', @max_price_cap||'none'
+  log sprintf '%25s  %s', 'Standard Fee', (@standard_fee ? "£#{@standard_fee}" : 'none (hourly rates?)')
+  log sprintf '%25s  %s', 'Max Price Cap', (@max_price_cap ? "£#{@max_price_cap}" : 'none')
   log sprintf '%25s  %s', 'Escape fee threshold', (@escape_fee_threshold ? "£#{@escape_fee_threshold} (#{@escape_fee_threshold_formula})" : 'none')
   log sprintf '%25s  %s', 'Additional Payments', (sample_matter_type.additional_payments&.any? ? 'yes' : 'no')
   sample_matter_type.additional_payments&.each&.with_index(1) do |additional_payment, i|

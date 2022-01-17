@@ -4,6 +4,7 @@ module SubmissionConfig
       matter_type1_codes
       matter_type2_codes
       matter_type_code_combinations
+      standard_fee
       standard_fees
       additional_payments
       additional_payment_fees
@@ -16,6 +17,7 @@ module SubmissionConfig
       matter_type1_codes:,
       matter_type2_codes:,
       matter_type_code_combinations:,
+      standard_fee:,
       standard_fees:,
       additional_payments:,
       additional_payment_fees:,
@@ -25,6 +27,7 @@ module SubmissionConfig
       build_matter_type1_codes(matter_type1_codes)
       build_matter_type2_codes(matter_type2_codes)
       build_matter_type_code_combinations(matter_type_code_combinations)
+      build_standard_fee(standard_fee)
       build_standard_fees(standard_fees)
       build_additional_payments(additional_payments)
       build_additional_payment_fees(additional_payment_fees)
@@ -73,6 +76,13 @@ module SubmissionConfig
             end
           end
         end
+    end
+
+    def build_standard_fee(standard_fee)
+      if standard_fee
+        @standard_fee = Models::StandardFee.new
+        @standard_fee.value = standard_fee
+      end
     end
 
     def build_standard_fees(standard_fees)
@@ -140,8 +150,9 @@ module SubmissionConfig
       @matter_type1_codes&.each do |code|
         if base
           if base == 'standard_fee'
-            next unless code.standard_fee
-            code.escape_fee_threshold = code.standard_fee.value
+            fee = code.standard_fee || @standard_fee
+            next unless fee
+            code.escape_fee_threshold = fee.value
           else
             code.escape_fee_threshold = base.to_f
           end
