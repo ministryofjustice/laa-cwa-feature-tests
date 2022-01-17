@@ -35,7 +35,7 @@ Given('the user wants to add outcomes with any Matter Type 1 from:') do |descrip
   log '-------------------------------------------------------'
   log '  This test will use a random existing configuration:'
   log sprintf '%25s  %s', 'Matter Type', sample_matter_type.name
-  log sprintf '%25s  £%s', 'Standard Fee', sample_matter_type.standard_fee&.value||'none (hourly rates)'
+  log sprintf '%25s  £%s', 'Standard Fee', sample_matter_type.standard_fee&.value||'none (hourly rates?)'
   log sprintf '%25s  £%s', 'Max Price Cap', @max_price_cap||'none'
   log sprintf '%25s  %s', 'Escape fee threshold', (@escape_fee_threshold ? "£#{@escape_fee_threshold} (#{@escape_fee_threshold_formula})" : 'none')
   log sprintf '%25s  %s', 'Additional Payments', (sample_matter_type.additional_payments&.any? ? 'yes' : 'no')
@@ -77,7 +77,7 @@ When('the user adds outcomes with:') do |description|
     @lines = [
         { profit_cost: profit_cost, counsel_cost: counsel_cost }
       ]
-  when 'profit + counsel costs exceeding the max price cap of £0.01'
+  when 'profit + counsel costs exceeding the max price cap'
       # randomly distribute the max price cap value between profit and counsel cost
       profit_costs_offset = rand(20.01..@max_price_cap-20.01).round(2)
       profit_cost = (@max_price_cap - profit_costs_offset).round(2)

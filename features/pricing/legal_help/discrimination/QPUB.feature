@@ -41,7 +41,7 @@ Feature: Pricing: QPUB: Public sector equality duty
   Scenario: Claims priced with: hourly rates Scheme
     When the user adds outcomes with:
       """
-      profit + counsel costs exceeding the max price cap of £0.01
+      profit + counsel costs exceeding the max price cap
       """
     Then the outcomes are priced at:
       """
