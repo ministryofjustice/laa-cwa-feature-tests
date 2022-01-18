@@ -13,9 +13,9 @@ module SubmissionConfig
     when :education
       CategoriesOfLaw::Education.new
     when :asylum
-      CategoriesOfLaw::ImmigrationAndAsylum::Asylum.new
+      CategoriesOfLaw::Asylum.new
     when :immigration
-      CategoriesOfLaw::ImmigrationAndAsylum::Immigration.new
+      CategoriesOfLaw::Immigration.new
     else
       raise Errors::InvalidConfigError.new("'#{name}' is not a valid category of law")
     end
