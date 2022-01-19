@@ -1,5 +1,9 @@
 Given('the user prepares to add outcomes in the {string} category of law') do |category_of_law|
   case category_of_law
+  when 'Discrimination'
+    ref = 'LEGAL HELP.EDU#10'
+  when 'Education'
+    ref = 'LEGAL HELP.EDU#9'
   when 'Asylum'
     ref = 'LEGAL HELP.IMMAS#5'
   when 'Immigration'
@@ -22,18 +26,23 @@ Given('the user wants to add outcomes with any Matter Type 1 from:') do |descrip
   raise "no matter types available for '#{description}'" unless sample_matter_type
 
   @matter_type_code = sample_matter_type.name
-  @standard_fee = sample_matter_type.standard_fee&.value
+  @standard_fee = sample_matter_type.standard_fee&.value || @config.standard_fee&.value
+  @max_price_cap = @config.max_price_cap
+  @escape_fee_threshold = sample_matter_type.escape_fee_threshold
+  @escape_fee_threshold_formula = @config.escape_fee_threshold_formula
   @additional_payments = sample_matter_type.additional_payments || []
 
-  STDOUT.puts '-------------------------------------------------------'
-  STDOUT.puts '  This test will use a random existing configuration:'
-  STDOUT.puts sprintf '%25s  %s', 'Matter Type', sample_matter_type.name
-  STDOUT.puts sprintf '%25s  £%s', 'Standard Fee', sample_matter_type.standard_fee&.value||'none (hourly rates)'
-  STDOUT.puts sprintf '%25s  %s', 'Additional Payments', (sample_matter_type.additional_payments&.any? ? 'yes' : 'no')
+  log '-------------------------------------------------------'
+  log '  This test will use a random existing configuration:'
+  log sprintf '%25s  %s', 'Matter Type', sample_matter_type.name
+  log sprintf '%25s  %s', 'Standard Fee', (@standard_fee ? "£#{@standard_fee}" : 'none (hourly rates?)')
+  log sprintf '%25s  %s', 'Max Price Cap', (@max_price_cap ? "£#{@max_price_cap}" : 'none')
+  log sprintf '%25s  %s', 'Escape fee threshold', (@escape_fee_threshold ? "£#{@escape_fee_threshold} (#{@escape_fee_threshold_formula})" : 'none')
+  log sprintf '%25s  %s', 'Additional Payments', (sample_matter_type.additional_payments&.any? ? 'yes' : 'no')
   sample_matter_type.additional_payments&.each&.with_index(1) do |additional_payment, i|
-    STDOUT.puts sprintf '%25s  £%s', "#{i}. #{additional_payment.description}", additional_payment.value
+    log sprintf '%25s  £%s', "#{i}. #{additional_payment.description}", additional_payment.value
   end
-  STDOUT.puts '-------------------------------------------------------'
+  log '-------------------------------------------------------'
 end
 
 When('the user confirms the submission') do
@@ -60,15 +69,31 @@ When('the user adds outcomes with:') do |description|
       ]
   when 'profit and counsel costs according to hourly rates'
     # randomly distribute the max profit costs value between profit and counsel cost
-    profit_costs_offset = rand(20..@config.max_profit_cost-20)
-    profit_cost = @config.max_profit_cost - profit_costs_offset
+    max_profit_cost = @max_price_cap || @config.max_profit_cost
+    profit_costs_offset = rand(20..max_profit_cost-20).round(2)
+    profit_cost = (max_profit_cost - profit_costs_offset).round(2)
     counsel_cost = profit_costs_offset
 
     @lines = [
         { profit_cost: profit_cost, counsel_cost: counsel_cost }
       ]
+  when 'profit + counsel costs exceeding the max price cap'
+      # randomly distribute the max price cap value between profit and counsel cost
+      profit_costs_offset = rand(20.01..@max_price_cap-20.01).round(2)
+      profit_cost = (@max_price_cap - profit_costs_offset).round(2)
+      counsel_cost = profit_costs_offset
+
+      # randomly add £0.01 to either profit or counsel cost
+      rand(0..1) == 0 ? (profit_cost += 0.01) : (counsel_cost += 0.01)
+
+      profit_cost = profit_cost.round(2)
+      counsel_cost = counsel_cost.round(2)
+
+      @lines = [
+          { profit_cost: profit_cost, counsel_cost: counsel_cost }
+        ]
   when 'additional payments'
-    profit_cost = @config.max_profit_cost if @standard_fee.nil?
+    profit_cost = @max_price_cap || @standard_fee || @config.max_profit_cost
 
     # assign a random quantity to all payable additional payments
     additional_payments_hash =
@@ -84,11 +109,11 @@ When('the user adds outcomes with:') do |description|
 
     @lines = [
       {
-        profit_cost: (@standard_fee || profit_cost)
+        profit_cost: profit_cost
       }.merge(**additional_payments_hash),
     ]
   when 'disbursements and disbursements VAT'
-    profit_cost = @config.max_profit_cost if @standard_fee.nil?
+    profit_cost = @max_price_cap || @standard_fee || @config.max_profit_cost
 
     # assign random disbursements values
     disbursements_amount = rand(50..200)
@@ -96,17 +121,17 @@ When('the user adds outcomes with:') do |description|
 
     @lines = [
       {
-        profit_cost: (@standard_fee || profit_cost),
+        profit_cost: profit_cost,
         disbursements_amount: disbursements_amount,
         disbursements_vat: disbursements_vat
       },
     ]
   when 'VAT indicator enabled for profit and counsel costs'
-    profit_cost = @config.max_profit_cost if @standard_fee.nil?
+    profit_cost = @max_price_cap || @standard_fee || @config.max_profit_cost
 
     @lines = [
       {
-        profit_cost: (@standard_fee || profit_cost),
+        profit_cost: profit_cost,
         vat_indicator: 'Y'
       },
     ]
@@ -121,7 +146,7 @@ When('the user adds outcomes with:') do |description|
       },
     ]
 
-  when /profit \+ counsel costs (\(minus additional payments\)\s)?(NOT\s)?exceeding three times the standard fee\(s\) \+ £1.00/
+  when /profit \+ counsel costs (\(minus additional payments\)\s)?(NOT\s)?exceeding the escape threshold?/
     additional_payments_value = 0
     additional_payments_hash = {}
 
@@ -144,7 +169,7 @@ When('the user adds outcomes with:') do |description|
             (@additional_payments.find do |additional_payment|
               additional_payment.name == name
             end.value * units)
-        end
+        end.round(2)
 
       if additional_payments_hash[:substantive_hearing]
         additional_payments_hash[:substantive_hearing] =
@@ -152,39 +177,38 @@ When('the user adds outcomes with:') do |description|
       end
     end
 
-    standard_fees = @standard_fee # only one for this test, only one stage
-    escape_threshold = (standard_fees * 3).round(2)
+    standard_fees = @standard_fee || 0 # only one for this test, only one stage
+    escape_threshold = @escape_fee_threshold.round(2)
 
     # randomly distribute the escape_threshold value between profit and counsel costs
-    profit_costs_offset = rand(20..escape_threshold-20)
-    profit_cost = escape_threshold - profit_costs_offset + additional_payments_value
-    counsel_cost = profit_costs_offset
+    profit_costs_offset = rand(20.01..escape_threshold-20.01).round(2)
+    profit_cost = (escape_threshold - profit_costs_offset + additional_payments_value).round(2)
+    counsel_cost = profit_costs_offset.round(2)
 
-    # randomly add £1.00 to either profit of counsel cost, unless negated in the assertion
-    if !Regexp.last_match(2)
-      rand(0..1) == 0 ? (profit_cost += 1) : (counsel_cost += 1)
+    # To go below the escape threshold, remove £0.01 to either profit or counsel cost
+    if Regexp.last_match(2)
+      rand(0..1) == 0 ? (profit_cost -= 0.01) : (counsel_cost -= 0.01)
     end
 
-    gross_total = profit_cost + counsel_cost
-    reduced_total = gross_total - additional_payments_value
+    profit_cost = profit_cost.round(2)
+    counsel_cost = counsel_cost.round(2)
 
-    STDOUT.puts '-------------------------------------------------------'
-    STDOUT.puts sprintf '%s  %-35s  %s', 'Abbr', 'Item', 'Value'
-    STDOUT.puts
-    STDOUT.puts sprintf '%s  %-35s  £%s', '(PC)', 'Profit cost', profit_cost
-    STDOUT.puts sprintf '%s  %-35s  £%s', '(CC)', 'Counsel cost', counsel_cost
-    STDOUT.puts sprintf '%s  %-35s  £%s', '(SF)', 'Standard fee(s)', standard_fees
-    STDOUT.puts sprintf '%s  %-35s  £%s', '(AP)', 'Additional payments', additional_payments_value
-    STDOUT.puts
-    STDOUT.puts 'Note: Profit cost (PC) includes any additional payment (AP).'
-    STDOUT.puts
-    STDOUT.puts sprintf '%s  %-35s  £%s', '(GT)', 'Gross total = (PC) + (CC)', gross_total
-    STDOUT.puts sprintf '%s  %-35s  £%s', '(RT)', 'Reduced total = (GT) - (AP)', reduced_total
-    STDOUT.puts sprintf '%s  %-35s  £%s', '(ET)', 'Escape threshold = (SF) * 3', escape_threshold
-    STDOUT.puts
-    STDOUT.puts '  Condition to escape the standard fee: (RT) > (ET) '
-    STDOUT.puts "  Expected to meet condition: #{(reduced_total > escape_threshold).to_s.upcase}"
-    STDOUT.puts '-------------------------------------------------------'
+    gross_total = (profit_cost + counsel_cost).round(2)
+    reduced_total = (gross_total - additional_payments_value).round(2)
+
+    log '-------------------------------------------------------'
+    log sprintf '%s  %-35s  %s', 'Abbr', 'Item', 'Value'
+    log sprintf '%s  %-35s  £%s', '(PC)', 'Profit cost', profit_cost
+    log sprintf '%s  %-35s  £%s', '(CC)', 'Counsel cost', counsel_cost
+    log sprintf '%s  %-35s  £%s', '(SF)', 'Standard fee(s)', standard_fees
+    log sprintf '%s  %-35s  £%s', '(AP)', 'Additional payments', additional_payments_value
+    log 'Note: Profit cost (PC) includes any additional payment (AP).'
+    log sprintf '%s  %-35s  £%s', '(GT)', 'Gross total = (PC) + (CC)', gross_total
+    log sprintf '%s  %-35s  £%s', '(RT)', 'Reduced total = (GT) - (AP)', reduced_total
+    log sprintf '%s  %-35s  £%s', '(ET)', "Escape threshold = #{@config.escape_fee_threshold_formula.gsub('standard_fee', '(SF)')}", escape_threshold
+    log '  Condition to escape the standard fee: (RT) >= (ET) '
+    log "  Expected to meet condition: #{(reduced_total >= escape_threshold).to_s.upcase}"
+    log '-------------------------------------------------------'
 
     @lines = [
       { profit_cost: profit_cost, counsel_cost: counsel_cost }.merge(**additional_payments_hash)
@@ -213,9 +237,8 @@ Then('the outcomes are priced at:') do |formula|
   line = @lines.first # Note: assumes price to be the same for all outcomes
   fees = formula.split('+').map(&:strip)
 
-  STDOUT.puts
-  STDOUT.puts sprintf '%3s  %25s  %3s', 'Qty', 'Item', 'Amount'
-  STDOUT.puts '-------------------------------------------------------'
+  log sprintf '%3s  %25s  %3s', 'Qty', 'Item', 'Amount'
+  log '-------------------------------------------------------'
 
   final_price = fees.reduce(0) do |tot, fee|
     case fee
@@ -224,42 +247,47 @@ Then('the outcomes are priced at:') do |formula|
         raise "no standard fee for '#{@matter_type_code} (maybe hourly rates?)'"
       end
       tot += @standard_fee
-      STDOUT.puts sprintf '%3s  %25s  £%s', 1, 'Standard Fee', @standard_fee
+      log sprintf '%3s  %25s  £%s', 1, 'Standard Fee', @standard_fee
     when 'hourly rates'
       profit_cost = line.fetch(:profit_cost, 0)
       counsel_cost = line.fetch(:counsel_cost, 0)
       tot += (profit_cost + counsel_cost)
-      STDOUT.puts sprintf '%3s  %25s  £%s', nil, 'Profit cost', profit_cost
-      STDOUT.puts sprintf '%3s  %25s  £%s', nil, 'Counsel cost', counsel_cost
+      log sprintf '%3s  %25s  £%s', nil, 'Profit cost', profit_cost
+      log sprintf '%3s  %25s  £%s', nil, 'Counsel cost', counsel_cost
+    when 'max price cap'
+      if @max_price_cap.nil?
+        raise "no max price cap for '#{@matter_type_code}'"
+      end
+      tot += @max_price_cap
+      log sprintf '%3s  %25s  £%s', 1, 'Max Price Cap', @max_price_cap
     when 'additional payments'
       @additional_payments.each do |additional_payment|
         units = line.fetch(additional_payment.name, 0)
         units == 'N' ? units = 0 : (units == 'Y' ? units = 1 : nil)
         if units > 0
           additional_payment_value = (additional_payment.value * units).round(2)
-          STDOUT.puts sprintf '%3s  %25s  £%s', units, additional_payment.description, additional_payment_value
+          log sprintf '%3s  %25s  £%s', units, additional_payment.description, additional_payment_value
           tot += additional_payment_value
         end
       end
     when 'disbursements'
       disbursements_amount = line.fetch(:disbursements_amount, 0)
       tot += disbursements_amount
-      STDOUT.puts sprintf '%3s  %25s  £%s', nil, 'Disbursements Amount', disbursements_amount
+      log sprintf '%3s  %25s  £%s', nil, 'Disbursements Amount', disbursements_amount
     when 'disbursements VAT'
       disbursements_vat = line.fetch(:disbursements_vat, 0)
       tot += disbursements_vat
-      STDOUT.puts sprintf '%3s  %25s  £%s', nil, 'Disbursements VAT', disbursements_vat
+      log sprintf '%3s  %25s  £%s', nil, 'Disbursements VAT', disbursements_vat
     when 'VAT'
       vat_amount = (tot * 0.20).round(2)
       tot += vat_amount
-      STDOUT.puts sprintf '%3s  %25s  £%s', nil, 'VAT (on items above)', vat_amount
+      log sprintf '%3s  %25s  £%s', nil, 'VAT (on items above)', vat_amount
     end
     tot
   end
 
-  STDOUT.puts '-------------------------------------------------------'
-  STDOUT.puts sprintf '%3s  %25s  £%s', nil, 'TOTAL', final_price
-  STDOUT.puts
+  log '-------------------------------------------------------'
+  log sprintf '%3s  %25s  £%s', nil, 'TOTAL', final_price
 
   submission_details_page = SubmissionDetailsPage.new
   expected_price = sprintf('£ %.2f', final_price)
@@ -288,7 +316,7 @@ Then(/the outcomes are (NOT\s)?flagged as escape fee cases/) do |negated|
   submission_details_page.outcomes.each do |outcome|
     STDOUT.print "    Checking escape fee flag for #{outcome.ufn.text}"
     found_flag = outcome.has_escape_fee_img?(wait: 0)
-    STDOUT.puts ": #{found_flag ? 'yes' : 'no'}"
+    STDOUT.puts ": #{(found_flag ? 'found' : 'not found').upcase}"
     expected_flag = negated ? false : true
     expect(found_flag).to eq(expected_flag)
   end
