@@ -108,8 +108,10 @@ JS
       claim_type.select(values[:claim_type])
     end
     wait_until_schedule_reference_visible(wait: 10)
-    schedule_reference.set(values[:schedule_reference])
-    case_reference_number.set(values[:case_reference_number])
+    schedule_reference.set(values[:schedule_ref])
+
+    case_reference_number.set(values[:case_ref_number])
+
     case_start_date.set(values[:case_start_date])
     case_id.set(values[:case_id])
     set_value_sync(procurement_area, values[:procurement_area])
@@ -118,38 +120,55 @@ JS
     client_surname.set(values[:client_surname])
     client_date_of_birth.set(values[:client_date_of_birth])
     ucn.set(values[:ucn])
-    postal_application_accepted.select(values[:postal_application_accepted])
+
+    postal_application_accepted.select(values[:postal_appl_accp])
+
     gender.select(values[:gender])
     ethnicity.select(values[:ethnicity])
     disability.select(values[:disability])
-    client_postcode.set(values[:client_postcode])
-    case_concluded_date.set(values[:case_concluded_date])
+    client_postcode.set(values[:client_post_code])
+
+    case_concluded_date.set(values[:work_concluded_date])
+
     case_concluded_date.send_keys(:tab)
     advice_time.set(values[:advice_time])
     travel_time.set(values[:travel_time])
     waiting_time.set(values[:waiting_time])
-    profit_costs_excluding_vat.set(values[:profit_costs_excluding_vat])
-    disbursements_excluding_vat.set(values[:disbursements_excluding_vat])
-    counsel_costs_excluding_vat.set(values[:counsel_costs_excluding_vat])
-    disbursements_vat_amount.set(values[:disbursements_vat_amount])
-    profit_and_counsel_vat_indicator.select(values[:profit_and_counsel_vat_indicator])
+
+    profit_costs_excluding_vat.set(values[:profit_cost])
+
+    disbursements_excluding_vat.set(values[:disbursements_amount])
+
+    counsel_costs_excluding_vat.set(values[:counsel_cost])
+
+    disbursements_vat_amount.set(values[:disbursements_vat])
+
+    profit_and_counsel_vat_indicator.select(values[:vat_indicator])
+
     london_rate.select(values[:london_rate]) if values[:london_rate]
     tolerance_indicator.select(values[:tolerance_indicator]) if values[:tolerance_indicator]
-    travel_and_waiting_costs_excluding_vat.set(values[:travel_and_waiting_costs_excluding_vat])
+
+    travel_and_waiting_costs_excluding_vat.set(values[:travel_waiting_costs])
+
     value_of_costs_damages_awarded.set(values[:value_of_costs_damages_awarded]) if values[:value_of_costs_damages_awarded]
     stage_reached.select(values[:stage_reached]) if values[:stage_reached]
     local_authority_number.set(values[:local_authority_number]) if values[:local_authority_number]
     client_type.select(values[:client_type]) if values[:client_type]
-    outcome_for_client.select(values[:outcome_for_client])
+
+    outcome_for_client.select(values[:outcome_code])
     case_stage_level.select(values[:case_stage_level]) if values[:case_stage_level]
 
-    home_office_ucn.set(values[:home_office_ucn]) if values[:home_office_ucn]
+    home_office_ucn.set(values[:home_office_ucn]) if values[:ho_ucn]
+
     legacy_case.select(values[:legacy_case]) if values[:legacy_case]
     ho_interview.select(values[:ho_interview]) if values[:ho_interview]
     ait_hearing_centre.select(values[:ait_hearing_centre]) if values[:ait_hearing_centre]
     adjourned_hearing_fee.set(values[:adjourned_hearing_fee]) if values[:adjourned_hearing_fee]
-    detention_travel_and_waiting_costs_excluding_vat.set(values[:detention_travel_and_waiting_costs_excluding_vat]) if values[:detention_travel_and_waiting_costs_excluding_vat]
-    jr_form_filling_costs_excluding_vat.set(values[:jr_form_filling_costs_excluding_vat]) if values[:jr_form_filling_costs_excluding_vat]
+
+    detention_travel_and_waiting_costs_excluding_vat.set(values[:travel_costs]) if values[:travel_costs]
+
+    jr_form_filling_costs_excluding_vat.set(values[:jr_form_filling]) if values[:jr_form_filling]
+
     cmrh_oral.select(values[:cmrh_oral]) if values[:cmrh_oral]
     cmrh_telephone.select(values[:cmrh_telephone]) if values[:cmrh_telephone]
     substantive_hearing.select(values[:substantive_hearing]) if values[:substantive_hearing]
