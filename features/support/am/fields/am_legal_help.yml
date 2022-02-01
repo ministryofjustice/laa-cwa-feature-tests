@@ -1,0 +1,171 @@
+#Note: currently missing tolerance_indicator field (which we want to remove) and postal_appl_accp
+base: &base
+  work_concluded_date:
+  ucn:
+  transfer_date:
+  case_start_date:
+  gender:
+  procurement_area:
+  stage_reached:
+  disability:
+  case_id:
+  excl_case_funding_ref:
+  outcome_code:
+  disbursements_amount:
+  client_post_code:
+  access_point:
+  client_forename:
+  ethnicity:
+  schedule_ref:
+  disbursements_vat:
+  client_date_of_birth:
+  client_surname:
+  case_ref_number:
+
+#additional base fields added to 'completed matter' claims
+base_cm: &base_cm
+  <<: *base
+  profit_cost:
+  waiting_time:
+  counsel_cost:
+  vat_indicator:
+  travel_waiting_costs:
+  advice_time:
+  travel_time:
+  exemption_criteria_satisfied:
+
+#additional base fields added to 'stage claim' claims
+base_sc: &base_sc
+  <<: *base_cm
+
+#'disbursement claim' claims just use base fields
+base_dc: &base_dc
+  <<: *base
+
+#immigration base fields added to all immigration claim types
+immigration_base: &immigration_base
+  ho_ucn:
+  ho_interview:
+  prior_authority_ref:
+
+#immigration 'completed matter' claims inc base_cm and immigration_base plus others
+immigration_base_cm: &immigration_base_cm
+  <<: *base_cm
+  <<: *immigration_base
+  legacy_case:
+  travel_costs:
+  jr_form_filling:
+  substantive_hearing:
+  cmrh_oral:
+  ait_hearing_centre:
+  cmrh_telephone:
+  adjourned_hearing_fee:
+  claim_type:
+
+#immigration 'stage claim' claims a mirror of immigration_base_cm
+immigration_base_sc: &immigration_base_sc
+  <<: *immigration_base_cm
+
+#immigration 'disbursement claim' claims only use base_dc plus immigrationb_base
+immigration_base_dc: &immigration_base_dc
+  <<: *base_dc
+  <<: *immigration_base
+
+#mental health 'completed matter' claims use base_cm fields plus extra ones
+mental_health_base_cm: &mental_health_base_cm
+  <<: *base_cm
+  case_stage_level:
+  desi_acc_rep:
+  mht_ref_number:
+  meetings_attended:
+  additional_travel_payment:
+  medical_reports_claimed:
+
+#mental health 'disbursement claims' claims use base_dc
+mental_health_base_dc: &mental_health_base_dc
+  <<: *base_dc
+
+legal_help:
+  completed_matter:
+    welfare_benefits:
+      <<: *base_cm
+      #welfare benefits specific fields
+      type_of_advice: REMOTE
+      delivery_location:
+
+    education:
+      *base_cm
+
+    family:
+      <<: *base_cm
+      #family specific fields
+      london_nonlondon_rate:
+      value_of_costs:
+      local_authority_number:
+      client_type:
+      case_stage_level:
+
+    discrimination:
+      *base_cm
+
+    claims_against_public_authorities:
+      *base_cm
+
+    community_care:
+      *base_cm
+
+    consumer_general_contract:
+      *base_cm
+
+    employment:
+      *base_cm
+
+    clinical_negligence:
+      *base_cm
+
+    residual_miscellaneous:
+      *base_cm
+
+    personal_injury:
+      *base_cm
+
+    public_law:
+      *base_cm
+
+    housing:
+      <<: *base_cm
+      #housing specific fields
+      eligible_client_indicator:
+      court_location_hpcds:
+
+    debt:
+      <<: *base_cm
+      #debt specific fields
+      cla_ref_number:
+      cla_exemption:
+
+    mental_health:
+      <<: *mental_health_base_cm
+
+    immigration:
+      <<: *immigration_base_cm
+
+    immigration_and_asylum:
+      <<: *immigration_base_cm
+
+  stage_claim:
+      immigration:
+        <<: *immigration_base_sc
+
+      immigration_and_asylum:
+        <<: *immigration_base_sc
+
+  disbursement_claim:
+      immigration:
+        <<: *immigration_base_dc
+
+      immigration_and_asylum:
+        <<: *immigration_base_dc
+
+      mental_health:
+        <<: *mental_health_base_dc

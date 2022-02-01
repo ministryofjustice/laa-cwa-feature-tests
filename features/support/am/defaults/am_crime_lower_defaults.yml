@@ -1,0 +1,234 @@
+criminal_investigations:
+  criminal_investigations_base: &criminal_investigations_base
+    client_forename:
+    client_surname:
+    disability:
+    disbursements_amount:
+    disbursements_vat:
+    ethnicity:
+    gender:
+    profit_cost:
+    ufn:
+    vat_indicator:
+    work_concluded_date:
+
+  post_charge_attendance: &post_charge_attendance
+    <<: *criminal_investigations_base
+    dscc_number:
+    duty_solicitor:
+    no_of_police_station:
+    no_of_suspects:
+    police_station:
+    schedule_ref:
+    travel_costs:
+    travel_waiting_costs:
+    youth_court:
+
+  warrant_of_further_detention: &warrant_of_further_detention
+    <<: *criminal_investigations_base
+    crime_matter_type:
+    duty_solicitor:
+    no_of_police_station:
+    no_of_suspects:
+    outcome_code:
+    police_station:
+    schedule_ref:
+    travel_costs:
+    travel_waiting_costs:
+    youth_court:
+
+  police_station_attendance: &police_station_attendance
+    <<: *criminal_investigations_base
+    crime_matter_type:
+    dscc_number:
+    duty_solicitor:
+    excess_travel_costs:
+    no_of_police_station:
+    no_of_suspects:
+    outcome_code:
+    police_station:
+    schedule_ref:
+    scheme_id:
+    travel_costs:
+    travel_waiting_costs:
+    youth_court:
+
+  pre-charge_bail: &pre-charge_bail
+    <<: *warrant_of_further_detention
+
+appeals_and_reviews_base: &appeals_and_reviews_base
+  client_forename:
+  client_surname:
+  disability:
+  disbursements_amount:
+  disbursements_vat:
+  ethnicity:
+  gender:
+  profit_cost:
+  schedule_ref:
+  travel_costs:
+  travel_waiting_costs:
+  ufn:
+  vat_indicator:
+  work_concluded_date:
+  youth_court:
+
+prison_law_base: &prison_law_base
+  client_forename:
+  client_surname:
+  crime_matter_type:
+  disability:
+  disbursements_amount:
+  disbursements_vat:
+  ethnicity:
+  gender:
+  outcome_code:
+  pa_number:
+  police_station:
+  profit_cost:
+  schedule_ref:
+  travel_costs:
+  travel_waiting_costs:
+  ufn:
+  vat_indicator:
+  work_concluded_date:
+
+associated_civil_work_base: &associated_civil_work_base
+  client_forename:
+  client_surname:
+  disability:
+  disbursements_amount:
+  disbursements_vat:
+  ethnicity:
+  gender:
+  profit_cost:
+  schedule_ref:
+  travel_costs:
+  travel_waiting_costs:
+  ufn:
+  vat_indicator:
+  work_concluded_date:
+  youth_court:
+
+crime_lower:
+  criminal_investigations:
+    #INV<x> codes: 7 fee schemes
+    INVA:
+      <<: *criminal_investigations_base
+      crime_matter_type:
+      outcome_code:
+      schedule_ref:
+      travel_costs:
+      travel_waiting_costs:
+      youth_court:
+
+    INVB:
+      <<: *criminal_investigations_base
+      crime_matter_type:
+      dscc_number:
+      duty_solicitor:
+      outcome_code:
+      police_station:
+      schedule_ref:
+      travel_costs:
+      travel_waiting_costs:
+      youth_court:
+
+    INVC:
+      <<: *police_station_attendance
+
+    INVD:
+      <<: *police_station_attendance
+
+    INVE:
+      <<: *warrant_of_further_detention
+
+    INVF:
+      <<: *warrant_of_further_detention
+
+    INVG:
+      disbursements_amount:
+      disbursements_vat:
+      profit_cost:
+      schedule_ref:
+      vat_indicator:
+
+    INVH:
+      <<: *post_charge_attendance
+
+    INVI:
+      <<: *post_charge_attendance
+
+    INVJ:
+
+    INVK:
+      <<: *pre-charge_bail
+    INVL:
+      <<: *pre-charge_bail
+
+    INVM:
+
+  #PRO<x> codes
+  criminal_proceedings:
+    PROC:
+
+    PROD:
+
+    PROE:
+
+    PROF:
+
+    PROG:
+
+    PROH:
+
+    PROI:
+
+    PROJ:
+
+    PROK:
+
+    PROL:
+
+    PROM:
+
+    PROP:
+
+    PROT:
+
+    PROU:
+
+    PROV:
+
+    PROW:
+
+  #APPA, APPB, APPC
+  appeals_and_reviews:
+    APPA:
+      <<: *appeals_and_reviews_base
+    APPB:
+      <<: *appeals_and_reviews_base
+    APPC:
+      <<: *appeals_and_reviews_base
+
+  #PRI<x> codes
+  prison_law:
+    PRIA:
+      <<: *prison_law_base
+    PRIB:
+      <<: *prison_law_base
+    PRIC:
+      <<: *prison_law_base
+    PRID:
+      <<: *prison_law_base
+    PRIE:
+      <<: *prison_law_base
+
+  #ASMS, ASPL, ASAS
+  associated_civil_work:
+    ASMS:
+      <<: *associated_civil_work_base
+    ASPL:
+      <<: *associated_civil_work_base
+    ASAS:
+      <<: *associated_civil_work_base

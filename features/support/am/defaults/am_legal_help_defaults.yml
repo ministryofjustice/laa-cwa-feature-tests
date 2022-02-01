@@ -1,0 +1,173 @@
+#Note: currently missing tolerance_indicator field (which we want to remove) and postal_appl_accp
+base: &base_defaults
+  access_point: AP00000
+  case_ref_number: TestCaseRef
+  client_date_of_birth: 14/09/1962
+  client_forename: Test
+  client_post_code: SW1H 9EA
+  client_surname: Person
+  disability: UKN
+  disbursements_amount: 0
+  disbursements_vat: 0
+  ethnicity: 99
+  gender: F
+  ucn: 14091962/T/PERS
+  work_concluded_date:
+
+#additional base fields added to 'completed matter' claims
+base_cm: &base_defaults_cm
+  <<: *base_defaults
+  profit_cost: 500
+  waiting_time: 0
+  counsel_cost: 0
+  vat_indicator: N
+  travel_waiting_costs: 0
+  advice_time: 0
+  travel_time: 0
+  exemption_criteria_satisfied:
+
+#immigration base fields added to all immigration claim types
+immigration_base: &immigration_base_defaults
+  ho_ucn: A9999999
+  ho_interview: 0
+
+#immigration 'completed matter' claims inc base_cm and immigration_base plus others
+immigration_base_cm: &immigration_base_cm_defaults
+  <<: *base_defaults_cm
+  <<: *immigration_base_defaults
+  legacy_case: N
+  travel_costs: 0
+  jr_form_filling:
+  substantive_hearing: N
+  cmrh_oral: 0
+  ait_hearing_centre: 16
+  cmrh_telephone: 0
+  adjourned_hearing_fee: 0
+  claim_type: Completed Matter Claim
+  access_point: AP00137
+  procurement_area: PA00136
+  outcome_code: IX
+  postal_appl_accp: Y
+
+legal_help:
+  completed_matter:
+    welfare_benefits:
+      <<: *base_defaults
+      procurement_area: PA00125
+      stage_reached: DA
+      outcome_code: DA
+
+    education:
+      <<: *base_defaults
+      procurement_area: PA00180
+      stage_reached: EA
+      outcome_code: EA
+
+    family:
+      <<: *base_defaults
+      #family specific fields
+      london_nonlondon_rate:
+      value_of_costs:
+      local_authority_number:
+      client_type:
+      case_stage_level:
+
+    discrimination:
+      <<: *base_defaults
+      procurement_area:
+      stage_reached:
+      outcome_code:
+
+    claims_against_public_authorities:
+      <<: *base_defaults
+      procurement_area:
+      stage_reached:
+      outcome_code:
+
+    community_care:
+      <<: *base_defaults
+      procurement_area:
+      stage_reached:
+      outcome_code:
+
+    consumer_general_contract:
+      <<: *base_defaults
+      procurement_area:
+      stage_reached:
+      outcome_code:
+
+    employment:
+      <<: *base_defaults
+      procurement_area:
+      stage_reached:
+      outcome_code:
+
+    clinical_negligence:
+      <<: *base_defaults
+      procurement_area:
+      stage_reached:
+      outcome_code:
+
+    residual_miscellaneous:
+      <<: *base_defaults
+      procurement_area:
+      stage_reached:
+      outcome_code:
+
+    personal_injury:
+      <<: *base_defaults
+      procurement_area:
+      stage_reached:
+      outcome_code:
+
+    public_law:
+      <<: *base_defaults
+      procurement_area:
+      stage_reached:
+      outcome_code:
+
+    housing:
+      <<: *base_defaults
+      #housing specific fields
+      eligible_client_indicator:
+      court_location_hpcds:
+
+    debt:
+      <<: *base_defaults
+      #debt specific fields
+      cla_ref_number:
+      cla_exemption:
+
+    mental_health:
+      <<: *base_defaults
+      procurement_area:
+      stage_reached:
+      outcome_code:
+
+    immigration:
+      <<: *immigration_base_cm_defaults
+      stage_reached:
+
+    immigration_and_asylum:
+      <<: *immigration_base_cm_defaults
+      stage_reached:
+
+  stage_claim:
+      immigration:
+        <<: *base_defaults
+        claim_type:  Stage Claim
+
+      immigration_and_asylum:
+        <<: *base_defaults
+
+  disbursement_claim:
+      immigration:
+        <<: *base_defaults
+        claim_type:  Disbursements Claim
+
+      immigration_and_asylum:
+        <<: *base_defaults
+
+      mental_health:
+        <<: *base_defaults
+        procurement_area: PA00158
