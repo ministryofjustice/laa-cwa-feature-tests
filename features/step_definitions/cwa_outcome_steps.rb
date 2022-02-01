@@ -1,3 +1,5 @@
+
+
 Given('user is on their submission details page') do
   steps %(
     Given a test firm user is on the portal login page
@@ -195,8 +197,27 @@ Then('the outcome does not save and gives an error') do
   expect(page).to have_content('The Category of Law, Procurement Area and Access Point combination that has been used is not valid for the date that has been recorded.')
 end
 
-When ('user adds an outcome for Immigration with {string}, {string}, {string}, {string}, {string}, {string} and {string}') \
-do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date, pa, ap|
+When("user adds outcomes for Immigration with fields like this:") do |table|
+  sr = CWAProvider.legal_help_submission.schedule_ref
+  outcome_data = table.hashes
+  @submissions_saved = outcome_data.size
+  outcome_data.each do |test_data_row|
+    submission_list_page = SubmissionListPage.new
+    submission_list_page.add_outcome_button.click
+    test_data_row["schedule_ref"] = sr
+    field_values = Helpers::ScreenFieldBuilder.get_fields(['legal_help', 'immigration'])
+    field_values.update(test_data_row)
+    page = AddOutcomePage.new
+    page.add_outcome(field_values.transform_keys(&:to_sym))
+  end
+end
+
+Then("{int} outcomes save successfully") do |expected|
+  expect(@submissions_saved).to eq(expected)
+end
+
+When ('user adds an outcome for Immigration with {string}, {string}, {string}, {string}, {string}, {string}, {string} and {string}') \
+do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date, pa, ap, ho_ucn|
   submission_list_page = SubmissionListPage.new
   submission_list_page.add_outcome_button.click
   page = AddOutcomePage.new
@@ -214,7 +235,7 @@ do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date
     client_date_of_birth: '01-Nov-2015',
     ucn: '01112015/T/PERS',
     postal_application_accepted: 'N',
-    home_office_ucn: 'A9999999',
+    home_office_ucn: ho_ucn,
     gender: 'Male',
     ethnicity: '00-Other',
     disability: 'NCD-Not Considered Disabled',
@@ -387,4 +408,9 @@ Then("the outcome does not save and the error message {string} appears") do |err
   page = AddOutcomePage.new
   expect(page).to have_errors
   expect(page.errors.text).to include(error_message)
+end
+
+Then("the outcome does not save and this popup error appears:") do |string|
+  expect(page.driver.browser.switch_to.alert.text).to have_content(string)
+  page.driver.browser.switch_to.alert.dismiss
 end
