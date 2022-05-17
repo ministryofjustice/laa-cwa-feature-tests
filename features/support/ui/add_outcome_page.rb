@@ -11,6 +11,7 @@ class AddOutcomePage < SitePrism::Page
 
   element :default_form, :xpath, '//*[@id="DefaultFormName"]'
   element :matter_type, :xpath, '//*[@id="MatterType"]'
+  element :crime_matter_type, *field("Matter Type", :select)
   element :claim_type, :xpath, '//*[@id="ClaimTypeDropDown"]'
   element :schedule_reference, *field("Schedule Reference", :input)
   element :case_reference_number, *field("Case Reference Number", :input)
@@ -19,6 +20,7 @@ class AddOutcomePage < SitePrism::Page
   element :procurement_area, *field("Procurement Area", :input)
   element :access_point, *field("Access Point", :input)
   element :client_forename, *field("Client Forename", :input)
+  element :client_forename, *field("Client Initial", :input)
   element :client_surname, *field("Client Surname", :input)
   element :client_date_of_birth, *field("Client Date of Birth", :input)
   element :ucn, *field("UCN", :input)
@@ -28,22 +30,32 @@ class AddOutcomePage < SitePrism::Page
   element :disability, *field("Disability", :select)
   element :client_postcode, *field("Client Postcode", :input)
   element :case_concluded_date, *field("Case Concluded Date", :input)
+  element :work_concluded_date, *field("Date Class of Work concluded", :input)
   element :advice_time, *field("Advice Time", :input)
   element :travel_time, *field("Travel Time", :input)
   element :waiting_time, *field("Waiting Time", :input)
   element :profit_costs_excluding_vat, *field("Profit Costs excluding VAT", :input)
+  element :profit_costs_excluding_vat, *field("Profit costs excluding VAT", :input)
   element :disbursements_excluding_vat, *field("Disbursements excluding VAT", :input)
   element :counsel_costs_excluding_vat, *field("Counsel Costs excluding VAT", :input)
   element :disbursements_vat_amount, *field("Disbursements VAT amount", :input)
+  element :disbursements_vat_amount, *field("Disbursements VAT Amount", :input)
   element :profit_and_counsel_vat_indicator, *field("Profit and Counsel VAT Indicator", :select)
   element :london_rate, *field("London Rate", :select)
   element :tolerance_indicator, *field("Tolerance indicator", :select)
   element :travel_and_waiting_costs_excluding_vat, *field("Travel and Waiting costs excluding VAT", :input)
+  element :travel_and_waiting_costs_excluding_vat, *field("Waiting costs excluding VAT", :input)
+
+  element :travel_costs_excluding_vat, *field("Travel costs excluding VAT", :input)
+  element :waiting_costs_excluding_vat, *field("Waiting costs excluding VAT", :input)
+  element :vat_indicator, *field("VAT Indicator", :select)
+
   element :value_of_costs_damages_awarded, *field("Value of Costs/Damages awarded", :input)
   element :local_authority_number, *field("Local Authority number", :input)
   element :client_type, *field("Client Type", :select)
   element :stage_reached, *field("Stage Reached", :select)
   element :outcome_for_client, *field("Outcome for client", :select)
+  element :outcome_code, *field("Outcome Code", :select)
   element :case_stage_level, *field("Case stage(s) / level(s)", :select)
   element :exemption_criteria_satisfied, *field("Exemption Criteria Satisfied", :select)
   element :exceptional_case_funding_reference, *field("Exceptional Case Funding Reference", :input)
@@ -65,6 +77,15 @@ class AddOutcomePage < SitePrism::Page
   element :surgery_date, *field("Surgery Date", :input)
   element :no_of_clients_seen_at_the_surgery, *field("Number of Clients Seen at the Surgery", :input)
   element :no_of_surgery_clients, *field("Number of Surgery Clients Resulting in a Legal Help Matter Opened", :input)
+
+  element :rep_order_date, *field("Representation Order Date", :input)
+  element :standard_fee_cat, *field("Standard Fee Category", :select)
+  element :no_of_suspects, *field("No of suspects/defendants", :input)
+  element :no_of_police_station, *field("No of Police Station/court attendances", :input)
+  element :police_station, *field("Police Station / Court identifier", :input)
+  element :youth_court, *field("Youth Court", :select)
+  element :ufn, *field("UFN", :input)
+  element :maat_id, *field("MAAT ID", :input)
 
   element :errors, :xpath, '//*[@id="FwkErrorBeanId"]'
 
@@ -110,52 +131,68 @@ JS
     wait_until_schedule_reference_visible(wait: 10)
     schedule_reference.set(values[:schedule_ref])
 
-    case_reference_number.set(values[:case_ref_number])
+    rep_order_date.set(values[:rep_order_date]) if values[:rep_order_date]
+    standard_fee_cat.select(values[:standard_fee_cat]) if values[:standard_fee_cat]
 
-    case_start_date.set(values[:case_start_date])
-    case_id.set(values[:case_id])
-    set_value_sync(procurement_area, values[:procurement_area])
-    set_value_sync(access_point, values[:access_point])
+    case_reference_number.set(values[:case_ref_number]) if values[:case_ref_number]
+    case_start_date.set(values[:case_start_date]) if values[:case_start_date]
+    case_id.set(values[:case_id]) if values[:case_id]
+    set_value_sync(procurement_area, values[:procurement_area]) if values[:procurement_area]
+    set_value_sync(access_point, values[:access_point]) if values[:access_point]
     client_forename.set(values[:client_forename])
     client_surname.set(values[:client_surname])
-    client_date_of_birth.set(values[:client_date_of_birth])
-    ucn.set(values[:ucn])
+    client_date_of_birth.set(values[:client_date_of_birth]) if values[:client_date_of_birth]
+    ucn.set(values[:ucn]) if values[:ucn]
 
-    postal_application_accepted.select(values[:postal_appl_accp])
+    postal_application_accepted.select(values[:postal_appl_accp]) if values[:postal_appl_accp]
 
     gender.select(values[:gender])
     ethnicity.select(values[:ethnicity])
     disability.select(values[:disability])
-    client_postcode.set(values[:client_post_code])
+    client_postcode.set(values[:client_post_code]) if values[:client_postcode]
 
-    case_concluded_date.set(values[:work_concluded_date])
+    case_concluded_date.set(values[:case_concluded_date]) if values[:case_concluded_date]
 
-    case_concluded_date.send_keys(:tab)
-    advice_time.set(values[:advice_time])
-    travel_time.set(values[:travel_time])
-    waiting_time.set(values[:waiting_time])
+    work_concluded_date.set(values[:work_concluded_date]) if values[:work_concluded_date]
 
-    profit_costs_excluding_vat.set(values[:profit_cost])
+    advice_time.set(values[:advice_time]) if values[:advice_time]
+    travel_time.set(values[:travel_time]) if values[:travel_time]
+    waiting_time.set(values[:waiting_time]) if values[:waiting_time]
+
+    profit_costs_excluding_vat.set(values[:profit_cost]) if values[:profit_cost]
 
     disbursements_excluding_vat.set(values[:disbursements_amount])
 
-    counsel_costs_excluding_vat.set(values[:counsel_cost])
+    maat_id.set(values[:maat_id]) if values[:maat_id]
+
+    counsel_costs_excluding_vat.set(values[:counsel_cost]) if values[:counsel_cost]
 
     disbursements_vat_amount.set(values[:disbursements_vat])
 
-    profit_and_counsel_vat_indicator.select(values[:vat_indicator])
+    profit_and_counsel_vat_indicator.select(values[:vat_indicator]) if values[:profit_and_counsel_vat_indicator]
 
     london_rate.select(values[:london_rate]) if values[:london_rate]
     tolerance_indicator.select(values[:tolerance_indicator]) if values[:tolerance_indicator]
 
-    travel_and_waiting_costs_excluding_vat.set(values[:travel_waiting_costs])
+    travel_and_waiting_costs_excluding_vat.set(values[:travel_waiting_costs]) if values[:travel_waiting_costs]
+    travel_costs_excluding_vat.set(values[:travel_costs]) if values[:travel_costs]
+    waiting_costs_excluding_vat.set(values[:waiting_costs]) if values[:waiting_costs]
+
+    vat_indicator.select(values[:vat_indicator]) if values[:vat_indicator]
 
     value_of_costs_damages_awarded.set(values[:value_of_costs_damages_awarded]) if values[:value_of_costs_damages_awarded]
     stage_reached.select(values[:stage_reached]) if values[:stage_reached]
     local_authority_number.set(values[:local_authority_number]) if values[:local_authority_number]
     client_type.select(values[:client_type]) if values[:client_type]
 
-    outcome_for_client.select(values[:outcome_code])
+    crime_matter_type.select(values[:crime_matter_type]) if values[:crime_matter_type]
+
+    if values[:stage_reached]
+      outcome_for_client.select(values[:outcome_code]) if values[:outcome_code]
+    else
+      outcome_code.select(values[:outcome_code]) if values[:outcome_code]
+    end
+
     case_stage_level.select(values[:case_stage_level]) if values[:case_stage_level]
 
     home_office_ucn.set(values[:home_office_ucn]) if values[:ho_ucn]
@@ -165,7 +202,15 @@ JS
     ait_hearing_centre.select(values[:ait_hearing_centre]) if values[:ait_hearing_centre]
     adjourned_hearing_fee.set(values[:adjourned_hearing_fee]) if values[:adjourned_hearing_fee]
 
-    detention_travel_and_waiting_costs_excluding_vat.set(values[:travel_costs]) if values[:travel_costs]
+    if values[:stage_reached]
+      detention_travel_and_waiting_costs_excluding_vat.set(values[:travel_costs]) if values[:travel_costs]
+    end
+
+    no_of_suspects.set(values[:no_of_suspects]) if values[:no_of_suspects]
+    no_of_police_station.set(values[:no_of_police_station]) if values[:no_of_police_station]
+    police_station.set(values[:police_station]) if values[:police_station]
+    youth_court.select(values[:youth_court]) if values[:youth_court]
+    ufn.set(values[:ufn]) if values[:ufn]
 
     jr_form_filling_costs_excluding_vat.set(values[:jr_form_filling]) if values[:jr_form_filling]
 
@@ -181,7 +226,6 @@ JS
     exemption_criteria_satisfied.select(values[:exemption_criteria_satisfied]) if values[:exemption_criteria_satisfied]
     exceptional_case_funding_reference.set(values[:exceptional_case_funding_reference]) if values[:exceptional_case_funding_reference]
     transfer_date.set(values[:transfer_date]) if values[:transfer_date]
-
     save_button.click
   end
 end
