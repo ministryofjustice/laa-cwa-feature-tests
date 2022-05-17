@@ -49,9 +49,18 @@ module CWAProvider
   environment = YAML.safe_load(File.read(path))
   @config = environment.fetch(ENV.fetch('TEST_ENV').downcase)
   @shared = environment.fetch('shared')
+  @area_of_law = []
 
   def self.url
     @config['url']
+  end
+
+  def self.area_of_law=(aol)
+    @area_of_law = aol
+  end
+
+  def self.area_of_law
+    @area_of_law
   end
 
   def self.submissions
@@ -67,7 +76,19 @@ module CWAProvider
     end
   end
 
-  def self.submission(ref)
+  def self.submission
+    if area_of_law.eql? 'CRIME LOWER'
+      crime_lower_submission
+    elsif area_of_law.eql? 'LEGAL HELP'
+      legal_help_submission
+    elsif area_of_law.eql? 'MEDIATION'
+      mediation_submission
+    else
+      raise("Invalid Area of Law #{area_of_law}")
+    end
+  end
+
+  def self.submission_by_ref(ref) # TODO: change references
     if ref
       id, _ = ref.split('#').last
       submissions.find do |submission|
@@ -80,6 +101,14 @@ module CWAProvider
     @legal_help_submission ||= OpenStruct.new(submission_for(:legal_help))
   end
 
+  def self.mediation_submission
+    @mediation_submission ||= OpenStruct.new(submission_for(:mediation))
+  end
+
+   def self.crime_lower_submission
+     @crime_lower_submission ||= OpenStruct.new(submission_for(:crime_lower))
+   end
+
   def self.submission_for(area_of_law)
     submissions.find do |submission|
       submission['area_of_law'] == area_of_law.to_s.upcase.tr('_', ' ')
@@ -89,6 +118,7 @@ module CWAProvider
   def self.errors
     JSON.parse(@shared['errors'].to_json, object_class: OpenStruct)
   end
+
 end
 
 World(PortalEnv, CWAProvider)
