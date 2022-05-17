@@ -8,7 +8,7 @@ module OutcomePage
       Then CWA application page is displayed
       When user navigates to Submissions page
       Then Submission Search Page displayed
-      When user searches for their legal help submission
+      When user searches for their submission
       Then their submission details are displayed
     )
     return if page.has_no_link?('Select All')
