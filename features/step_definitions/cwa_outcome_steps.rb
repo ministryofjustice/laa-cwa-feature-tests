@@ -1,6 +1,5 @@
-
-
-Given('user is on their submission details page') do
+Given('user is on their legal help submission details page') do
+  CWAProvider.area_of_law = 'LEGAL HELP'
   steps %(
     Given a test firm user is on the portal login page
     When user Logs in
@@ -9,7 +8,22 @@ Given('user is on their submission details page') do
     Then CWA application page is displayed
     When user navigates to Submissions page
     Then Submission Search Page displayed
-    When user searches for their legal help submission
+    When user searches for their submission
+    Then their submission details are displayed
+  )
+end
+
+Given('user is on their crime lower submission details page') do
+  CWAProvider.area_of_law = 'CRIME LOWER'
+  steps %(
+    Given a test firm user is on the portal login page
+    When user Logs in
+    Then Portal application page is displayed
+    When user clicks on CWA link
+    Then CWA application page is displayed
+    When user navigates to Submissions page
+    Then Submission Search Page displayed
+    When user searches for their submission
     Then their submission details are displayed
   )
 end
@@ -198,7 +212,7 @@ Then('the outcome does not save and gives an error') do
 end
 
 When("user adds outcomes for Immigration with fields like this:") do |table|
-  sr = CWAProvider.legal_help_submission.schedule_ref
+  sr = CWAProvider.submission.schedule_ref
   outcome_data = table.hashes
   @submissions_saved = outcome_data.size
   outcome_data.each do |test_data_row|
@@ -206,6 +220,21 @@ When("user adds outcomes for Immigration with fields like this:") do |table|
     submission_list_page.add_outcome_button.click
     test_data_row["schedule_ref"] = sr
     field_values = Helpers::ScreenFieldBuilder.get_fields(['legal_help', 'immigration'])
+    field_values.update(test_data_row)
+    page = AddOutcomePage.new
+    page.add_outcome(field_values.transform_keys(&:to_sym))
+  end
+end
+
+When("user adds outcomes for Crime Lower Criminal Proceedings with fields like this:") do |table|
+  sr = CWAProvider.submission.schedule_ref
+  outcome_data = table.hashes
+  @submissions_saved = outcome_data.size
+  outcome_data.each do |test_data_row|
+    submission_list_page = SubmissionListPage.new
+    submission_list_page.add_outcome_button.click
+    test_data_row["schedule_ref"] = sr
+    field_values = Helpers::ScreenFieldBuilder.get_fields(['crime_lower', 'criminal_proceedings', test_data_row['matter_type']])
     field_values.update(test_data_row)
     page = AddOutcomePage.new
     page.add_outcome(field_values.transform_keys(&:to_sym))
