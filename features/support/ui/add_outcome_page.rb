@@ -158,7 +158,7 @@ JS
     outcome_for_client.select(values[:outcome_code])
     case_stage_level.select(values[:case_stage_level]) if values[:case_stage_level]
 
-    home_office_ucn.set(values[:home_office_ucn]) if values[:ho_ucn]
+    home_office_ucn.set(values[:ho_ucn]) if values[:ho_ucn]
 
     legacy_case.select(values[:legacy_case]) if values[:legacy_case]
     ho_interview.select(values[:ho_interview]) if values[:ho_interview]
