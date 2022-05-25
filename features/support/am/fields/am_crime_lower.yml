@@ -125,8 +125,8 @@ criminal_proceedings_base: &criminal_proceedings_base
   disbursements_amount:
   disbursements_vat:
   dscc_number:
-  duty_solicitor:
-  item_id:
+  # duty_solicitor:
+  # item_id:
   maat_id:
   no_of_police_station:
   no_of_suspects:
