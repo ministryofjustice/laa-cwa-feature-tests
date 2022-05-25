@@ -1,0 +1,223 @@
+access_point:
+  - Access Point
+additional_travel_payment:
+  - Additional Travel Payment
+adjourned_hearing_fee:
+  - Adjourned Hearing Fee
+advice_time:
+  - Advice Time
+ait_hearing_centre:
+  - AIT Hearing Centre
+case_id:
+  - Case ID
+  - Claim Id
+case_ref_number:
+  - Case Reference Number
+case_stage_level:
+  - Case stage(s) / level(s)
+case_start_date:
+  - Case Start Date
+cla_exemption:
+  - CLA Exemption Code
+cla_ref_number:
+  - CLA Reference Number
+claim_type:
+  - Claim Type
+client2_date_of_birth:
+  - 2nd Client Date of Birth
+  - 2nd Client Date Of Birth
+client2_disability:
+  - 2nd Client Disability
+client2_ethnicity:
+  - 2nd Client Ethnicity
+client2_forename:
+  - 2nd Client Forename
+client2_gender:
+  - 2nd Client Gender
+client2_legally_aided:
+  - 2nd Client Legally Aided
+client2_post_code:
+  - 2nd Client Postcode
+client2_postal_appl_accp:
+  - 2nd Client Postal Application Accepted
+client2_surname:
+  - 2nd Client Surname
+client2_ucn:
+  - 2nd Client UCN
+client_date_of_birth:
+  - Client Date of Birth
+client_forename:
+  - Client Forename
+  - Client Initial
+client_legally_aided:
+  - Client Legally Aided
+client_post_code:
+  - Client Postcode
+client_surname:
+  - Client Surname
+client_type:
+  - Client Type
+cmrh_oral:
+  - CMRH Oral
+cmrh_oral_tele:
+  - CMRH Oral /Telephone
+cmrh_telephone:
+  - CMRH Telephone
+counsel_cost:
+  - Counsel Costs excluding VAT
+court_location_hpcds:
+  - Court Location (HPCDS)
+crime_matter_type:
+  - Matter Type
+delivery_location:
+  - Delivery Location
+desi_acc_rep:
+  - Designated Accredited Representatives
+detention_centre:
+  - Detention Centre
+disability:
+  - Disability
+disbursements_amount:
+  - Disbursements
+  - Disbursments excluding VAT
+  - Disbursements Amount
+  - Disbursements excluding VAT
+disbursements_vat:
+  - Disbursements VAT Amount
+  - Disbursements VAT amount
+dscc_number:
+  - DSCC Number
+duty_solicitor:
+  - Duty Solicitor
+eligible_client_indicator:
+  - Eligible Client
+ethnicity:
+  - Ethnicity
+excess_travel_costs:
+  - Net Excess Travel Costs
+excl_case_funding_ref:
+  - Exceptional Case Funding Reference
+exemption_criteria_satisfied:
+  - Exemption Criteria Satisfied
+gender:
+  - Gender
+ho_interview:
+  - HO Interview
+ho_ucn:
+  - Home Office UCN
+irc_surgery:
+  - IRC Surgery
+jr_form_filling:
+  - JR /Form Filling costs excluding VAT
+legacy_case:
+  - Legacy Case
+local_authority_number:
+  - Local Authority number
+london_nonlondon_rate:
+  - London Rate
+maat_id:
+  - MAAT ID
+matter_type:
+  - Matter Type
+  - Stage Reached
+med_concluded_date:
+  - Work Concluded Date
+mediation_time:
+  - Mediation Time
+medical_reports_claimed:
+  - Number of Independent Medical Reports Claimed
+meetings_attended:
+  - Meetings attended
+mht_ref_number:
+  - Mental Health Tribunal Reference Number
+no_of_clients:
+  - Number of Clients Seen at the Surgery
+no_of_police_station:
+  - No of Police Station/court attendances
+  - No. of Police Station/court attendances
+no_of_surgery_clients:
+  - Number of Surgery Clients Resulting in a Legal Help Matter Opened
+no_of_suspects:
+  - No of suspects/defendants
+  - No. of suspects/defendants
+number_of_mediation_sessions:
+  - Number of Mediation Sessions
+outcome_code:
+  - Outcome for client
+  - Outcome Code
+outreach:
+  - Outreach Code
+pa_number:
+  - Prior Approval Number
+police_station:
+  - Prison ID
+  - Police Station / Court identifier
+  - Police Station / Court Identifier
+postal_appl_accp:
+  - Postal Application Accepted
+prior_authority_ref:
+  - Disbursement Prior Authority Number
+procurement_area:
+  - Procurement Area
+profit_cost:
+  - Profit Costs
+  - Profit costs excluding VAT
+  - Profit Costs excluding VAT
+  - Profit Cost
+referral:
+  - Referral Code
+rep_order_date:
+  - Representation Order Date
+schedule_ref:
+  - Schedule Reference
+scheme_id:
+  - Police Scheme Id
+stage_reached:
+  - Stage Reached
+standard_fee_cat:
+  - Fixed Fee Category
+  - Standard Fee Category
+substantive_hearing:
+  - Substantive Hearing
+surgery_date:
+  - Surgery Date
+tolerance_indicator:
+  - Tolerance indicator
+  - Tolerance Indicator
+transfer_date:
+  - Transfer Date
+travel_costs:
+  - Travel
+  - Travel costs excluding VAT
+  - Detention Travel & Waiting Costs Excluding VAT
+  - Detention Travel Costs excluding VAT
+travel_time:
+  - Travel Time
+travel_waiting_costs:
+  - Travel and Waiting costs excluding VAT
+  - Waiting Cost
+  - Waiting costs excluding VAT
+type_of_advice:
+  - Type of Advice
+ucn:
+  - UCN
+ufn:
+  - UFN
+unique_case_id:
+  - Unique Case Id
+value_of_costs:
+  - Value of Costs/Damages awarded
+vat_indicator:
+  - VAT Indicator
+  - Profit and Counsel VAT Indicator
+waiting_time:
+  - Waiting Time
+  - Waiting
+work_concluded_date:
+  - Date Class of Work concluded
+  - Case Concluded Date
+  - Work Concluded Date
+  - Date Class of Work Concluded
+  - Claim Date
+youth_court:
+  - Youth Court

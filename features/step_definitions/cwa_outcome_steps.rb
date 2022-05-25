@@ -219,10 +219,12 @@ When("user adds outcomes for Immigration with fields like this:") do |table|
     submission_list_page = SubmissionListPage.new
     submission_list_page.add_outcome_button.click
     test_data_row["schedule_ref"] = sr
-    field_values = Helpers::ScreenFieldBuilder.get_fields(['legal_help', 'immigration'])
-    field_values.update(test_data_row)
-    page = AddOutcomePage.new
-    page.add_outcome(field_values.transform_keys(&:to_sym))
+    builder = Helpers::ScreenFieldBuilder.from(
+      area_of_law: 'legal_help',
+      category_of_law: 'immigration')
+    builder.overrides = test_data_row
+    page = AddOutcomePage.new(builder)
+    page.add_outcome
   end
 end
 
@@ -233,11 +235,14 @@ When("user adds outcomes for Crime Lower Criminal Proceedings with fields like t
   outcome_data.each do |test_data_row|
     submission_list_page = SubmissionListPage.new
     submission_list_page.add_outcome_button.click
-    test_data_row["schedule_ref"] = sr
-    field_values = Helpers::ScreenFieldBuilder.get_fields(['crime_lower', 'criminal_proceedings', test_data_row['matter_type']])
-    field_values.update(test_data_row)
-    page = AddOutcomePage.new
-    page.add_outcome(field_values.transform_keys(&:to_sym))
+    test_data_row['schedule_ref'] = sr
+    builder = Helpers::ScreenFieldBuilder.from(
+      area_of_law: 'crime_lower',
+      category_of_law: 'criminal_proceedings',
+      stage_reached_code: test_data_row['matter_type'])
+    builder.overrides = test_data_row
+    page = AddOutcomePage.new(builder)
+    page.add_outcome
   end
 end
 
@@ -249,7 +254,6 @@ When ('user adds an outcome for Immigration with {string}, {string}, {string}, {
 do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date, pa, ap, ho_ucn|
   submission_list_page = SubmissionListPage.new
   submission_list_page.add_outcome_button.click
-  page = AddOutcomePage.new
   values = {
     matter_type: matter_type,
     claim_type: 'Completed Matter Claim',
@@ -293,14 +297,18 @@ do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date
     exemption_criteria_satisfied: exemption_criteria_satisfied,
     exceptional_case_funding_reference: ecf_ref
   }
-  page.add_outcome(values)
+  builder = Helpers::ScreenFieldBuilder.from(
+    area_of_law: 'legal_help',
+    category_of_law: 'immigration')
+  builder.overrides = values
+  page = AddOutcomePage.new(builder)
+  page.add_outcome
 end
 
 When ('user adds an outcome for Family with {string}, {string}, {string}, {string}, {string}, {string} and {string}') \
 do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date, pa, ap|
   submission_list_page = SubmissionListPage.new
   submission_list_page.add_outcome_button.click
-  page = AddOutcomePage.new
   values = {
     matter_type: matter_type,
     claim_type: 'Completed Matter Claim',
@@ -338,14 +346,18 @@ do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date
     exemption_criteria_satisfied: exemption_criteria_satisfied,
     exceptional_case_funding_reference: ecf_ref
   }
-  page.add_outcome(values)
+  builder = Helpers::ScreenFieldBuilder.from(
+    area_of_law: 'legal_help',
+    category_of_law: 'family')
+  builder.overrides = values
+  page = AddOutcomePage.new(builder)
+  page.add_outcome
 end
 
 When ('user adds an outcome for Medical Negligence with {string}, {string}, {string}, {string}, {string}, {string} and {string}') \
 do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date, pa, ap|
   submission_list_page = SubmissionListPage.new
   submission_list_page.add_outcome_button.click
-  page = AddOutcomePage.new
   values = {
     matter_type: matter_type,
     claim_type: 'Completed Matter Claim',
@@ -379,7 +391,12 @@ do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date
     exemption_criteria_satisfied: exemption_criteria_satisfied,
     exceptional_case_funding_reference: ecf_ref
   }
-  page.add_outcome(values)
+  builder = Helpers::ScreenFieldBuilder.from(
+    area_of_law: 'legal_help',
+    category_of_law: 'clinical_negligence')
+  builder.overrides = values
+  page = AddOutcomePage.new(builder)
+  page.add_outcome
 end
 
 When ('user adds an outcome for Education with {string}, {string}, {string}, {string}, {string} and {string}') \
@@ -387,7 +404,6 @@ do |matter_type, ecf_ref, case_start_date, pa, ap, case_id |
   submission_list_page = SubmissionListPage.new
   submission_list_page.add_outcome_button.click
 
-  page = AddOutcomePage.new
   values = {
     matter_type: matter_type,
     claim_type: 'Completed Matter Claim',
@@ -423,8 +439,12 @@ do |matter_type, ecf_ref, case_start_date, pa, ap, case_id |
     exceptional_case_funding_reference: ecf_ref,
     transfer_date: ''
   }
-
-  page.add_outcome(values)
+  builder = Helpers::ScreenFieldBuilder.from(
+    area_of_law: 'legal_help',
+    category_of_law: 'education')
+  builder.overrides = values
+  page = AddOutcomePage.new(builder)
+  page.add_outcome
 end
 
 Then("the outcome does not save and gives an error containing:") do |string|
