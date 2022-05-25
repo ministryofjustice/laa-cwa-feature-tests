@@ -11,9 +11,10 @@ module OutcomePage
       When user searches for their submission
       Then their submission details are displayed
     )
-    return if page.has_no_link?('Select All')
-    page.click_link 'Select All'
-    page.find('#Delete').click
-    page.click_button 'Yes'
+    page = SubmissionDetailsPage.new
+    return if page.has_no_select_all_link?(wait: 0)
+    page.select_all
+    page.delete_button.click
+    page.confirm_delete_button.click
   end
 end
