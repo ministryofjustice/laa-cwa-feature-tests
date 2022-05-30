@@ -8,7 +8,7 @@ Feature: PROV outcome pricing
   in use.
 
 Background:
-  Given user is on their crime lower submission details page
+  Given user is on their "CRIME LOWER" submission details page
 
 @valid @crime_lower @delete_outcome_before @XXLSC_MAGISTRATE_COURT_FEE_ASB
 Scenario: Manually enter PROV outcomes using the mag court fee scheme 23-MAR-2015 to 30-JUN-2015

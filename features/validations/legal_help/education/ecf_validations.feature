@@ -9,7 +9,7 @@ Feature: Check ECF Validation for Education claims
     Procurement Area code PA20000 and Access Point code AP20000.  These
     are special PA/AP codes set up for use when an ECF Matter is reported.
 
-    Given user is on their submission details page
+    Given user is on their "LEGAL HELP" submission details page
 
   @delete_outcome_after
   Scenario Outline: Add a valid submission for Education where the case start date >= '01-Sep-2019'

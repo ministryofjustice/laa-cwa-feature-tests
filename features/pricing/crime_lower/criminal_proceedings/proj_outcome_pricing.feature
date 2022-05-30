@@ -10,7 +10,7 @@ Feature: PROJ outcome pricing
   in use.
 
 Background:
-  Given user is on their crime lower submission details page
+  Given user is on their "CRIME LOWER" submission details page
 
 @valid @crime_lower @delete_outcome_before @XXLSC_MAGISTRATE_COURT_FEES
 Scenario: Manually enter PROJ outcomes using the mag court fee scheme 01-JAN-1995 to 02-OCT-2011

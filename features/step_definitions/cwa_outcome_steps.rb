@@ -1,43 +1,21 @@
-Given('user is on their legal help submission details page') do
-  CWAProvider.area_of_law = 'LEGAL HELP'
+Given('user is on their {string} submission details page') do |area_of_law|
+  CWAProvider.area_of_law = area_of_law.upcase
   steps %(
     Given a test firm user is on the portal login page
     When user Logs in
-    Then Portal application page is displayed
-    When user clicks on CWA link
-    Then CWA application page is displayed
-    When user navigates to Submissions page
-    Then Submission Search Page displayed
-    When user searches for their submission
-    Then their submission details are displayed
+    And Portal application page is displayed
+    And user clicks on CWA link
+    And CWA application page is displayed
+    And user navigates to Submissions page
+    And Submission Search Page displayed
+    And user searches for their submission
+    And their submission details are displayed
   )
 end
 
-Given('user is on their crime lower submission details page') do
-  CWAProvider.area_of_law = 'CRIME LOWER'
-  steps %(
-    Given a test firm user is on the portal login page
-    When user Logs in
-    Then Portal application page is displayed
-    When user clicks on CWA link
-    Then CWA application page is displayed
-    When user navigates to Submissions page
-    Then Submission Search Page displayed
-    When user searches for their submission
-    Then their submission details are displayed
-  )
-end
-
-Then(/^the outcome saves successfully(?: with \"(.*)\")?$/) do |ufn|
-  page = SubmissionDetailsPage.new
-  expect(page).to_not have_content('Error')
-  expect(page).to have_content(ufn) if ufn
-end
-
-Then('the outcome does not save and gives an error') do
+Then('the outcome saves successfully') do
   page = AddOutcomePage.new
-  expect(page).to have_content('Error')
-  expect(page).to have_content('The Category of Law, Procurement Area and Access Point combination that has been used is not valid for the date that has been recorded.')
+  expect(page.has_no_errors?(wait: 0)).to eq(true)
 end
 
 When("user adds outcomes for Immigration with fields like this:") do |table|
@@ -75,19 +53,15 @@ When("user adds outcomes for Crime Lower Criminal Proceedings with fields like t
   end
 end
 
-Then("{int} outcomes save successfully") do |expected|
-  expect(@submissions_saved).to eq(expected)
-end
-
-When ('user adds an outcome for Immigration with {string}, {string}, {string}, {string}, {string}, {string}, {string} and {string}') \
-do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date, pa, ap, ho_ucn|
+When ('user adds an outcome for Immigration with {string}, {string}, {string}, {string}, {string}, {string} and {string}') \
+do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date, pa, ap|
   submission_list_page = SubmissionListPage.new
   submission_list_page.add_outcome_button.click
   values = {
     matter_type: matter_type,
     claim_type: 'Completed Matter Claim',
-    schedule_reference: CWAProvider.legal_help_submission.schedule_ref,
-    case_reference_number: 'TestCaseRef',
+    schedule_ref: CWAProvider.legal_help_submission.schedule_ref,
+    case_ref_number: 'TestCaseRef',
     case_start_date: case_start_date,
     case_id: case_id,
     procurement_area: pa,
@@ -96,39 +70,38 @@ do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date
     client_surname: 'Person',
     client_date_of_birth: '01-Nov-2015',
     ucn: '01112015/T/PERS',
-    postal_application_accepted: 'N',
-    home_office_ucn: ho_ucn,
+    postal_appl_accp: 'N',
+    ho_ucn: 'A9999999',
     gender: 'Male',
     ethnicity: '00-Other',
     disability: 'NCD-Not Considered Disabled',
-    client_postcode: 'SW1H 9AJ',
-    case_concluded_date: '01-Nov-2019',
+    client_post_code: 'SW1H 9AJ',
+    work_concluded_date: '01-Nov-2019',
     advice_time: '0',
     travel_time: '0',
     waiting_time: '0',
-    profit_costs_excluding_vat: '100.00',
-    disbursements_excluding_vat: '0',
-    counsel_costs_excluding_vat: '0',
-    disbursements_vat_amount: '0',
-    profit_and_counsel_vat_indicator: 'No',
+    profit_cost: '100.00',
+    disbursements_amount: '0',
+    counsel_cost: '0',
+    disbursements_vat: '0',
+    vat_indicator: 'No',
     legacy_case: 'No',
     ho_interview: '0',
     ait_hearing_centre: '16-Other',
-    travel_and_waiting_costs_excluding_vat: '0',
+    travel_waiting_costs: '0',
     adjourned_hearing_fee: '0',
-    detention_travel_and_waiting_costs_excluding_vat: '0',
-    jr_form_filling_costs_excluding_vat: '0',
+    jr_form_filling: '0',
     cmrh_oral: '0',
     cmrh_telephone: '0',
     substantive_hearing: 'No',
     stage_reached: '',
-    outcome_for_client: 'IX',
+    outcome_code: 'IX',
     exemption_criteria_satisfied: exemption_criteria_satisfied,
-    exceptional_case_funding_reference: ecf_ref
+    excl_case_funding_ref: ecf_ref
   }
   builder = Helpers::ScreenFieldBuilder.from(
     area_of_law: 'legal_help',
-    category_of_law: 'immigration')
+    category_of_law: 'immigration_and_asylum')
   builder.overrides = values
   page = AddOutcomePage.new(builder)
   page.add_outcome
@@ -141,8 +114,8 @@ do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date
   values = {
     matter_type: matter_type,
     claim_type: 'Completed Matter Claim',
-    schedule_reference: CWAProvider.legal_help_submission.schedule_ref,
-    case_reference_number: 'TestCaseRef',
+    schedule_ref: CWAProvider.legal_help_submission.schedule_ref,
+    case_ref_number: 'TestCaseRef',
     case_start_date: case_start_date,
     case_id: case_id,
     procurement_area: pa,
@@ -151,29 +124,29 @@ do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date
     client_surname: 'Person',
     client_date_of_birth: '01-May-1980',
     ucn: '01051980/T/PERS',
-    postal_application_accepted: 'N',
+    postal_appl_accp: 'N',
     gender: 'Male',
     ethnicity: '00-Other',
     disability: 'NCD-Not Considered Disabled',
-    client_postcode: 'SW1H 9AJ',
-    case_concluded_date: '01-Nov-2019',
+    client_post_code: 'SW1H 9AJ',
+    work_concluded_date: '01-Nov-2019',
     advice_time: '0',
     travel_time: '0',
     waiting_time: '0',
-    profit_costs_excluding_vat: '100.00',
-    disbursements_excluding_vat: '0',
-    counsel_costs_excluding_vat: '0',
-    disbursements_vat_amount: '0',
-    profit_and_counsel_vat_indicator: 'No',
+    profit_cost: '100.00',
+    disbursements_amount: '0',
+    counsel_cost: '0',
+    disbursements_vat: '0',
+    vat_indicator: 'No',
     london_rate: 'No',
-    travel_and_waiting_costs_excluding_vat: '0',
+    travel_waiting_costs: '0',
     value_of_costs_damages_awarded: '0',
     local_authority_number: '1234',
     client_type: 'P-Parent',
-    outcome_for_client: 'FF-Settlement with no benefit for the client',
+    outcome_code: 'FF-Settlement with no benefit for the client',
     case_stage_level: 'FPL10-Div',
     exemption_criteria_satisfied: exemption_criteria_satisfied,
-    exceptional_case_funding_reference: ecf_ref
+    excl_case_funding_ref: ecf_ref
   }
   builder = Helpers::ScreenFieldBuilder.from(
     area_of_law: 'legal_help',
@@ -190,8 +163,8 @@ do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date
   values = {
     matter_type: matter_type,
     claim_type: 'Completed Matter Claim',
-    schedule_reference: CWAProvider.legal_help_submission.schedule_ref,
-    case_reference_number: 'TestCaseRef',
+    schedule_ref: CWAProvider.legal_help_submission.schedule_ref,
+    case_ref_number: 'TestCaseRef',
     case_start_date: case_start_date,
     case_id: case_id,
     procurement_area: pa,
@@ -200,25 +173,25 @@ do |case_id, matter_type, exemption_criteria_satisfied, ecf_ref, case_start_date
     client_surname: 'Person',
     client_date_of_birth: '01-May-1980',
     ucn: '01051980/T/PERS',
-    postal_application_accepted: 'N',
+    postal_appl_accp: 'N',
     gender: 'Male',
     ethnicity: '00-Other',
     disability: 'NCD-Not Considered Disabled',
-    client_postcode: 'SW1H 9AJ',
-    case_concluded_date: '01-Nov-2019',
+    client_post_code: 'SW1H 9AJ',
+    work_concluded_date: '01-Nov-2019',
     advice_time: '0',
     travel_time: '0',
     waiting_time: '0',
-    profit_costs_excluding_vat: '100.00',
-    disbursements_excluding_vat: '0',
-    counsel_costs_excluding_vat: '0',
-    disbursements_vat_amount: '0',
-    profit_and_counsel_vat_indicator: 'No',
+    profit_cost: '100.00',
+    disbursements_amount: '0',
+    counsel_cost: '0',
+    disbursements_vat: '0',
+    vat_indicator: 'No',
     tolerance_indicator: 'No',
-    travel_and_waiting_costs_excluding_vat: '0',
-    outcome_for_client: 'NA-Client receives damages',
+    travel_waiting_costs: '0',
+    outcome_code: 'NA-Client receives damages',
     exemption_criteria_satisfied: exemption_criteria_satisfied,
-    exceptional_case_funding_reference: ecf_ref
+    excl_case_funding_ref: ecf_ref
   }
   builder = Helpers::ScreenFieldBuilder.from(
     area_of_law: 'legal_help',
@@ -236,8 +209,8 @@ do |matter_type, ecf_ref, case_start_date, pa, ap, case_id |
   values = {
     matter_type: matter_type,
     claim_type: 'Completed Matter Claim',
-    schedule_reference: CWAProvider.legal_help_submission.schedule_ref,
-    case_reference_number: 'TestCaseRef',
+    schedule_ref: CWAProvider.legal_help_submission.schedule_ref,
+    case_ref_number: 'TestCaseRef',
     case_start_date: case_start_date,
     case_id: case_id,
     procurement_area: pa,
@@ -246,26 +219,26 @@ do |matter_type, ecf_ref, case_start_date, pa, ap, case_id |
     client_surname: 'Person',
     client_date_of_birth: '01-May-1980',
     ucn: '01051980/T/PERS',
-    postal_application_accepted: 'N',
+    postal_appl_accp: 'N',
     gender: 'Male',
     ethnicity: '00-Other',
     disability: 'NCD-Not Considered Disabled',
-    client_postcode: 'SW1H 9AJ',
-    case_concluded_date: '02-Sep-2019',
+    client_post_code: 'SW1H 9AJ',
+    work_concluded_date: '02-Sep-2019',
     advice_time: '0',
     travel_time: '0',
     waiting_time: '0',
-    profit_costs_excluding_vat: '100.00',
-    disbursements_excluding_vat: '0',
-    counsel_costs_excluding_vat: '0',
-    disbursements_vat_amount: '0',
-    profit_and_counsel_vat_indicator: 'No',
+    profit_cost: '100.00',
+    disbursements_amount: '0',
+    counsel_cost: '0',
+    disbursements_vat: '0',
+    vat_indicator: 'No',
     tolerance_indicator: 'No',
-    travel_and_waiting_costs_excluding_vat: '0',
+    travel_waiting_costs: '0',
     stage_reached: 'EA-First meeting',
-    outcome_for_client: 'EA-Client receives damages',
+    outcome_code: 'EA-Client receives damages',
     exemption_criteria_satisfied: '',
-    exceptional_case_funding_reference: ecf_ref,
+    excl_case_funding_ref: ecf_ref,
     transfer_date: ''
   }
   builder = Helpers::ScreenFieldBuilder.from(
