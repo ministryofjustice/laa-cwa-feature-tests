@@ -2,7 +2,7 @@ Feature: Validation for Family claims
 
   @delete_outcome_after @manual_submission @invalid
   Scenario Outline: Reject invalid Family claims
-    Given user is on their submission details page
+    Given user is on their "LEGAL HELP" submission details page
     When user adds an outcome for Family with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
     Then the outcome does not save and the error message "<error message>" appears
     Examples:
@@ -16,7 +16,7 @@ Feature: Validation for Family claims
 
   @delete_outcome_after @manual_submission @valid
   Scenario Outline: Add valid Family claims
-    Given user is on their submission details page
+    Given user is on their "LEGAL HELP" submission details page
     When user adds an outcome for Family with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
     Then the outcome saves successfully
     Examples:

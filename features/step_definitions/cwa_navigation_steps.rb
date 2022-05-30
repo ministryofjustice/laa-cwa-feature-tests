@@ -48,7 +48,6 @@ When('user searches for their submission') do
   end
 
   existing_submission.update_button.click
-  
 end
 
 Then('their submission details are displayed') do

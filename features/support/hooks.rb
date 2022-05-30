@@ -35,7 +35,7 @@ Before('@delete_outcome_before') do |scenario|
   visit("#{PortalEnv.url}/oam/server/logout?")
   delete_all_outcomes
   visit("#{CWAProvider.url}/OA_HTML/OALogout.jsp?")
-  visit("#{PortalEnv.url}/oam/server/logout?")  
+  visit("#{PortalEnv.url}/oam/server/logout?")
 end
 
 After('@delete_outcome_after') do |scenario|
