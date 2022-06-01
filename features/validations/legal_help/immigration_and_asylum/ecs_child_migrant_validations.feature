@@ -33,3 +33,4 @@ Feature: Check Child Migrant Validation for Immigration
       | 321     | IMXC:IREM | CM001    | 1234567AB | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is not required. |
       | 322     | IMXC:IREM | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is not required. |
       | 323     | IMXC:IREM | CM001    |           | 01/11/19        | PA20000 | AP20000 | Invalid Procurement Area and Access Point.             |
+      | 318     | IMLB:IDOM | CM001    |           | 01/11/19        | PA00140 | AP00198 | TODO: <Add message to restrict use of CM001 here>      |
