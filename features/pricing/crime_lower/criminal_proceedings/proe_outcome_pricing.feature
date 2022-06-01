@@ -90,7 +90,7 @@ Scenario: Manually enter PROE outcomes using the mag court fee scheme 01-JUL-201
 
   When user adds outcomes for Crime Lower Criminal Proceedings with fields like this:
   | matter_type | rep_order_date | standard_fee_cat | profit_cost | ufn        | work_concluded_date | police_station | maat_id    |
-  | PROE        | 01-JUL-2015    | 1EW              | 177.01      | 010715/002 | 02-JUL-2015         | C1013          | 1234567890 |
+  | PROE        | 01-JUL-2015    | 1EW              | 176.01      | 010715/002 | 02-JUL-2015         | C1013          | 1234567890 |
   Then the outcome saves successfully
 
 @invalid @crime_lower @delete_outcome_before @XXLSC_MC_FEE_REV_PRE_JULY_2015
