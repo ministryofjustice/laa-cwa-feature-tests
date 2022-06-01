@@ -1,5 +1,5 @@
 Given(/^user prepares to submit outcomes for test provider "(.*)"(\s+again)?$/) do |ref, again|
-  @submission = CWAProvider.submission(ref)
+  @submission = CWAProvider.submission_by_ref(ref)
 
   navigator = NavigatorPage.new
   navigator.load
@@ -22,7 +22,7 @@ Given(/^user prepares to submit outcomes for test provider "(.*)"(\s+again)?$/) 
       submission_details_page = SubmissionDetailsPage.new
       if !submission_details_page.has_text?(/No results found/)
         STDOUT.print 'Cleaning existing outcomes for test reference...'
-        submission_details_page.select_all.click
+        submission_details_page.select_all
         submission_details_page.delete_button.click
         submission_details_page.confirm_delete_button.click
         STDOUT.puts ' done.'
@@ -100,14 +100,14 @@ When('user bulk loads {string} for the test firm') do |file|
   navigator.roles.cwa_activity_report_manager_internal_role.click
   navigator.content.bulk_load.click
 
-  submission = CWAProvider.submissions.select { |s| s.area_of_law == 'LEGAL HELP' }[1]
+  CWAProvider.area_of_law = 'LEGAL HELP'
 
   @bulk_load_page = BulkLoadPage.new
   within_popup(@bulk_load_page, ->{ @bulk_load_page.lookup_firm.click }) do
     office_search_page = OfficeSearchPage.new
     within_frame(office_search_page.frame) do
       office_search_page.search_by.select('Account Number')
-      office_search_page.account_number.set(submission.account_number)
+      office_search_page.account_number.set(CWAProvider.submission.account_number)
       office_search_page.search_button.click
       office_search_page.first_quick_select.click
     end

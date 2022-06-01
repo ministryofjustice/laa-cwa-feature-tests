@@ -8,7 +8,6 @@ end
 
 Given('a test firm user is on the portal login page') do
   visit(PortalEnv.url)
-  expect(page).to have_content('To sign in to the Online Portal')
 end
 
 When('user Logs in') do

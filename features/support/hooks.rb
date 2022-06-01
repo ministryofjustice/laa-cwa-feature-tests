@@ -18,6 +18,26 @@ Before do
   visit("#{PortalEnv.url}/oam/server/logout?")
 end
 
+Before('@crime_lower') do |scenario|
+  CWAProvider.area_of_law = 'CRIME LOWER'
+end
+
+Before('@legal_help') do |scenario|
+  CWAProvider.area_of_law = 'CRIME LOWER'
+end
+
+Before('@mediation') do |scenario|
+  CWAProvider.area_of_law = 'MEDIATION'
+end
+
+Before('@delete_outcome_before') do |scenario|
+  visit("#{CWAProvider.url}/OA_HTML/OALogout.jsp?")
+  visit("#{PortalEnv.url}/oam/server/logout?")
+  delete_all_outcomes
+  visit("#{CWAProvider.url}/OA_HTML/OALogout.jsp?")
+  visit("#{PortalEnv.url}/oam/server/logout?")
+end
+
 After('@delete_outcome_after') do |scenario|
   if scenario.passed?
     visit("#{CWAProvider.url}/OA_HTML/OALogout.jsp?")

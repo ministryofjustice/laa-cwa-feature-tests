@@ -13,6 +13,7 @@ base: &base_defaults
   gender: F
   ucn: 14091962/T/PERS
   work_concluded_date:
+  postal_appl_accp: Y
 
 #additional base fields added to 'completed matter' claims
 base_cm: &base_defaults_cm
@@ -151,6 +152,7 @@ legal_help:
     immigration_and_asylum:
       <<: *immigration_base_cm_defaults
       stage_reached:
+      irc_surgery:
 
   stage_claim:
       immigration:

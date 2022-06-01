@@ -21,6 +21,7 @@ base: &base
   client_date_of_birth:
   client_surname:
   case_ref_number:
+  postal_appl_accp:
 
 #additional base fields added to 'completed matter' claims
 base_cm: &base_cm
@@ -152,6 +153,7 @@ legal_help:
 
     immigration_and_asylum:
       <<: *immigration_base_cm
+      irc_surgery:
 
   stage_claim:
       immigration:

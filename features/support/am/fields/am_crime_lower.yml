@@ -1,3 +1,13 @@
+base: &base
+    client_forename:
+    client_surname:
+    disability:
+    ethnicity:
+    gender:
+    profit_cost:
+    ufn:
+    vat_indicator:
+
 criminal_investigations:
   criminal_investigations_base: &criminal_investigations_base
     client_forename:
@@ -110,6 +120,25 @@ associated_civil_work_base: &associated_civil_work_base
   work_concluded_date:
   youth_court:
 
+criminal_proceedings_base: &criminal_proceedings_base
+  <<: *base
+  disbursements_amount:
+  disbursements_vat:
+  dscc_number:
+  # duty_solicitor:
+  # item_id:
+  maat_id:
+  no_of_police_station:
+  no_of_suspects:
+  police_station:
+  rep_order_date:
+  schedule_ref:
+  standard_fee_cat:
+  travel_costs:
+  travel_waiting_costs:
+  work_concluded_date:
+  youth_court:
+
 crime_lower:
   criminal_investigations:
     #INV<x> codes: 7 fee schemes
@@ -175,22 +204,37 @@ crime_lower:
     PROD:
 
     PROE:
+      <<: *criminal_proceedings_base
+      crime_matter_type:
+      outcome_code:
 
     PROF:
+      <<: *criminal_proceedings_base
+      crime_matter_type:
+      outcome_code:
 
     PROG:
+      <<: *criminal_proceedings_base
 
     PROH:
 
     PROI:
 
     PROJ:
+      <<: *criminal_proceedings_base
 
     PROK:
+      <<: *criminal_proceedings_base
+      crime_matter_type:
+      outcome_code:
 
     PROL:
+      <<: *criminal_proceedings_base
+      crime_matter_type:
+      outcome_code:
 
     PROM:
+      <<: *criminal_proceedings_base
 
     PROP:
 
@@ -199,6 +243,9 @@ crime_lower:
     PROU:
 
     PROV:
+      <<: *criminal_proceedings_base
+      crime_matter_type:
+      outcome_code:
 
     PROW:
 
