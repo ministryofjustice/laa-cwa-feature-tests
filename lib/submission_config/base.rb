@@ -102,6 +102,10 @@ module SubmissionConfig
       Constants::MAX_PROFIT_COST
     end
 
+    def category_of_law
+      self.class.name.split('::').last
+    end
+
     private
 
     attr_accessor :config

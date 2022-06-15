@@ -70,6 +70,12 @@ When('the user adds outcomes with:') do |description|
   when 'profit and counsel costs according to hourly rates'
     # randomly distribute the max profit costs value between profit and counsel cost
     max_profit_cost = @max_price_cap || @config.max_profit_cost
+
+    # Note: this should be removed at some point, CM cases should not be capped
+    if @max_price_cap && @config.category_of_law == 'Asylum'
+      max_profit_cost = @config.max_profit_cost
+    end
+
     profit_costs_offset = rand(20..max_profit_cost-20).round(2)
     profit_cost = (max_profit_cost - profit_costs_offset).round(2)
     counsel_cost = profit_costs_offset
@@ -135,13 +141,32 @@ When('the user adds outcomes with:') do |description|
         vat_indicator: 'Y'
       },
     ]
-  when 'exemption criteria separated migrant child'
-    profit_cost = @config.max_profit_cost if @standard_fee.nil?
+  when /exemption criteria separated migrant child (below|above) the max price cap/
+    max_profit_cost = @max_price_cap || @config.max_profit_cost
+
+    direction = Regexp.last_match(1)
+    if direction == 'below'
+      profit_cost = max_profit_cost - 0.01
+    elsif direction == 'above'
+      profit_cost = max_profit_cost + 0.01
+    else
+      raise ArgumentError, 'unimplemented step'
+    end
+
+    remainder = rand(20.0..profit_cost).round(2)
+    counsel_cost = (profit_cost - remainder).round(2)
+    profit_cost = remainder.round(2)
+    total_cost = (profit_cost+counsel_cost).round(2)
+
+    log sprintf '%3s  %25s  £%s', nil, 'Profit cost', profit_cost
+    log sprintf '%3s  %25s  £%s', nil, 'Counsel cost', counsel_cost
+    log '-------------------------------------------------------'
+    log sprintf '%3s  %25s  £%s', nil, 'TOTAL', total_cost
 
     @lines = [
       {
-        profit_cost: @standard_fee ? rand(@standard_fee+100..@standard_fee+500) : profit_cost,
-        counsel_cost: 100,
+        profit_cost: profit_cost,
+        counsel_cost: counsel_cost,
         exemption_criteria_satisfied: 'CM001'
       },
     ]
