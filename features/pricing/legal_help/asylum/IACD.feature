@@ -48,12 +48,3 @@ Feature: Pricing: IACD: Asylum – Interim CLR rates (hourly rates with fixed fe
       hourly rates + VAT
       """
 
-  Scenario: Claims priced with: Hourly Rates (Separated Migrant Child)
-    When the user adds outcomes with:
-      """
-      exemption criteria separated migrant child
-      """
-    Then the outcomes are priced at:
-      """
-      hourly rates
-      """

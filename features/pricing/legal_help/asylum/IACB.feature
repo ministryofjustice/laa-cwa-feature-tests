@@ -48,16 +48,6 @@ Feature: Pricing: IACB: Asylum - Stage 2b (CLR)
       standard fee + VAT
       """
 
-  Scenario: Claims priced with: Hourly Rates (Separated Migrant Child)
-    When the user adds outcomes with:
-      """
-      exemption criteria separated migrant child
-      """
-    Then the outcomes are priced at:
-      """
-      hourly rates
-      """
-
   @escape_fee_flag
   Scenario: Claims priced with: Escape Fee Flag
     When the user adds outcomes with:
