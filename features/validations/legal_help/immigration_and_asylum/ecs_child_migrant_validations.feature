@@ -10,12 +10,11 @@ Feature: Check Child Migrant Validation for Immigration
     When user adds an outcome for Immigration with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
     Then the outcome saves successfully
 
-    Examples: All Immigration (IMMOT) MT1/MT2 codes can be used with the new child migrant code
+    Examples: Only Hourly Rate Immigration (IMMOT) MT1 codes can be used with the new child migrant code
       Immigration claims do not require an ECF Ref when submitted as a child migrant case
 
       | case id | mt        | ecs code | ecf ref | case start date | pa      | ap      |
       | 312     | IMXL:IRVL | CM001    |         | 01/11/19        | PA00140 | AP00198 |
-      | 313     | IMLB:ICZN | CM001    |         | 01/11/19        | PA00140 | AP00198 |
       | 314     | IMXC:IREM | CM001    |         | 01/11/19        | PA00140 | AP00198 |
 
   @delete_outcome_after @manual_submission @immot @invalid
@@ -33,4 +32,4 @@ Feature: Check Child Migrant Validation for Immigration
       | 321     | IMXC:IREM | CM001    | 1234567AB | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is not required. |
       | 322     | IMXC:IREM | CM001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is not required. |
       | 323     | IMXC:IREM | CM001    |           | 01/11/19        | PA20000 | AP20000 | Invalid Procurement Area and Access Point.             |
-      | 318     | IMLB:IDOM | CM001    |           | 01/11/19        | PA00140 | AP00198 | TODO: <Add message to restrict use of CM001 here>      |
+      | 318     | IMLB:IDOM | CM001    |           | 01/11/19        | PA00140 | AP00198 |  The Exemption Criteria Satisfied code is not valid for this matter type combination. |
