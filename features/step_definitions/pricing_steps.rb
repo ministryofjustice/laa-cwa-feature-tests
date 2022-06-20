@@ -72,7 +72,7 @@ When('the user adds outcomes with:') do |description|
     max_profit_cost = @max_price_cap || @config.max_profit_cost
 
     # Note: this should be removed at some point, CM cases should not be capped
-    if @max_price_cap && @config.category_of_law == 'Asylum'
+    if @max_price_cap && ['Asylum','Immigration'].include?(@config.category_of_law)
       max_profit_cost = @config.max_profit_cost
     end
 

@@ -25,7 +25,7 @@ Feature: Pricing: IAXC: Asylum - CLR Work Not Subject to the Standard Fee Scheme
       """
     Then the outcomes are priced at:
       """
-      hourly rates + additional payments
+      max price cap
       """
 
   Scenario: Claims priced with: Disbursements
