@@ -4,6 +4,26 @@ Feature: Check Child Migrant Validation for Immigration
   As a provider
   I want to use the new child migrant code
 
+  @delete_outcome_after @bulkload @immas @valid
+  Scenario: Bulk load valid file for IMMAS combinations
+    The xml file contains all combinations in the Immigration & Asylum category of law
+
+    Given a test firm user is logged in CWA
+    When user bulk loads "child_migrant_immas.xml" for the test firm
+    Then user should see the bulk load results page
+    And successful outcomes should equal 57
+    And there should be no problem outcomes
+
+  @delete_outcome_after @bulkload @immot @valid
+  Scenario: Bulk load valid file for IMMOT combinations
+    The xml file contains all combinations in the Immigration (non-Asylum) category of law
+
+    Given a test firm user is logged in CWA
+    When user bulk loads "child_migrant_immot.xml" for the test firm
+    Then user should see the bulk load results page
+    And successful outcomes should equal 58
+    And there should be no problem outcomes
+
   @delete_outcome_after @manual_submission @immot @valid
   Scenario Outline: Add child migrant Immigration (non-Asylum) claims
     Given user is on their "LEGAL HELP" submission details page
