@@ -48,12 +48,3 @@ Feature: Validation for Immigration claims
         | 717     | IMXL:IIRC   | 01/11/19        | PA00188          | AP00187      | No          |
 
         Then the outcome saves successfully
-
-    @delete_outcome_after @manual_submission @valid @IMXLICZN
-    Scenario Outline: Add valid Immigration claims
-        Given user is on their "LEGAL HELP" submission details page
-        When user adds an outcome for Immigration with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
-        Then the outcome saves successfully
-        Examples:
-            | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      |
-            | 714     | IMXL:ICZN | CM001    |           | 01/11/19        | PA00136 | AP00137 |
