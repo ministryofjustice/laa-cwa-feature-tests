@@ -45,13 +45,15 @@ module SubmissionConfig
         INAS: 'No description',
         ISTU: 'No description',
         ITWE: 'No description',
+        IDIF: 'No description'
       })
 
       MATTER_TYPE2_CODES_COMMON = %i[IASY ILEA IFRA IFST IIRC IOTH IOUT IRVL IGOL]
       private_constant :MATTER_TYPE2_CODES_COMMON
 
       define_matter_type_code_combinations({
-        IAXL: MATTER_TYPE2_CODES_COMMON + %i[IBAI ICOA IDAS IJRA IMER IPAS IUAS IFFL],
+        IAXL: MATTER_TYPE2_CODES_COMMON + %i[IBAI ICOA IDAS IJRA IMER IPAS IUAS IFFL IDIF],
+
         IAXC: MATTER_TYPE2_CODES_COMMON + %i[IBAI IRAR IUAS IREM],
 
         IALB: MATTER_TYPE2_CODES_COMMON,
@@ -119,6 +121,7 @@ module SubmissionConfig
       })
 
       define_escape_fee_threshold_formula 'standard_fee * 3 + 1.00'
+      define_max_price_cap 500 # Note: this should be removed at some point, CM cases should not be capped
     end
   end
 end
