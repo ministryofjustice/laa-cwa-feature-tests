@@ -157,11 +157,11 @@ module Helpers
         extra_args.fetch(:claim_type, 'completed_matter').to_s
       end
 
-      def overrides
-        @overrides.merge(
-          { work_concluded_date: Time.now.strftime('%d/%m/%Y') }
-        )
-      end
+#      def overrides
+#        @overrides.merge(
+#          { work_concluded_date: Time.now.strftime('%d/%m/%Y') }
+#        )
+#      end
     end
 
     class Mediation < Base
