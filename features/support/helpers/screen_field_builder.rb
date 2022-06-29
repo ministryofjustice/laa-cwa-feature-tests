@@ -158,9 +158,9 @@ module Helpers
       end
 
       def overrides
-        @overrides.merge(
-          { work_concluded_date: Time.now.strftime('%d/%m/%Y') }
-        )
+        return @overrides if @overrides.key?(:work_concluded_date)
+
+        @overrides.merge({ work_concluded_date: Time.now.strftime('%d/%m/%Y') })
       end
     end
 
