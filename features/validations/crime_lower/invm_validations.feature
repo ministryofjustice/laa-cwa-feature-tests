@@ -75,3 +75,22 @@ Then the following results are expected:
   | 1 | SCHEME_ID is missing       |
   | 1 | <none>                     |
   | 1 | 12345XXXXX is not a valid SCHEME_ID |
+
+ @cn13
+ Scenario: Bulkoad Crime Lower stage reached code INVM with case outcome code CN13
+           NOTE: For correct testing, start_date_active for outcome code CN13 in lookup
+                 has to be temporarily set to 01-Oct-2021, and reset to 01-Oct-2022 after testing.
+
+ And the following outcomes are bulkloaded:
+  | # | UFN        | OUTCOME_CODE | WORK_CONCLUDED_DATE |
+#  | 1 | 011022/001 | CN12         | 02/10/2022          |   # Uncomment this line after 2nd Oct 2022
+#  | 2 | 011022/002 | CN13         | 02/10/2022          |   # Uncomment this line after 2nd Oct 2022
+#  | 3 | 300922/003 | CN13         | 02/10/2022          |   # Uncomment this line after 2nd Oct 2022
+  | 1 | 011021/001 | CN12         | 02/10/2021          |    # Delete this line after 2nd Oct 2022
+  | 2 | 011021/002 | CN13         | 02/10/2021          |    # Delete this line after 2nd Oct 2022
+  | 3 | 300921/003 | CN13         | 02/10/2021          |    # Delete this line after 2nd Oct 2022
+Then the following results are expected:
+  | # | ERROR_CODE_OR_MESSAGE            |
+  | 1 | <none>                           |
+  | 2 | <none>                           |
+  | 3 | OUTCOME_CODE CN13 is only valid for case start date on or after 01/Oct/2022 |
