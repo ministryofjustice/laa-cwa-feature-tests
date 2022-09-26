@@ -6,10 +6,6 @@ Feature: For Mental health code MHDC,  new Case Stage Level code MHL10 billing p
   Background:
     Given a test firm user is logged in CWA
     And user prepares to submit outcomes for test provider "LEGAL HELP.MHE#11"
-
-  @mental_health @mlh10 @mhl10_pricing
-  Scenario: For Completed Matter claim, using Case Stage/Level MHL10 always prices
-            £129.00
     Given the following Matter Types are chosen:
       | MHDC:MCOM |
       | MHDC:MCON |
@@ -20,6 +16,11 @@ Feature: For Mental health code MHDC,  new Case Stage Level code MHL10 billing p
       | MHDC:MREL |
       | MHDC:MSCR |
       | MHDC:MSUP |
+
+  @mental_health @mlh10 @mhl10_pricing
+  Scenario: For Completed Matter claim, using Case Stage/Level MHL10 always prices £129.00, whatever the profit cost,
+            VAT is applied if flag is Y.
+
    When the following outcomes are bulkloaded:
       | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | CASE_STAGE_LEVEL | PROFIT_COST | VAT_INDICATOR |
       | 1 | 190920/001 | CM         | 01/01/2020      | 31/03/2020          | MHL10            | 128.00      | N             |
@@ -40,17 +41,67 @@ Feature: For Mental health code MHDC,  new Case Stage Level code MHL10 billing p
       | 5 | 190920/005 | £ 154.80   |
       | 6 | 190920/006 | £ 154.80   |
 
- @mhl10_validate @mental_health @mlh10
- Scenario: For completed Matters MT1 value MHDC, when Case Stage/Level MHL10 is used, the
-           Designated Accredited Rep (DESI_ACC_REP) must NOT be selected. If its, then an
-           error is raised.
-   Given the following Matter Types are chosen:
-      | MHDC:MCOM |
+
+  @mental_health @mlh10 @mhl10_pricing
+  Scenario: For Completed Matter claim, using Case Stage/Level MHL10 always prices £129.00, whatever the profit cost,
+            plus disbursement.
+
+  When the following outcomes are bulkloaded:
+     | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | CASE_STAGE_LEVEL | PROFIT_COST | DISBURSEMENTS_AMOUNT | VAT_INDICATOR |
+     | 1 | 190920/001 | CM         | 01/01/2020      | 31/03/2020          | MHL10            | 128.00      | 100.00               | N             |
+     | 2 | 190920/002 | CM         | 01/01/2020      | 31/03/2020          | MHL10            | 128.00      | 100.00               | Y             |
+
+  When user confirms the submission
+  And user is on the pricing outcome details page
+  Then user should see the following outcomes:
+     | # | UFN        | Value      |
+     | 1 | 190920/001 | £ 229.00   |
+     | 2 | 190920/002 | £ 254.80   |
+
+  @mental_health @mlh10 @mhl10_pricing
+  Scenario: For Completed Matter claim, using Case Stage/Level MHL10 always prices £129.00, whatever the profit cost,
+            plus disbursement and disbursement vat.
+
+  When the following outcomes are bulkloaded:
+    | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | CASE_STAGE_LEVEL | PROFIT_COST | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT | VAT_INDICATOR |
+    | 1 | 190920/001 | CM         | 01/01/2020      | 31/03/2020          | MHL10            | 128.00      | 100.00               | 20                | N             |
+    | 2 | 190920/002 | CM         | 01/01/2020      | 31/03/2020          | MHL10            | 128.00      | 100.00               | 20                | Y             |
+
+     When user confirms the submission
+     And user is on the pricing outcome details page
+     Then user should see the following outcomes:
+        | # | UFN        | Value      |
+        | 1 | 190920/001 | £ 249.00   |
+        | 2 | 190920/002 | £ 274.80   |
+
+   @mental_health @mlh10 @mhl10_pricing
+   Scenario: For Completed Matter claim, using Case Stage/Level MHL10 always prices £129.00, whatever the profit cost,
+             plus cost of adjourned hearing fee.
+
    When the following outcomes are bulkloaded:
-      | # | CASE_ID    | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | CASE_STAGE_LEVEL | DESI_ACC_REP | MHT_REF_NUMBER |
-      | 1 | 001        | CM         | 01/01/2020      | 31/03/2020          | MHL10            |              | AA/1234/12345  |
-      | 2 | 002        | CM         | 01/01/2020      | 31/03/2020          | MHL10            | 1            | AA/1234/12345  |
-   Then the following results are expected:
-      | # | ERROR_CODE_OR_MESSAGE      |
-      | 1 | <none>                     |
-      | 2 | You do not need to complete the Designated Accredited Representative field where you are not claiming a Level 3 Fee. This field should be left blank. |
+      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | CASE_STAGE_LEVEL | PROFIT_COST | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT | ADJOURNED_HEARING_FEE | VAT_INDICATOR |
+      | 1 | 190920/001 | CM         | 01/01/2020      | 31/03/2020          | MHL10            | 128.00      | 0                    | 0                 | 1                     | N             |
+      | 2 | 190920/002 | CM         | 01/01/2020      | 31/03/2020          | MHL10            | 128.00      | 0                    | 0                 | 1                     | Y             |
+
+   When user confirms the submission
+   And user is on the pricing outcome details page
+   Then user should see the following outcomes:
+      | # | UFN        | Value      |
+      | 1 | 190920/001 | £ 246.00   |
+      | 2 | 190920/002 | £ 295.20   |
+
+   @mental_health @mlh10 @mhl10_pricing
+   Scenario: For Completed Matter claim, using Case Stage/Level MHL10 always prices £129.00, whatever the profit cost,
+             plus additional travel payment.
+
+   When the following outcomes are bulkloaded:
+      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | CASE_STAGE_LEVEL | PROFIT_COST | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT | ADJOURNED_HEARING_FEE | ADDITIONAL_TRAVEL_PAYMENT | VAT_INDICATOR |
+      | 1 | 190920/001 | CM         | 01/01/2020      | 31/03/2020          | MHL10            | 128.00      | 0                    | 0                 | 0                     | Y                         | N             |
+      | 2 | 190920/002 | CM         | 01/01/2020      | 31/03/2020          | MHL10            | 128.00      | 0                    | 0                 | 0                     | Y                         | Y             |
+
+   When user confirms the submission
+   And user is on the pricing outcome details page
+   Then user should see the following outcomes:
+      | # | UFN        | Value      |
+      | 1 | 190920/001 | £ 198.00   |
+      | 2 | 190920/002 | £ 237.60   |

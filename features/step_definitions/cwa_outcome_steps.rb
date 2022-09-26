@@ -35,6 +35,23 @@ When("user adds outcomes for Immigration with fields like this:") do |table|
   end
 end
 
+When("user adds outcomes for Mental Health with fields like this:") do |table|
+  sr = CWAProvider.submission.schedule_ref
+  outcome_data = table.hashes
+  @submissions_saved = outcome_data.size
+  outcome_data.each do |test_data_row|
+    submission_list_page = SubmissionListPage.new
+    submission_list_page.add_outcome_button.click
+    test_data_row["schedule_ref"] = sr
+    builder = Helpers::ScreenFieldBuilder.from(
+      area_of_law: 'legal_help',
+      category_of_law: 'mental_health')
+    builder.overrides = test_data_row
+    page = AddOutcomePage.new(builder)
+    page.add_outcome
+  end
+end
+
 When("user adds outcomes for Crime Lower Criminal Proceedings with fields like this:") do |table|
   sr = CWAProvider.submission.schedule_ref
   outcome_data = table.hashes

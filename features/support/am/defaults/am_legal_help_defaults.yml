@@ -141,9 +141,23 @@ legal_help:
 
     mental_health:
       <<: *base_defaults
-      procurement_area:
+      procurement_area: PA00158
+      access_point: AP00000
       stage_reached:
       outcome_code:
+      claim_type: Completed Matter Claim
+      travel_time: 0
+      waiting_time: 0
+      advice_time: 0
+      profit_cost: 0
+      counsel_cost: 0
+      outcome_code: MD
+      meetings_attended: MTGA03
+      vat_indicator: N
+      travel_waiting_costs: 0
+      medical_reports_claimed: 2
+      mht_ref_number: AA/1234/12345
+
 
     immigration:
       <<: *immigration_base_cm_defaults
