@@ -5,12 +5,12 @@ Scenario Outline: Validation of Legal Aid Mental Health. Able to select Stage/Le
 Given user is on their "LEGAL HELP" submission details page
 When user adds outcomes for Mental Health with fields like this:
     | case_id | matter_type | case_start_date | case_stage_level | work_concluded_date | profit_cost |
-    | 001     | MHDC:MCOM   | 01/01/2020      | MHL10            | 31/03/2020          | 50          |
+    | 010     | MHDC:MCOM   | 01/01/2020      | MHL10            | 31/03/2020          | 50          |
 
 Then the outcome saves successfully
 
 
-@mhl10_validate @mental_health @mlh10
+@mhl10_validate @mental_health @mhl10
 Scenario: For completed Matters MT1 value MHDC, when the new Case Stage/Level MHL10 is used, then
           the Designated Accredited Rep field must be null.
 
