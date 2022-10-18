@@ -81,6 +81,7 @@ mental_health_base_cm: &mental_health_base_cm
   meetings_attended:
   additional_travel_payment:
   medical_reports_claimed:
+  claim_type:
 
 #mental health 'disbursement claims' claims use base_dc
 mental_health_base_dc: &mental_health_base_dc
