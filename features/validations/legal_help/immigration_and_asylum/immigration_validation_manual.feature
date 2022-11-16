@@ -1,9 +1,11 @@
 Feature: Validation for Immigration claims
 
+  Background:
+    Given user is on their "LEGAL HELP" submission details page
+
     @delete_outcome_after @manual_submission @invalid
     Scenario Outline: Reject invalid Immigration claims
-        Given user is on their "LEGAL HELP" submission details page
-        When user adds an outcome for Immigration with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+        When user adds an outcome for "Legal Help" "Immigration" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
         Then the outcome does not save and the error message "<error message>" appears
         Examples:
             | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      | error message                                                                                                                                                                                                                            |
@@ -22,8 +24,7 @@ Feature: Validation for Immigration claims
 
     @delete_outcome_after @manual_submission @invalid @irc
     Scenario Outline: Add invalid Immigration claims using IRC
-        Given user is on their "LEGAL HELP" submission details page
-        When user adds an outcome for Immigration with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+        When user adds an outcome for "Legal Help" "Immigration" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
         Then the outcome does not save and the error message "<error message>" appears
         Examples:
             | case id | mt        | ecs code | ecf ref  | case start date | pa      | ap      | error message                                                                                       |
@@ -31,19 +32,27 @@ Feature: Validation for Immigration claims
 
     @delete_outcome_after @manual_submission @valid
     Scenario Outline: Add valid Immigration claims
-        Given user is on their "LEGAL HELP" submission details page
-        When user adds an outcome for Immigration with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+        When user adds outcomes for "Legal Help" "Immigration" with fields like this:
+            | case_id | matter_type | exemption_criteria_satisfied | excl_case_funding_ref | case_start_date | procurement_area | access_point |
+            | 713     | IMLB:IOUT   |                              | 1234567AB             | 01/11/19        | PA20000          | AP20000      |
+            | 715     | IMLB:IOUT   | LE001                        | 1234567AB             | 01/11/19        | PA20000          | AP20000      |
+            | 716     | IMLB:IOUT   | TR001                        |                       | 01/11/19        | PA00136          | AP00137      |
+
         Then the outcome saves successfully
-        Examples:
-            | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      |
-            | 713     | IMLB:IOUT |          | 1234567AB | 01/11/19        | PA20000 | AP20000 |
-            | 715     | IMLB:IOUT | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
-            | 716     | IMLB:IOUT | TR001    |           | 01/11/19        | PA00136 | AP00137 |
+
+    @delete_outcome_after @manual_submission @valid @nabb
+    Scenario Outline: Add valid Immigration claims
+        When user adds outcomes for "Legal Help" "Immigration And Asylum" with fields like this:
+            | case_id | matter_type | exemption_criteria_satisfied | excl_case_funding_ref | case_start_date | procurement_area | access_point |
+            | 713     | IACE:IOUT   |                              |                       | 01/07/22        | PA20000          | AP20000      |
+            | 714     | IACE:IOUT   |                              | 1234567AB             | 01/07/22        | PA20000          | AP20000      |
+            | 715     | IACE:IOUT   | TR001                        | 1234567AB             | 01/07/22        | PA20000          | AP20000      |
+
+        Then the outcome saves successfully
 
     @delete_outcome_after @manual_submission @valid @irc
     Scenario Outline: Add valid Immigration claims using IRC
-        Given user is on their "LEGAL HELP" submission details page
-        When user adds outcomes for Immigration with fields like this:
+        When user adds outcomes for "Legal Help" "Immigration" with fields like this:
         | case_id | matter_type | case_start_date | procurement_area | access_point | irc_surgery |
         | 717     | IMXL:IIRC   | 01/11/19        | PA00188          | AP00187      | No          |
 

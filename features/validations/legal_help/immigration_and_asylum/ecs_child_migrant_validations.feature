@@ -7,7 +7,7 @@ Feature: Check Child Migrant Validation for Immigration
   @delete_outcome_after @manual_submission @immot @valid
   Scenario Outline: Add child migrant Immigration (non-Asylum) claims
     Given user is on their "LEGAL HELP" submission details page
-    When user adds an outcome for Immigration with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+    When user adds an outcome for "Legal Help" "Immigration" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
     Then the outcome saves successfully
 
     Examples: Only Hourly Rate Immigration (IMMOT) MT1 codes can be used with the new child migrant code
@@ -20,7 +20,7 @@ Feature: Check Child Migrant Validation for Immigration
   @delete_outcome_after @manual_submission @immot @invalid
   Scenario Outline: Reject invalid child migrant Immigration (non-Asylum) claims
     Given user is on their "LEGAL HELP" submission details page
-    When user adds an outcome for Immigration with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+    When user adds an outcome for "Legal Help" "Immigration" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
     Then the outcome does not save and the error message "<error message>" appears
 
     Examples:
