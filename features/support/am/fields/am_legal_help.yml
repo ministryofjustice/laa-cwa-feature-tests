@@ -1,4 +1,4 @@
-#Note: currently missing tolerance_indicator field (which we want to remove) and postal_appl_accp
+#Note: currently missing postal_appl_accp
 base: &base
   work_concluded_date:
   ucn:
@@ -22,6 +22,7 @@ base: &base
   client_surname:
   case_ref_number:
   postal_appl_accp:
+  tolerance_indicator:
 
 #additional base fields added to 'completed matter' claims
 base_cm: &base_cm
@@ -96,7 +97,7 @@ legal_help:
       delivery_location:
 
     education:
-      *base_cm
+      <<: *base_cm
 
     family:
       <<: *base_cm
@@ -108,31 +109,31 @@ legal_help:
       case_stage_level:
 
     discrimination:
-      *base_cm
+      <<: *base_cm
 
     claims_against_public_authorities:
-      *base_cm
+      <<: *base_cm
 
     community_care:
-      *base_cm
+      <<: *base_cm
 
     consumer_general_contract:
-      *base_cm
+      <<: *base_cm
 
     employment:
-      *base_cm
+      <<: *base_cm
 
     clinical_negligence:
-      *base_cm
+      <<: *base_cm
 
     residual_miscellaneous:
-      *base_cm
+      <<: *base_cm
 
     personal_injury:
-      *base_cm
+      <<: *base_cm
 
     public_law:
-      *base_cm
+      <<: *base_cm
 
     housing:
       <<: *base_cm
