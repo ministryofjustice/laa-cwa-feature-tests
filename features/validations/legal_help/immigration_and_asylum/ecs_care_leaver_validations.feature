@@ -51,7 +51,7 @@ Feature: Check Care Leaver Validation for Immigration claims
   @delete_outcome_after @manual_submission @immas @invalid
   Scenario Outline: Reject invalid care leaver Asylum claims
     Given user is on their "LEGAL HELP" submission details page
-    When user adds an outcome for "Legal Help" "Immigration" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+    When user adds an outcome for "Legal Help" "Immigration and Asylum" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
     Then the outcome does not save and the error message "<error message>" appears
     Examples:
       | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      | error message                                                                                                                                                                                                     |
@@ -68,7 +68,7 @@ Feature: Check Care Leaver Validation for Immigration claims
   @delete_outcome_after @manual_submission @immas @valid
   Scenario Outline: Add valid care leaver Asylum claims
     Given user is on their "LEGAL HELP" submission details page
-    When user adds an outcome for Immigration with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+    When user adds an outcome for "Legal Help" "Immigration and Asylum" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
     Then the outcome saves successfully
     Examples:
       | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      |
