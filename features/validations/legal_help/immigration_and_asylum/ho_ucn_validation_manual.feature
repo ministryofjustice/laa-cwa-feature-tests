@@ -1,9 +1,11 @@
 Feature: Validation of Home Office UCN for Immigration and Asylum claims
 
+  Background:
+    Given user is on their "LEGAL HELP" submission details page
+
 @delete_outcome_after @manual_submission @valid @ho_ucn
 Scenario: Add valid Immigration and Asylum claims using new HO_UCN format
-    Given user is on their "LEGAL HELP" submission details page
-    When user adds outcomes for Immigration with fields like this:
+    When user adds outcomes for "Legal Help" "Immigration" with fields like this:
     | case_id | matter_type | case_start_date | ho_ucn   |
     | 001     | IMCC:IDOM   | 01/11/19        | 12345678 |
     | 002     | IMCC:IDOM   | 01/11/19        | ABCDEFGH |
@@ -12,8 +14,7 @@ Scenario: Add valid Immigration and Asylum claims using new HO_UCN format
 
 @delete_outcome_after @manual_submission @invalid @ho_ucn
 Scenario: Add valid Immigration and Asylum claims using new HO_UCN format
-    Given user is on their "LEGAL HELP" submission details page
-    When user adds outcomes for Immigration with fields like this:
+    When user adds outcomes for "Legal Help" "Immigration" with fields like this:
     | case_id | matter_type | case_start_date | ho_ucn   |
     | 001     | IMCC:IDOM   | 01/11/19        |          |
 

@@ -3,7 +3,7 @@ Feature: Validation of Legal Aid Mental Health Stage/Level code MHL10
 @delete_outcome_after @manual_submission @valid @mhl10 @mental_health
 Scenario Outline: Validation of Legal Aid Mental Health. Able to select Stage/Level code MHL10 via manual input
 Given user is on their "LEGAL HELP" submission details page
-When user adds outcomes for Mental Health with fields like this:
+When user adds outcomes for "Legal Help" "Mental Health" with fields like this:
     | case_id | matter_type | case_start_date | case_stage_level | work_concluded_date | profit_cost |
     | 010     | MHDC:MCOM   | 01/01/2020      | MHL10            | 31/03/2020          | 50          |
 

@@ -14,6 +14,7 @@ base: &base_defaults
   ucn: 14091962/T/PERS
   work_concluded_date:
   postal_appl_accp: Y
+  tolerance_indicator: N
 
 #additional base fields added to 'completed matter' claims
 base_cm: &base_defaults_cm
@@ -59,19 +60,20 @@ legal_help:
       outcome_code: DA
 
     education:
-      <<: *base_defaults
+      <<: *base_defaults_cm
       procurement_area: PA00180
       stage_reached: EA
       outcome_code: EA
 
     family:
-      <<: *base_defaults
+      <<: *base_defaults_cm
       #family specific fields
-      london_nonlondon_rate:
+      london_nonlondon_rate: N
       value_of_costs:
       local_authority_number:
       client_type:
-      case_stage_level:
+      outcome_code: FF
+      case_stage_level: FPL10
 
     discrimination:
       <<: *base_defaults
@@ -104,10 +106,10 @@ legal_help:
       outcome_code:
 
     clinical_negligence:
-      <<: *base_defaults
+      <<: *base_defaults_cm
       procurement_area:
       stage_reached:
-      outcome_code:
+      outcome_code: NA
 
     residual_miscellaneous:
       <<: *base_defaults
@@ -128,10 +130,13 @@ legal_help:
       outcome_code:
 
     housing:
-      <<: *base_defaults
+      <<: *base_defaults_cm
       #housing specific fields
       eligible_client_indicator:
       court_location_hpcds:
+      stage_reached: HC
+      outcome_code: HF
+
 
     debt:
       <<: *base_defaults
