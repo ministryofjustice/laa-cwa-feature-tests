@@ -103,7 +103,7 @@ Feature: Debt Bulk load validations
       | 1 | 01/04/2013      | 1234567        | <NONEXISTENT> |
     Then the following results are expected:
       | # | MATTER_TYPE | ERROR_CODE_OR_MESSAGE                      |
-      | 1 | DIVB:DIBP   | <NONEXISTENT> is not a valid CLA_EXEMPTION |
+      | 1 | DIVB:DIBP   | The Exemption code you have reported is not in the correct format. Please enter a valid 4 letter code. |
 
   Scenario: Bulkload Civil Debt outcomes with CASE_START_DATE after April 2013 _and_ after 15 May 2020, CLA_EXEMPTION: <NONE>
     Given the following Matter Types are chosen:
@@ -188,4 +188,4 @@ Feature: Debt Bulk load validations
       | 1 | 15/05/2020      | <blank>        | <NONEXISTENT> |
     Then the following results are expected:
       | # | MATTER_TYPE | ERROR_CODE_OR_MESSAGE                      |
-      | 1 | DIVB:DIBP   | <NONEXISTENT> is not a valid CLA_EXEMPTION |
+      | 1 | DIVB:DIBP   | The Exemption code you have reported is not in the correct format. Please enter a valid 4 letter code. |
