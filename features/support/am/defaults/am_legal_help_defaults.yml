@@ -26,7 +26,6 @@ base_cm: &base_defaults_cm
   travel_time: 0
   exemption_criteria_satisfied:
   postal_appl_accp: Y
-  tolerance_indicator: N
 
 #immigration base fields added to all immigration claim types
 immigration_base: &immigration_base_defaults

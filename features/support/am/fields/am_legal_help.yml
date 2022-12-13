@@ -34,7 +34,6 @@ base_cm: &base_cm
   travel_time:
   exemption_criteria_satisfied:
   postal_appl_accp:
-  tolerance_indicator:
 
 #additional base fields added to 'stage claim' claims
 base_sc: &base_sc
