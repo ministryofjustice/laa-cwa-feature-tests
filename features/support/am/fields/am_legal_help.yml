@@ -21,8 +21,6 @@ base: &base
   client_date_of_birth:
   client_surname:
   case_ref_number:
-  postal_appl_accp:
-  tolerance_indicator:
 
 #additional base fields added to 'completed matter' claims
 base_cm: &base_cm
@@ -35,6 +33,8 @@ base_cm: &base_cm
   advice_time:
   travel_time:
   exemption_criteria_satisfied:
+  postal_appl_accp:
+  tolerance_indicator:
 
 #additional base fields added to 'stage claim' claims
 base_sc: &base_sc
