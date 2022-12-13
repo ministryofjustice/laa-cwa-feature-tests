@@ -13,8 +13,6 @@ base: &base_defaults
   gender: F
   ucn: 14091962/T/PERS
   work_concluded_date:
-  postal_appl_accp: Y
-  tolerance_indicator: N
 
 #additional base fields added to 'completed matter' claims
 base_cm: &base_defaults_cm
@@ -27,6 +25,8 @@ base_cm: &base_defaults_cm
   advice_time: 0
   travel_time: 0
   exemption_criteria_satisfied:
+  postal_appl_accp: Y
+  tolerance_indicator: N
 
 #immigration base fields added to all immigration claim types
 immigration_base: &immigration_base_defaults
@@ -191,4 +191,6 @@ legal_help:
 
       mental_health:
         <<: *base_defaults
+        claim_type: Stage Disbursements Claim
         procurement_area: PA00158
+        outcome_code: --
