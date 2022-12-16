@@ -115,7 +115,7 @@ module Helpers
         @fields ||= load_fields
           .fetch(area_of_law)
           .fetch(category_of_law)
-          .fetch(stage_reached_code)
+          .fetch(matter_type)
           .transform_keys(&:to_sym)
       end
 
@@ -123,18 +123,23 @@ module Helpers
         @defaults ||= load_defaults
           .fetch(area_of_law)
           .fetch(category_of_law)
-          .fetch(stage_reached_code)
+          .fetch(matter_type)
           .transform_keys(&:to_sym)
       end
 
       private
 
-      def stage_reached_code
-        extra_args.fetch(:stage_reached_code)&.to_s
+      def matter_type
+        extra_args.fetch(:matter_type)&.to_s
       end
     end
 
     class LegalHelp < Base
+      CLAIM_TYPES = {
+        'DC' => 'disbursement_claim',
+        'SC' => 'stage_claim',
+        'CM' => 'completed_matter'
+      }
       def fields
         @fields ||= load_fields
           .fetch(area_of_law)
@@ -154,7 +159,7 @@ module Helpers
       private
 
       def claim_type
-        extra_args.fetch(:claim_type, 'completed_matter').to_s
+        CLAIM_TYPES[extra_args.fetch(:claim_type, 'CM').to_s]
       end
 
       def overrides
