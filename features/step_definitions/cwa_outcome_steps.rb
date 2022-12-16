@@ -24,28 +24,22 @@ Then('the outcome saves successfully') do
 end
 
 When("user adds outcomes for {string} {string} with fields like this:") do |area_of_law, category_of_law, table|
-  lh_claim_type = { "DC" => "disbursement_claim", "SC" => "stage_claim" }
-  lh_claim_type.default = "completed_matter"
-  sr = CWAProvider.submission.schedule_ref
   outcome_data = table.hashes
   @submissions_saved = outcome_data.size
-  outcome_data.each do |test_data_row|
+  outcome_data.each do |outcome|
     submission_list_page = SubmissionListPage.new
     submission_list_page.add_outcome_button.click
-    test_data_row["schedule_ref"] = sr
-    if area_of_law == 'Legal Help'
-      claim_type = lh_claim_type[test_data_row["claim_type"]]
-    end
-    if area_of_law == 'Crime Lower'
-      matter_type = test_data_row["matter_type"]
-    end
+
     builder = Helpers::ScreenFieldBuilder.from(
       area_of_law: area_of_law.downcase.gsub(' ', '_'),
       category_of_law: category_of_law.downcase.gsub(' ', '_'),
-      claim_type: claim_type,
-      matter_type: matter_type
+      claim_type: outcome['claim_type'],
+      matter_type: outcome['matter_type']
     )
-    builder.overrides = test_data_row
+
+    outcome['schedule_ref'] = CWAProvider.submission.schedule_ref
+    builder.overrides = outcome
+
     page = AddOutcomePage.new(builder)
     page.add_outcome
   end

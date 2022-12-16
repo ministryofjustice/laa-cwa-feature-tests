@@ -25,4 +25,4 @@ Feature: Stage billing validations for Mental health
     And user adds outcomes for "Legal Help" "Mental Health" with fields like this:
     | case_id | matter_type | case_start_date | work_concluded_date | claim_type |
     | 099     | MHAS:MCOM   | 01/01/2020      | 01/07/2020          | DC         |
-    Then the outcome saves successfull
+    Then the outcome saves successfully

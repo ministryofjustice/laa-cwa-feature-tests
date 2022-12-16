@@ -135,6 +135,11 @@ module Helpers
     end
 
     class LegalHelp < Base
+      CLAIM_TYPES = {
+        'DC' => 'disbursement_claim',
+        'SC' => 'stage_claim',
+        'CM' => 'completed_matter'
+      }
       def fields
         @fields ||= load_fields
           .fetch(area_of_law)
@@ -154,7 +159,7 @@ module Helpers
       private
 
       def claim_type
-        extra_args.fetch(:claim_type, 'completed_matter').to_s
+        CLAIM_TYPES[extra_args.fetch(:claim_type, 'CM').to_s]
       end
 
       def overrides
