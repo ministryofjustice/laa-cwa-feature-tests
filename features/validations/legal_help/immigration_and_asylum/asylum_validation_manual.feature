@@ -13,8 +13,8 @@ Feature: Validation for Immigration and Asylum claims
 
   @delete_outcome_after @manual_submission @valid @idif
   Scenario Outline: Add valid asylum claim for code combination IAXL:IDIF.
-                  Case start date has to be on or after 25th April 2022.
-                  Valid outcome codes are: -- IG, IH, IU, IW, IY, IZ
+    Case start date has to be on or after 25th April 2022.
+    Valid outcome codes are: -- IG, IH, IU, IW, IY, IZ
 
     When user adds outcomes for "Legal Help" "Immigration And Asylum" with fields like this:
       | case_id | matter_type | case_start_date | outcome_code | work_concluded_date |
@@ -27,19 +27,19 @@ Feature: Validation for Immigration and Asylum claims
       |     007 | IAXL:IDIF   |        25/04/22 | IZ           |            26/04/22 |
     Then the outcome saves successfully
 
-  @delete_outcome_after @manual_submission @valid
+  @delete_outcome_after @manual_submission @valid @NRMadvice
   Scenario Outline: NRM advice option for Immigration and Asylum cases, valid options 'yes' 'no' and 'null'
     When user adds outcomes for "Legal Help" "Immigration And Asylum" with fields like this:
       | case_id | matter_type | case_start_date | outcome_code | work_concluded_date | nrm_advice |
-      |     001 | IAXL:IDIF   |        25/04/22 | --           |            26/04/22 | Yes        |
+      |     001 | IAXL:IBAI   |        25/04/22 | --           |            26/04/22 | Yes        |
       |     002 | IAXL:IDIF   |        25/04/22 | --           |            26/04/22 | No         |
-      |     003 | IAXL:IDIF   |        25/04/22 | --           |            26/04/22 |            |
+      |     003 | IMXL:IBAI   |        25/04/22 | --           |            26/04/22 |            |
     Then the outcome saves successfully
 
   @delete_outcome_after @manual_submission @valid @idif
   Scenario Outline: Add valid asylum claim for code combination IAXL:IDIF.
-                      Case start date has to be on or after 25th April 2022.
-                      Valid ECS codes <blank> and TR001
+    Case start date has to be on or after 25th April 2022.
+    Valid ECS codes <blank> and TR001
 
     When user adds outcomes for "Legal Help" "Immigration And Asylum" with fields like this:
       | case_id | matter_type | case_start_date | outcome_code | exemption_criteria_satisfied | excl_case_funding_ref | procurement_area | access_point | work_concluded_date |
@@ -62,7 +62,7 @@ Feature: Validation for Immigration and Asylum claims
 
   @delete_outcome_after @manual_submission @invalid @idif
   Scenario Outline: Reject invalid Asylum claims for IAXL:IDIF
-                  The following outcome codes are invalid: IA IB IC ID IE IF IV IX
+    The following outcome codes are invalid: IA IB IC ID IE IF IV IX
 
     When user adds outcomes for "Legal Help" "Immigration And Asylum" with fields like this:
       | case_id | matter_type | case_start_date | outcome_code | procurement_area | access_point | work_concluded_date |
@@ -74,7 +74,7 @@ Feature: Validation for Immigration and Asylum claims
 
   @delete_outcome_after @manual_submission @invalid @idif
   Scenario Outline: Reject invalid Asylum claims.
-                  For code combination IAXL:IDIF, the following ECS code is invalid: CM001
+    For code combination IAXL:IDIF, the following ECS code is invalid: CM001
 
     When user adds outcomes for "Legal Help" "Immigration And Asylum" with fields like this:
       | case_id | matter_type | case_start_date | outcome_code | procurement_area | access_point | exemption_criteria_satisfied | work_concluded_date |
