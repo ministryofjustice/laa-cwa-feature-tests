@@ -1,6 +1,6 @@
 class SubmissionListSection < SitePrism::Section
   element :schedule_submission_reference, :xpath, './/td[6]'
-  element :update_button, :xpath, './/td[8]/a'
+  element :update_button, :id, 'N3:Update:0'
 end
 
 class SubmissionListPage < SitePrism::Page
@@ -8,8 +8,8 @@ class SubmissionListPage < SitePrism::Page
 
   element :firm_name, :xpath, '//*[@id="SearchFirmName"]'
   element :account_number, :xpath, '//*[@id="SearchLscAccountNo"]'
-  element :search_button, :xpath, '/html/body/form/span[2]/div[1]/div[3]/span/div/table[2]/tbody/tr[2]/td[2]/table/tbody/tr[2]/td[3]/button[1]'
-  element :add_outcome_button, :xpath, '//*[@id="AddOutcome"]'
+  element :search_button, :link_or_button, 'Go'
+  element :add_outcome_button, :id, 'AddOutcome'
   element :area_of_law_search, "select[id='AreaOfLawSearch']"
 
   sections :submissions, SubmissionListSection, :xpath, '//*[@id="SubmissionHeadersTab"]/table[2]/tbody/tr[1]/following-sibling::tr[position() > 0]'

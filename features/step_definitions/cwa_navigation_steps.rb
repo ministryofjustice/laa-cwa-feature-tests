@@ -41,12 +41,10 @@ When('user searches for their submission') do
   submission_list_page.account_number.set(CWAProvider.submission.account_number)
   submission_list_page.area_of_law_search.set(CWAProvider.area_of_law)
   submission_list_page.search_button.click
-
   submission_list_page.wait_until_submissions_visible(wait: 10)
   existing_submission = submission_list_page.submissions.find do |submission|
     submission.schedule_submission_reference.text == CWAProvider.submission.schedule_number
   end
-
   existing_submission.update_button.click
 end
 
