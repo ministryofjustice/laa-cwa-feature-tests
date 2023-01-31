@@ -29,11 +29,13 @@ When("user adds outcomes for {string} {string} with fields like this:") do |area
   outcome_data.each do |outcome|
     submission_list_page = SubmissionListPage.new
     submission_list_page.add_outcome_button.click
-
+    if area_of_law == 'Legal Help' 
+      claim_type = outcome['claim_type'] ||= 'CM'
+    end
     builder = Helpers::ScreenFieldBuilder.from(
       area_of_law: area_of_law.downcase.gsub(' ', '_'),
       category_of_law: category_of_law.downcase.gsub(' ', '_'),
-      claim_type: outcome['claim_type'],
+      claim_type: claim_type,
       matter_type: outcome['matter_type']
     )
 

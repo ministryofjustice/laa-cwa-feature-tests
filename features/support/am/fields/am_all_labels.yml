@@ -130,6 +130,8 @@ meetings_attended:
   - Meetings attended
 mht_ref_number:
   - Mental Health Tribunal Reference Number
+nrm_advice:
+  - NRM Advice
 no_of_clients:
   - Number of Clients Seen at the Surgery
 no_of_police_station:
