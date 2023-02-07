@@ -93,11 +93,12 @@ legal_help:
     welfare_benefits:
       <<: *base_cm
       #welfare benefits specific fields
-      type_of_advice: REMOTE
+      type_of_advice:
       delivery_location:
 
     education:
       <<: *base_cm
+      tolerance_indicator:
 
     family:
       <<: *base_cm
@@ -125,6 +126,7 @@ legal_help:
 
     clinical_negligence:
       <<: *base_cm
+      tolerance_indicator:
 
     residual_miscellaneous:
       <<: *base_cm
@@ -140,6 +142,7 @@ legal_help:
       #housing specific fields
       eligible_client_indicator:
       court_location_hpcds:
+      tolerance_indicator:
 
     debt:
       <<: *base_cm
