@@ -38,7 +38,7 @@ class AddOutcomePage < SitePrism::Page
 
   def fill_in(field, value)
     return if value.to_s.empty?
-puts field,value
+    
     if !respond_to?(field)
       raise NotImplementedError, "Element '#{field}' is not defined on the page"
     end
