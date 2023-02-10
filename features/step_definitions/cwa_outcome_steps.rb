@@ -32,7 +32,8 @@ When("user adds outcomes for {string} {string} with fields like this:") do |area
     builder = Helpers::ScreenFieldBuilder.from(
       area_of_law: area_of_law.downcase.gsub(' ', '_'),
       category_of_law: category_of_law.downcase.gsub(' ', '_'),
-      matter_type: outcome['matter_type']
+      matter_type: outcome['matter_type'],
+      claim_type: outcome['claim_type']
     )
 
     outcome['schedule_ref'] = CWAProvider.submission.schedule_ref

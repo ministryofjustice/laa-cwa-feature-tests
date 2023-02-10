@@ -159,7 +159,7 @@ module Helpers
       private
 
       def claim_type
-        CLAIM_TYPES[extra_args.fetch(:claim_type, 'CM').to_s]
+        CLAIM_TYPES[(extra_args[:claim_type] || 'CM').to_s]
       end
 
       def overrides
