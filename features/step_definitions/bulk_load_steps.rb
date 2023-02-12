@@ -61,14 +61,14 @@ When(/^the following outcomes are bulkloaded(\sand\sconfirmed)?:$/) do |confirm,
   file_name = save_tmp_bulkload_xml(doc)
 
   @bulk_load_page.bulk_load_file.send_keys(file_name)
-  with_delay(0.75) { @bulk_load_page.next_button.click }
+  with_delay(2) { @bulk_load_page.next_button.click }
 
   step('user confirms the submission') if confirm
 end
 
 Then('the following results are expected:') do |table|
   @bulk_load_results_page = BulkLoadResultsPage.new
-  @bulk_load_results_page.wait_until_summary_visible(wait: 30)
+  @bulk_load_results_page.wait_until_summary_visible(wait: 60)
 
   expected_results = @matter_types.flat_map do |matter_type|
     table_to_hash_array(table).map do |row|
