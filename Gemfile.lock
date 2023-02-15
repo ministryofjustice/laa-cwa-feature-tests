@@ -56,6 +56,7 @@ GEM
     nokogiri (1.13.10)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
+    ox (2.14.14)
     public_suffix (4.0.6)
     racc (1.6.1)
     rack (3.0.4.1)
@@ -98,9 +99,10 @@ DEPENDENCIES
   byebug
   capybara (~> 3.35.3)
   cucumber (~> 7.1.0)
+  ox
   rspec (~> 3.10.0)
   selenium-webdriver (~> 3.142.7)
   site_prism (~> 3.7.3)
 
 BUNDLED WITH
-   2.1.4
+   2.2.31

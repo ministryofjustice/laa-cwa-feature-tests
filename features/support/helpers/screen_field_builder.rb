@@ -11,7 +11,7 @@ module Helpers
     class Builder
       extend Forwardable
 
-      def_delegators :@object, :fields, :defaults, :values, :overrides=, :fields_with_label
+      def_delegators :@object, :merged, :fields, :defaults, :values, :overrides=, :fields_with_label
 
       attr_reader :area_of_law, :category_of_law
 
@@ -71,6 +71,10 @@ module Helpers
 
       def defaults
         raise NotImplementedError
+      end
+      
+      def merged
+        @merged = fields.merge!(defaults)
       end
 
       def values

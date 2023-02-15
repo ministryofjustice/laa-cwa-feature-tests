@@ -1,8 +1,15 @@
+require 'time'
+require 'ox'
+
 module Helpers
   module Bulkload
     require_relative './refinements/string_refinement'
 
     using StringRefinement
+
+    XMLNS_XSI = "http://www.w3.org/2001/XMLSchema-instance"
+    XMLNS_XSD = "http://www.w3.org/2001/XMLSchema"
+    XMLNS = "http://www.legalservices.gov.uk/sms/ActivityManagement/XMLSchema/"
 
     FIXTURES_DIR ||= './features/support/fixtures/bulkload/'.freeze
     TMP_DIR ||= "#{FIXTURES_DIR}tmp/".freeze
@@ -41,6 +48,42 @@ module Helpers
       table.rows.map do |row|
         headers.zip(row).to_h
       end
+    end
+
+    def build_and_save_bulkload_file(submission, submission_header)
+      file_name = tmp_bulkload_file_path("bulkload_#{Time.now.to_i}.xml")
+      doc = Ox::Builder.file(file_name)
+      doc.instruct('xml', {:version => '1.0'})
+      doc.element('submission', {'xmlns:xsi'=> XMLNS_XSI,
+        'xmlns:xsd' => XMLNS_XSD ,
+        'xmlns' => XMLNS })
+      doc.element('office', {'account' => submission_header['account']} )
+      schedule = {'submissionPeriod' => submission_header['submission_period'],
+          'areaOfLaw' => submission_header['area_of_law'],
+          'scheduleNum' => submission_header['schedule_num']}
+      doc.element('schedule', schedule)
+
+      t = Time.now
+      day = t.strftime('%d')
+      month = t.strftime('%m')
+      year = t.strftime('%y')
+
+      submission.each_with_index {|hash, i|
+        idx_plus_one = i + 1
+        case_id = idx_plus_one.to_s().rjust(3, "0")
+        hash[:case_id] = case_id
+        hash[:ufn] = "#{day}#{month}#{year}/#{case_id}"
+        hash.compact!
+        doc.element('outcome', {'matterType' => hash[:matter_type]})
+        hash.each {|(k,v)|
+          doc.element('outcomeItem', {'name' => k.to_s.upcase})
+          doc.text(v.to_s)
+          doc.pop
+        }
+        doc.pop
+      }
+      doc.close
+      file_name
     end
   end
 end

@@ -6,47 +6,61 @@ Given(/^user prepares to submit outcomes for test provider "(.*)"(\s+again)?$/) 
   navigator.roles.cwa_activity_report_manager_internal_role.click
 
   if !again
-    navigator.content.submission_list.click
-
-    submission_list_page = SubmissionListPage.new
-    submission_list_page.account_number.set(@submission.account_number)
-    submission_list_page.search_button.click
-
-    submission_list_page.wait_until_submissions_visible(wait: 10)
-    existing_submission = submission_list_page.submissions.find do |submission|
-      submission.schedule_submission_reference.text == @submission.schedule_number
-    end
-
-    if existing_submission
-      existing_submission.update_button.click
-      submission_details_page = SubmissionDetailsPage.new
-      if !submission_details_page.has_text?(/No results found/)
-        STDOUT.print 'Cleaning existing outcomes for test reference...'
-        submission_details_page.select_all
-        submission_details_page.delete_button.click
-        submission_details_page.confirm_delete_button.click
-        STDOUT.puts ' done.'
-      end
-    end
-
-    navigator.load
-    navigator.roles.cwa_activity_report_manager_internal_role.click
+    steps %{
+      When user submits outcomes again
+    }
   end
 
   navigator.content.bulk_load.click
 
+  steps %{
+    When user searches and selects the firm "#{@submission.account_number}"
+  }
+end
+
+When('user submits outcomes again') do 
+  navigator.content.submission_list.click
+
+  submission_list_page = SubmissionListPage.new
+  submission_list_page.account_number.set(@submission.account_number)
+  submission_list_page.search_button.click
+
+  submission_list_page.wait_until_submissions_visible(wait: 10)
+  existing_submission = submission_list_page.submissions.find do |submission|
+    submission.schedule_submission_reference.text == @submission.schedule_number
+  end
+
+  if existing_submission
+    existing_submission.update_button.click
+    submission_details_page = SubmissionDetailsPage.new
+    if !submission_details_page.has_text?(/No results found/)
+      STDOUT.print 'Cleaning existing outcomes for test reference...'
+      submission_details_page.select_all
+      submission_details_page.delete_button.click
+      submission_details_page.confirm_delete_button.click
+      STDOUT.puts ' done.'
+    end
+  end
+
+  navigator.load
+  navigator.roles.cwa_activity_report_manager_internal_role.click
+end
+
+
+When('user searches and selects the firm {string}') do |account_number|
+  puts(account_number)
   @bulk_load_page = BulkLoadPage.new
   within_popup(@bulk_load_page, ->{ @bulk_load_page.lookup_firm.click }) do
     office_search_page = OfficeSearchPage.new
     sleep 1
     within_frame(office_search_page.frame) do
       office_search_page.search_by.select('Account Number')
-      office_search_page.account_number.set(@submission.account_number)
+      office_search_page.account_number.set(account_number)
       office_search_page.search_button.click
       office_search_page.first_quick_select.click
     end
   end
-end
+end 
 
 Given('the following Matter Types are chosen:') do |table|
   @matter_types = table.raw.flatten
@@ -70,6 +84,8 @@ Then('the following results are expected:') do |table|
   @bulk_load_results_page = BulkLoadResultsPage.new
   @bulk_load_results_page.wait_until_summary_visible(wait: 30)
 
+  byebug
+
   expected_results = @matter_types.flat_map do |matter_type|
     table_to_hash_array(table).map do |row|
       row.tap { |r| r[:matter_type] = matter_type }
@@ -92,6 +108,39 @@ Then('the following results are expected:') do |table|
 
     expect(error).to eq(expected)
   end
+end
+
+When("user bulkloads outcomes for {string} {string} with fields like this:") do |area_of_law, category_of_law, table|
+  navigator = NavigatorPage.new
+  navigator.load
+  navigator.roles.cwa_activity_report_manager_internal_role.click
+  submission_header = MonthlySubmission.submission_header
+
+  navigator.content.bulk_load.click
+
+  steps %{
+  When user searches and selects the firm "#{submission_header['account']}"
+  }
+
+  outcome_data = table.hashes
+  hash_arr = []
+  outcome_data.each do |outcome|
+    if area_of_law == 'Legal Help' 
+      claim_type = outcome['claim_type'] ||= 'CM'
+    end
+    builder = Helpers::ScreenFieldBuilder.from(
+      area_of_law: area_of_law.downcase.gsub(' ', '_'),
+      category_of_law: category_of_law.downcase.gsub(' ', '_'),
+      claim_type: claim_type,
+      matter_type: outcome['matter_type']
+    )
+    hash_arr.push(builder.merged.merge!(outcome.transform_keys(&:to_sym)))
+  end
+  file_name = build_and_save_bulkload_file(
+    hash_arr, submission_header
+  )
+  @bulk_load_page.bulk_load_file.send_keys(file_name)
+  with_delay(0.75) { @bulk_load_page.next_button.click }
 end
 
 When('user bulk loads {string} for the test firm') do |file|

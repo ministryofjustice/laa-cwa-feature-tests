@@ -44,7 +44,25 @@ module PortalEnv
   end
 end
 
+module MonthlySubmission 
+
+  path = File.join(File.dirname(__FILE__), 'cwa_env.yml')
+  environment = YAML.safe_load(File.read(path))
+  @config = environment.fetch(ENV.fetch('TEST_ENV').downcase)
+
+  attr_reader :area_of_law, :account, :submission_period, :schedule_num
+
+  def self.submission_header
+    hash = {'area_of_law' => 'LEGAL HELP',
+    'account' => '0F238U',
+    'submission_period' => 'APR-2020',
+    'schedule_num' => '0F238U/CIVIL'
+    }
+  end
+end
+
 module CWAProvider
+
   path = File.join(File.dirname(__FILE__), 'cwa_env.yml')
   environment = YAML.safe_load(File.read(path))
   @config = environment.fetch(ENV.fetch('TEST_ENV').downcase)
@@ -121,4 +139,4 @@ module CWAProvider
 
 end
 
-World(PortalEnv, CWAProvider)
+World(PortalEnv, CWAProvider, MonthlySubmission)
