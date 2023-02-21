@@ -1,3 +1,4 @@
+@bulkload
 Feature: Check Care Leaver Validation for Immigration claims
 
   In order to submit care leaver claims

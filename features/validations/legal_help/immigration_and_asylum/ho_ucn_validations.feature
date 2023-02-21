@@ -1,3 +1,4 @@
+@bulkload
 Feature: Immigration Bulk load validations
 
   Background:

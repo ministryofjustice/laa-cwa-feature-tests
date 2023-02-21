@@ -1,3 +1,4 @@
+@bulkload
 Feature: Validation of Legal Aid Mental Health Stage/Level code MHL10
 
 @delete_outcome_after @manual_submission @valid @mhl10 @mental_health

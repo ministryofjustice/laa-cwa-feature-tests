@@ -1,3 +1,4 @@
+@bulkload
 Feature: Stage billing validations for Asylum and Immigration
 
   Background:

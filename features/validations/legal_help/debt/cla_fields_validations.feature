@@ -1,3 +1,4 @@
+@bulkload
 Feature: Debt Bulk load validations
 
   Background:

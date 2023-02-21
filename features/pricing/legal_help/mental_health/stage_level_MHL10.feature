@@ -1,3 +1,4 @@
+@bulkload
 Feature: For Mental health code MHDC,  new Case Stage Level code MHL10 billing pricing.
          MHL10 is priced at fixed rate of £129, whether profit cost is lower or higher.
          Fixed rate cannot be escaped, so 3 X £129 still priced at £129.

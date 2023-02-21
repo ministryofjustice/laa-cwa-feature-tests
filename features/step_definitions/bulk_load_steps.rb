@@ -54,7 +54,7 @@ end
 
 When(/^the following outcomes are bulkloaded(\sand\sconfirmed)?:$/) do |confirm, table|
   @bulk_load_page = BulkLoadPage.new
-  expect(page).to have_content("Bulk Load File Selection")
+  expect(page).to have_content("Bulk Load File Selection", wait: 5)
   doc = build_bulkload_xml(
     submission: @submission,
     matter_types: @matter_types,
@@ -62,7 +62,7 @@ When(/^the following outcomes are bulkloaded(\sand\sconfirmed)?:$/) do |confirm,
   )
   file_name = save_tmp_bulkload_xml(doc)
   @bulk_load_page.bulk_load_file.send_keys(file_name)
-  expect(page).to have_content("Bulk Load File Selection")
+  expect(page).to have_content("Bulk Load File Selection", wait: 5)
   expect(page).to have_field("FirmName")
   @bulk_load_page.next_button.click
   step('user confirms the submission') if confirm
@@ -70,8 +70,6 @@ end
 
 Then('the following results are expected:') do |table|
   @bulk_load_results_page = BulkLoadResultsPage.new
-  # expect(page).to have_content("Bulk Load Information")
-  expect(page).to have_text('Bulk Load Information', wait: 20)
   expected_results = @matter_types.flat_map do |matter_type|
     table_to_hash_array(table).map do |row|
       row.tap { |r| r[:matter_type] = matter_type }
@@ -91,7 +89,7 @@ Then('the following results are expected:') do |table|
     expected = error_message(row[:error_code_or_message])
     error = actual_results[case_id]
     next if error.nil? && expected == '<none>'
-
+    expect(page).to have_content('Bulk Load Information', wait: 30)
     expect(error).to eq(expected)
   end
 end

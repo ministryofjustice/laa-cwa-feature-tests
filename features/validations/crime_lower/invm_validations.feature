@@ -1,3 +1,4 @@
+@bulkload
 Feature: INVM code Bulk load validations
 
   Background:
