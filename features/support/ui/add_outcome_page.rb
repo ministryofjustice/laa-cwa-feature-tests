@@ -30,7 +30,7 @@ class AddOutcomePage < SitePrism::Page
     end
 
     values.each(&method(:fill_in))
-
+    page.execute_script "window.scrollBy(0,10000)"
     save_button.click
   end
 

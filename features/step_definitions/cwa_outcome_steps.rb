@@ -44,8 +44,7 @@ When("user adds outcomes for {string} {string} with fields like this:") do |area
   end
 end
 
-When ('user adds an outcome for {string} {string} with {string}, {string}, {string}, {string}, {string}, {string} and {string}') \
-  do |area_of_law, category_of_law, case_id, matter_type, ecs, ecf_ref, case_start_date, pa, ap |
+When ("user adds an outcome for {string} {string} with {string}, {string}, {string}, {string}, {string}, {string} and {string}") do |area_of_law, category_of_law, case_id, matter_type, ecs, ecf_ref, case_start_date, pa, ap |
     sr = CWAProvider.submission.schedule_ref
 
     outcome_data = Hash.new

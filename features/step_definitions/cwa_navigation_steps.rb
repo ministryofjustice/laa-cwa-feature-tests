@@ -46,7 +46,7 @@ When('user searches for their submission') do
   existing_submission = submission_list_page.submissions.find do |submission|
     submission.schedule_submission_reference.text == CWAProvider.submission.schedule_number
   end
-
+  next unless existing_submission
   existing_submission.update_button.click
 end
 
