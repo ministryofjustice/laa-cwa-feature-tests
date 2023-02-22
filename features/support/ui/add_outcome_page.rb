@@ -12,7 +12,7 @@ class AddOutcomePage < SitePrism::Page
       .each(&method(:add_field)) if builder
   end
 
-  element :save_button, :xpath, '//*[@id="Apply_uixr"]'
+  element :save_button, :id, 'Apply_uixr'
   element :errors, :xpath, '//*[@id="FwkErrorBeanId"]'
 
   PRIMARY_FIELDS = %i[matter_type crime_matter_type claim_type]

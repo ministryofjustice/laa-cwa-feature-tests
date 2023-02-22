@@ -36,7 +36,6 @@ Feature: Check ECF Validation for Education claims
       """
       The combination of reporting codes can only be used for cases started on or after 01-APR-2013 if it is reported with an Exceptional Case Funding reference.
       """
-
     Examples: Submission validation after 01-Sep-2019
       Providers can only submit some Education claims with an ECF reference
 
@@ -62,6 +61,13 @@ Feature: Check ECF Validation for Education claims
       | 922     | EADM:EAAP   | 1234567AB             | 31/08/19        | PA20000          | AP20000      |
       | 923     | EGTO:ELOC   | 1234567AB             | 31/08/19        | PA20000          | AP20000      |
       | 924     | EPRO:ELOC   | 1234567AB             | 31/08/19        | PA20000          | AP20000      |
+
+  Then the outcome saves successfully
+
+  @regression @delete_outcome_after @valid
+  Scenario Outline: Add a valid outcome for Education where case start date between '01-APR-2013' and '01-Sep-2019', only valid with an ECF Reference
+    When user adds outcomes for "Legal Help" "Education" with fields like this:
+      | case_id | matter_type | excl_case_funding_ref | case_start_date | procurement_area | access_point |
       | 925     | EREO:EIAP   | 1234567AB             | 31/08/19        | PA20000          | AP20000      |
       | 926     | ESEN:EPRU   | 1234567AB             | 01/04/13        | PA20000          | AP20000      |
       | 927     | EDDA:EPRU   | 1234567AB             | 01/04/13        | PA20000          | AP20000      |
@@ -98,6 +104,21 @@ Feature: Check ECF Validation for Education claims
       | 943     | EGTO:ENUR   |         | 31/08/19        | PA20000 | AP20000 |     |
       | 944     | EPRO:ENUR   |         | 31/08/19        | PA20000 | AP20000 |     |
       | 945     | EREO:ENUR   |         | 31/08/19        | PA20000 | AP20000 |     |
+
+
+
+  @regression @delete_outcome_after @invalid
+  Scenario Outline: Add an invalid outcome for Education where case start date between '01-APR-2013' and '01-Sep-2019'
+    When user adds an outcome for "Legal Help" "Education" with "<case id>", "<matter type>", "<ecs>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+    Then the outcome does not save and gives an error containing:
+      """
+      The combination of reporting codes can only be used for cases started on or after 01-APR-2013 if it is reported with an Exceptional Case Funding reference.
+      """
+
+    Examples: ECF validation between 01-Apr-2013 and 01-Sep-2019
+      Education claims are invalid if these matter types have no ECF reference
+
+      | case id | matter type | ecf ref | case start date | pa      | ap      | ecs |
       | 946     | ESEN:ENUR   |         | 01/04/13        | PA20000 | AP20000 |     |
       | 947     | EDDA:ENUR   |         | 01/04/13        | PA20000 | AP20000 |     |
       | 948     | EEQU:ENUR   |         | 01/04/13        | PA20000 | AP20000 |     |

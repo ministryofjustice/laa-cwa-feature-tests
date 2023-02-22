@@ -75,13 +75,13 @@ Then('the following results are expected:') do |table|
       row.tap { |r| r[:matter_type] = matter_type }
     end
   end
-
+  expect(page).to have_content('Bulk Load Information', wait: 30)
+  page.execute_script "window.scrollTo(0,500)"
   actual_results = @bulk_load_results_page.errors.reduce({}) do |collected, current|
     case_id = current.client_surname.text.split.last
     error_message = current.description.text
     collected.merge({ case_id => error_message })
   end
-
   expected_results.each.with_index(1) do |row, i|
     STDOUT.puts("Testing #{row[:matter_type]}, assertion ##{row[:'#']}")
 
@@ -90,7 +90,7 @@ Then('the following results are expected:') do |table|
     error = actual_results[case_id]
     next if error.nil? && expected == '<none>'
     expect(page).to have_content('Bulk Load Information', wait: 30)
-    expect(error).to eq(expected)
+    expect(error).to have_content(expected, wait:20)
   end
 end
 

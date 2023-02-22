@@ -24,6 +24,7 @@ end
 
 Capybara.default_driver = :firefox
 Capybara.default_max_wait_time = 5
+Capybara.current_window.resize_to(1920,1080)
 
 # Set portal environment specific variables
 module PortalEnv
