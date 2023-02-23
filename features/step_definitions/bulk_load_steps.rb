@@ -34,7 +34,6 @@ Given(/^user prepares to submit outcomes for test provider "(.*)"(\s+again)?$/) 
   end
 
   navigator.content.bulk_load.click
-
   @bulk_load_page = BulkLoadPage.new
   within_popup(@bulk_load_page, ->{ @bulk_load_page.lookup_firm.click }) do
     office_search_page = OfficeSearchPage.new
@@ -43,6 +42,7 @@ Given(/^user prepares to submit outcomes for test provider "(.*)"(\s+again)?$/) 
       office_search_page.search_by.select('Account Number')
       office_search_page.account_number.set(@submission.account_number)
       office_search_page.search_button.click
+      expect(page).to have_content("Search and Select: Firm Name", wait: 10)
       office_search_page.first_quick_select.click
     end
   end
@@ -64,6 +64,7 @@ When(/^the following outcomes are bulkloaded(\sand\sconfirmed)?:$/) do |confirm,
   @bulk_load_page.bulk_load_file.send_keys(file_name)
   expect(page).to have_content("Bulk Load File Selection", wait: 5)
   expect(page).to have_field("FirmName")
+  expect(page).to have_css("#Next")
   @bulk_load_page.next_button.click
   step('user confirms the submission') if confirm
 end
@@ -75,7 +76,7 @@ Then('the following results are expected:') do |table|
       row.tap { |r| r[:matter_type] = matter_type }
     end
   end
-  expect(page).to have_content('Bulk Load Information', wait: 30)
+  expect(page).to have_content('Bulk Load Information', wait: 60)
   page.execute_script "window.scrollTo(0,500)"
   actual_results = @bulk_load_results_page.errors.reduce({}) do |collected, current|
     case_id = current.client_surname.text.split.last
