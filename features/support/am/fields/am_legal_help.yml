@@ -140,6 +140,7 @@ legal_help:
       #housing specific fields
       eligible_client_indicator:
       court_location_hpcds:
+      tolerance_indicator:
 
     debt:
       <<: *base_cm

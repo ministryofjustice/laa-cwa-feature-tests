@@ -47,6 +47,12 @@ After('@delete_outcome_after') do |scenario|
 end
 
 After do |scenario|
+  if (scenario.failed?)
+    page.driver.browser.save_screenshot("html-report/#{scenario.__id__}.png")
+    if ENV['HEADLESS'] == 'false'
+      attach("html-report/#{scenario.__id__}.png", "image/png")
+    end
+  end
   byebug if scenario.failed? && ENV['DEBUG_FAILURES'] == 'true'
 end
 

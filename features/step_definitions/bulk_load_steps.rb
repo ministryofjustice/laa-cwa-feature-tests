@@ -66,6 +66,68 @@ When(/^the following outcomes are bulkloaded(\sand\sconfirmed)?:$/) do |confirm,
   step('user confirms the submission') if confirm
 end
 
+Then('the following error message is expected for each:') do |error_message|
+  bulk_load_results_page = BulkLoadResultsPage.new
+  bulk_load_results_page.wait_until_summary_visible(wait: 20)
+  total_outcomes = bulk_load_results_page.summary.total_outcomes.text.to_i
+  page_errors = bulk_load_results_page.errors
+
+  page_errors.each do |page_error|
+    expect(page_error.description.text).to eq error_message
+  end
+  expect(total_outcomes).to eq page_errors.count
+end
+
+Then('the following error message is matched for each:') do |error_message|
+  bulk_load_results_page = BulkLoadResultsPage.new
+  bulk_load_results_page.wait_until_summary_visible(wait: 20)
+  total_outcomes = bulk_load_results_page.summary.total_outcomes.text.to_i
+  page_errors = bulk_load_results_page.errors
+
+  expect(total_outcomes).to eq page_errors.count
+
+  page_errors.each do |page_error|
+    expect(page_error.description.text).to match(error_message)
+  end
+end
+
+Then('the following error messages are matched for each:') do |table|
+  @bulk_load_results_page = BulkLoadResultsPage.new
+  @bulk_load_results_page.wait_until_summary_visible(wait: 30)
+
+  expected_results = @matter_types.reduce({}) do |memo,current|
+    table.hashes.each do |element|
+      memo.merge!(current=>memo.fetch(current,[]).push(*element.values))
+    end
+    memo
+  end
+
+  expected_results.each do |k,v|
+    check_errors = @bulk_load_results_page.errors.select{ |i| i.matter_type___stage_reached.text == k }.map{ |i|i.description.text }
+    v.each do |i|
+      found = check_errors.select {|s| s.match?(i) }
+      expect(found).to_not be_empty, "expecting to match \"#{i}\", but not found"
+    end
+  end
+
+end
+
+Then ('there should be no error outcomes') do
+  bulk_load_results_page = BulkLoadResultsPage.new
+  bulk_load_results_page.wait_until_summary_visible(wait: 20)
+
+  total_outcomes = bulk_load_results_page.summary.total_outcomes.text.to_i
+  problem_outcomes = bulk_load_results_page.summary.problem_outcomes.text.to_i
+  duplicate_outcomes = bulk_load_results_page.summary.duplicate_outcomes.text.to_i
+  invalid_outcomes_nms = bulk_load_results_page.summary.invalid_outcomes_nms.text.to_i
+  successful_outcomes = bulk_load_results_page.summary.successful_outcomes.text.to_i
+
+  expect(problem_outcomes).to eq 0
+  expect(duplicate_outcomes).to eq 0
+  expect(invalid_outcomes_nms).to eq 0
+  expect(total_outcomes).to eq(successful_outcomes)
+end
+
 Then('the following results are expected:') do |table|
   @bulk_load_results_page = BulkLoadResultsPage.new
   @bulk_load_results_page.wait_until_summary_visible(wait: 30)

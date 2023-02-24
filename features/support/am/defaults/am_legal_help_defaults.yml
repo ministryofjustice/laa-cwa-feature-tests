@@ -135,7 +135,7 @@ legal_help:
       court_location_hpcds:
       stage_reached: HC
       outcome_code: HF
-
+      tolerance_indicator: N
 
     debt:
       <<: *base_defaults
