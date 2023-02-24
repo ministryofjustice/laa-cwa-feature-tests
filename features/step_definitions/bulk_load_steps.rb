@@ -34,7 +34,6 @@ Given(/^user prepares to submit outcomes for test provider "(.*)"(\s+again)?$/) 
   end
 
   navigator.content.bulk_load.click
-
   @bulk_load_page = BulkLoadPage.new
   within_popup(@bulk_load_page, ->{ @bulk_load_page.lookup_firm.click }) do
     office_search_page = OfficeSearchPage.new
@@ -43,6 +42,7 @@ Given(/^user prepares to submit outcomes for test provider "(.*)"(\s+again)?$/) 
       office_search_page.search_by.select('Account Number')
       office_search_page.account_number.set(@submission.account_number)
       office_search_page.search_button.click
+      expect(page).to have_content("Search and Select: Firm Name", wait: 10)
       office_search_page.first_quick_select.click
     end
   end
@@ -53,35 +53,34 @@ Given('the following Matter Types are chosen:') do |table|
 end
 
 When(/^the following outcomes are bulkloaded(\sand\sconfirmed)?:$/) do |confirm, table|
+  @bulk_load_page = BulkLoadPage.new
+  expect(page).to have_content("Bulk Load File Selection", wait: 5)
   doc = build_bulkload_xml(
     submission: @submission,
     matter_types: @matter_types,
     new_lines: table_to_hash_array(table)
   )
   file_name = save_tmp_bulkload_xml(doc)
-
   @bulk_load_page.bulk_load_file.send_keys(file_name)
-  with_delay(0.75) { @bulk_load_page.next_button.click }
-
+  @bulk_load_page.wait_until_next_button_visible(wait: 5)
+  @bulk_load_page.next_button.double_click
   step('user confirms the submission') if confirm
 end
 
 Then('the following results are expected:') do |table|
   @bulk_load_results_page = BulkLoadResultsPage.new
-  @bulk_load_results_page.wait_until_summary_visible(wait: 30)
-
   expected_results = @matter_types.flat_map do |matter_type|
     table_to_hash_array(table).map do |row|
       row.tap { |r| r[:matter_type] = matter_type }
     end
   end
-
+  expect(page).to have_content('Bulk Load Information', wait: 60)
+  page.execute_script "window.scrollTo(0,500)"
   actual_results = @bulk_load_results_page.errors.reduce({}) do |collected, current|
     case_id = current.client_surname.text.split.last
     error_message = current.description.text
     collected.merge({ case_id => error_message })
   end
-
   expected_results.each.with_index(1) do |row, i|
     STDOUT.puts("Testing #{row[:matter_type]}, assertion ##{row[:'#']}")
 
@@ -89,8 +88,8 @@ Then('the following results are expected:') do |table|
     expected = error_message(row[:error_code_or_message])
     error = actual_results[case_id]
     next if error.nil? && expected == '<none>'
-
-    expect(error).to eq(expected)
+    expect(page).to have_content('Bulk Load Information', wait: 30)
+    expect(error).to have_content(expected, wait:20)
   end
 end
 

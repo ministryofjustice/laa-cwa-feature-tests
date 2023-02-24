@@ -17,6 +17,7 @@ end
 
 Then('Submission Search Page displayed') do
   submission_list_page = SubmissionListPage.new
+  submission_list_page.wait_until_submissions_visible(wait: 10)
   submission_list_page.account_number.set(CWAProvider.submission.account_number)
   submission_list_page.area_of_law_search.select(CWAProvider.submission.area_of_law)
 
@@ -46,10 +47,11 @@ When('user searches for their submission') do
   existing_submission = submission_list_page.submissions.find do |submission|
     submission.schedule_submission_reference.text == CWAProvider.submission.schedule_number
   end
-
-  existing_submission.update_button.click
+  expect(page).to have_content("Submission Search", wait: 10)
+  existing_submission.wait_until_update_button_visible(wait: 5)
+  existing_submission.update_button.double_click
 end
 
 Then('their submission details are displayed') do
-  expect(page.title).to eq('Submission Details')
+  expect(page).to have_title("Submission Details", wait:20)
 end

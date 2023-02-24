@@ -1,3 +1,4 @@
+@bulkload
 Feature: Asylum Bulk load validations for PRN Follow on work
 
   Background:

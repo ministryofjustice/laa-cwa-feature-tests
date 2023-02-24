@@ -8,7 +8,7 @@ class SubmissionListPage < SitePrism::Page
 
   element :firm_name, :xpath, '//*[@id="SearchFirmName"]'
   element :account_number, :xpath, '//*[@id="SearchLscAccountNo"]'
-  element :search_button, :xpath, '/html/body/form/span[2]/div[1]/div[3]/span/div/table[2]/tbody/tr[2]/td[2]/table/tbody/tr[2]/td[3]/button[1]'
+  element :search_button, :xpath, '//button[1]'
   element :add_outcome_button, :id, 'AddOutcome'
   element :area_of_law_search, "select[id='AreaOfLawSearch']"
 

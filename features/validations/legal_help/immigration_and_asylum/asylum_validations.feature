@@ -1,3 +1,4 @@
+@bulkload
 Feature: Asylum Bulk load validations
 
   Background:

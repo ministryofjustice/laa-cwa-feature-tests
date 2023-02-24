@@ -57,12 +57,15 @@ legal_help:
       procurement_area: PA00125
       stage_reached: DA
       outcome_code: DA
+      type_of_advice: REMOTE
+
 
     education:
       <<: *base_defaults_cm
       procurement_area: PA00180
       stage_reached: EA
       outcome_code: EA
+      tolerance_indicator: N
 
     family:
       <<: *base_defaults_cm
@@ -109,6 +112,8 @@ legal_help:
       procurement_area:
       stage_reached:
       outcome_code: NA
+      tolerance_indicator: N
+
 
     residual_miscellaneous:
       <<: *base_defaults
@@ -135,6 +140,7 @@ legal_help:
       court_location_hpcds:
       stage_reached: HC
       outcome_code: HF
+      tolerance_indicator: N
 
 
     debt:
@@ -161,6 +167,7 @@ legal_help:
       travel_waiting_costs: 0
       medical_reports_claimed: 2
       mht_ref_number: AA/1234/12345
+      postal_appl_accp: Y
 
 
     immigration:
@@ -171,7 +178,7 @@ legal_help:
       <<: *immigration_base_cm_defaults
       stage_reached:
       irc_surgery:
-
+      
   stage_claim:
       immigration:
         <<: *base_defaults

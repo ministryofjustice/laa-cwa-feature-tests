@@ -29,14 +29,11 @@ When("user adds outcomes for {string} {string} with fields like this:") do |area
   outcome_data.each do |outcome|
     submission_list_page = SubmissionListPage.new
     submission_list_page.add_outcome_button.click
-    if area_of_law == 'Legal Help' 
-      claim_type = outcome['claim_type'] ||= 'CM'
-    end
     builder = Helpers::ScreenFieldBuilder.from(
-      area_of_law: area_of_law.downcase.gsub(' ', '_'),
       category_of_law: category_of_law.downcase.gsub(' ', '_'),
-      claim_type: claim_type,
-      matter_type: outcome['matter_type']
+      area_of_law: area_of_law.downcase.gsub(' ', '_'),
+      matter_type: outcome['matter_type'],
+      claim_type: outcome['claim_type']
     )
 
     outcome['schedule_ref'] = CWAProvider.submission.schedule_ref
@@ -47,8 +44,7 @@ When("user adds outcomes for {string} {string} with fields like this:") do |area
   end
 end
 
-When ('user adds an outcome for {string} {string} with {string}, {string}, {string}, {string}, {string}, {string} and {string}') \
-  do |area_of_law, category_of_law, case_id, matter_type, ecs, ecf_ref, case_start_date, pa, ap |
+When ("user adds an outcome for {string} {string} with {string}, {string}, {string}, {string}, {string}, {string} and {string}") do |area_of_law, category_of_law, case_id, matter_type, ecs, ecf_ref, case_start_date, pa, ap |
     sr = CWAProvider.submission.schedule_ref
 
     outcome_data = Hash.new
