@@ -48,8 +48,9 @@ When('user searches for their submission') do
     submission.schedule_submission_reference.text == CWAProvider.submission.schedule_number
   end
   expect(page).to have_content("Submission Search", wait: 10)
-  page.first(:xpath, ".//td[8]/a")
-  existing_submission.update_button.click
+  existing_submission.wait_until_update_button_visible(wait: 5)
+  # page.first(:xpath, ".//td[8]/a")
+  existing_submission.update_button.double_click
 end
 
 Then('their submission details are displayed') do

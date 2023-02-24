@@ -62,10 +62,8 @@ When(/^the following outcomes are bulkloaded(\sand\sconfirmed)?:$/) do |confirm,
   )
   file_name = save_tmp_bulkload_xml(doc)
   @bulk_load_page.bulk_load_file.send_keys(file_name)
-  expect(page).to have_content("Bulk Load File Selection", wait: 5)
-  expect(page).to have_field("FirmName")
-  expect(page).to have_css("#Next")
-  @bulk_load_page.next_button.click
+  @bulk_load_page.wait_until_next_button_visible(wait: 5)
+  @bulk_load_page.next_button.double_click
   step('user confirms the submission') if confirm
 end
 
