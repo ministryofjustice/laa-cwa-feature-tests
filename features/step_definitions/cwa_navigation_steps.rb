@@ -49,7 +49,6 @@ When('user searches for their submission') do
   end
   expect(page).to have_content("Submission Search", wait: 10)
   existing_submission.wait_until_update_button_visible(wait: 5)
-  # page.first(:xpath, ".//td[8]/a")
   existing_submission.update_button.double_click
 end
 
