@@ -24,11 +24,15 @@ Given('user deleted any existing {string} outcomes for the test firm') do |categ
   submission_list_page.wait_until_submissions_visible(wait: 10)
   existing_submission = submission_list_page.submissions.find do |sub|
     sub.schedule_submission_reference.text == submission.schedule_number
-  end.update_button.click
+  end
 
-  next unless existing_submission
+  # next unless existing_submission
 
-  existing_submission.update_button.click
+  # existing_submission.update_button.click
+
+  expect(page).to have_content("Submission Search", wait: 10)
+  existing_submission.wait_until_update_button_visible(wait: 5)
+  existing_submission.update_button.double_click
 
   @submission_details_page = SubmissionDetailsPage.new
   expect(@submission_details_page).to be_loaded
@@ -36,7 +40,7 @@ Given('user deleted any existing {string} outcomes for the test firm') do |categ
   if !@submission_details_page.has_text?(/No results found/)
     STDOUT.print 'Cleaning existing outcomes for test reference...'
 
-    @submission_details_page.select_all.click
+    @submission_details_page.select_all
     @submission_details_page.delete_button.click
     @submission_details_page.confirm_delete_button.click
 
