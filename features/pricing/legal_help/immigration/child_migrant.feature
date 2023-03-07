@@ -1,4 +1,4 @@
-Feature: Pricing: IMXL: Immigration - IAXC Assylum  Child Migrant
+Feature: Pricing: IMXL: Immigration Child Migrant
 
  Background:
     Given a test firm user is logged in CWA
