@@ -51,19 +51,20 @@ Feature: Pricing: IMXC: Immigration - CLR Work Not Subject to the Standard Fee S
   Scenario: Claims priced with: Hourly Rates (Separated Migrant Child) (1)
     When the user adds outcomes with:
       """
-      exemption criteria separated migrant child below the max price cap
+      exemption criteria separated migrant child above the max price cap
       """
     Then the outcomes are priced at:
       """
       hourly rates
       """
 
-  Scenario: Claims priced with: Hourly Rates (Separated Migrant Child) (2)
+  Scenario: Claims priced with: Hourly Rates (Separated Migrant Child) (1)
     When the user adds outcomes with:
       """
-      exemption criteria separated migrant child above the max price cap
+      exemption criteria separated migrant child below the max price cap
       """
     Then the outcomes are priced at:
       """
-      max price cap
+      hourly rates
       """
+  
