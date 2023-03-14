@@ -1,4 +1,10 @@
 Feature: Pricing: IAXC Assylum  Child Migrant
+           
+           Base price = profit cost+ councel cost 
+           20 % of base price if vat flag yes (20% of Base price is calculated)
+           Disbursement amount 
+           Disbursement vat
+           E.g Value £6,400 is arrived using . Base Price + no 20% of Base price as flag is "No" + Disbursement amount + Disbursement vat = {3000+1000) + {2000} + {400} = £6,400
 
  Background:
     Given a test firm user is logged in CWA
@@ -18,9 +24,3 @@ Feature: Pricing: IAXC Assylum  Child Migrant
       | # | UFN        | Value         |
       | 1 | 010120/001 | £ 10,800.00   |
       | 2 | 010120/002 | £ 6,400.00    |
-
-# Base price = profit cost+ councel cost 
-# 20 % of base price if vat flag yes (20% of Base price is calculated)
-# Disbursement amount 
-# Disbursement vat
-# E.g Value £6,400 is arrived using . Base Price + no 20% of Base price as flag is "No" + Disbursement amount + Disbursement vat = {3000+1000) + {2000} + {400} = £6,400
