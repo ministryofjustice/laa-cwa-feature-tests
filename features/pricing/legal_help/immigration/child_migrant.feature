@@ -17,3 +17,11 @@ Feature: Pricing: IMXL: Immigration Child Migrant
       | # | UFN        | Value         |
       | 1 | 010120/001 | £ 10,800.00   |
       | 2 | 010120/002 | £ 3,200.00    |
+
+
+# Base price = profit cost+ councel cost 
+# 20 % of base price if vat flag yes (20% of Base price is calculated)
+# Disbursement amount 
+# Disbursement vat
+# E.g Value £10,800 is arrived using . Base Price + 20% of Base Price as vat flag is "yes" + Disbursement amount + Disbursement vat = {3000+3000) + {1200} + {3000} + {600} = £10,800
+
