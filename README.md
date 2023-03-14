@@ -6,7 +6,7 @@ This work is being gradually built up over time and should include any new piece
 of development done in CWA.
 
 In some cases, feature tests will be used as an exploratory tool and in support
-of complex CWA refactoring excercises.
+of complex CWA refactoring exercises.
 
 ## Setup
 
@@ -23,7 +23,7 @@ to be installed and activated for the project.
 If you already have it, you can skip this step.
 
 Please note: these instructions support the `rbenv` Ruby version management tool
-only. Other tools might be more preferrable based on your experience.
+only. Other tools might be preferable based on your experience.
 
 #### Install rbenv
 
@@ -64,7 +64,7 @@ Once Homebrew is installed, run:
 brew bundle
 ```
 
-Also note: at this point you'll have to install Firefox if it's not already
+Also note: at this point, you'll have to install Firefox if it's not already
 present in your system.
 
 ### Setup git-crypt
@@ -76,7 +76,7 @@ unlock them.
 
 #### Generate GPG key
 
-In order to be added as a collaborator you'll need to generate a GPG key.
+To be added as a collaborator you'll need to generate a GPG key.
 
 Please note: if you think you have one already, please run `gpg --list-keys` to
 find your pubkey.
@@ -109,10 +109,10 @@ Please run:
 $ gpg --armor --export --output $HOME/Downloads/$GPG_PUBKEY.gpg $GPG_PUBKEY
 ```
 
-Once saved, the file needs to be sent to any user who already have the authority
+Once saved, the file needs to be sent to any user who already has the authority
 to add users to `git-crypt` for this project.
 
-Once added as git-crypt collaborator according to
+Once added as `git-crypt` collaborator according to
 [Adding git-crypt collaborators](#adding-git-crypt-collaborators), you can run:
 
 ```sh
@@ -145,25 +145,27 @@ $ gpg --import $HOME/Downloads/$GPG_PUBKEY
 $ gpg ––edit–key $GPG_PUBKEY
 ```
 
-This will lead to a prompt where you can get the fingerprint sending the command: 
+This will lead to a prompt.
+
+1. Get the fingerprint by sending the command: 
 
 ```
 > fpr
 ```
 
-Select a trust level:
+2. Select a trust level:
 
 ```
 > trust
 ```
 
-After verifying the fingerprint, save changes:
+3. After verifying the fingerprint, save the changes:
 
 ```
 > save
 ```
 
-Finally, quit the prompt:
+4. Finally, quit the prompt:
 
 ```
 > quit
@@ -209,7 +211,7 @@ Set the environment variable `TEST_ENV` with:
 export TEST_ENV=dev
 ```
 
-You can choose between: `dev`, `tst` and `uat`.
+You can choose between `dev`, `tst` and `uat`.
 
 Portal environment-specific variables are set in
 [`portal_env.yml`](features/support/portal_env.yml) in the following format:
@@ -245,15 +247,16 @@ The details in this file should match the details in the CWA environment.
 
 ### Run tests in Headless mode
 
-In order to gain more speed and be able to run tests in an environment that does
-not have desktop virtualization available, you can run tests in Headless mode
+To gain more speed and be able to run tests in an environment that does not have
+desktop virtualization available, you can run tests in Headless mode
 with:
 
 ```sh
 export HEADLESS=true
 ```
 
-This is currently configured to work with Firefox only and it may not work for some features.
+This is currently configured to work with Firefox only and it may not work for
+some features.
 
 For more information about the Headless mode please have a look at
 [this doc](https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Headless_mode).
@@ -269,6 +272,6 @@ $ export DEBUG_FAILURES=true
 
 You can also use the `byebug` to debug the step definitions.
 
-Ff you are not familiar with the tool or as a refresher, refer to
+If you are not familiar with the tool or as a refresher, refer to
 [these commands](https://github.com/deivid-rodriguez/byebug#byebugs-commands)
 and [this guide](https://github.com/deivid-rodriguez/byebug/blob/master/GUIDE.md#guide).
