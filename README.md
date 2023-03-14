@@ -243,6 +243,53 @@ dev:
 
 The details in this file should match the details in the CWA environment.
 
+## Development
+
+Existing test features are written following the BDD approach.
+
+Development is done locally and individual tests are run normally against the
+CWA `dev` environment.
+
+Ideally, the whole test pack should be run against `tst`. 
+
+The MoJ VPN is required to connect to the available environments.
+Refer to [Environments and users](#environments-and-users) for more information
+on the existing configuration.
+
+### Domains
+
+The CWA domains currently tested are:
+
+* Validations
+* Pricing
+
+Not all categories of law within Legal Help and Crime Lower are covered.
+
+Please note: several testing "approaches" have been introduced over the years,
+and a consolidation exercise is still ongoing. As a result of that, the best way
+to test something is to understand how the most recent features have been written
+and check with the existing development team for advice.
+
+### Page objects
+
+This test suite uses the [`site_prism`](https://github.com/site-prism/site_prism#siteprism)
+library and the Page Object model.
+
+Refer to https://github.com/site-prism/site_prism#introduction-to-the-page-object-model
+for more information on the importance of using this level of abstraction.
+
+Most of the frequently used pages and elements are defined under [features/support/ui](features/support/ui).
+### Best practices
+
+Some of the current and most important rules to keep in mind include:
+
+* Reference and wait for page objects elements when writing step assertions
+  * Do NOT reference DOM elements directly from the step implementation!
+* Avoid `sleep`s in the codebase in favor of [`with_retry`](features/support/helpers/testing.rb)
+* [Don't repeat yourself](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
+* Respect indentation
+* [Consider a more declarative style](https://cucumber.io/docs/bdd/better-gherkin/) for features
+
 ## Runtime configuration
 
 ### Run tests in Headless mode
