@@ -110,16 +110,16 @@ When('the user adds outcomes with:') do |description|
     if additional_payments_hash[:substantive_hearing]
       additional_payments_hash[:substantive_hearing] = (rand(0..1) == 0 ? 'N' : 'Y')
     end
+
     tot_additional_payments = @additional_payments.sum(&:value)
     profit_cost = @max_price_cap || @standard_fee || (@config.max_profit_cost-tot_additional_payments)
-
-
 
     @lines = [
       {
         profit_cost: profit_cost
       }.merge(**additional_payments_hash),
     ]
+
   when 'disbursements and disbursements VAT'
     profit_cost = @max_price_cap || @standard_fee || @config.max_profit_cost
 
