@@ -119,7 +119,7 @@ When('the user adds outcomes with:') do |description|
         profit_cost: profit_cost
       }.merge(**additional_payments_hash),
     ]
-
+    
   when 'disbursements and disbursements VAT'
     profit_cost = @max_price_cap || @standard_fee || @config.max_profit_cost
 
@@ -141,35 +141,6 @@ When('the user adds outcomes with:') do |description|
       {
         profit_cost: profit_cost,
         vat_indicator: 'Y'
-      },
-    ]
-  when /exemption criteria separated migrant child (below|above) the max price cap/
-    max_profit_cost = @max_price_cap || @config.max_profit_cost
-
-    direction = Regexp.last_match(1)
-    if direction == 'below'
-      profit_cost = max_profit_cost - 0.01
-    elsif direction == 'above'
-      profit_cost = max_profit_cost + 0.01
-    else
-      raise ArgumentError, 'unimplemented step'
-    end
-
-    remainder = rand(20.0..profit_cost).round(2)
-    counsel_cost = (profit_cost - remainder).round(2)
-    profit_cost = remainder.round(2)
-    total_cost = (profit_cost+counsel_cost).round(2)
-
-    log sprintf '%3s  %25s  £%s', nil, 'Profit cost', profit_cost
-    log sprintf '%3s  %25s  £%s', nil, 'Counsel cost', counsel_cost
-    log '-------------------------------------------------------'
-    log sprintf '%3s  %25s  £%s', nil, 'TOTAL', total_cost
-
-    @lines = [
-      {
-        profit_cost: profit_cost,
-        counsel_cost: counsel_cost,
-        exemption_criteria_satisfied: 'CM001'
       },
     ]
 
