@@ -99,8 +99,6 @@ When('the user adds outcomes with:') do |description|
           { profit_cost: profit_cost, counsel_cost: counsel_cost }
         ]
   when 'additional payments'
-    profit_cost = @max_price_cap || @standard_fee || @config.max_profit_cost
-
     # assign a random quantity to all payable additional payments
     additional_payments_hash =
       @additional_payments
@@ -112,6 +110,10 @@ When('the user adds outcomes with:') do |description|
     if additional_payments_hash[:substantive_hearing]
       additional_payments_hash[:substantive_hearing] = (rand(0..1) == 0 ? 'N' : 'Y')
     end
+    tot_additional_payments = @additional_payments.sum(&:value)
+    profit_cost = @max_price_cap || @standard_fee || (@config.max_profit_cost-tot_additional_payments)
+
+
 
     @lines = [
       {
