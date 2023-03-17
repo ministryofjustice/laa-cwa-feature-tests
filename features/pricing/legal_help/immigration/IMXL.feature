@@ -47,23 +47,3 @@ Feature: Pricing: IMXL: Immigration - LH Work Not Subject to the Standard Fee Sc
       """
       hourly rates + VAT
       """
-
-  Scenario: Claims priced with: Hourly Rates (Separated Migrant Child) (1)
-    When the user adds outcomes with:
-      """
-      exemption criteria separated migrant child below the max price cap
-      """
-    Then the outcomes are priced at:
-      """
-      hourly rates
-      """
-
-  Scenario: Claims priced with: Hourly Rates (Separated Migrant Child) (2)
-    When the user adds outcomes with:
-      """
-      exemption criteria separated migrant child above the max price cap
-      """
-    Then the outcomes are priced at:
-      """
-      max price cap
-      """
