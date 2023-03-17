@@ -121,7 +121,6 @@ module SubmissionConfig
       })
 
       define_escape_fee_threshold_formula 'standard_fee * 3'
-      define_max_price_cap 500 # Note: this should be removed at some point, CM cases should not be capped
     end
   end
 end
