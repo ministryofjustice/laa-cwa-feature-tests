@@ -9,7 +9,6 @@ module SubmissionConfig
         IALB: 'Asylum - Stage 1 (LH)',
         IACA: 'Asylum - Stage 2a (CLR)',
         IACB: 'Asylum - Stage 2b (CLR)',
-        IACC: 'Asylum - Stage 2c (CLR)',
 
         IACD: 'Asylum – Interim CLR rates (hourly rates with fixed fee for advocacy services)',
       })
@@ -59,8 +58,6 @@ module SubmissionConfig
         IALB: MATTER_TYPE2_CODES_COMMON,
         IACA: MATTER_TYPE2_CODES_COMMON,
         IACB: MATTER_TYPE2_CODES_COMMON,
-        IACC: MATTER_TYPE2_CODES_COMMON,
-
         IACD: MATTER_TYPE2_CODES_COMMON,
       })
 
@@ -68,7 +65,6 @@ module SubmissionConfig
         IALB: 413,
         IACA: 227,
         IACB: 567,
-        IACC: 627,
       })
 
       define_additional_payments({
@@ -87,27 +83,6 @@ module SubmissionConfig
         adjourned_hearing_fee: 161,
       })
 
-      # define_additional_payment_quantities({
-      #   ho_interview: Constants::ZERO_TO_NINE,
-      #   cmrh_oral: Constants::ZERO_TO_NINE,
-      #   cmrh_telephone: Constants::ZERO_TO_NINE,
-      #   substantive_hearing: Constants::YES_OR_NO,
-      #   adjourned_hearing_fee: Constants::ZERO_TO_NINE,
-      # })
-
-      # TODO: look for query that hardcodes MTs when retrieving values for the dropdowns
-      # define_additional_payment_combinations({
-      #   IAXL: %i[ho_interview],
-      #   IAXC: %i[cmrh_oral cmrh_telephone substantive_hearing adjourned_hearing_fee],
-
-      #   IALB: %i[ho_interview],
-      #   IACA: %i[cmrh_oral cmrh_telephone],
-      #   IACB: %i[cmrh_oral cmrh_telephone substantive_hearing adjourned_hearing_fee],
-      #   IACC: %i[ho_interview cmrh_oral cmrh_telephone substantive_hearing adjourned_hearing_fee],
-
-      #   IACD: %i[ho_interview cmrh_oral cmrh_telephone substantive_hearing adjourned_hearing_fee],
-      # })
-
       define_additional_payment_combinations({
         IAXL: %i[],
         IAXC: %i[cmrh_oral cmrh_telephone substantive_hearing adjourned_hearing_fee],
@@ -115,7 +90,6 @@ module SubmissionConfig
         IALB: %i[],
         IACA: %i[cmrh_oral cmrh_telephone],
         IACB: %i[cmrh_oral cmrh_telephone substantive_hearing adjourned_hearing_fee],
-        IACC: %i[cmrh_oral cmrh_telephone substantive_hearing adjourned_hearing_fee],
 
         IACD: %i[cmrh_oral cmrh_telephone substantive_hearing adjourned_hearing_fee],
       })
