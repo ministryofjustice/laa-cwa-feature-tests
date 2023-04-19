@@ -66,8 +66,8 @@ Feature: Asylum Bulk load validations for PRN Follow on work
       | 2 | 01/05/2022      | DC         |                 | --           | TR001                        |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE |
-      | 1 | Matter type combination IAXL:IPRN requires one of the following values: CLR, Judicial Review, Legal Help, Licensed Work, N/A, for Follow on work. |
-      | 2 | Matter type combination IAXL:IPRN requires one of the following values: CLR, Judicial Review, Legal Help, Licensed Work, N/A, for Follow on work. |
+      | 1 | Matter type combination IAXL:IPRN requires one of the following values: CLR, Judicial Review, Legal Help, Licensed Work, N/A for Follow on work. |
+      | 2 | Matter type combination IAXL:IPRN requires one of the following values: CLR, Judicial Review, Legal Help, Licensed Work, N/A for Follow on work. |
 
   @invalid @IMXL @4
   Scenario: 4. Bulkload Civil Asylum outcomes with combinations IMXL:IPRN
@@ -85,10 +85,10 @@ Feature: Asylum Bulk load validations for PRN Follow on work
       | 4 | 01/05/2022      | DC         | N/A             | --           | TR001                        |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE |
-      | 1 | Matter type combination IMXL:IPRN requires one of the following values: CLR, Judicial Review, Legal Help, Licensed Work, for Follow on work. |
-      | 2 | Matter type combination IMXL:IPRN requires one of the following values: CLR, Judicial Review, Legal Help, Licensed Work, for Follow on work. |
-      | 3 | Matter type combination IMXL:IPRN requires one of the following values: CLR, Judicial Review, Legal Help, Licensed Work, for Follow on work. |
-      | 4 | Matter type combination IMXL:IPRN requires one of the following values: CLR, Judicial Review, Legal Help, Licensed Work, for Follow on work. |
+      | 1 | Matter type combination IMXL:IPRN requires one of the following values: CLR, Judicial Review, Legal Help, Licensed Work for Follow on work. |
+      | 2 | Matter type combination IMXL:IPRN requires one of the following values: CLR, Judicial Review, Legal Help, Licensed Work for Follow on work. |
+      | 3 | Matter type combination IMXL:IPRN requires one of the following values: CLR, Judicial Review, Legal Help, Licensed Work for Follow on work. |
+      | 4 | Matter type combination IMXL:IPRN requires one of the following values: CLR, Judicial Review, Legal Help, Licensed Work for Follow on work. |
 
   @other @valid @5
   Scenario: 5. Bulkload Civil Asylum outcomes with other than combinations IAXL:IPRN IMXL:IPRN,
