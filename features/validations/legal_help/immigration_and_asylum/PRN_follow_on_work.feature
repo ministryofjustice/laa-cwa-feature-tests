@@ -5,7 +5,7 @@ Feature: Asylum Bulk load validations for PRN Follow on work
     Given a test firm user is logged in CWA
     And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#5"
 
-  @valid @IPRN @1
+  @valid @IPRN
   Scenario: 1. Bulkload Civil Asylum outcomes with combinations IAXL:IPRN IMXL:IPRN
             with completed matters and Disbursement Claims having valid values
             for Follow_on_work field which are:
@@ -35,7 +35,7 @@ Feature: Asylum Bulk load validations for PRN Follow on work
       | 7 | <none>                |
       | 8 | <none>                |
 
-      @valid @IAXL_na @2
+      @valid @IAXL_na
       Scenario: 2. Bulkload Civil Asylum outcomes with combination IAXL:IPRN
                 with completed matters and Disbursement Claims, N/A is required to be valid.
                 Error messages should NOT be displayed.
@@ -52,7 +52,7 @@ Feature: Asylum Bulk load validations for PRN Follow on work
           | 2 | <none> |
 
 
-  @invalid @IAXL @3
+  @invalid @IAXL
   Scenario: 3. Bulkload Civil Asylum outcomes with combinations IAXL:IPRN
             with completed matters and Disbursement Claims having invalid values
             for Follow_on_work field which is: NULL.
@@ -69,7 +69,7 @@ Feature: Asylum Bulk load validations for PRN Follow on work
       | 1 | Matter type combination IAXL:IPRN requires one of the following values: CLR, Judicial Review, Legal Help, Licensed Work, N/A for Follow on work. |
       | 2 | Matter type combination IAXL:IPRN requires one of the following values: CLR, Judicial Review, Legal Help, Licensed Work, N/A for Follow on work. |
 
-  @invalid @IMXL @4
+  @invalid @IMXL
   Scenario: 4. Bulkload Civil Asylum outcomes with combinations IMXL:IPRN
             with completed matters and Disbursement Claims having invalid values
             for Follow_on_work field which are: NULL and N/A
@@ -90,7 +90,7 @@ Feature: Asylum Bulk load validations for PRN Follow on work
       | 3 | Matter type combination IMXL:IPRN requires one of the following values: CLR, Judicial Review, Legal Help, Licensed Work for Follow on work. |
       | 4 | Matter type combination IMXL:IPRN requires one of the following values: CLR, Judicial Review, Legal Help, Licensed Work for Follow on work. |
 
-  @other @valid @5
+  @other @valid
   Scenario: 5. Bulkload Civil Asylum outcomes with other than combinations IAXL:IPRN IMXL:IPRN,
             such as IAXL:IBAI IACA:IFRA
             with completed matters and Disbursement Claims having valid values
@@ -113,7 +113,7 @@ Feature: Asylum Bulk load validations for PRN Follow on work
       | 3 | <none>  |
       | 4 | <none>  |
 
-  @other @invalid @6
+  @other @invalid
   Scenario: 6. Bulkload Civil Asylum outcomes with combinations other than IAXL:IPRN IMXL:IPRN,
             such as IAXL:IBAI IMXL:IBAI
             with completed matters and Disbursement Claims having invalid values
