@@ -64,9 +64,8 @@ When(/^the following outcomes are bulkloaded(\sand\sconfirmed)?:$/) do |confirm,
   @bulk_load_page.bulk_load_file.send_keys(file_name)
   @bulk_load_page.wait_until_next_button_visible(wait: 5)
   @bulk_load_page.next_button.double_click
-  byebug
-  step('user confirms the submission') if confirm
-  byebug
+  step('user confirms the submission') if
+  confirm
 end
 
 Then('the following results are expected:') do |table|
