@@ -64,7 +64,8 @@ When(/^the following outcomes are bulkloaded(\sand\sconfirmed)?:$/) do |confirm,
   @bulk_load_page.bulk_load_file.send_keys(file_name)
   @bulk_load_page.wait_until_next_button_visible(wait: 5)
   @bulk_load_page.next_button.double_click
-  step('user confirms the submission') if confirm
+  step('user confirms the submission') if
+  confirm
 end
 
 Then('the following results are expected:') do |table|
@@ -107,6 +108,28 @@ When('user bulk loads {string} for the test firm') do |file|
     within_frame(office_search_page.frame) do
       office_search_page.search_by.select('Account Number')
       office_search_page.account_number.set(CWAProvider.submission.account_number)
+      office_search_page.search_button.click
+      office_search_page.first_quick_select.click
+    end
+  end
+
+  @bulk_load_page.bulk_load_file.send_keys(bulkload_file_path(file))
+  with_delay(1.75) { @bulk_load_page.next_button.click }
+  sleep 5
+end
+
+When('user bulk loads {string} for the test firm {string}') do |file , account_no|
+  navigator = NavigatorPage.new
+  navigator.load
+  navigator.roles.cwa_activity_report_manager_internal_role.click
+  navigator.content.bulk_load.click
+  CWAProvider.area_of_law = 'LEGAL HELP'
+  @bulk_load_page = BulkLoadPage.new
+  within_popup(@bulk_load_page, ->{ @bulk_load_page.lookup_firm.click }) do
+    office_search_page = OfficeSearchPage.new
+    within_frame(office_search_page.frame) do
+      office_search_page.search_by.select('Account Number')
+      office_search_page.account_number.set(account_no)
       office_search_page.search_button.click
       office_search_page.first_quick_select.click
     end

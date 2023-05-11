@@ -24,6 +24,14 @@ Then('the outcome saves successfully') do
 end
 
 When("user adds outcomes for {string} {string} with fields like this:") do |area_of_law, category_of_law, table|
+  submission_details_page = SubmissionDetailsPage.new
+  if !submission_details_page.has_text?(/No results found/)
+    STDOUT.print 'Cleaning existing outcomes for test reference...'
+    submission_details_page.select_all
+    submission_details_page.delete_button.click
+    submission_details_page.confirm_delete_button.click
+    STDOUT.puts ' done.'
+  end
   outcome_data = table.hashes
   @submissions_saved = outcome_data.size
   outcome_data.each do |outcome|
@@ -35,7 +43,6 @@ When("user adds outcomes for {string} {string} with fields like this:") do |area
       matter_type: outcome['matter_type'],
       claim_type: outcome['claim_type']
     )
-
     outcome['schedule_ref'] = CWAProvider.submission.schedule_ref
     builder.overrides = outcome
 
@@ -48,7 +55,7 @@ When ("user adds an outcome for {string} {string} with {string}, {string}, {stri
     sr = CWAProvider.submission.schedule_ref
 
     outcome_data = Hash.new
-      
+
     outcome_data["matter_type"] = matter_type
     outcome_data["excl_case_funding_ref"] = ecf_ref
     outcome_data["case_start_date"] = case_start_date
