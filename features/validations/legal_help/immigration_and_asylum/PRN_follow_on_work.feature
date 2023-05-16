@@ -112,3 +112,20 @@ Feature: Asylum Bulk load validations for PRN Follow on work
       | 2 | Matter type combination IAXL:IBAI requires one of the following values: N/A for Follow on work. |
       | 3 | Matter type combination IAXL:IBAI requires one of the following values: N/A for Follow on work. |
       | 4 | Matter type combination IAXL:IBAI requires one of the following values: N/A for Follow on work. |
+
+
+      @invalid @IMXL
+      Scenario: 7. Bulkload Civil Asylum outcomes with combination IMXL:IPRN
+                with completed matters and Disbursement Claims
+                Error messages should be displayed.
+                The following Matter Types are invalid only from 01/04/2023.
+        Given the following Matter Types are chosen:
+          | IMXL:IPRN |
+        And the following outcomes are bulkloaded:
+          | # | CASE_START_DATE | CLAIM_TYPE |
+          | 1 | 01/04/2022      | CM         |
+          | 1 | 01/04/2022      | DC         |
+        Then the following results are expected:
+          | # | ERROR_CODE_OR_MESSAGE |
+          | 1 | An invalid matter type has been used. Please refer to the relevant guidance and re-enter. |
+          | 2 | An invalid matter type has been used. Please refer to the relevant guidance and re-enter. |
