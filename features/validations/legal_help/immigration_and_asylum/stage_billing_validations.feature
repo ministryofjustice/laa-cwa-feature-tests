@@ -71,7 +71,7 @@ Feature: Stage billing validations for Asylum and Immigration
     When user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#4" again
     And the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 2 | 001     | 010120/001 | DC         | 01/01/2020      | 30/06/2020          | --           |
+      | 2 | 001     | 010120/001 | DC         | 01/01/2020      | 28/06/2020          | --           |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE                                                                                                                                                              |
       | 2 | Stage disbursement claims can only be claimed where 3 months have elapsed since the entitlement to claim arose or an application for payment was made. Please refer to guidelines. |

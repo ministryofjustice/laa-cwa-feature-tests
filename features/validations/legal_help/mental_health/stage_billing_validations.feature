@@ -3,7 +3,7 @@ Feature: Stage billing validations for Mental health
 
   Background:
     Given a test firm user is logged in CWA
-    And user prepares to submit outcomes for test provider "LEGAL HELP.MHE#6"
+    And user prepares to submit outcomes for test provider "LEGAL HELP.MHE#11"
 
   Scenario: Add new stage Disbursement claim when there are no existing claims
     Given the following Matter Types are chosen:

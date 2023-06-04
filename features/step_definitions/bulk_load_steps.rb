@@ -85,7 +85,7 @@ Then('the following results are expected:') do |table|
   expected_results.each.with_index(1) do |row, i|
     STDOUT.puts("Testing #{row[:matter_type]}, assertion ##{row[:'#']}")
 
-    case_id = "%03d" % i
+    # case_id = "%03d" % i
     expected = error_message(row[:error_code_or_message])
     error = actual_results[case_id]
     next if error.nil? && expected == '<none>'

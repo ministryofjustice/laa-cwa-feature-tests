@@ -44,9 +44,9 @@ Feature: Validation for Immigration claims
     Scenario Outline: Add valid Immigration claims
         When user adds outcomes for "Legal Help" "Immigration And Asylum" with fields like this:
             | case_id | matter_type | exemption_criteria_satisfied | excl_case_funding_ref | case_start_date | procurement_area | access_point |
-            | 716     | IACE:IOUT   |                              | 1234567AB             | 01/07/22        | PA20000          | AP20000      |
-            | 717     | IACE:IOUT   |                              | 1234567AB             | 01/07/22        | PA20000          | AP20000      |
-            | 718     | IACE:IOUT   | TR001                        |                       | 01/07/22        | PA00136          | AP00137      |
+            | 716     | IACE:IOUT   |                              | 1234567AB             | 01/04/23        | PA20000          | AP20000      |
+            | 717     | IACE:IOUT   |                              | 1234567AB             | 01/04/23        | PA20000          | AP20000      |
+            | 718     | IACE:IOUT   | TR001                        |                       | 01/04/23        | PA00136          | AP00137      |
 
         Then the outcome saves successfully
 
