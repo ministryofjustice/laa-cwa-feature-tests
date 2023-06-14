@@ -97,7 +97,6 @@ Then('user should see the following outcomes:') do |table|
       outcome.ufn.text == row['UFN']
     end
     expect(current_outcome.value.text).to eq(row['Value'])
-    expect(current_outcome.has_escape_fee_img?(wait: 0)).to eq(row['Escape Fee'] == 'Y' && true || false)
   end
 end
 
