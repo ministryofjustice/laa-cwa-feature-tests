@@ -1,6 +1,6 @@
 Feature: Pricing: IALB: Asylum - Stage 1 (LH)
 
-  Background:
+  Background: 
     Given a test firm user is logged in CWA
     And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#12"
     Given the following Matter Types are chosen:
@@ -9,7 +9,7 @@ Feature: Pricing: IALB: Asylum - Stage 1 (LH)
   Scenario: Claims priced with: Standard Fee Scheme
     When the following outcomes are bulkloaded:
       | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR |
-      | 1 | 010120/001 | CM         |      03/10/2011 |          31/03/2023 |         400 |           13 | N             |
+      | 1 | 010120/001 | CM         |      03/10/2011 |          31/03/2023 |         400 |           14 | N             |
     When user confirms the submission
     And user is on the pricing outcome details page
     Then user should see the following outcomes:
@@ -101,3 +101,23 @@ Feature: Pricing: IALB: Asylum - Stage 1 (LH)
     Then the outcomes are NOT flagged as escape fee cases
       | Comment                                                                                                                                    |
       | escape threhold 3 * standard fee (£413) = £1239, Profit_Cost(£1200) + Counsel_Cost(£304) - Additioanal_payments(HO_INTERVIEW(£266))= £1238 |
+
+  Scenario: Claims priced with: Standard Fee Scheme with NRM advice
+    When the following outcomes are bulkloaded:
+      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | NATIONAL_REF_MECHANISM_ADVICE |
+      | 1 | 010423/001 | CM         |      01/04/2023 |          20/04/2023 |         400 |           28 | N             | Y                             |
+    When user confirms the submission
+    And user is on the pricing outcome details page
+    Then user should see the following outcomes:
+      | # | UFN        | Value    | Comment                                                               |
+      | 1 | 010423/001 | £ 563.00 | Standard fee for MT1 IALB £413 + NRM_ADVICE Bolt On fee (£150) = £563 |
+
+  Scenario: Claims priced with: Standard Fee Scheme without NRM advice bolt-on added
+    When the following outcomes are bulkloaded:
+      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | NATIONAL_REF_MECHANISM_ADVICE |
+      | 1 | 010413/001 | CM         |      01/04/2013 |          31/03/2023 |         400 |           28 | N             | Y                             |
+    When user confirms the submission
+    And user is on the pricing outcome details page
+    Then user should see the following outcomes:
+      | # | UFN        | Value    | Comment                                                                                                                                      |
+      | 1 | 010413/001 | £ 413.00 | Standard fee for MT1 IALB £413 priced at standard fee , ignoring NRM bolt-on as start date earler to 01/04/23, NRM_ADVICE Bolt On fee (£150) |
