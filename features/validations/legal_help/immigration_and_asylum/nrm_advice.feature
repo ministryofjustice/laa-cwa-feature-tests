@@ -17,10 +17,10 @@ Feature: Asylum Bulk load validations for NRM advice dropdown field
       | IAXL:IDIF |
       | IMXL:IBAI |
     And the following outcomes are bulkloaded:
-      | # | CASE_START_DATE | CLAIM_TYPE | NRM_ADVICE | OUTCOME_CODE | work_concluded_date |
-      | 1 |      25/04/2022 | CM         | Yes        | --           |            26/04/22 |
-      | 2 |      25/04/2022 | CM         | No         | --           |            26/04/22 |
-      | 3 |      25/04/2022 | CM         |            | --           |            26/04/22 |
+      | # | CASE_START_DATE | CLAIM_TYPE | NATIONAL_REF_MECHANISM_ADVICE | OUTCOME_CODE | work_concluded_date |
+      | 1 |      25/04/2022 | CM         | Yes                           | --           |            26/04/22 |
+      | 2 |      25/04/2022 | CM         | No                            | --           |            26/04/22 |
+      | 3 |      25/04/2022 | CM         |                               | --           |            26/04/22 |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE |
       | 1 | <none>                |
