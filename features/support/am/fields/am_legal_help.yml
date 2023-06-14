@@ -62,7 +62,7 @@ immigration_base_cm: &immigration_base_cm
   cmrh_telephone:
   adjourned_hearing_fee:
   claim_type:
-  nrm_advice:
+  national_ref_mechanism_advice:
 
 #immigration 'stage claim' claims a mirror of immigration_base_cm
 immigration_base_sc: &immigration_base_sc

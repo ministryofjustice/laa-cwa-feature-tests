@@ -55,3 +55,24 @@ Feature: Pricing: IAXL: Asylum - LH Work Not Subject to the Standard Fee Scheme
     Then user should see the following outcomes:
       | # | UFN        | Value    | Comment                                                                      |
       | 1 | 010120/001 | £ 273.60 | Priced at hourly rates (profit cost(£200) +  counsel cost(£28) + vat(45.6))) |
+
+
+   Scenario: Claims priced with: hourly rates Scheme with NRM advice
+    When the following outcomes are bulkloaded:
+      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR |NATIONAL_REF_MECHANISM_ADVICE   |
+      | 1 | 010423/001 | CM         |      01/04/2023 |          20/04/2023 |         200 |           28 | N             |Y          |
+    When user confirms the submission
+    And user is on the pricing outcome details page
+    Then user should see the following outcomes:
+      | # | UFN        | Value    | Comment                                                         |
+      | 1 | 010413/001 | £ 378.00 | Priced at hourly rates (profit cost(£200) +  counsel cost(£28)) + NRM_ADVICE Bolt On fee (£150) |
+
+ Scenario: Claims priced with: hourly rates Scheme without NRM advice bolt-on added
+    When the following outcomes are bulkloaded:
+      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR |NATIONAL_REF_MECHANISM_ADVICE   |
+      | 1 | 010413/001 | CM         |      01/04/2013 |          31/03/2023 |         200 |           28 | N             |Y          |
+    When user confirms the submission
+    And user is on the pricing outcome details page
+    Then user should see the following outcomes:
+      | # | UFN        | Value    | Comment                                                         |
+      | 1 | 010413/001 | £ 228.00 | Priced at hourly rates (profit cost(£200) +  counsel cost(£28)) = £228 , ignoring NRM bolt-on as start date earler to 01/04/23, NRM_ADVICE Bolt On fee (£150) |

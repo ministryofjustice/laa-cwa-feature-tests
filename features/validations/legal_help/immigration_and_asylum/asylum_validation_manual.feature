@@ -1,6 +1,6 @@
 Feature: Validation for Immigration and Asylum claims
 
-  Background: 
+  Background:
     Given user is on their "LEGAL HELP" submission details page
 
   @delete_outcome_after @manual_submission @valid @irc
@@ -30,10 +30,10 @@ Feature: Validation for Immigration and Asylum claims
   @delete_outcome_after @manual_submission @valid @NRMadvice
   Scenario Outline: NRM advice option for Immigration and Asylum cases, valid options 'yes' 'no' and 'null'
     When user adds outcomes for "Legal Help" "Immigration And Asylum" with fields like this:
-      | case_id | matter_type | case_start_date | outcome_code | work_concluded_date | nrm_advice |
-      |     001 | IAXL:IBAI   |        25/04/22 | --           |            26/04/22 | Yes        |
-      |     002 | IAXL:IDIF   |        25/04/22 | --           |            26/04/22 | No         |
-      |     003 | IMXL:IBAI   |        25/04/22 | --           |            26/04/22 |            |
+      | case_id | matter_type | case_start_date | outcome_code | work_concluded_date | national_ref_mechanism_advice |
+      |     001 | IAXL:IBAI   |        25/04/22 | --           |            26/04/22 | Y                             |
+      |     002 | IAXL:IDIF   |        25/04/22 | --           |            26/04/22 | N                             |
+      |     003 | IMXL:IBAI   |        25/04/22 | --           |            26/04/22 |                               |
     Then the outcome saves successfully
 
   @delete_outcome_after @manual_submission @valid @idif
