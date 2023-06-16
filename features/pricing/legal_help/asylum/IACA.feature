@@ -58,7 +58,7 @@ Feature: Pricing: IACA: Asylum - Stage 2a (CLR)
       | 1 | 010120/001 | £ 227.00 | Standard fee for MT1 IACA £227 is the total |
     Then the outcomes are flagged as escape fee cases
       | Comment                                                                                                                |
-      | escape threhold 3 * standard fee (£227) = £681, Profit_Cost(£228) + Counsel_Cost(£432) - Additioanal_payments(0)= £681 |
+      | escape threhold 3 * standard fee (£227) = £681, Profit_Cost(£228) + Counsel_Cost(£453) - Additioanal_payments(0)= £681 |
 
   @escape_fee_flag
   Scenario: Claims priced with: NO Escape Fee Flag (profit cost + counsel cost < the escape threshold)
@@ -78,7 +78,7 @@ Feature: Pricing: IACA: Asylum - Stage 2a (CLR)
   Scenario: Claims priced with: Escape Fee Flag (additional payments)
     When the following outcomes are bulkloaded:
       | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | CMRH_ORAL | CMRH_TELEPHONE |
-      | 1 | 010120/001 | CM         |      01/01/2020 |          31/03/2020 |         712 |          481 | N             |         1 |              1 |
+      | 1 | 010120/001 | CM         |      01/01/2020 |          31/03/2020 |         712 |          225 | N             |         1 |              1 |
     When user confirms the submission
     And user is on the pricing outcome details page
     Then user should see the following outcomes:

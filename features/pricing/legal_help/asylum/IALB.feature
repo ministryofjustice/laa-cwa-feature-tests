@@ -112,7 +112,7 @@ Feature: Pricing: IALB: Asylum - Stage 1 (LH)
       | # | UFN        | Value    | Comment                                                               |
       | 1 | 010423/001 | £ 563.00 | Standard fee for MT1 IALB £413 + NRM_ADVICE Bolt On fee (£150) = £563 |
 
-  Scenario: Claims priced with: Standard Fee Scheme without NRM advice bolt-on added
+  Scenario: Claims priced with: Standard Fee Scheme without NRM advice bolt-on , ignoring NRM bolt-on as start date earler to 01/04/23
     When the following outcomes are bulkloaded:
       | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | NATIONAL_REF_MECHANISM_ADVICE |
       | 1 | 010413/001 | CM         |      01/04/2013 |          31/03/2023 |         400 |           28 | N             | Y                             |
