@@ -9,4 +9,7 @@ group :test do
   gem 'rspec', '~> 3.10.0'
   gem 'selenium-webdriver', '~> 3.142.7'
   gem 'site_prism', '~> 3.7.3'
+  gem 'database_cleaner', '~> 2.0', '>= 2.0.2'
+  gem 'dbi', '~> 0.4.5'
+  gem 'ruby-oci8', '~> 2.2', '>= 2.2.12'
 end

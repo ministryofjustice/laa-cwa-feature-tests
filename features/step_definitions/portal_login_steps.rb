@@ -1,3 +1,6 @@
+require 'rubygems'
+require 'dbi'
+
 When('I visit the portal url') do
   visit(PortalEnv.url)
 end
@@ -26,4 +29,9 @@ Given('user is on the portal home page') do
     When user Logs in
     Then Portal application page is displayed
   )
+end
+
+
+Given('Connect to database') do
+  dbh = DBI.Connect('DBI:Oracle:CWA', 'apps' , 'app5cwa')
 end
