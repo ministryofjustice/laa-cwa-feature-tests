@@ -9,7 +9,7 @@ Feature: Pricing: IACA: Asylum - Stage 2a (CLR)
   Scenario: Claims priced with: Standard Fee Scheme
     When the following outcomes are bulkloaded:
       | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR |
-      | 1 | 010120/001 | CM         |      01/01/2020 |          31/03/2020 |         200 |           28 | N             |
+      | 1 | 010120/001 | CM         |      01/04/2020 |          31/03/2020 |         200 |           28 | N             |
     When user confirms the submission
     And user is on the pricing outcome details page
     Then user should see the following outcomes:
