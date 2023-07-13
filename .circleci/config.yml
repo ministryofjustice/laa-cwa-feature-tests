@@ -1,17 +1,28 @@
 version: 2.1
 
 orbs:
-  ruby: circleci/ruby@2.0.1
+  browser-tools: circleci/browser-tools@1.1
 
 jobs:
   test:
     docker:
-      - image: 'cimg/ruby:2.7.6-browsers'
+      - image: cimg/ruby:2.7.6-browsers
     steps:
+      - browser-tools/install-browser-tools
       - checkout
+      - run: |
+          ruby --version
+          node --version
+          java --version
+          google-chrome --version
+      - run: |
+          echo 'export TEST_ENV=tst' >> $BASH_ENV
+      - run:
+          name: Run bundle dependencies
+          command: bundle install 
       - run:
           name: Run tests
-          command: bundle exec cucumber features/ 
+          command: bundle exec cucumber
 
 workflows:
   version: 2
