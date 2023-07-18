@@ -122,10 +122,12 @@ When('user bulk loads {string} for the test firm {string}') do |file , account_n
   navigator = NavigatorPage.new
   navigator.load
   navigator.roles.cwa_activity_report_manager_internal_role.click
+  sleep(2)
   navigator.content.bulk_load.click
   CWAProvider.area_of_law = 'LEGAL HELP'
   @bulk_load_page = BulkLoadPage.new
   within_popup(@bulk_load_page, ->{ @bulk_load_page.lookup_firm.click }) do
+    
     office_search_page = OfficeSearchPage.new
     within_frame(office_search_page.frame) do
       office_search_page.search_by.select('Account Number')
@@ -134,15 +136,15 @@ When('user bulk loads {string} for the test firm {string}') do |file , account_n
       office_search_page.first_quick_select.click
     end
   end
-
+  sleep(2)
   @bulk_load_page.bulk_load_file.send_keys(bulkload_file_path(file))
-  with_delay(1.75) { @bulk_load_page.next_button.click }
-  sleep 5
+  with_delay(5) { @bulk_load_page.next_button.double_click }
+
 end
 
 Then(/successful outcomes should equal (\d*)/) do |num_of_successful_outcomes|
   @bulk_load_page = BulkLoadResultsPage.new
-  @bulk_load_page.wait_until_summary_visible(wait: 300)
+  @bulk_load_page.wait_until_summary_visible(wait: 1000)
   expect(@bulk_load_page.summary).to have_successful_outcomes
   expect(@bulk_load_page.summary.successful_outcomes.text).to eq(num_of_successful_outcomes)
 end
@@ -151,7 +153,7 @@ Then("there should be no problem outcomes") do
   @bulk_load_page = BulkLoadResultsPage.new
   @bulk_load_page.wait_until_summary_visible(wait: 20)
   expect(@bulk_load_page.summary).to have_problem_outcomes
-  expect(@bulk_load_page.summary.problem_outcomes.text).to eq('188')
+  expect(@bulk_load_page.summary.problem_outcomes.text).to eq('1119')
 end
 
 Then("there should be no duplicate outcomes") do

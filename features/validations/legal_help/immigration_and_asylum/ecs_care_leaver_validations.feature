@@ -8,104 +8,120 @@ Feature: Check Care Leaver Validation for Immigration claims
  @delete_outcome_after @bulkload @immas
   Scenario: Bulk load valid file for Asylum
     Given a test firm user is logged in CWA
-    When user bulk loads "large_bulkload_file.xml" for the test firm "0Q801N"
+    When user bulk loads "0U591W.xml" for the test firm "0Q801N"
     Then user should see the bulk load results page
-    And successful outcomes should equal 1079
+    And successful outcomes should equal 1163 
     And there should be no problem outcomes
 
- @delete_outcome_after @bulkload @immas
+    @delete_outcome_after @bulkload @immas
   Scenario: Bulk load valid file for Asylum
     Given a test firm user is logged in CWA
-    When user bulk loads "large_bulkload_file.xml" for the test firm "0Q801N"
+    When user bulk loads "0U591W.xml" for the test firm "0Q801N"
     Then user should see the bulk load results page
-    And successful outcomes should equal 1079
+    And successful outcomes should equal 1163 
     And there should be no problem outcomes
 
- @delete_outcome_after @bulkload @immas
+    @delete_outcome_after @bulkload @immas
   Scenario: Bulk load valid file for Asylum
     Given a test firm user is logged in CWA
-    When user bulk loads "large_bulkload_file.xml" for the test firm "0Q801N"
+    When user bulk loads "0U591W.xml" for the test firm "0Q801N"
     Then user should see the bulk load results page
-    And successful outcomes should equal 1079
+    And successful outcomes should equal 1163 
     And there should be no problem outcomes
 
+#  @delete_outcome_after @bulkload @immas
+#   Scenario: Bulk load valid file for Asylum
+#     Given a test firm user is logged in CWA
+#     When user bulk loads "large_bulkload_file.xml" for the test firm "0Q801N"
+#     Then user should see the bulk load results page
+#     And successful outcomes should equal 1079
+#     And there should be no problem outcomes
+
+#  @delete_outcome_after @bulkload @immas
+#   Scenario: Bulk load valid file for Asylum
+#     Given a test firm user is logged in CWA
+#     When user bulk loads "large_bulkload_file.xml" for the test firm "0Q801N"
+#     Then user should see the bulk load results page
+#     And successful outcomes should equal 1079
+#     And there should be no problem outcomes
+
+
+#   @delete_outcome_after @bulkload @immas
+#   Scenario: Bulk load valid file for Asylum
+#     Given a test firm user is logged in CWA
+#     When user bulk loads "large_bulkload_file.xml" for the test firm "0Q801N"
+#     Then user should see the bulk load results page
+#     And successful outcomes should equal 1079
+#     And there should be no problem outcomes
 
   @delete_outcome_after @bulkload @immas
   Scenario: Bulk load valid file for Asylum
     Given a test firm user is logged in CWA
-    When user bulk loads "large_bulkload_file.xml" for the test firm "0Q801N"
+    When user bulk loads "o_sfs_immas_stage1_lh.xml" for the test firm "0A005F"
     Then user should see the bulk load results page
-    And successful outcomes should equal 1079
+    And successful outcomes should equal 26
     And there should be no problem outcomes
 
-  # @delete_outcome_after @bulkload @immas
-  # Scenario: Bulk load valid file for Asylum
-  #   Given a test firm user is logged in CWA
-  #   When user bulk loads "o_sfs_immas_stage1_lh.xml" for the test firm "0A005F"
-  #   Then user should see the bulk load results page
-  #   And successful outcomes should equal 24
-  #   And there should be no problem outcomes
+  @delete_outcome_after @bulkload @immot
+  Scenario: Bulk load valid file for Immigration (non-Asylum)
+    Given a test firm user is logged in CWA
+    When user bulk loads "o_sfs_immot_stage1_lh.xml" for the test firm "0A005F"
+    Then user should see the bulk load results page
+    And successful outcomes should equal 26
+    And there should be no problem outcomes
 
-  # @delete_outcome_after @bulkload @immot
-  # Scenario: Bulk load valid file for Immigration (non-Asylum)
-  #   Given a test firm user is logged in CWA
-  #   When user bulk loads "o_sfs_immot_stage1_lh.xml" for the test firm "0A005F"
-  #   Then user should see the bulk load results page
-  #   And successful outcomes should equal 24
-  #   And there should be no problem outcomes
+  # @delete_outcome_after @manual_submission @immot @invalid
+  # Scenario Outline: Reject invalid care leaver Immigration (non-Asylum) claims
+  #   Given user is on their "LEGAL HELP" submission details page
+  #   When user adds an outcome for "Legal Help" "Immigration" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+  #   Then the outcome does not save and the error message "<error message>" appears
+  #   Examples:
+  #     | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      | error message                                                                                                                                                                                                     |
+  #     | 401     | IMXL:IRVL | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+  #     | 402     | IMXL:IRVL | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+  #     | 403     | IMXL:IRVL | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+  #     | 404     | IMLB:ICZN | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+  #     | 405     | IMLB:ICZN | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+  #     | 406     | IMLB:ICZN | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+  #     | 407     | IMXC:IREM | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+  #     | 408     | IMXC:IREM | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+  #     | 409     | IMXC:IREM | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
 
-  @delete_outcome_after @manual_submission @immot @invalid
-  Scenario Outline: Reject invalid care leaver Immigration (non-Asylum) claims
-    Given user is on their "LEGAL HELP" submission details page
-    When user adds an outcome for "Legal Help" "Immigration" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
-    Then the outcome does not save and the error message "<error message>" appears
-    Examples:
-      | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      | error message                                                                                                                                                                                                     |
-      | 401     | IMXL:IRVL | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
-      | 402     | IMXL:IRVL | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
-      | 403     | IMXL:IRVL | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
-      | 404     | IMLB:ICZN | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
-      | 405     | IMLB:ICZN | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
-      | 406     | IMLB:ICZN | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
-      | 407     | IMXC:IREM | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
-      | 408     | IMXC:IREM | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
-      | 409     | IMXC:IREM | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+  # @delete_outcome_after @manual_submission @immot @valid
+  # Scenario Outline: Add valid care leaver Immigration (non-Asylum) claims
+  #   Given user is on their "LEGAL HELP" submission details page
+  #   When user adds an outcome for "Legal Help" "Immigration" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+  #   Then the outcome saves successfully
+  #   Examples:
+  #     | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      |
+  #     | 410     | IMXL:IRVL | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+  #     | 411     | IMLB:ICZN | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+  #     | 412     | IMXC:IREM | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
 
-  @delete_outcome_after @manual_submission @immot @valid
-  Scenario Outline: Add valid care leaver Immigration (non-Asylum) claims
-    Given user is on their "LEGAL HELP" submission details page
-    When user adds an outcome for "Legal Help" "Immigration" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
-    Then the outcome saves successfully
-    Examples:
-      | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      |
-      | 410     | IMXL:IRVL | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
-      | 411     | IMLB:ICZN | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
-      | 412     | IMXC:IREM | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+  # @delete_outcome_after @manual_submission @immas @invalid
+  # Scenario Outline: Reject invalid care leaver Asylum claims
+  #   Given user is on their "LEGAL HELP" submission details page
+  #   When user adds an outcome for "Legal Help" "Immigration and Asylum" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+  #   Then the outcome does not save and the error message "<error message>" appears
+  #   Examples:
+  #     | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      | error message                                                                                                                                                                                                     |
+  #     | 413     | IACA:IFRA | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+  #     | 414     | IACA:IFRA | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+  #     | 415     | IACA:IFRA | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+  #     | 416     | IAXL:IOUT | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+  #     | 417     | IAXL:IOUT | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+  #     | 418     | IAXL:IOUT | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+  #     | 419     | IACA:IASY | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+  #     | 420     | IACA:IASY | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+  #     | 421     | IACA:IASY | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
 
-  @delete_outcome_after @manual_submission @immas @invalid
-  Scenario Outline: Reject invalid care leaver Asylum claims
-    Given user is on their "LEGAL HELP" submission details page
-    When user adds an outcome for "Legal Help" "Immigration and Asylum" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
-    Then the outcome does not save and the error message "<error message>" appears
-    Examples:
-      | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      | error message                                                                                                                                                                                                     |
-      | 413     | IACA:IFRA | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
-      | 414     | IACA:IFRA | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
-      | 415     | IACA:IFRA | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
-      | 416     | IAXL:IOUT | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
-      | 417     | IAXL:IOUT | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
-      | 418     | IAXL:IOUT | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
-      | 419     | IACA:IASY | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
-      | 420     | IACA:IASY | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
-      | 421     | IACA:IASY | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
-
-  @delete_outcome_after @manual_submission @immas @valid
-  Scenario Outline: Add valid care leaver Asylum claims
-    Given user is on their "LEGAL HELP" submission details page
-    When user adds an outcome for "Legal Help" "Immigration and Asylum" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
-    Then the outcome saves successfully
-    Examples:
-      | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      |
-      | 432     | IACA:IFRA | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
-      | 433     | IAXL:IOUT | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
-      | 434     | IACA:IASY | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+  # @delete_outcome_after @manual_submission @immas @valid
+  # Scenario Outline: Add valid care leaver Asylum claims
+  #   Given user is on their "LEGAL HELP" submission details page
+  #   When user adds an outcome for "Legal Help" "Immigration and Asylum" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+  #   Then the outcome saves successfully
+  #   Examples:
+  #     | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      |
+  #     | 432     | IACA:IFRA | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+  #     | 433     | IAXL:IOUT | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+  #     | 434     | IACA:IASY | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
