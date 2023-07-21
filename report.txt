@@ -1,0 +1,547 @@
+1 process for 1 feature, ~ 1 feature per process
+Using the default profile...
+@bulkload
+Feature: Check Care Leaver Validation for Immigration claims
+  In order to submit care leaver claims
+  As a provider
+  I want to use the new care leaver code with an ecf reference
+
+  @delete_outcome_after @bulkload @immas
+  Scenario: Bulk load valid file for Asylum                      # features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:9
+    Given a test firm user is logged in CWA                      # features/step_definitions/cwa_navigation_steps.rb:1
+      Browsing context has been discarded (Selenium::WebDriver::Error::NoSuchWindowError)
+      RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:8:8
+      WebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:187:5
+      NoSuchWindowError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:613:5
+      assert.that/<@chrome://remote/content/shared/webdriver/Assert.sys.mjs:485:13
+      assert.open@chrome://remote/content/shared/webdriver/Assert.sys.mjs:147:4
+      GeckoDriver.prototype.findElements@chrome://remote/content/marionette/driver.sys.mjs:1596:15
+      despatch@chrome://remote/content/marionette/server.sys.mjs:320:40
+      execute@chrome://remote/content/marionette/server.sys.mjs:291:16
+      onPacket/<@chrome://remote/content/marionette/server.sys.mjs:264:20
+      onPacket@chrome://remote/content/marionette/server.sys.mjs:265:9
+      _onJSONObjectReady/<@chrome://remote/content/marionette/transport.sys.mjs:496:20
+      ./features/step_definitions/portal_login_steps.rb:14:in `nil'
+      ./features/step_definitions/cwa_navigation_steps.rb:2:in `nil'
+      features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:10:in `a test firm user is logged in CWA'
+    When user bulk loads "0U591W.xml" for the test firm "0Q801N" # features/step_definitions/bulk_load_steps.rb:121
+    Then user should see the bulk load results page              # features/step_definitions/bulk_load_steps.rb:174
+    And successful outcomes should equal 1163                    # features/step_definitions/bulk_load_steps.rb:145
+    And there should be no problem outcomes                      # features/step_definitions/bulk_load_steps.rb:152
+      Browsing context has been discarded (Selenium::WebDriver::Error::NoSuchWindowError)
+      RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:8:8
+      WebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:187:5
+      NoSuchWindowError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:613:5
+      assert.that/<@chrome://remote/content/shared/webdriver/Assert.sys.mjs:485:13
+      assert.open@chrome://remote/content/shared/webdriver/Assert.sys.mjs:147:4
+      GeckoDriver.prototype.getTextFromDialog@chrome://remote/content/marionette/driver.sys.mjs:2750:15
+      despatch@chrome://remote/content/marionette/server.sys.mjs:320:40
+      execute@chrome://remote/content/marionette/server.sys.mjs:291:16
+      onPacket/<@chrome://remote/content/marionette/server.sys.mjs:264:20
+      onPacket@chrome://remote/content/marionette/server.sys.mjs:265:9
+      _onJSONObjectReady/<@chrome://remote/content/marionette/transport.sys.mjs:496:20
+
+  @delete_outcome_after @bulkload @immas
+  Scenario: Bulk load valid file for Asylum                      # features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:17
+      Browsing context has been discarded (Selenium::WebDriver::Error::NoSuchWindowError)
+      RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:8:8
+      WebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:187:5
+      NoSuchWindowError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:613:5
+      assert.that/<@chrome://remote/content/shared/webdriver/Assert.sys.mjs:485:13
+      assert.open@chrome://remote/content/shared/webdriver/Assert.sys.mjs:147:4
+      GeckoDriver.prototype.navigateTo@chrome://remote/content/marionette/driver.sys.mjs:821:39
+      despatch@chrome://remote/content/marionette/server.sys.mjs:320:40
+      execute@chrome://remote/content/marionette/server.sys.mjs:291:16
+      onPacket/<@chrome://remote/content/marionette/server.sys.mjs:264:20
+      onPacket@chrome://remote/content/marionette/server.sys.mjs:265:9
+      _onJSONObjectReady/<@chrome://remote/content/marionette/transport.sys.mjs:496:20
+      ./features/support/hooks.rb:17:in `Before'
+    Given a test firm user is logged in CWA                      # features/step_definitions/cwa_navigation_steps.rb:1
+    When user bulk loads "0U591W.xml" for the test firm "0Q801N" # features/step_definitions/bulk_load_steps.rb:121
+    Then user should see the bulk load results page              # features/step_definitions/bulk_load_steps.rb:174
+    And successful outcomes should equal 1163                    # features/step_definitions/bulk_load_steps.rb:145
+    And there should be no problem outcomes                      # features/step_definitions/bulk_load_steps.rb:152
+
+  @delete_outcome_after @bulkload @immas
+  Scenario: Bulk load valid file for Asylum                      # features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:25
+    Given a test firm user is logged in CWA                      # features/step_definitions/cwa_navigation_steps.rb:1
+    When user bulk loads "0U591W.xml" for the test firm "0Q801N" # features/step_definitions/bulk_load_steps.rb:121
+    Then user should see the bulk load results page              # features/step_definitions/bulk_load_steps.rb:174
+    And successful outcomes should equal 1163                    # features/step_definitions/bulk_load_steps.rb:145
+    And there should be no problem outcomes                      # features/step_definitions/bulk_load_steps.rb:152
+
+  #  @delete_outcome_after @bulkload @immas
+  #   Scenario: Bulk load valid file for Asylum
+  #     Given a test firm user is logged in CWA
+  #     When user bulk loads "large_bulkload_file.xml" for the test firm "0Q801N"
+  #     Then user should see the bulk load results page
+  #     And successful outcomes should equal 1079
+  #     And there should be no problem outcomes
+  #  @delete_outcome_after @bulkload @immas
+  #   Scenario: Bulk load valid file for Asylum
+  #     Given a test firm user is logged in CWA
+  #     When user bulk loads "large_bulkload_file.xml" for the test firm "0Q801N"
+  #     Then user should see the bulk load results page
+  #     And successful outcomes should equal 1079
+  #     And there should be no problem outcomes
+  #   @delete_outcome_after @bulkload @immas
+  #   Scenario: Bulk load valid file for Asylum
+  #     Given a test firm user is logged in CWA
+  #     When user bulk loads "large_bulkload_file.xml" for the test firm "0Q801N"
+  #     Then user should see the bulk load results page
+  #     And successful outcomes should equal 1079
+  #     And there should be no problem outcomes
+  @delete_outcome_after @bulkload @immas
+  Scenario: Bulk load valid file for Asylum                                     # features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:58
+    Given a test firm user is logged in CWA                                     # features/step_definitions/cwa_navigation_steps.rb:1
+    When user bulk loads "o_sfs_immas_stage1_lh.xml" for the test firm "0A005F" # features/step_definitions/bulk_load_steps.rb:121
+    Then user should see the bulk load results page                             # features/step_definitions/bulk_load_steps.rb:174
+    And successful outcomes should equal 26                                     # features/step_definitions/bulk_load_steps.rb:145
+    And there should be no problem outcomes                                     # features/step_definitions/bulk_load_steps.rb:152
+
+  @delete_outcome_after @bulkload @immot
+  Scenario: Bulk load valid file for Immigration (non-Asylum)                   # features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:66
+    Given a test firm user is logged in CWA                                     # features/step_definitions/cwa_navigation_steps.rb:1
+    When user bulk loads "o_sfs_immot_stage1_lh.xml" for the test firm "0A005F" # features/step_definitions/bulk_load_steps.rb:121
+    Then user should see the bulk load results page                             # features/step_definitions/bulk_load_steps.rb:174
+    And successful outcomes should equal 26                                     # features/step_definitions/bulk_load_steps.rb:145
+    And there should be no problem outcomes                                     # features/step_definitions/bulk_load_steps.rb:152
+# @delete_outcome_after @manual_submission @immot @invalid
+# Scenario Outline: Reject invalid care leaver Immigration (non-Asylum) claims
+#   Given user is on their "LEGAL HELP" submission details page
+#   When user adds an outcome for "Legal Help" "Immigration" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+#   Then the outcome does not save and the error message "<error message>" appears
+#   Examples:
+#     | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      | error message                                                                                                                                                                                                     |
+#     | 401     | IMXL:IRVL | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+#     | 402     | IMXL:IRVL | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+#     | 403     | IMXL:IRVL | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+#     | 404     | IMLB:ICZN | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+#     | 405     | IMLB:ICZN | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+#     | 406     | IMLB:ICZN | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+#     | 407     | IMXC:IREM | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+#     | 408     | IMXC:IREM | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+#     | 409     | IMXC:IREM | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+# @delete_outcome_after @manual_submission @immot @valid
+# Scenario Outline: Add valid care leaver Immigration (non-Asylum) claims
+#   Given user is on their "LEGAL HELP" submission details page
+#   When user adds an outcome for "Legal Help" "Immigration" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+#   Then the outcome saves successfully
+#   Examples:
+#     | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      |
+#     | 410     | IMXL:IRVL | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+#     | 411     | IMLB:ICZN | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+#     | 412     | IMXC:IREM | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+# @delete_outcome_after @manual_submission @immas @invalid
+# Scenario Outline: Reject invalid care leaver Asylum claims
+#   Given user is on their "LEGAL HELP" submission details page
+#   When user adds an outcome for "Legal Help" "Immigration and Asylum" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+#   Then the outcome does not save and the error message "<error message>" appears
+#   Examples:
+#     | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      | error message                                                                                                                                                                                                     |
+#     | 413     | IACA:IFRA | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+#     | 414     | IACA:IFRA | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+#     | 415     | IACA:IFRA | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+#     | 416     | IAXL:IOUT | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+#     | 417     | IAXL:IOUT | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+#     | 418     | IAXL:IOUT | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+#     | 419     | IACA:IASY | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+#     | 420     | IACA:IASY | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+#     | 421     | IACA:IASY | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+# @delete_outcome_after @manual_submission @immas @valid
+# Scenario Outline: Add valid care leaver Asylum claims
+#   Given user is on their "LEGAL HELP" submission details page
+#   When user adds an outcome for "Legal Help" "Immigration and Asylum" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+#   Then the outcome saves successfully
+#   Examples:
+#     | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      |
+#     | 432     | IACA:IFRA | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+#     | 433     | IAXL:IOUT | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+#     | 434     | IACA:IASY | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+
+Failing Scenarios:
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:9 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:17 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:25 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:58 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:66 # Scenario: Bulk load valid file for Immigration (non-Asylum)
+
+5 scenarios (5 failed)
+25 steps (1 failed, 24 skipped)
+0m3.323s
+
+Failing Scenarios:
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:9 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:17 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:25 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:58 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:66 # Scenario: Bulk load valid file for Immigration (non-Asylum)
+
+5 scenarios (5 failed)
+25 steps (1 failed, 24 skipped)
+
+Took 6 seconds
+1 process for 1 feature, ~ 1 feature per process
+Using the default profile...
+@bulkload
+Feature: Check Care Leaver Validation for Immigration claims
+  In order to submit care leaver claims
+  As a provider
+  I want to use the new care leaver code with an ecf reference
+
+  @delete_outcome_after @bulkload @immas
+  Scenario: Bulk load valid file for Asylum                      # features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:9
+    Given a test firm user is logged in CWA                      # features/step_definitions/cwa_navigation_steps.rb:1
+      Browsing context has been discarded (Selenium::WebDriver::Error::NoSuchWindowError)
+      RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:8:8
+      WebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:187:5
+      NoSuchWindowError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:613:5
+      assert.that/<@chrome://remote/content/shared/webdriver/Assert.sys.mjs:485:13
+      assert.open@chrome://remote/content/shared/webdriver/Assert.sys.mjs:147:4
+      GeckoDriver.prototype.findElements@chrome://remote/content/marionette/driver.sys.mjs:1596:15
+      despatch@chrome://remote/content/marionette/server.sys.mjs:320:40
+      execute@chrome://remote/content/marionette/server.sys.mjs:291:16
+      onPacket/<@chrome://remote/content/marionette/server.sys.mjs:264:20
+      onPacket@chrome://remote/content/marionette/server.sys.mjs:265:9
+      _onJSONObjectReady/<@chrome://remote/content/marionette/transport.sys.mjs:496:20
+      ./features/step_definitions/portal_login_steps.rb:14:in `nil'
+      ./features/step_definitions/cwa_navigation_steps.rb:2:in `nil'
+      features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:10:in `a test firm user is logged in CWA'
+    When user bulk loads "0U591W.xml" for the test firm "0Q801N" # features/step_definitions/bulk_load_steps.rb:121
+    Then user should see the bulk load results page              # features/step_definitions/bulk_load_steps.rb:174
+    And successful outcomes should equal 1163                    # features/step_definitions/bulk_load_steps.rb:145
+    And there should be no problem outcomes                      # features/step_definitions/bulk_load_steps.rb:152
+      Browsing context has been discarded (Selenium::WebDriver::Error::NoSuchWindowError)
+      RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:8:8
+      WebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:187:5
+      NoSuchWindowError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:613:5
+      assert.that/<@chrome://remote/content/shared/webdriver/Assert.sys.mjs:485:13
+      assert.open@chrome://remote/content/shared/webdriver/Assert.sys.mjs:147:4
+      GeckoDriver.prototype.getTextFromDialog@chrome://remote/content/marionette/driver.sys.mjs:2750:15
+      despatch@chrome://remote/content/marionette/server.sys.mjs:320:40
+      execute@chrome://remote/content/marionette/server.sys.mjs:291:16
+      onPacket/<@chrome://remote/content/marionette/server.sys.mjs:264:20
+      onPacket@chrome://remote/content/marionette/server.sys.mjs:265:9
+      _onJSONObjectReady/<@chrome://remote/content/marionette/transport.sys.mjs:496:20
+
+  @delete_outcome_after @bulkload @immas
+  Scenario: Bulk load valid file for Asylum                      # features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:17
+      Browsing context has been discarded (Selenium::WebDriver::Error::NoSuchWindowError)
+      RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:8:8
+      WebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:187:5
+      NoSuchWindowError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:613:5
+      assert.that/<@chrome://remote/content/shared/webdriver/Assert.sys.mjs:485:13
+      assert.open@chrome://remote/content/shared/webdriver/Assert.sys.mjs:147:4
+      GeckoDriver.prototype.navigateTo@chrome://remote/content/marionette/driver.sys.mjs:821:39
+      despatch@chrome://remote/content/marionette/server.sys.mjs:320:40
+      execute@chrome://remote/content/marionette/server.sys.mjs:291:16
+      onPacket/<@chrome://remote/content/marionette/server.sys.mjs:264:20
+      onPacket@chrome://remote/content/marionette/server.sys.mjs:265:9
+      _onJSONObjectReady/<@chrome://remote/content/marionette/transport.sys.mjs:496:20
+      ./features/support/hooks.rb:17:in `Before'
+    Given a test firm user is logged in CWA                      # features/step_definitions/cwa_navigation_steps.rb:1
+    When user bulk loads "0U591W.xml" for the test firm "0Q801N" # features/step_definitions/bulk_load_steps.rb:121
+    Then user should see the bulk load results page              # features/step_definitions/bulk_load_steps.rb:174
+    And successful outcomes should equal 1163                    # features/step_definitions/bulk_load_steps.rb:145
+    And there should be no problem outcomes                      # features/step_definitions/bulk_load_steps.rb:152
+
+  @delete_outcome_after @bulkload @immas
+  Scenario: Bulk load valid file for Asylum                      # features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:25
+    Given a test firm user is logged in CWA                      # features/step_definitions/cwa_navigation_steps.rb:1
+    When user bulk loads "0U591W.xml" for the test firm "0Q801N" # features/step_definitions/bulk_load_steps.rb:121
+    Then user should see the bulk load results page              # features/step_definitions/bulk_load_steps.rb:174
+    And successful outcomes should equal 1163                    # features/step_definitions/bulk_load_steps.rb:145
+    And there should be no problem outcomes                      # features/step_definitions/bulk_load_steps.rb:152
+
+  #  @delete_outcome_after @bulkload @immas
+  #   Scenario: Bulk load valid file for Asylum
+  #     Given a test firm user is logged in CWA
+  #     When user bulk loads "large_bulkload_file.xml" for the test firm "0Q801N"
+  #     Then user should see the bulk load results page
+  #     And successful outcomes should equal 1079
+  #     And there should be no problem outcomes
+  #  @delete_outcome_after @bulkload @immas
+  #   Scenario: Bulk load valid file for Asylum
+  #     Given a test firm user is logged in CWA
+  #     When user bulk loads "large_bulkload_file.xml" for the test firm "0Q801N"
+  #     Then user should see the bulk load results page
+  #     And successful outcomes should equal 1079
+  #     And there should be no problem outcomes
+  #   @delete_outcome_after @bulkload @immas
+  #   Scenario: Bulk load valid file for Asylum
+  #     Given a test firm user is logged in CWA
+  #     When user bulk loads "large_bulkload_file.xml" for the test firm "0Q801N"
+  #     Then user should see the bulk load results page
+  #     And successful outcomes should equal 1079
+  #     And there should be no problem outcomes
+  @delete_outcome_after @bulkload @immas
+  Scenario: Bulk load valid file for Asylum                                     # features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:58
+    Given a test firm user is logged in CWA                                     # features/step_definitions/cwa_navigation_steps.rb:1
+    When user bulk loads "o_sfs_immas_stage1_lh.xml" for the test firm "0A005F" # features/step_definitions/bulk_load_steps.rb:121
+    Then user should see the bulk load results page                             # features/step_definitions/bulk_load_steps.rb:174
+    And successful outcomes should equal 26                                     # features/step_definitions/bulk_load_steps.rb:145
+    And there should be no problem outcomes                                     # features/step_definitions/bulk_load_steps.rb:152
+
+  @delete_outcome_after @bulkload @immot
+  Scenario: Bulk load valid file for Immigration (non-Asylum)                   # features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:66
+    Given a test firm user is logged in CWA                                     # features/step_definitions/cwa_navigation_steps.rb:1
+    When user bulk loads "o_sfs_immot_stage1_lh.xml" for the test firm "0A005F" # features/step_definitions/bulk_load_steps.rb:121
+    Then user should see the bulk load results page                             # features/step_definitions/bulk_load_steps.rb:174
+    And successful outcomes should equal 26                                     # features/step_definitions/bulk_load_steps.rb:145
+    And there should be no problem outcomes                                     # features/step_definitions/bulk_load_steps.rb:152
+# @delete_outcome_after @manual_submission @immot @invalid
+# Scenario Outline: Reject invalid care leaver Immigration (non-Asylum) claims
+#   Given user is on their "LEGAL HELP" submission details page
+#   When user adds an outcome for "Legal Help" "Immigration" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+#   Then the outcome does not save and the error message "<error message>" appears
+#   Examples:
+#     | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      | error message                                                                                                                                                                                                     |
+#     | 401     | IMXL:IRVL | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+#     | 402     | IMXL:IRVL | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+#     | 403     | IMXL:IRVL | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+#     | 404     | IMLB:ICZN | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+#     | 405     | IMLB:ICZN | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+#     | 406     | IMLB:ICZN | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+#     | 407     | IMXC:IREM | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+#     | 408     | IMXC:IREM | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+#     | 409     | IMXC:IREM | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+# @delete_outcome_after @manual_submission @immot @valid
+# Scenario Outline: Add valid care leaver Immigration (non-Asylum) claims
+#   Given user is on their "LEGAL HELP" submission details page
+#   When user adds an outcome for "Legal Help" "Immigration" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+#   Then the outcome saves successfully
+#   Examples:
+#     | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      |
+#     | 410     | IMXL:IRVL | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+#     | 411     | IMLB:ICZN | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+#     | 412     | IMXC:IREM | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+# @delete_outcome_after @manual_submission @immas @invalid
+# Scenario Outline: Reject invalid care leaver Asylum claims
+#   Given user is on their "LEGAL HELP" submission details page
+#   When user adds an outcome for "Legal Help" "Immigration and Asylum" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+#   Then the outcome does not save and the error message "<error message>" appears
+#   Examples:
+#     | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      | error message                                                                                                                                                                                                     |
+#     | 413     | IACA:IFRA | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+#     | 414     | IACA:IFRA | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+#     | 415     | IACA:IFRA | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+#     | 416     | IAXL:IOUT | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+#     | 417     | IAXL:IOUT | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+#     | 418     | IAXL:IOUT | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+#     | 419     | IACA:IASY | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+#     | 420     | IACA:IASY | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+#     | 421     | IACA:IASY | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+# @delete_outcome_after @manual_submission @immas @valid
+# Scenario Outline: Add valid care leaver Asylum claims
+#   Given user is on their "LEGAL HELP" submission details page
+#   When user adds an outcome for "Legal Help" "Immigration and Asylum" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+#   Then the outcome saves successfully
+#   Examples:
+#     | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      |
+#     | 432     | IACA:IFRA | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+#     | 433     | IAXL:IOUT | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+#     | 434     | IACA:IASY | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+
+Failing Scenarios:
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:9 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:17 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:25 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:58 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:66 # Scenario: Bulk load valid file for Immigration (non-Asylum)
+
+5 scenarios (5 failed)
+25 steps (1 failed, 24 skipped)
+0m7.606s
+
+Failing Scenarios:
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:9 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:17 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:25 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:58 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:66 # Scenario: Bulk load valid file for Immigration (non-Asylum)
+
+5 scenarios (5 failed)
+25 steps (1 failed, 24 skipped)
+
+Took 10 seconds
+1 process for 1 feature, ~ 1 feature per process
+Using the default profile...
+@bulkload
+Feature: Check Care Leaver Validation for Immigration claims
+  In order to submit care leaver claims
+  As a provider
+  I want to use the new care leaver code with an ecf reference
+
+  @delete_outcome_after @bulkload @immas
+  Scenario: Bulk load valid file for Asylum                      # features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:9
+    Given a test firm user is logged in CWA                      # features/step_definitions/cwa_navigation_steps.rb:1
+      Unable to locate window: 040c98b0-e424-4da2-9fd7-5477587bbb3e (Selenium::WebDriver::Error::NoSuchWindowError)
+      RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:8:8
+      WebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:187:5
+      NoSuchWindowError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:613:5
+      GeckoDriver.prototype.switchToWindow@chrome://remote/content/marionette/driver.sys.mjs:1232:11
+      despatch@chrome://remote/content/marionette/server.sys.mjs:320:40
+      execute@chrome://remote/content/marionette/server.sys.mjs:291:16
+      onPacket/<@chrome://remote/content/marionette/server.sys.mjs:264:20
+      onPacket@chrome://remote/content/marionette/server.sys.mjs:265:9
+      _onJSONObjectReady/<@chrome://remote/content/marionette/transport.sys.mjs:496:20
+      ./features/step_definitions/cwa_login_steps.rb:3:in `nil'
+      ./features/step_definitions/cwa_navigation_steps.rb:2:in `nil'
+      features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:10:in `a test firm user is logged in CWA'
+    When user bulk loads "0U591W.xml" for the test firm "0Q801N" # features/step_definitions/bulk_load_steps.rb:121
+    Then user should see the bulk load results page              # features/step_definitions/bulk_load_steps.rb:174
+    And successful outcomes should equal 1163                    # features/step_definitions/bulk_load_steps.rb:145
+    And there should be no problem outcomes                      # features/step_definitions/bulk_load_steps.rb:152
+      Browsing context has been discarded (Selenium::WebDriver::Error::NoSuchWindowError)
+      RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:8:8
+      WebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:187:5
+      NoSuchWindowError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:613:5
+      assert.that/<@chrome://remote/content/shared/webdriver/Assert.sys.mjs:485:13
+      assert.open@chrome://remote/content/shared/webdriver/Assert.sys.mjs:147:4
+      GeckoDriver.prototype.getTextFromDialog@chrome://remote/content/marionette/driver.sys.mjs:2750:15
+      despatch@chrome://remote/content/marionette/server.sys.mjs:320:40
+      execute@chrome://remote/content/marionette/server.sys.mjs:291:16
+      onPacket/<@chrome://remote/content/marionette/server.sys.mjs:264:20
+      onPacket@chrome://remote/content/marionette/server.sys.mjs:265:9
+      _onJSONObjectReady/<@chrome://remote/content/marionette/transport.sys.mjs:496:20
+
+  @delete_outcome_after @bulkload @immas
+  Scenario: Bulk load valid file for Asylum                      # features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:17
+      Browsing context has been discarded (Selenium::WebDriver::Error::NoSuchWindowError)
+      RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:8:8
+      WebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:187:5
+      NoSuchWindowError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:613:5
+      assert.that/<@chrome://remote/content/shared/webdriver/Assert.sys.mjs:485:13
+      assert.open@chrome://remote/content/shared/webdriver/Assert.sys.mjs:147:4
+      GeckoDriver.prototype.navigateTo@chrome://remote/content/marionette/driver.sys.mjs:821:39
+      despatch@chrome://remote/content/marionette/server.sys.mjs:320:40
+      execute@chrome://remote/content/marionette/server.sys.mjs:291:16
+      onPacket/<@chrome://remote/content/marionette/server.sys.mjs:264:20
+      onPacket@chrome://remote/content/marionette/server.sys.mjs:265:9
+      _onJSONObjectReady/<@chrome://remote/content/marionette/transport.sys.mjs:496:20
+      ./features/support/hooks.rb:17:in `Before'
+    Given a test firm user is logged in CWA                      # features/step_definitions/cwa_navigation_steps.rb:1
+    When user bulk loads "0U591W.xml" for the test firm "0Q801N" # features/step_definitions/bulk_load_steps.rb:121
+    Then user should see the bulk load results page              # features/step_definitions/bulk_load_steps.rb:174
+    And successful outcomes should equal 1163                    # features/step_definitions/bulk_load_steps.rb:145
+    And there should be no problem outcomes                      # features/step_definitions/bulk_load_steps.rb:152
+
+  @delete_outcome_after @bulkload @immas
+  Scenario: Bulk load valid file for Asylum                      # features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:25
+    Given a test firm user is logged in CWA                      # features/step_definitions/cwa_navigation_steps.rb:1
+    When user bulk loads "0U591W.xml" for the test firm "0Q801N" # features/step_definitions/bulk_load_steps.rb:121
+    Then user should see the bulk load results page              # features/step_definitions/bulk_load_steps.rb:174
+    And successful outcomes should equal 1163                    # features/step_definitions/bulk_load_steps.rb:145
+    And there should be no problem outcomes                      # features/step_definitions/bulk_load_steps.rb:152
+
+  #  @delete_outcome_after @bulkload @immas
+  #   Scenario: Bulk load valid file for Asylum
+  #     Given a test firm user is logged in CWA
+  #     When user bulk loads "large_bulkload_file.xml" for the test firm "0Q801N"
+  #     Then user should see the bulk load results page
+  #     And successful outcomes should equal 1079
+  #     And there should be no problem outcomes
+  #  @delete_outcome_after @bulkload @immas
+  #   Scenario: Bulk load valid file for Asylum
+  #     Given a test firm user is logged in CWA
+  #     When user bulk loads "large_bulkload_file.xml" for the test firm "0Q801N"
+  #     Then user should see the bulk load results page
+  #     And successful outcomes should equal 1079
+  #     And there should be no problem outcomes
+  #   @delete_outcome_after @bulkload @immas
+  #   Scenario: Bulk load valid file for Asylum
+  #     Given a test firm user is logged in CWA
+  #     When user bulk loads "large_bulkload_file.xml" for the test firm "0Q801N"
+  #     Then user should see the bulk load results page
+  #     And successful outcomes should equal 1079
+  #     And there should be no problem outcomes
+  @delete_outcome_after @bulkload @immas
+  Scenario: Bulk load valid file for Asylum                                     # features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:58
+    Given a test firm user is logged in CWA                                     # features/step_definitions/cwa_navigation_steps.rb:1
+    When user bulk loads "o_sfs_immas_stage1_lh.xml" for the test firm "0A005F" # features/step_definitions/bulk_load_steps.rb:121
+    Then user should see the bulk load results page                             # features/step_definitions/bulk_load_steps.rb:174
+    And successful outcomes should equal 26                                     # features/step_definitions/bulk_load_steps.rb:145
+    And there should be no problem outcomes                                     # features/step_definitions/bulk_load_steps.rb:152
+
+  @delete_outcome_after @bulkload @immot
+  Scenario: Bulk load valid file for Immigration (non-Asylum)                   # features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:66
+    Given a test firm user is logged in CWA                                     # features/step_definitions/cwa_navigation_steps.rb:1
+    When user bulk loads "o_sfs_immot_stage1_lh.xml" for the test firm "0A005F" # features/step_definitions/bulk_load_steps.rb:121
+    Then user should see the bulk load results page                             # features/step_definitions/bulk_load_steps.rb:174
+    And successful outcomes should equal 26                                     # features/step_definitions/bulk_load_steps.rb:145
+    And there should be no problem outcomes                                     # features/step_definitions/bulk_load_steps.rb:152
+# @delete_outcome_after @manual_submission @immot @invalid
+# Scenario Outline: Reject invalid care leaver Immigration (non-Asylum) claims
+#   Given user is on their "LEGAL HELP" submission details page
+#   When user adds an outcome for "Legal Help" "Immigration" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+#   Then the outcome does not save and the error message "<error message>" appears
+#   Examples:
+#     | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      | error message                                                                                                                                                                                                     |
+#     | 401     | IMXL:IRVL | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+#     | 402     | IMXL:IRVL | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+#     | 403     | IMXL:IRVL | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+#     | 404     | IMLB:ICZN | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+#     | 405     | IMLB:ICZN | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+#     | 406     | IMLB:ICZN | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+#     | 407     | IMXC:IREM | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+#     | 408     | IMXC:IREM | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+#     | 409     | IMXC:IREM | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+# @delete_outcome_after @manual_submission @immot @valid
+# Scenario Outline: Add valid care leaver Immigration (non-Asylum) claims
+#   Given user is on their "LEGAL HELP" submission details page
+#   When user adds an outcome for "Legal Help" "Immigration" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+#   Then the outcome saves successfully
+#   Examples:
+#     | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      |
+#     | 410     | IMXL:IRVL | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+#     | 411     | IMLB:ICZN | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+#     | 412     | IMXC:IREM | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+# @delete_outcome_after @manual_submission @immas @invalid
+# Scenario Outline: Reject invalid care leaver Asylum claims
+#   Given user is on their "LEGAL HELP" submission details page
+#   When user adds an outcome for "Legal Help" "Immigration and Asylum" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+#   Then the outcome does not save and the error message "<error message>" appears
+#   Examples:
+#     | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      | error message                                                                                                                                                                                                     |
+#     | 413     | IACA:IFRA | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+#     | 414     | IACA:IFRA | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+#     | 415     | IACA:IFRA | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+#     | 416     | IAXL:IOUT | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+#     | 417     | IAXL:IOUT | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+#     | 418     | IAXL:IOUT | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+#     | 419     | IACA:IASY | LE001    |           | 01/11/19        | PA00140 | AP00198 | An Exceptional Case Funding Reference is required.                                                                                                                                                                |
+#     | 420     | IACA:IASY | LE001    | 1234567AB | 01/11/19        | PA00140 | AP00198 | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
+#     | 421     | IACA:IASY | LE001    |           | 01/11/19        | PA20000 | AP20000 | An Exceptional Case Funding Reference is required. |
+# @delete_outcome_after @manual_submission @immas @valid
+# Scenario Outline: Add valid care leaver Asylum claims
+#   Given user is on their "LEGAL HELP" submission details page
+#   When user adds an outcome for "Legal Help" "Immigration and Asylum" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
+#   Then the outcome saves successfully
+#   Examples:
+#     | case id | mt        | ecs code | ecf ref   | case start date | pa      | ap      |
+#     | 432     | IACA:IFRA | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+#     | 433     | IAXL:IOUT | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+#     | 434     | IACA:IASY | LE001    | 1234567AB | 01/11/19        | PA20000 | AP20000 |
+
+Failing Scenarios:
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:9 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:17 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:25 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:58 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:66 # Scenario: Bulk load valid file for Immigration (non-Asylum)
+
+5 scenarios (5 failed)
+25 steps (1 failed, 24 skipped)
+0m8.639s
+
+Failing Scenarios:
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:9 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:17 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:25 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:58 # Scenario: Bulk load valid file for Asylum
+cucumber features/validations/legal_help/immigration_and_asylum/ecs_care_leaver_validations.feature:66 # Scenario: Bulk load valid file for Immigration (non-Asylum)
+
+5 scenarios (5 failed)
+25 steps (1 failed, 24 skipped)
+
+Took 11 seconds

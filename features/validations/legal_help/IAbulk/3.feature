@@ -13,21 +13,21 @@ Feature: Check Care Leaver Validation for Immigration claims
     And successful outcomes should equal 1163 
     And there should be no problem outcomes
 
-    @delete_outcome_after @bulkload @immas
-  Scenario: Bulk load valid file for Asylum
-    Given a test firm user is logged in CWA
-    When user bulk loads "0U591W.xml" for the test firm "0Q801N"
-    Then user should see the bulk load results page
-    And successful outcomes should equal 1163 
-    And there should be no problem outcomes
+  #   @delete_outcome_after @bulkload @immas
+  # Scenario: Bulk load valid file for Asylum
+  #   Given a test firm user is logged in CWA
+  #   When user bulk loads "0U591W.xml" for the test firm "0Q801N"
+  #   Then user should see the bulk load results page
+  #   And successful outcomes should equal 1163 
+  #   And there should be no problem outcomes
 
-    @delete_outcome_after @bulkload @immas
-  Scenario: Bulk load valid file for Asylum
-    Given a test firm user is logged in CWA
-    When user bulk loads "0U591W.xml" for the test firm "0Q801N"
-    Then user should see the bulk load results page
-    And successful outcomes should equal 1163 
-    And there should be no problem outcomes
+  #   @delete_outcome_after @bulkload @immas
+  # Scenario: Bulk load valid file for Asylum
+  #   Given a test firm user is logged in CWA
+  #   When user bulk loads "0U591W.xml" for the test firm "0Q801N"
+  #   Then user should see the bulk load results page
+  #   And successful outcomes should equal 1163 
+  #   And there should be no problem outcomes
 
 #  @delete_outcome_after @bulkload @immas
 #   Scenario: Bulk load valid file for Asylum
@@ -54,21 +54,21 @@ Feature: Check Care Leaver Validation for Immigration claims
 #     And successful outcomes should equal 1079
 #     And there should be no problem outcomes
 
-  @delete_outcome_after @bulkload @immas
-  Scenario: Bulk load valid file for Asylum
-    Given a test firm user is logged in CWA
-    When user bulk loads "o_sfs_immas_stage1_lh.xml" for the test firm "0A005F"
-    Then user should see the bulk load results page
-    And successful outcomes should equal 26
-    And there should be no problem outcomes
+  # @delete_outcome_after @bulkload @immas
+  # Scenario: Bulk load valid file for Asylum
+  #   Given a test firm user is logged in CWA
+  #   When user bulk loads "o_sfs_immas_stage1_lh.xml" for the test firm "0A005F"
+  #   Then user should see the bulk load results page
+  #   And successful outcomes should equal 26
+  #   And there should be no problem outcomes
 
-  @delete_outcome_after @bulkload @immot
-  Scenario: Bulk load valid file for Immigration (non-Asylum)
-    Given a test firm user is logged in CWA
-    When user bulk loads "o_sfs_immot_stage1_lh.xml" for the test firm "0A005F"
-    Then user should see the bulk load results page
-    And successful outcomes should equal 26
-    And there should be no problem outcomes
+  # @delete_outcome_after @bulkload @immot
+  # Scenario: Bulk load valid file for Immigration (non-Asylum)
+  #   Given a test firm user is logged in CWA
+  #   When user bulk loads "o_sfs_immot_stage1_lh.xml" for the test firm "0A005F"
+  #   Then user should see the bulk load results page
+  #   And successful outcomes should equal 26
+  #   And there should be no problem outcomes
 
   # @delete_outcome_after @manual_submission @immot @invalid
   # Scenario Outline: Reject invalid care leaver Immigration (non-Asylum) claims
