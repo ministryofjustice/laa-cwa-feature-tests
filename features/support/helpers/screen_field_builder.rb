@@ -102,7 +102,7 @@ module Helpers
       end
 
       def load_yaml(filename)
-        YAML.load_file(File.expand_path(filename))
+        YAML.load_file(File.expand_path(filename), aliases: true)
       end
 
       def overrides
