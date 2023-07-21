@@ -9,7 +9,7 @@ Feature: PRIE outcome pricing
 
   Background:
     Given a test firm user is logged in CWA
-    And user prepares to submit outcomes for test provider "CRIME LOWER#9"
+    And user prepares to submit outcomes for test provider "CRIME LOWER#14"
     And the following Matter Types are chosen:
       | PRIE |
 
