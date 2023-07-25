@@ -11,6 +11,7 @@ Given('a test firm user is on the portal login page') do
 end
 
 When('user Logs in') do
+  expect(page).to have_title("LAA Online Portal", wait:20)
   fill_in 'username', with: PortalEnv.cwa_provider_user
   fill_in 'password', with: PortalEnv.cwa_provider_user_password
   click_button 'Log in'
