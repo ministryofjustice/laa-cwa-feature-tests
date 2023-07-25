@@ -74,4 +74,4 @@ Feature: PRIE outcome pricing
       | 11 | 190719/011 | £ 1,865.33 | Fixed fee = 1454.44 where Profit Costs greater than 49.81 , vat indicator = Y , total value = fixed fee(1454.44) + 20% vat on fixed fee(20% of £1454.44 = £290.89) + Disbursements(£100) + DisbursementVat(£20) = £1865.33 |
     Then the outcomes are NOT flagged as escape fee cases
       | Comment                                                                                                                   |
-      | escape fee threshold capped at £4362.54 in CWA ,PC + waiting cost = £4362.54 < threshold(£4362.54) hence not escape case, |
+      | escape fee threshold capped at £4362.54 in CWA ,PC + waiting cost = £4362.53 < threshold(£4362.54) hence not escape case, |
