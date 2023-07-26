@@ -119,7 +119,7 @@ When('the user adds outcomes with:') do |description|
         profit_cost: profit_cost
       }.merge(**additional_payments_hash),
     ]
-    
+
   when 'disbursements and disbursements VAT'
     profit_cost = @max_price_cap || @standard_fee || @config.max_profit_cost
 
@@ -302,7 +302,7 @@ Then('the outcomes are priced at:') do |formula|
   end
 end
 
-Then(/the outcomes are (NOT\s)?flagged as escape fee cases/) do |negated|
+Then(/the outcomes are (NOT\s)?flagged as escape fee cases/) do |negated,comment|
   step('the user is on the pricing outcome details page')
 
   submission_details_page = SubmissionDetailsPage.new

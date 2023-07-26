@@ -207,7 +207,7 @@ end
 When('user confirms the submission') do
   @bulk_load_page = BulkLoadPage.new
   @bulk_load_page.wait_until_confirm_submission_visible(wait: 10)
-  @bulk_load_page.confirm_submission.click
+  @bulk_load_page.confirm_submission.double_click
 end
 
 When("user views the submission details") do
