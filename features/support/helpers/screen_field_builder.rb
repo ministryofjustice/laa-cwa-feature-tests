@@ -102,7 +102,6 @@ module Helpers
       end
 
       def load_yaml(filename)
-        # YAML.load_file(File.expand_path(filename))
         begin
           YAML.load_file(File.expand_path(filename), aliases: true)
         rescue ArgumentError
