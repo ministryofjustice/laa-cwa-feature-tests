@@ -31,8 +31,7 @@ jobs:
             TEST_ENV: tst
       - run:
           name: Run tests
-          command:
-          bundle exec cucumber
+          command: bundle exec cucumber
 
 workflows:
   version: 2
