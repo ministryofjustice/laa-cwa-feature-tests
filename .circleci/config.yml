@@ -27,8 +27,11 @@ jobs:
       - run:
           name: Run bundle dependencies
           command: bundle install
-      - environment:
-            TEST_ENV: tst
+      - run:
+          name: Export env variable
+          command: |
+            echo 'export TEST_ENV=tst' >> "$BASH_ENV"
+            source "$BASH_ENV"
       - run:
           name: Run tests
           command: bundle exec cucumber
