@@ -26,11 +26,12 @@ jobs:
           firefox --version
       - run:
           name: Run bundle dependencies
-          command: bundle install 
+          command: bundle install
+      - environment:
+            TEST_ENV: tst
       - run:
           name: Run tests
-          command: |
-          export TEST_ENV=tst
+          command:
           bundle exec cucumber
 
 workflows:
