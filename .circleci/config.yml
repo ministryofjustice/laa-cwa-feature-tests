@@ -10,6 +10,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install git-crypt
+          command: |
+            sudo apt-get update
+            sudo apt-get install git-crypt
+      - run:
           name: Decrypt secrets
           command: |
             echo "${GIT_CRYPT_KEY}" | base64 -d > git-crypt.key
@@ -21,8 +26,6 @@ jobs:
           node --version
           java --version
           google-chrome --version
-      - run: |
-          echo 'export TEST_ENV=tst' >> $BASH_ENV
       - run:
           name: Run bundle dependencies
           command: bundle install 
