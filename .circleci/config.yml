@@ -19,22 +19,22 @@ jobs:
           command: |
             echo "${GIT_CRYPT_KEY}" | base64 -d > git-crypt.key
             git-crypt unlock git-crypt.key
-      - browser-tools/install-browser-tools:
-          chrome-version: 114.0.5735.90
+      - browser-tools/install-firefox
+      - browser-tools/install-geckodriver
       - run: |
           ruby --version
-          node --version
-          java --version
-          google-chrome --version
+          firefox --version
       - run:
           name: Run bundle dependencies
           command: bundle install 
       - run:
           name: Run tests
-          command: bundle exec cucumber
+          command: |
+          export TEST_ENV=tst
+          bundle exec cucumber
 
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - test
+      - Feature Test
