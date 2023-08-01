@@ -62,9 +62,9 @@ import oracledb
 
 oracledb.init_oracle_client(lib_dir="/Users/vimal.suresh/Downloads/instantclient_10_1")
 
-username = 'apps'
-password = 'app5cwa'
-host = 'localhost:1571/cwa'
+username = 'xxx'
+password = 'xxxxx'
+host = 'xxxxx'
 
 
 conn = oracledb.connect(user=username, password=password, dsn=host)
