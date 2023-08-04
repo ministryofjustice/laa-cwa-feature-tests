@@ -7,7 +7,6 @@ ENV LD_LIBRARY_PATH /opt/oracle/instantclient
 ENV PATH=$PATH:$ORACLE_HOME
 
 # Install Oracle Instant Client and other necessary dependencies
-# Install Oracle Instant Client and other necessary dependencies
 RUN apt-get update \
     && apt-get install -y libaio1 wget unzip \
     && mkdir -p /opt/oracle \
@@ -44,6 +43,7 @@ RUN apt-get update  \
 ENV TEST_ENV=tst
 ENV HEADLESS=true
 
+# Install all ruby gems from gemfile
 RUN bundle install
 
 # Install the ruby-oci8 gem
@@ -52,4 +52,4 @@ RUN gem install ruby-oci8
 # Start your Ruby application (if applicable)
 # CMD ["rails", "server", "-b", "0.0.0.0"]
 # CMD bundle exec cucumber
-CMD ruby dbconnect.rb
+# CMD ruby dbconnect.rb
