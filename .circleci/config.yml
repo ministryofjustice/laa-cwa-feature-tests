@@ -38,7 +38,7 @@ jobs:
             docker tag foo ${AWS_ECR_REGISTRY_ID}/${ECR_REPOSITORY}:${CIRCLE_SHA1}
             docker tag foo ${AWS_ECR_REGISTRY_ID}/${ECR_REPOSITORY}:${SANITISED_BRANCH}
             docker image ls
-            docker push --all-tags ${AWS_ECR_REGISTRY_ID}/${ECR_REPOSITORY}
+            docker push --all-tags "${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/laa-pcuam/laa-cwa-test"
 
 workflows:
   version: 2
