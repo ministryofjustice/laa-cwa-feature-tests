@@ -39,8 +39,8 @@ jobs:
             docker tag foo ${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test-ecr:${CIRCLE_SHA1}
             docker tag foo ${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test-ecr:${SANITISED_BRANCH}
             docker image ls
-            docker push --all-tags "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test:${CIRCLE_SHA1}"
-            docker push --all-tags "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test:${SANITISED_BRANCH}"
+            docker image push -a "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test:${CIRCLE_SHA1}"
+            docker image push -a "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test:${SANITISED_BRANCH}"
 
 workflows:
   version: 2
