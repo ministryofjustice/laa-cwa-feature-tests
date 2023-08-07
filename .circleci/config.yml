@@ -34,18 +34,26 @@ jobs:
       - setup_remote_docker:
           version: 20.10.14
           docker_layer_caching: true
-      - run: |
-          aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
       - run:
           name: Build docker image
           command: |
-            export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
-            docker build . -f ./Dockerfile -t foo
-            docker tag foo ${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test-ecr:${CIRCLE_SHA1}
-            docker tag foo ${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test-ecr:${SANITISED_BRANCH}
-            docker image ls
-            docker push  "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test:${CIRCLE_SHA1}"
-            docker push  "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test:${SANITISED_BRANCH}"
+            docker build \
+            --build-arg BUILD_DATE=$(date +%Y-%m-%dT%H:%M:%S%z) \
+            --build-arg BUILD_TAG="app-${CIRCLE_SHA1}" \
+            --build-arg APP_BRANCH=${CIRCLE_BRANCH} \
+            -t app .
+      - run: |
+          aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+      - run:
+          name: Push image to ECR repository
+          command: |
+            docker tag app "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test-ecr:${CIRCLE_SHA1}"
+            docker push "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test-ecr:${CIRCLE_SHA1}"
+            docker tag  ${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test-ecr:${CIRCLE_SHA1}
+            if [ "${CIRCLE_BRANCH}" == "main" ]; then
+              docker tag app "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test-ecr:latest"
+              docker push "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test-ecr:latest"
+            fi
 
 workflows:
   version: 2
