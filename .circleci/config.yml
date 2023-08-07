@@ -27,6 +27,7 @@ jobs:
           role_arn: $ECR_ROLE_TO_ASSUME
           region: $ECR_REGION
       - setup_remote_docker:
+          version: 20.10.14
           docker_layer_caching: true
       - run: |
           aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
