@@ -35,11 +35,11 @@ jobs:
           command: |
             export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
             docker build . -f ./Dockerfile -t foo
-            docker tag foo ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/laa-pcuam/laa-cwa-test:${CIRCLE_SHA1}
-            docker tag foo ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/laa-pcuam/laa-cwa-test:${SANITISED_BRANCH}
+            docker tag foo ${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test-ecr:${CIRCLE_SHA1}
+            docker tag foo ${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test-ecr:${SANITISED_BRANCH}
             docker image ls
-            docker push "${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/laa-pcuam/laa-cwa-test:${CIRCLE_SHA1}"
-            docker push "${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/laa-pcuam/laa-cwa-test:${SANITISED_BRANCH}"
+            docker push --all -tags "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test:${CIRCLE_SHA1}"
+            docker push --all -tags "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test:${SANITISED_BRANCH}"
 
 workflows:
   version: 2
