@@ -18,11 +18,11 @@ jobs:
     executor: build-executor
     steps:
       - checkout
-      - run:
-          name: Decrypt secrets
-          command: |
-            echo "${GIT_CRYPT_KEY}" | base64 -d > git-crypt.key
-            git-crypt unlock git-crypt.key
+      # - run:
+      #     name: Decrypt secrets
+      #     command: |
+      #       echo "${GIT_CRYPT_KEY}" | base64 -d > git-crypt.key
+      #       git-crypt unlock git-crypt.key
       - aws-cli/setup:
           role_arn: $ECR_ROLE_TO_ASSUME
           region: $ECR_REGION
