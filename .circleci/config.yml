@@ -18,11 +18,16 @@ jobs:
     executor: build-executor
     steps:
       - checkout
-      # - run:
-      #     name: Decrypt secrets
-      #     command: |
-      #       echo "${GIT_CRYPT_KEY}" | base64 -d > git-crypt.key
-      #       git-crypt unlock git-crypt.key
+      - run:
+          name: Install git-crypt
+          command: |
+            sudo apt-get update
+            sudo apt-get install git-crypt
+      - run:
+          name: Decrypt secrets
+          command: |
+            echo "${GIT_CRYPT_KEY}" | base64 -d > git-crypt.key
+            git-crypt unlock git-crypt.key
       - aws-cli/setup:
           role_arn: $ECR_ROLE_TO_ASSUME
           region: $ECR_REGION
@@ -34,13 +39,14 @@ jobs:
       - run:
           name: Build docker image
           command: |
-            export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
             docker build . -f ./Dockerfile -t foo
-            docker tag foo ${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test-ecr:${CIRCLE_SHA1}
-            docker tag foo ${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test-ecr:${SANITISED_BRANCH}
+            docker tag app ${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test-ecr:${CIRCLE_SHA1}
             docker image ls
-            docker image push -a "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test:${CIRCLE_SHA1}"
-            docker image push -a "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test:${SANITISED_BRANCH}"
+            docker push "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test:${CIRCLE_SHA1}"
+            if [ "${CIRCLE_BRANCH}" == "main" ]; then
+              docker tag app "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test-ecr:latest"
+              docker push "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test-ecr:latest"
+            fi
 
 workflows:
   version: 2
