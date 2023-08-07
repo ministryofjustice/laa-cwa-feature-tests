@@ -39,14 +39,13 @@ jobs:
       - run:
           name: Build docker image
           command: |
+            export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
             docker build . -f ./Dockerfile -t foo
-            docker tag app ${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test-ecr:${CIRCLE_SHA1}
+            docker tag foo ${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test-ecr:${CIRCLE_SHA1}
+            docker tag foo ${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test-ecr:${SANITISED_BRANCH}
             docker image ls
-            docker push "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test:${CIRCLE_SHA1}"
-            if [ "${CIRCLE_BRANCH}" == "main" ]; then
-              docker tag app "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test-ecr:latest"
-              docker push "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test-ecr:latest"
-            fi
+            docker push  "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test:${CIRCLE_SHA1}"
+            docker push  "${AWS_ECR_REGISTRY_ID}/laa-pcuam/laa-cwa-test:${SANITISED_BRANCH}"
 
 workflows:
   version: 2
