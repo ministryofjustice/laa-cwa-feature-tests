@@ -11,7 +11,6 @@ executors:
   build-executor:
     docker:
       - image: cimg/base:2023.03
-    working_directory: ~/
 
 jobs:
   Build and Push Docker Image:
