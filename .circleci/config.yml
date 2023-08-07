@@ -1,43 +1,44 @@
 version: 2.1
 
-orbs:
-  browser-tools: circleci/browser-tools@1.4.0
+# ------------------
+# EXECUTORS
+# ------------------
+executors:
+  build-executor:
+    docker:
+      - image: cimg/base:2023.03
+    working_directory: ~/
 
 jobs:
-  Feature Test:
-    docker:
-      - image: cimg/ruby:2.7.6-browsers
+  Build and Push Docker Image:
+    executor: build-executor
     steps:
       - checkout
-      - run:
-          name: Install git-crypt
-          command: |
-            sudo apt-get update
-            sudo apt-get install git-crypt
       - run:
           name: Decrypt secrets
           command: |
             echo "${GIT_CRYPT_KEY}" | base64 -d > git-crypt.key
             git-crypt unlock git-crypt.key
-      - browser-tools/install-firefox
-      - browser-tools/install-geckodriver
+      - aws-cli/setup:
+          role_arn: $ECR_ROLE_TO_ASSUME
+          region: $ECR_REGION
       - run: |
-          ruby --version
-          firefox --version
+          aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
       - run:
-          name: Run bundle dependencies
-          command: bundle install
-      - run:
-          name: Export env variable
+          name: Build docker image
           command: |
-            echo 'export TEST_ENV=tst' >> "$BASH_ENV"
-            source "$BASH_ENV"
+            export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
+            docker build . -f ./DockerServiceDescription/TestImageDockerfile -t foo
+            docker tag foo ${AWS_ECR_REGISTRY_ID}/${ECR_REPOSITORY}:${CIRCLE_SHA1}
+            docker tag foo ${AWS_ECR_REGISTRY_ID}/${ECR_REPOSITORY}:${SANITISED_BRANCH}
+            docker image ls
       - run:
-          name: Run tests
-          command: bundle exec cucumber
+          name: Push to ECR
+          command: |
+            docker push --all-tags ${AWS_ECR_REGISTRY_ID}/${ECR_REPOSITORY}
 
 workflows:
   version: 2
-  build_and_test:
+  build_and_push:
     jobs:
-      - Feature Test
+      - Build and Push Docker Image
