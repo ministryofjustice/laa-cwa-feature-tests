@@ -46,7 +46,8 @@ jobs:
           repo: $ECR_REPOSITORY
       - run:
           command: |
-           aws ecr list-images --repository-name ${ECR_REPOSITORY}
+            aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+            aws ecr list-images --repository-name ${ECR_REPOSITORY}
 
 
 workflows:
