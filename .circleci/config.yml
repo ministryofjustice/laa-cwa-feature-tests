@@ -5,17 +5,17 @@ orbs:
   aws-cli: circleci/aws-cli@4.0.0
   aws-ecr: circleci/aws-ecr@8.2.1
 
-# # ------------------
-# # EXECUTORS
-# # ------------------
-# executors:
-#   build-executor:
-#     docker:
-#       - image: cimg/base:2023.03
+# ------------------
+# EXECUTORS
+# ------------------
+executors:
+  build-executor:
+    docker:
+      - image: cimg/base:2023.03
 
 jobs:
   Build_and_Push_Docker_Image:
-    executor: aws-ecr/default
+    executor: build-executor
     steps:
       - checkout
       - run:
