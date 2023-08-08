@@ -36,16 +36,18 @@ jobs:
       - run: |
           aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
       - run:
-          name: Set ECR_TAG environment variable for use in next step
+          name: Set sanitised branch name
           command: |
-            [[ "$CIRCLE_BRANCH" == "main" ]] && ECR_TAG="main-$CIRCLE_SHA1" || ECR_TAG="branch-$CIRCLE_SHA1"
-            echo "export ECR_TAG=$ECR_TAG" >> "$BASH_ENV"
-            source "$BASH_ENV"
-      - aws-ecr/build-image:
+            export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
+      - aws-ecr/build-and-push-image:
           push-image: true
-          tag: $ECR_TAG
+          tag: ${CIRCLE_SHA1},${SANITISED_BRANCH}
           region: $ECR_REGION
           repo: $ECR_REPOSITORY
+      - run:
+          command: |
+           aws ecr list-images --repository-name ${ECR_REPOSITORY}
+
 
 workflows:
   version: 2
