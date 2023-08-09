@@ -50,6 +50,7 @@ WORKDIR /usr/src/app
 # ENV RAILS_ENV production
 ENV TEST_ENV=tst
 ENV HEADLESS=true
+ENV PATH=$PATH:/usr/src/app
 
 # Install all ruby gems from gemfile
 RUN bundle install
@@ -61,3 +62,5 @@ RUN gem install ruby-oci8
 # CMD ["rails", "server", "-b", "0.0.0.0"]
 # CMD bundle exec cucumber
 # CMD ruby dbconnect.rb
+
+ENTRYPOINT [ "bundle exec cucumber" ]
