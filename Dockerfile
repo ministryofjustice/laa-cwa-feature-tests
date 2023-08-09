@@ -12,6 +12,7 @@ RUN groupadd -g 2000 testgroup && useradd -g testgroup testuser -u 1000 -m
 # Install Oracle Instant Client and other necessary dependencies
 RUN apt-get update \
     && apt-get install -y libaio1 wget unzip \
+    && apt-get install -y build-essential  \
     && mkdir -p /opt/oracle \
     && cd /opt/oracle \
     && wget https://download.oracle.com/otn_software/linux/instantclient/instantclient-basiclite-linuxx64.zip \
@@ -26,7 +27,6 @@ RUN apt-get update \
     && echo /opt/oracle/instantclient > /etc/ld.so.conf.d/oracle-instantclient.conf \
     && ldconfig
 
-RUN apt-get install -y build-essential
 
 # Install geckodriver and ceritificates
 RUN apt-get install -y --no-install-recommends ca-certificates curl firefox-esr \
@@ -42,7 +42,7 @@ COPY . /usr/src/app
 ### Update ownership for local repository and tests
 RUN chown testuser:testgroup -R /usr/src/app
 
-### Switch user to testuser
+# ### Switch user to testuser
 USER 1000
 WORKDIR /usr/src/app
 
@@ -50,7 +50,6 @@ WORKDIR /usr/src/app
 # ENV RAILS_ENV production
 ENV TEST_ENV=tst
 ENV HEADLESS=true
-ENV PATH=$PATH:/usr/src/app
 
 # Install all ruby gems from gemfile
 RUN bundle install
@@ -63,4 +62,4 @@ RUN gem install ruby-oci8
 # CMD bundle exec cucumber
 # CMD ruby dbconnect.rb
 
-ENTRYPOINT [ "bundle exec cucumber" ]
+ENTRYPOINT [  "sh", "runner.sh" ]
