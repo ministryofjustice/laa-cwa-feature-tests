@@ -6,6 +6,9 @@ ENV ORACLE_HOME /opt/oracle/instantclient
 ENV LD_LIBRARY_PATH /opt/oracle/instantclient
 ENV PATH=$PATH:$ORACLE_HOME
 
+# Add new user to execute tests
+RUN groupadd -g 2000 testgroup && useradd -g testgroup testuser -u 1000 -m
+
 # Install Oracle Instant Client and other necessary dependencies
 RUN apt-get update \
     && apt-get install -y libaio1 wget unzip \
@@ -23,6 +26,8 @@ RUN apt-get update \
     && echo /opt/oracle/instantclient > /etc/ld.so.conf.d/oracle-instantclient.conf \
     && ldconfig
 
+RUN apt-get install -y build-essential
+
 # Install geckodriver and ceritificates
 RUN apt-get install -y --no-install-recommends ca-certificates curl firefox-esr \
  && rm -fr /var/lib/apt/lists/* \
@@ -34,12 +39,15 @@ RUN apt-get install -y --no-install-recommends ca-certificates curl firefox-esr 
 # COPY . .
 RUN mkdir -p /usr/src/app
 COPY . /usr/src/app
+### Update ownership for local repository and tests
+RUN chown testuser:testgroup -R /usr/src/app
+
+### Switch user to testuser
+USER 1000
 WORKDIR /usr/src/app
 
 # Set any other environment variables you may need (if applicable)
 # ENV RAILS_ENV production
-RUN apt-get update  \
-&& apt-get install -y build-essential
 ENV TEST_ENV=tst
 ENV HEADLESS=true
 

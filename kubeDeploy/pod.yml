@@ -10,7 +10,7 @@ spec:
     image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/laa-pcuam/laa-cwa-test-ecr:docker-branch
     env:
     - name: TARGET_ENV
-      value: {{ .Values.targetEnv }}
+      value: "tst"
     resources:
       requests:
         cpu: 1000m
