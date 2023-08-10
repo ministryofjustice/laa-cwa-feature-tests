@@ -40,8 +40,9 @@ jobs:
       #     command: |
       #       export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
       - aws-ecr/build-and-push-image:
-          command: |
-            export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
+          pre-steps:
+            - run:
+               command: export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
           push-image: true
           tag: ${CIRCLE_SHA1},${SANITISED_BRANCH}
           region: $ECR_REGION
