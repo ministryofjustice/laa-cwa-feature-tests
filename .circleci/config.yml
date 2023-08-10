@@ -35,13 +35,15 @@ jobs:
           docker_layer_caching: true
       - run: |
           aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
-      - run:
-          name: Set sanitised branch name
+      # - run:
+      #     name: Set sanitised branch name
+      #     command: |
+      #       export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
+      - aws-ecr/build-and-push-image:
           command: |
             export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
-      - aws-ecr/build-and-push-image:
           push-image: true
-          tag: ${CIRCLE_SHA1},docker-branch
+          tag: ${CIRCLE_SHA1},${SANITISED_BRANCH}
           region: $ECR_REGION
           repo: $ECR_REPOSITORY
       # - run:
