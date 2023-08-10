@@ -38,7 +38,8 @@ jobs:
       - run:
           name: Set sanitised branch name
           command: |
-            export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
+            echo 'export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')' >> "$BASH_ENV"
+            source "$BASH_ENV" 
       - aws-ecr/build-and-push-image:
           push-image: true
           tag: ${CIRCLE_SHA1},${SANITISED_BRANCH}
