@@ -1,7 +1,7 @@
 global:
   branch: main
   costcentre: LAA
-  serviceAccount: "sa-laa-crime-apps-test"
+  serviceAccount: "sa-laa-cwa-test"
   browser: chrome
   test_env: tst
 
