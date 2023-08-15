@@ -4,6 +4,7 @@ orbs:
   snyk: snyk/snyk@1.7.0
   aws-cli: circleci/aws-cli@4.0.0
   aws-ecr: circleci/aws-ecr@8.2.1
+  helm: circleci/helm@2.0.1
 
 # ------------------
 # EXECUTORS
@@ -14,6 +15,20 @@ executors:
       - image: cimg/base:2023.03
 
 jobs:
+  Deploy_tests_on_cloud_platform:
+    docker:
+      - image: cimg/deploy:2023.08
+    steps:
+      - checkout
+      - run:
+          name: Deploy helm chart
+          command: |
+            export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
+            helm install --generate-name ./charts/cwa-tests \
+            -f charts/cwa-tests/Values.yaml \
+            --set ecr.image.tag=${SANITISED_BRANCH} \
+            --wait --timeout 300s
+
   Build_and_Push_Docker_Image:
     executor: build-executor
     steps:
@@ -56,3 +71,6 @@ workflows:
   build_and_push:
     jobs:
       - Build_and_Push_Docker_Image
+  deploy_tests:
+    jobs:
+      - Deploy_tests_on_cloud_platform
