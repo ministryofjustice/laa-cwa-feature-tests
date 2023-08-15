@@ -21,6 +21,15 @@ executors:
 jobs:
   Deploy_tests_on_cloud_platform:
     executor: deploy-executor
+    parameters:
+      environment:
+        description: Destination environment
+        type: string
+        value: laa-cwa-test
+      token:
+        description: CircleCI Service account token
+        type: string
+        value: ${CIRCLE_CI_TOKEN}
     steps:
       - checkout
       - run:
