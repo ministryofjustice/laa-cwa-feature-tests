@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: laa-pcuam-cwa-tests
+spec:
+  restartPolicy: Never
+  serviceAccountName: {{ .Values.global.serviceAccount }}
+  containers:
+  - name: laa-pcuam-cwa-tests
+    image: {{ .Values.ecr.image.registryAddress }}/{{ .Values.ecr.image.regPath }}:{{ .Values.ecr.image.tag }}
+    env:
+    - name: TEST_ENV
+      value: {{ .Values.global.test_env }}
+    resources:
+      requests:
+        cpu: 1000m
+        memory: 2048Mi
+      limits:
+        cpu: 1000m
+        memory: 2048Mi
+    command: ["/bin/sh", "-ec", "bundle exec cucumber"]
