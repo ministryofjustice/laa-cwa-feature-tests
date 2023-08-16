@@ -20,6 +20,7 @@ executors:
 
 jobs:
   Deploy_tests_on_cloud_platform:
+    type: approval
     executor: deploy-executor
     parameters:
       environment:
