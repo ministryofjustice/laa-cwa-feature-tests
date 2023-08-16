@@ -91,10 +91,12 @@ workflows:
   version: 2
   build_and_push:
     jobs:
-      - hold_test_deployment:
-          type: approval
-      - Build_and_Push_Docker_Image:
-          requires: hold_test_deployment
+      - Build_and_Push_Docker_Image
+
   deploy_tests:
     jobs:
-      - Deploy_tests_on_cloud_platform
+      - hold_test_deployment:
+          type: approval
+      - Deploy_tests_on_cloud_platform:
+          requires:
+            - hold_test_deployment
