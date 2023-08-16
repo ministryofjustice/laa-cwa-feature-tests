@@ -25,11 +25,11 @@ jobs:
       environment:
         description: Destination environment
         type: string
-        value: laa-cwa-test
+        default: laa-cwa-test
       token:
         description: CircleCI Service account token
         type: string
-        value: ${CIRCLE_CI_TOKEN}
+        default: ${CIRCLE_CI_TOKEN}
     steps:
       - checkout
       - run:
