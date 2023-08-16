@@ -20,7 +20,6 @@ executors:
 
 jobs:
   Deploy_tests_on_cloud_platform:
-    type: approval
     executor: deploy-executor
     parameters:
       environment:
@@ -92,7 +91,10 @@ workflows:
   version: 2
   build_and_push:
     jobs:
-      - Build_and_Push_Docker_Image
+      - hold_test_deployment:
+          type: approval
+      - Build_and_Push_Docker_Image:
+          requires: hold_test_deployment
   deploy_tests:
     jobs:
       - Deploy_tests_on_cloud_platform
