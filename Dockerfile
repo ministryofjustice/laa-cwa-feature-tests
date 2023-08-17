@@ -6,13 +6,11 @@ ENV ORACLE_HOME /opt/oracle/instantclient
 ENV LD_LIBRARY_PATH /opt/oracle/instantclient
 ENV PATH=$PATH:$ORACLE_HOME
 
-# Add new user to execute tests
-RUN groupadd -g 2000 testgroup && useradd -g testgroup testuser -u 1000 -m
-
 # Install Oracle Instant Client and other necessary dependencies
 RUN apt-get update \
     && apt-get install -y libaio1 wget unzip \
     && apt-get install -y build-essential  \
+    && apt-get -y install vim \
     && mkdir -p /opt/oracle \
     && cd /opt/oracle \
     && wget https://download.oracle.com/otn_software/linux/instantclient/instantclient-basiclite-linuxx64.zip \
@@ -34,16 +32,10 @@ RUN apt-get install -y --no-install-recommends ca-certificates curl firefox-esr 
  && curl -L https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz | tar xz -C /usr/local/bin \
  && apt-get purge -y ca-certificates curl
 
-
 # Copy your Ruby application files to the container (if needed)
 # COPY . .
 RUN mkdir -p /usr/src/app
 COPY . /usr/src/app
-### Update ownership for local repository and tests
-RUN chown testuser:testgroup -R /usr/src/app
-
-# ### Switch user to testuser
-USER 1000
 WORKDIR /usr/src/app
 
 # Set any other environment variables you may need (if applicable)
@@ -52,14 +44,24 @@ ENV TEST_ENV=tst
 ENV HEADLESS=true
 
 # Install all ruby gems from gemfile
+RUN bundle config set --local with docker
 RUN bundle install
 
 # Install the ruby-oci8 gem
 RUN gem install ruby-oci8
+
+# Add new user to execute tests
+RUN groupadd -g 2000 testgroup && useradd -g testgroup testuser -u 1000 -m
+
+### Update ownership for local repository and tests
+RUN chown testuser:testgroup -R /usr/src/app
+
+### Switch user to testuser
+USER 1000
 
 # Start your Ruby application (if applicable)
 # CMD ["rails", "server", "-b", "0.0.0.0"]
 # CMD bundle exec cucumber
 # CMD ruby dbconnect.rb
 
-ENTRYPOINT [  "sh", "runner.sh" ]
+CMD bundle exec cucumber

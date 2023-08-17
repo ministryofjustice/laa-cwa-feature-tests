@@ -11,3 +11,7 @@ group :test do
   gem 'site_prism', '~> 3.7.3'
   gem "timecop", "~> 0.9.8"
 end
+
+group :docker do
+  gem 'ruby-oci8', '~> 2.2.12'
+end

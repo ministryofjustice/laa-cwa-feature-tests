@@ -77,6 +77,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.10.0)
     rspec-support (3.10.3)
+    ruby-oci8 (2.2.12)
     rubyzip (2.3.2)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
@@ -105,6 +106,7 @@ DEPENDENCIES
   date
   execjs
   rspec (~> 3.10.0)
+  ruby-oci8 (~> 2.2.12)
   selenium-webdriver (~> 3.142.7)
   sequel
   site_prism (~> 3.7.3)
