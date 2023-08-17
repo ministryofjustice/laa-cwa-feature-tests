@@ -10,6 +10,7 @@ ENV PATH=$PATH:$ORACLE_HOME
 RUN apt-get update \
     && apt-get install -y libaio1 wget unzip \
     && apt-get install -y build-essential  \
+    && apt-get install curl \
     && apt-get -y install vim \
     && mkdir -p /opt/oracle \
     && cd /opt/oracle \
