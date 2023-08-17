@@ -13,3 +13,7 @@ group :test do
   gem 'date'
   gem 'sequel'
 end
+
+group :docker do
+  gem 'ruby-oci8', '~> 2.2.12'
+end
