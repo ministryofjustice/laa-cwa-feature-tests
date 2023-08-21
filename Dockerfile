@@ -10,7 +10,6 @@ ENV PATH=$PATH:$ORACLE_HOME
 RUN apt-get update \
     && apt-get install -y libaio1 wget unzip \
     && apt-get install -y build-essential  \
-    && apt-get install curl -y \
     && apt-get -y install vim \
     && mkdir -p /opt/oracle \
     && cd /opt/oracle \
@@ -31,7 +30,7 @@ RUN apt-get update \
 RUN apt-get install -y --no-install-recommends ca-certificates curl firefox-esr \
  && rm -fr /var/lib/apt/lists/* \
  && curl -L https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz | tar xz -C /usr/local/bin \
- && apt-get purge -y ca-certificates curl
+ && apt-get purge -y ca-certificates
 
 # Copy your Ruby application files to the container (if needed)
 # COPY . .
