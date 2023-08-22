@@ -12,6 +12,7 @@ group :test do
   gem 'execjs'
   gem 'date'
   gem 'sequel'
+  gem 'report_builder', '~> 1.9'
 end
 
 group :docker do
