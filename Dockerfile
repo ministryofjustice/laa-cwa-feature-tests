@@ -29,8 +29,7 @@ RUN apt-get update \
 # Install geckodriver and ceritificates
 RUN apt-get install -y --no-install-recommends ca-certificates curl firefox-esr \
  && rm -fr /var/lib/apt/lists/* \
- && curl -L https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz | tar xz -C /usr/local/bin \
- && apt-get purge -y ca-certificates
+ && curl -L https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz | tar xz -C /usr/local/bin
 
 # Copy your Ruby application files to the container (if needed)
 # COPY . .
