@@ -9,9 +9,6 @@ group :test do
   gem 'rspec', '~> 3.10.0'
   gem 'selenium-webdriver', '~> 3.142.7'
   gem 'site_prism', '~> 3.7.3'
-  gem 'execjs'
-  gem 'date'
-  gem 'sequel'
 end
 
 group :docker do
