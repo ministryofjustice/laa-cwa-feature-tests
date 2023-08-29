@@ -1,4 +1,4 @@
-# Feature: Pricing: IMXC: Immigration - CLR Work Not Subject to the Standard Fee Scheme
+# Feature: Pricing: IMMA: Illegal Immigration Act
 
 #   Background:
 #     Given a test firm user is logged in CWA
