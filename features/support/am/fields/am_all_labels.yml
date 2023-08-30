@@ -188,10 +188,11 @@ tolerance_indicator:
   - Tolerance Indicator
 transfer_date:
   - Transfer Date
+detention_travel_waiting_costs:
+ - Detention Travel & Waiting Costs Excluding VAT
 travel_costs:
   - Travel
   - Travel costs excluding VAT
-  - Detention Travel & Waiting Costs Excluding VAT
   - Detention Travel Costs excluding VAT
 travel_time:
   - Travel Time
