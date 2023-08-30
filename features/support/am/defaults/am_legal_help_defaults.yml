@@ -183,9 +183,6 @@ legal_help:
       immigration:
         <<: *base_defaults
         claim_type:  Stage Claim
-
-      immigration_and_asylum:
-        <<: *base_defaults
         procurement_area: PA00158
         access_point: AP00137
         stage_reached:
@@ -206,17 +203,22 @@ legal_help:
         cmrh_telephone: 0
         adjourned_hearing_fee: 0
 
+      immigration_and_asylum:
+        <<: *base_defaults
+
+
   disbursement_claim:
       immigration:
         <<: *base_defaults
         claim_type:  Disbursements Claim
-
-      immigration_and_asylum:
-        <<: *base_defaults
         procurement_area: PA00158
         access_point: AP00137
         ho_ucn: A9999999
         ho_interview: 0
+
+      immigration_and_asylum:
+        <<: *base_defaults
+
 
       mental_health:
         <<: *base_defaults
