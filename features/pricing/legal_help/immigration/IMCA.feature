@@ -8,8 +8,8 @@ Feature: Pricing: IMCA: Immigration - Stage 2a (CLR)
 
   Scenario: Claims priced with: Standard Fee Scheme
     When the following outcomes are bulkloaded:
-      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR |
-      | 1 | 010413/001 | CM         |      01/04/2013 |          31/03/2023 |         200 |           28 | N             |
+      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS |
+      | 1 | 010413/001 | CM         |      01/04/2013 |          31/03/2023 |         200 |           28 | N             |        10000 |
     When user confirms the submission
     And user is on the pricing outcome details page
     Then user should see the following outcomes:
@@ -28,8 +28,8 @@ Feature: Pricing: IMCA: Immigration - Stage 2a (CLR)
 
   Scenario: Claims priced with: Disbursements
     When the following outcomes are bulkloaded:
-      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | VAT_INDICATOR | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT |
-      | 1 | 010413/001 | CM         |      01/04/2013 |          31/03/2023 |         228 | N             |                100.0 |                20 |
+      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | VAT_INDICATOR | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT | TRAVEL_COSTS |
+      | 1 | 010413/001 | CM         |      01/04/2013 |          31/03/2023 |         228 | N             |                100.0 |                20 |        10000 |
     When user confirms the submission
     And user is on the pricing outcome details page
     Then user should see the following outcomes:
