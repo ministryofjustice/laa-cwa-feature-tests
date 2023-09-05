@@ -6,7 +6,7 @@ Feature: Pricing: IMMA: Illegal Immigration Act
     Given the following Matter Types are chosen:
       | IMMA:IMRN |
 
-  Scenario: Claims priced with: hourly rates Scheme
+  Scenario: Claims priced with: hourly rates Scheme with detention travel & waiting costs without JR form filling cost
     When the following outcomes are bulkloaded:
       | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | JR_FORM_FILLING |
       | 1 | 010523/001 | CM         |      01/05/2023 |          01/08/2023 |         200 |           28 | N             |        10000 |             100 |
@@ -14,7 +14,7 @@ Feature: Pricing: IMMA: Illegal Immigration Act
     And user is on the pricing outcome details page
     Then user should see the following outcomes:
       | # | UFN        | Value       | Comment                                                         |
-      | 1 | 010523/001 | £ 10,228.00 | Priced at hourly rates (profit cost(£200) +  counsel cost(£28)) |
+      | 1 | 010523/001 | £ 10,228.00 | Priced at hourly rates (profit cost(£200) +  counsel cost(£28)) + detention travel & waiting costs(£10000) |
 
   Scenario: Claims priced with: hourly rates Scheme with disbursements
     When the following outcomes are bulkloaded:
@@ -56,7 +56,7 @@ Feature: Pricing: IMMA: Illegal Immigration Act
       | # | UFN        | Value    | Comment                                                                      |
       | 1 | 010523/001 | £ 273.60 | Priced at hourly rates (profit cost(£200) +  counsel cost(£28) + vat(45.6))) |
 
-  Scenario: Claims priced with: hourly rates with detention travel costs
+  Scenario: Claims priced with: hourly rates with detention travel & waiting costs
     When the following outcomes are bulkloaded:
       | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT |
       | 1 | 010523/001 | CM         |      01/05/2023 |          01/08/2023 |        2000 |         3000 | Y             |        10000 |               1000.0 |               200 |
@@ -66,7 +66,7 @@ Feature: Pricing: IMMA: Illegal Immigration Act
       | # | UFN        | Value       | Comment                                                                                                                                                                            |
       | 1 | 010523/001 | £ 19,200.00 | Priced at hourly rates (profit cost(£2000) +  counsel cost(£3000) +  detention travel & waiting costs(£10000) + vat(£3000))) + disbursement amount(£1000) + disbursement vat(£200) |
 
-  Scenario: Claims priced with: hourly rates with detention travel costs
+  Scenario: Claims priced with: hourly rates with detention travel & waiting costs
     When the following outcomes are bulkloaded:
       | # | UFN        | CLAIM_TYPE | OUTCOME_CODE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT |
       | 1 | 010523/001 | SC         | --           |      01/05/2023 |          01/08/2023 |        2000 |         3000 | Y             |        10000 |               1000.0 |               200 |
@@ -76,7 +76,7 @@ Feature: Pricing: IMMA: Illegal Immigration Act
       | # | UFN        | Value       | Comment                                                                                                                                                                            |
       | 1 | 010523/001 | £ 19,200.00 | Priced at hourly rates (profit cost(£2000) +  counsel cost(£3000) +  detention travel & waiting costs(£10000) + vat(£3000))) + disbursement amount(£1000) + disbursement vat(£200) |
 
-  Scenario: Claims priced with: hourly rates with detention travel costs
+  Scenario: Claims priced with: hourly rates
     When the following outcomes are bulkloaded:
       | # | UFN        | CLAIM_TYPE | OUTCOME_CODE | CASE_START_DATE | WORK_CONCLUDED_DATE | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT | HO_INTERVIEW |
       | 1 | 010523/001 | DC         | --           |      01/05/2023 |          01/08/2023 |               1000.0 |               200 |            3 |

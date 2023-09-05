@@ -6,7 +6,7 @@ Feature: Pricing: IMCA: Immigration - Stage 2a (CLR)
     Given the following Matter Types are chosen:
       | IMCA:IOUT |
 
-  Scenario: Claims priced with: Standard Fee Scheme
+  Scenario: Claims priced with: Standard Fee Scheme , no impact of detention travel & waiting costs
     When the following outcomes are bulkloaded:
       | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS |
       | 1 | 010413/001 | CM         |      01/04/2013 |          31/03/2023 |         200 |           28 | N             |        10000 |
@@ -26,7 +26,7 @@ Feature: Pricing: IMCA: Immigration - Stage 2a (CLR)
       | # | UFN        | Value    | Comment                                                    |
       | 1 | 010413/001 | £ 483.00 | Standard fee(£227) + CMRH_ORAL(£166) + CMRH_TELEPHONE(£90) |
 
-  Scenario: Claims priced with: Disbursements
+  Scenario: Claims priced with: Disbursements , no impact of detention travel & waiting costs
     When the following outcomes are bulkloaded:
       | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | VAT_INDICATOR | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT | TRAVEL_COSTS |
       | 1 | 010413/001 | CM         |      01/04/2013 |          31/03/2023 |         228 | N             |                100.0 |                20 |        10000 |
