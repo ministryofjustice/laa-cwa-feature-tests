@@ -1,15 +1,15 @@
 Feature: Pricing: IACD: Asylum – Interim CLR rates (hourly rates with fixed fee for advocacy services)
 
-  Background:
+  Background: 
     Given a test firm user is logged in CWA
     And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#12"
     Given the following Matter Types are chosen:
       | IACD:IOUT |
 
-  Scenario: Claims priced with: hourly rates Scheme
+  Scenario: Claims priced with: hourly rates Scheme , no impact of detention travel & waiting costs
     When the following outcomes are bulkloaded:
-      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR |
-      | 1 | 010413/001 | CM         |      01/04/2013 |          31/03/2023 |         200 |           28 | N             |
+      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS |
+      | 1 | 010413/001 | CM         |      01/04/2013 |          31/03/2023 |         200 |           28 | N             |        10000 |
     When user confirms the submission
     And user is on the pricing outcome details page
     Then user should see the following outcomes:
@@ -36,10 +36,10 @@ Feature: Pricing: IACD: Asylum – Interim CLR rates (hourly rates with fixed fe
       | # | UFN        | Value      | Comment                                                                                                                                                                 |
       | 1 | 010413/001 | £ 9,719.00 | Priced at hourly rates Profit_Cost(£5000) + Counsel_Cost(£4000) + CMRH_ORAL(£166) + CMRH_TELEPHONE(£90) + SUBSTANTIVE_HEARING(£302) +  ADJOURNED_HEARING(£161) = £9,719 |
 
-  Scenario: Claims priced with: hourly rates Scheme with disbursements and disbursements_vat
+  Scenario: Claims priced with: hourly rates Scheme with disbursements and disbursements_vat , no impact of detention travel & waiting costs
     When the following outcomes are bulkloaded:
-      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT | VAT_INDICATOR |
-      | 1 | 010413/001 | CM         |      01/04/2013 |          31/03/2023 |         500 |          400 |                100.0 |                20 | N             |
+      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT | VAT_INDICATOR | TRAVEL_COSTS |
+      | 1 | 010413/001 | CM         |      01/04/2013 |          31/03/2023 |         500 |          400 |                100.0 |                20 | N             |        10000 |
     When user confirms the submission
     And user is on the pricing outcome details page
     Then user should see the following outcomes:

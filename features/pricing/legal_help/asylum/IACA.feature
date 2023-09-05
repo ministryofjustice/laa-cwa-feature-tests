@@ -1,15 +1,15 @@
 Feature: Pricing: IACA: Asylum - Stage 2a (CLR)
 
-  Background:
+  Background: 
     Given a test firm user is logged in CWA
     And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#12"
     Given the following Matter Types are chosen:
       | IACA:IOUT |
 
-  Scenario: Claims priced with: Standard Fee Scheme
+  Scenario: Claims priced with: Standard Fee Scheme , no impact of detention travel & waiting costs
     When the following outcomes are bulkloaded:
-      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR |
-      | 1 | 010120/001 | CM         |      01/04/2020 |          31/03/2020 |         200 |           28 | N             |
+      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS |
+      | 1 | 010120/001 | CM         |      01/04/2020 |          31/03/2020 |         200 |           28 | N             |        10000 |
     When user confirms the submission
     And user is on the pricing outcome details page
     Then user should see the following outcomes:
@@ -26,10 +26,10 @@ Feature: Pricing: IACA: Asylum - Stage 2a (CLR)
       | # | UFN        | Value    | Comment                                                    |
       | 1 | 010120/001 | £ 483.00 | Standard fee(£227) + CMRH_ORAL(£166) + CMRH_TELEPHONE(£90) |
 
-  Scenario: Claims priced with: Disbursements
+  Scenario: Claims priced with: Disbursements , no impact of detention travel & waiting costs
     When the following outcomes are bulkloaded:
-      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | VAT_INDICATOR | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT |
-      | 1 | 010120/001 | CM         |      01/01/2020 |          31/03/2020 |         228 | N             |                100.0 |                20 |
+      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | VAT_INDICATOR | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT | TRAVEL_COSTS |
+      | 1 | 010120/001 | CM         |      01/01/2020 |          31/03/2020 |         228 | N             |                100.0 |                20 |        10000 |
     When user confirms the submission
     And user is on the pricing outcome details page
     Then user should see the following outcomes:
