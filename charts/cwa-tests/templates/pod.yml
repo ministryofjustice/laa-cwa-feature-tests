@@ -19,8 +19,8 @@ spec:
     resources:
       requests:
         cpu: 1000m
-        memory: 2048Mi
+        memory: 3072Mi
       limits:
         cpu: 1000m
-        memory: 2048Mi
+        memory: 3072Mi
     command: ["/bin/sh", "-ec", "bundle exec cucumber"]
