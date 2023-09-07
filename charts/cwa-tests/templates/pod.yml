@@ -18,9 +18,9 @@ spec:
       value: {{ .Values.global.test_env }}
     resources:
       requests:
-        cpu: 1000m
-        memory: 3072Mi
+        cpu: 4000m
+        memory: 8192Mi
       limits:
-        cpu: 1000m
-        memory: 3072Mi
+        cpu: 4000m
+        memory: 8192Mi
     command: ["/bin/sh", "-ec", "bundle exec cucumber"]
