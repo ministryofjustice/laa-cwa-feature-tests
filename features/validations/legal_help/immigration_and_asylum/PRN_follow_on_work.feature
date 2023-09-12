@@ -19,20 +19,20 @@ Feature: Asylum Bulk load validations for PRN Follow on work
       | 2 | 01/04/2023      | CM         | CLR             | IC           | TR001                        |
       | 3 | 01/04/2023      | CM         | Licensed Work   | IC           | TR001                        |
       | 4 | 01/04/2023      | CM         | Judicial Review | IC           | TR001                        |
-      # | 5 | 01/05/2022      | DC         | Legal Help      | --           | TR001                        |
-      # | 6 | 01/05/2022      | DC         | CLR             | --           | TR001                        |
-      # | 7 | 01/05/2022      | DC         | Licensed Work   | --           | TR001                        |
-      # | 8 | 01/05/2022      | DC         | Judicial Review | --           | TR001                        |
+      | 5 | 01/04/2023      | DC         | Legal Help      | --           | TR001                        |
+      | 6 | 01/04/2023      | DC         | CLR             | --           | TR001                        |
+      | 7 | 01/04/2023      | DC         | Licensed Work   | --           | TR001                        |
+      | 8 | 01/04/2023      | DC         | Judicial Review | --           | TR001                        |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE |
       | 1 | <none>                |
       | 2 | <none>                |
       | 3 | <none>                |
       | 4 | <none>                |
-      # | 5 | <none>                |
-      # | 6 | <none>                |
-      # | 7 | <none>                |
-      # | 8 | <none>                |
+      | 5 | <none>                |
+      | 6 | <none>                |
+      | 7 | <none>                |
+      | 8 | <none>                |
 
       @valid @IAXL_na
       Scenario: 2. Bulkload Civil Asylum outcomes with combination IAXL:IPRN
@@ -44,11 +44,11 @@ Feature: Asylum Bulk load validations for PRN Follow on work
         And the following outcomes are bulkloaded:
           | # | CASE_START_DATE | CLAIM_TYPE | FOLLOW_ON_WORK  | OUTCOME_CODE | EXEMPTION_CRITERIA_SATISFIED |
           | 1 | 01/04/2023      | CM         | N/A             | IC           | TR001                        |
-          # | 2 | 01/05/2022      | DC         | N/A             | --           | TR001                        |
+          | 2 | 01/04/2023      | DC         | N/A             | --           | TR001                        |
         Then the following results are expected:
           | # | ERROR_CODE_OR_MESSAGE |
           | 1 | <none> |
-          # | 2 | <none> |
+          | 2 | <none> |
 
 
   @invalid @IAXL
@@ -62,11 +62,11 @@ Feature: Asylum Bulk load validations for PRN Follow on work
     And the following outcomes are bulkloaded:
       | # | CASE_START_DATE | CLAIM_TYPE | FOLLOW_ON_WORK  | OUTCOME_CODE | EXEMPTION_CRITERIA_SATISFIED |
       | 1 | 01/04/2023      | CM         |                 | IC           | TR001                        |
-      # | 2 | 01/05/2022      | DC         |                 | --           | TR001                        |
+      | 2 | 01/04/2023      | DC         |                 | --           | TR001                        |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE |
       | 1 | Matter type combination IAXL:IPRN requires one of the following values: CLR, Judicial Review, Legal Help, Licensed Work, N/A for Follow on work. |
-      # | 2 | Matter type combination IAXL:IPRN requires one of the following values: CLR, Judicial Review, Legal Help, Licensed Work, N/A for Follow on work. |
+      | 2 | Matter type combination IAXL:IPRN requires one of the following values: CLR, Judicial Review, Legal Help, Licensed Work, N/A for Follow on work. |
 
   @other @valid
   Scenario: 5. Bulkload Civil Asylum outcomes with other than combinations IAXL:IPRN
@@ -82,14 +82,14 @@ Feature: Asylum Bulk load validations for PRN Follow on work
       | # | CASE_START_DATE | CLAIM_TYPE | FOLLOW_ON_WORK  | OUTCOME_CODE | EXEMPTION_CRITERIA_SATISFIED |
       | 1 | 01/04/2023      | CM         |                 | IC           | TR001                        |
       | 2 | 01/04/2023      | CM         | N/A             | IC           | TR001                        |
-      # | 3 | 01/05/2022      | DC         |                 | --           | TR001                        |
-      # | 4 | 01/05/2022      | DC         | N/A             | --           | TR001                        |
+      | 3 | 01/04/2022      | DC         |                 | --           | TR001                        |
+      | 4 | 01/04/2023      | DC         | N/A             | --           | TR001                        |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE |
       | 1 | <none>  |
       | 2 | <none>  |
-      # | 3 | <none>  |
-      # | 4 | <none>  |
+      | 3 | <none>  |
+      | 4 | <none>  |
 
   @other @invalid
   Scenario: 6. Bulkload Civil Asylum outcomes with combinations other than IAXL:IPRN
@@ -104,14 +104,14 @@ Feature: Asylum Bulk load validations for PRN Follow on work
       | # | CASE_START_DATE | CLAIM_TYPE | FOLLOW_ON_WORK  | OUTCOME_CODE | EXEMPTION_CRITERIA_SATISFIED |
       | 1 | 01/04/2023      | CM         | Legal Help      | IC           | TR001                        |
       | 2 | 01/04/2023      | CM         | CLR             | IC           | TR001                        |
-      # | 3 | 01/05/2022      | DC         | Licensed Work   | --           | TR001                        |
-      # | 4 | 01/05/2022      | DC         | Judicial Review | --           | TR001                        |
+      | 3 | 01/05/2023      | DC         | Licensed Work   | --           | TR001                        |
+      | 4 | 01/05/2023      | DC         | Judicial Review | --           | TR001                        |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE |
       | 1 | Matter type combination IAXL:IBAI requires one of the following values: N/A for Follow on work. |
       | 2 | Matter type combination IAXL:IBAI requires one of the following values: N/A for Follow on work. |
-      # | 3 | Matter type combination IAXL:IBAI requires one of the following values: N/A for Follow on work. |
-      # | 4 | Matter type combination IAXL:IBAI requires one of the following values: N/A for Follow on work. |
+      | 3 | Matter type combination IAXL:IBAI requires one of the following values: N/A for Follow on work. |
+      | 4 | Matter type combination IAXL:IBAI requires one of the following values: N/A for Follow on work. |
 
 
       @invalid @IMXL
@@ -124,8 +124,8 @@ Feature: Asylum Bulk load validations for PRN Follow on work
         And the following outcomes are bulkloaded:
           | # | CASE_START_DATE | CLAIM_TYPE |
           | 1 | 01/04/2023      | CM         |
-          # | 1 | 01/04/2022      | DC         |
+          | 2 | 01/04/2023      | DC         |
         Then the following results are expected:
           | # | ERROR_CODE_OR_MESSAGE |
           | 1 | An invalid matter type has been used. Please refer to the relevant guidance and re-enter. |
-          # | 2 | An invalid matter type has been used. Please refer to the relevant guidance and re-enter. |
+          | 2 | An invalid matter type has been used. Please refer to the relevant guidance and re-enter. |
