@@ -51,6 +51,27 @@ When("user adds outcomes for {string} {string} with fields like this:") do |area
   end
 end
 
+When("user adds outcomes for {string} {string} with fields like this again:") do |area_of_law, category_of_law, table|
+  submission_details_page = SubmissionDetailsPage.new
+  outcome_data = table.hashes
+  @submissions_saved = outcome_data.size
+  outcome_data.each do |outcome|
+    submission_list_page = SubmissionListPage.new
+    submission_list_page.add_outcome_button.click
+    builder = Helpers::ScreenFieldBuilder.from(
+      category_of_law: category_of_law.downcase.gsub(' ', '_'),
+      area_of_law: area_of_law.downcase.gsub(' ', '_'),
+      matter_type: outcome['matter_type'],
+      claim_type: outcome['claim_type']
+    )
+    outcome['schedule_ref'] = CWAProvider.submission.schedule_ref
+    builder.overrides = outcome
+
+    page = AddOutcomePage.new(builder)
+    page.add_outcome
+  end
+end
+
 When ("user adds an outcome for {string} {string} with {string}, {string}, {string}, {string}, {string}, {string} and {string}") do |area_of_law, category_of_law, case_id, matter_type, ecs, ecf_ref, case_start_date, pa, ap |
     sr = CWAProvider.submission.schedule_ref
 

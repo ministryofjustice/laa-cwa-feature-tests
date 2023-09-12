@@ -1,7 +1,7 @@
 @bulkload
 Feature: Stage billing validations for Mental health
 
-  Background:
+  Background: 
     Given a test firm user is logged in CWA
     And user prepares to submit outcomes for test provider "LEGAL HELP.MHE#11"
 
@@ -99,9 +99,9 @@ Feature: Stage billing validations for Mental health
       | MHTM:MSCR |
       | MHTM:MSUP |
     When the following outcomes are bulkloaded:
-      | # | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 | DC         | 01/01/2020      | 31/03/2020          | --           |
-      | 2 | DC         | 01/01/2020      | 01/04/2020          | --           |
+      | # | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | CASE_STAGE_LEVEL | OUTCOME_CODE |
+      | 1 | DC         |      01/01/2020 |          31/03/2020 | MHL10            | --           |
+      | 2 | DC         |      01/01/2020 |          01/04/2020 | MHL10            | --           |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE                                                                                                                          |
       | 1 | Stage disbursement claims can only be claimed where 3 months have elapsed from the date the matter was opened. Please refer to the guidelines. |
@@ -109,14 +109,14 @@ Feature: Stage billing validations for Mental health
 
   Scenario: Add new stage disbursement claim when there is an existing completed matter
     Given the following Matter Types are chosen:
-      | MHAS:MCOM |
+      | MHDC:MCOM |
     And the following outcomes are bulkloaded and confirmed:
-      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 | 001     | 010120/001 | CM         | 01/01/2020      | 01/04/2020          | --           |
-    When user prepares to submit outcomes for test provider "LEGAL HELP.MHE#6" again
+      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | CASE_STAGE_LEVEL |
+      | 1 |     001 | 010120/001 | CM         |      01/01/2020 |          01/04/2020 | MHL10            |
+    When user prepares to submit outcomes for test provider "LEGAL HELP.MHE#11" again
     And the following outcomes are bulkloaded:
-      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 2 | 001     | 010120/001 | DC         | 01/01/2020      | 02/04/2020          | --           |
+      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | CASE_STAGE_LEVEL | OUTCOME_CODE |
+      | 2 |     001 | 010120/001 | DC         |      01/01/2020 |          02/04/2020 | MHL10            | --           |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE                                                                                                                                                                                                                                     |
       | 2 | It is not possible to process this claim, as a Completed Matter Claim has been identified in the system. Please contact your Relationship manager by email with all the relevant case details if you need to make any amendments to previous submissions. |
@@ -126,12 +126,12 @@ Feature: Stage billing validations for Mental health
     Given the following Matter Types are chosen:
       | MHAS:MCOM |
     And the following outcomes are bulkloaded and confirmed:
-      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 | 001     | 010120/001 | CM         | 01/01/2020      | 01/04/2020          | --           |
-    When user prepares to submit outcomes for test provider "LEGAL HELP.MHE#6" again
+      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | CASE_STAGE_LEVEL |
+      | 1 |     001 | 010120/001 | CM         |      01/01/2020 |          01/04/2020 | MHL10            |
+    When user prepares to submit outcomes for test provider "LEGAL HELP.MHE#11" again
     And the following outcomes are bulkloaded:
-      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 2 | 001     | 010120/001 | DC         | 01/01/2020      | 30/06/2020          | --           |
+      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | CASE_STAGE_LEVEL | OUTCOME_CODE |
+      | 2 |     001 | 010120/001 | DC         |      01/01/2020 |          30/06/2020 | MHL10            | --           |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE                                                                                                                                                                                                                                     |
       | 2 | It is not possible to process this claim, as a Completed Matter Claim has been identified in the system. Please contact your Relationship manager by email with all the relevant case details if you need to make any amendments to previous submissions. |
@@ -139,14 +139,14 @@ Feature: Stage billing validations for Mental health
   @bugfix
   Scenario: Add new stage disbursement claim with *more* than 6 months between case start date and claim date when there is an existing completed matter
     Given the following Matter Types are chosen:
-      | MHAS:MCOM |
+      | MHNS:MOUT |
     And the following outcomes are bulkloaded and confirmed:
-      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 | 001     | 010120/001 | CM         | 01/01/2020      | 01/04/2020          | --           |
-    When user prepares to submit outcomes for test provider "LEGAL HELP.MHE#6" again
+      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | CASE_STAGE_LEVEL |
+      | 1 |     001 | 010120/001 | CM         |      01/01/2020 |          01/04/2020 | MHL10            |
+    When user prepares to submit outcomes for test provider "LEGAL HELP.MHE#11" again
     And the following outcomes are bulkloaded:
-      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 2 | 001     | 010120/001 | DC         | 01/01/2020      | 01/07/2020          | --           |
+      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | CASE_STAGE_LEVEL | OUTCOME_CODE |
+      | 2 |     001 | 010120/001 | DC         |      01/01/2020 |          01/07/2020 | MHL10            | --           |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE                                                                                                                                                                                                                                     |
       | 2 | It is not possible to process this claim, as a Completed Matter Claim has been identified in the system. Please contact your Relationship manager by email with all the relevant case details if you need to make any amendments to previous submissions. |
