@@ -8,13 +8,14 @@ Feature: PROW code Bulk load validations
 
   @XXLSC_TEST_CURRENT_SUBMISSION_PERIOD
    Scenario: Bulkload PROW code outcomes with REP_ORDER_DATE after system date or XXLSC_TEST_CURRENT_SUBMISSION_PERIOD
+    And set system date to tomorrow
     And the following outcomes are bulkloaded:
-      | # | UFN        | REP_ORDER_DATE | WORK_CONCLUDED_DATE |
-      | 1 | 181020/001 | 01/11/2020     | 02/11/2020          |
+      | # | UFN        |
+      | 1 | 070923/001 |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE      |
       | 1 | The Representation Order Date must not be after today's date. Please enter a valid value. |
-
+    And reset system date
 
   Scenario: Bulkload PROW code outcomes with REP_ORDER_DATE around 19 October 2020
     And the following outcomes are bulkloaded:
