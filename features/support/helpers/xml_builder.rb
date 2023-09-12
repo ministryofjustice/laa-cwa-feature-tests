@@ -86,6 +86,8 @@ module Helpers
               "#{client_surname} #{case_id}"
             when 'CASE_START_DATE'
               case_start_date || now.strftime("%d/%m/%Y")
+            when 'REP_ORDER_DATE'
+              rep_order_date || now.strftime("%d/%m/%Y")
             when 'WORK_CONCLUDED_DATE'
               work_concluded_date || now.strftime("%d/%m/%Y")
             when 'UFN'

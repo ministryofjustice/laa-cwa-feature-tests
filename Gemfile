@@ -13,6 +13,7 @@ group :test do
   gem 'date'
   gem 'sequel'
   gem 'report_builder', '~> 1.9'
+  gem "timecop", "~> 0.9.8"
 end
 
 group :docker do
