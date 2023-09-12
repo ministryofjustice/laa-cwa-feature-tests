@@ -1,3 +1,5 @@
+require 'timecop'
+
 Given(/^user prepares to submit outcomes for test provider "(.*)"(\s+again)?$/) do |ref, again|
   @submission = CWAProvider.submission_by_ref(ref)
 
@@ -52,6 +54,14 @@ Given('the following Matter Types are chosen:') do |table|
   @matter_types = table.raw.flatten
 end
 
+Given('set system date to tomorrow') do
+  Timecop.freeze(Date.today + 1)
+end
+
+Given('reset system date') do
+  Timecop.unfreeze
+end
+
 When(/^the following outcomes are bulkloaded(\sand\sconfirmed)?:$/) do |confirm, table|
   @bulk_load_page = BulkLoadPage.new
   expect(page).to have_content("Bulk Load File Selection", wait: 5)
@@ -66,6 +76,7 @@ When(/^the following outcomes are bulkloaded(\sand\sconfirmed)?:$/) do |confirm,
   @bulk_load_page.next_button.double_click
   step('user confirms the submission') if
   confirm
+  sleep(1)
 end
 
 Then('the following results are expected:') do |table|
