@@ -1,0 +1,43 @@
+version: 2.1
+
+orbs:
+  browser-tools: circleci/browser-tools@1.4.0
+
+jobs:
+  Feature Test:
+    docker:
+      - image: cimg/ruby:2.7.6-browsers
+    steps:
+      - checkout
+      - run:
+          name: Install git-crypt
+          command: |
+            sudo apt-get update
+            sudo apt-get install git-crypt
+      - run:
+          name: Decrypt secrets
+          command: |
+            echo "${GIT_CRYPT_KEY}" | base64 -d > git-crypt.key
+            git-crypt unlock git-crypt.key
+      - browser-tools/install-firefox
+      - browser-tools/install-geckodriver
+      - run: |
+          ruby --version
+          firefox --version
+      - run:
+          name: Run bundle dependencies
+          command: bundle install
+      - run:
+          name: Export env variable
+          command: |
+            echo 'export TEST_ENV=tst' >> "$BASH_ENV"
+            source "$BASH_ENV"
+      - run:
+          name: Run tests
+          command: bundle exec cucumber
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - Feature Test
