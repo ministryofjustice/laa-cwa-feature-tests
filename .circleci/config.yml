@@ -48,9 +48,6 @@ jobs:
             -f charts/cwa-tests/Values.yaml \
             --set ecr.image.tag=${SANITISED_BRANCH} \
             --wait --timeout 300s
-      - run:
-         name: Check pod logs
-         command: kubectl logs -f charts/cwa-tests/Values.yaml
 
   Build_and_Push_Docker_Image:
     executor: build-executor
