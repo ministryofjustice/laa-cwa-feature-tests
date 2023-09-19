@@ -14,6 +14,7 @@ group :test do
   gem 'sequel'
   gem 'report_builder', '~> 1.9'
   gem "timecop", "~> 0.9.8"
+  gem "parallel_tests"
 end
 
 group :docker do
