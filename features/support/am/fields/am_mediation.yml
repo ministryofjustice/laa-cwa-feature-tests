@@ -1,43 +1,44 @@
 base_mediation: &base_mediation
-  case_id:
-  case_ref_number:
-  case_start_date:
-  client2_date_of_birth:
-  client2_disability:
-  client2_ethnicity:
-  client2_forename:
-  client2_gender:
-  client2_legally_aided:
-  client2_post_code:
-  client2_postal_appl_accp:
-  client2_surname:
-  client2_ucn:
-  client_date_of_birth:
-  client_forename:
-  client_legally_aided:
-  client_post_code:
-  client_surname:
-  disability:
-  disbursements_amount:
-  disbursements_vat:
-  ethnicity:
-  gender:
-  outreach:
-  postal_appl_accp:
-  referral:
-  schedule_ref:
-  ucn:
-  unique_case_id:
-  vat_indicator:
+   case_id:
+   case_ref_number:
+   case_start_date:
+   client2_date_of_birth:
+   client2_disability:
+   client2_ethnicity:
+   client2_forename:
+   client2_gender:
+   client2_legally_aided:
+   client2_post_code:
+   client2_postal_appl_accp:
+   client2_surname:
+   client2_ucn:
+   client_date_of_birth:
+   client_forename:
+   client_legally_aided:
+   client_post_code:
+   client_surname:
+   disability:
+   disbursements_amount:
+   disbursements_vat:
+   ethnicity:
+   gender:
+   outreach:
+   postal_appl_accp:
+   referral:
+   schedule_ref:
+   ucn:
+   unique_case_id:
+   vat_indicator:
 
 mediation:
-  #MT1 code
-  MEDI:
+  mediation_case:
+    #MT1 code
+    MEDI:
     <<: *base_mediation
 
-  ASSM:
-    <<: *base_mediation
-    med_concluded_date:
-    mediation_time:
-    number_of_mediation_sessions:
-    outcome_code:
+    ASSM:
+      <<: *base_mediation
+      med_concluded_date:
+      mediation_time:
+      number_of_mediation_sessions:
+      outcome_code:

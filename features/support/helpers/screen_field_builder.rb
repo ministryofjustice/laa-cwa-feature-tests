@@ -176,20 +176,19 @@ module Helpers
     class Mediation < Base
       def fields
         @fields ||= load_fields
-          .fetch(matter_type_code)
+          .fetch(matter_type)
           .transform_keys(&:to_sym)
       end
 
       def defaults
         @defaults ||= load_defaults
-          .fetch(matter_type_code)
+          .fetch(matter_type)
           .transform_keys(&:to_sym)
       end
 
       private
-
-      def matter_type_code
-        extra_args.fetch(:matter_type_code)&.to_s
+      def matter_type
+        extra_args.fetch(:matter_type)&.to_s
       end
     end
   end
