@@ -40,8 +40,6 @@ jobs:
             kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=<< parameters.environment >>
             kubectl config use-context ${K8S_CLUSTER_NAME}
             kubectl get pods
-            export POD_NAME=$(helm list -q | tail -1)
-            kubectl logs ${POD_NAME}
       - run:
           name: Deploy helm chart
           command: |
