@@ -48,7 +48,7 @@ jobs:
             -f charts/cwa-tests/Values.yaml \
             --set ecr.image.tag=${SANITISED_BRANCH} \
             export POD_NAME=$(helm list -q | tail -1) \
-            kubectl logs ${POD_NAME}
+            kubectl logs ${POD_NAME} \
             --wait --timeout 300s
 
   Build_and_Push_Docker_Image:
