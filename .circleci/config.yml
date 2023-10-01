@@ -47,9 +47,10 @@ jobs:
             helm install --generate-name ./charts/cwa-tests \
             -f charts/cwa-tests/Values.yaml \
             --set ecr.image.tag=${SANITISED_BRANCH} \
-            export POD_NAME=$(helm list -q | tail -1) \
-            kubectl logs ${POD_NAME} \
             --wait --timeout 300s
+            export POD_NAME=$(helm list -q | tail -1)
+            kubectl logs ${POD_NAME}
+            kubectl get pods
 
   Build_and_Push_Docker_Image:
     executor: build-executor
