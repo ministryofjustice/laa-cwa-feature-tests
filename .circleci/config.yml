@@ -47,10 +47,7 @@ jobs:
             helm install --generate-name ./charts/cwa-tests \
             -f charts/cwa-tests/Values.yaml \
             --set ecr.image.tag=${SANITISED_BRANCH} \
-            helm list \
-            export RELEASE_NAME=$(helm list -q | head -1) \
-            helm get manifest $RELEASE_NAME  > release.yaml \
-            export POD_NAME=$(yq -r '.spec.template.metadata.name' release.yaml) \
+            export POD_NAME=helm list -q | tail -1 \
             kubectl logs -f $POD_NAME
             --wait --timeout 300s
 
