@@ -49,7 +49,7 @@ jobs:
             --set ecr.image.tag=${SANITISED_BRANCH} \
             --wait --timeout 300s
             export POD_NAME=$(helm list -q | tail -1)
-            kubectl logs ${POD_NAME}
+            kubectl logs -f ${POD_NAME}
 
   Build_and_Push_Docker_Image:
     executor: build-executor
