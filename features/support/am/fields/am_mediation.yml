@@ -31,12 +31,11 @@ base_mediation: &base_mediation
    vat_indicator:
 
 mediation:
-  mediation_case:
-    #MT1 code
-    MEDI:
+  mediation:
     <<: *base_mediation
 
-    ASSM:
+  assessment_meetings:
+    ASSM:ASSA:
       <<: *base_mediation
       med_concluded_date:
       mediation_time:
