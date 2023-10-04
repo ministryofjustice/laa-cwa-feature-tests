@@ -120,6 +120,7 @@ maat_id:
 matter_type:
   - Matter Type
   - Stage Reached
+  - Work Type
 med_concluded_date:
   - Work Concluded Date
 mediation_time:

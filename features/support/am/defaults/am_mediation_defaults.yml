@@ -1,4 +1,4 @@
-base_mediation: &base_mediation
+base_defaults: &base_defaults
   case_id:
   case_ref_number:
   case_start_date:
@@ -31,13 +31,13 @@ base_mediation: &base_mediation
   vat_indicator:
 
 mediation:
-  #MT1 code
-  MEDI:
-    <<: *base_mediation
+  mediation:
+    <<: *base_defaults
 
-  ASSM:
-    <<: *base_mediation
-    med_concluded_date:
-    mediation_time:
-    number_of_mediation_sessions:
-    outcome_code:
+  assessment_meetings:
+    ASSM:ASSA:
+      <<: *base_defaults
+      med_concluded_date:
+      mediation_time:
+      number_of_mediation_sessions:
+      outcome_code:
