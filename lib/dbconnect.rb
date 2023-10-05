@@ -1,7 +1,7 @@
 require 'ruby-oci8'
 
 
-module ChangeStartDate
+class ChangeStartDate
     def change_start_date
 conn = OCI8.new('username', 'password' ,'host.docker.internal:1571/cwa')
 statement = ("UPDATE xxlsc_civil_scope_date_rules
