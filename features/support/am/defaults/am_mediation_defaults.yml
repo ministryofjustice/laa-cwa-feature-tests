@@ -32,6 +32,7 @@ base_defaults: &base_defaults
 
 mediation:
   mediation:
+    MEDI:MDAC:
     <<: *base_defaults
 
   assessment_meetings:

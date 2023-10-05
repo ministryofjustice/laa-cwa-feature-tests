@@ -176,16 +176,18 @@ module Helpers
     class Mediation < Base
       def fields
         @fields ||= load_fields
+          .fetch(area_of_law)
+          .fetch(category_of_law)
           .fetch(matter_type)
           .transform_keys(&:to_sym)
       end
-
       def defaults
         @defaults ||= load_defaults
+          .fetch(area_of_law)
+          .fetch(category_of_law)
           .fetch(matter_type)
           .transform_keys(&:to_sym)
       end
-
       private
       def matter_type
         extra_args.fetch(:matter_type)&.to_s
