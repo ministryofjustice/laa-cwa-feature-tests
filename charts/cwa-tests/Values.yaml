@@ -1,0 +1,14 @@
+global:
+  branch: main
+  costcentre: LAA
+  namespace: "laa-cwa-test"
+  serviceAccount: "sa-laa-cwa-test"
+  browser: chrome
+  test_env: tst
+
+ecr:
+  image:
+    registryAddress: 754256621582.dkr.ecr.eu-west-2.amazonaws.com
+    regPath: laa-pcuam/laa-cwa-test-ecr
+    tag: batches-latest
+    pullPolicy: Always
