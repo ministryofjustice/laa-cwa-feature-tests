@@ -29,16 +29,30 @@ base_mediation: &base_mediation
   ucn:
   unique_case_id:
   vat_indicator:
+  med_concluded_date:
+  mediation_time:
+  number_of_mediation_sessions:
+  outcome_code:
 
 mediation:
   mediation:
     MEDI:MDAC:
-    <<: *base_mediation
+     <<: *base_mediation
+    MEDI:MDAS:
+     <<: *base_mediation
+    MEDI:MDCC:
+     <<: *base_mediation
+    MEDI:MDCS:
+     <<: *base_mediation
+    MEDI:MDPC:
+     <<: *base_mediation
+    MEDI:MDPS:
+     <<: *base_mediation
 
   assessment_meetings:
     ASSM:ASSA:
-      <<: *base_mediation
-      med_concluded_date:
-      mediation_time:
-      number_of_mediation_sessions:
-      outcome_code:
+     <<: *base_mediation
+    ASSM:ASSS:
+     <<: *base_mediation
+    ASSM:ASST:
+     <<: *base_mediation
