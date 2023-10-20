@@ -1,6 +1,6 @@
 Feature: Pricing: IMMA: Illegal Immigration Act
 
-  Background:
+  Background: 
     Given a test firm user is logged in CWA
     And user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#13"
     Given the following Matter Types are chosen:
@@ -19,12 +19,22 @@ Feature: Pricing: IMMA: Illegal Immigration Act
   Scenario: Claims priced with: hourly rates Scheme with zero pc and cc , detention travel & waiting costs without JR form filling cost
     When the following outcomes are bulkloaded:
       | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | JR_FORM_FILLING |
-      | 1 | 010523/001 | CM         |      01/05/2023 |          01/08/2023 |         0 |           0    | N             |        10000 |             100 |
+      | 1 | 010523/001 | CM         |      01/05/2023 |          01/08/2023 |           0 |            0 | N             |        10000 |             100 |
     When user confirms the submission
     And user is on the pricing outcome details page
     Then user should see the following outcomes:
-      | # | UFN        | Value       | Comment                                                                                                    |
-      | 1 | 010523/001 | £ 10,000.00 | Priced at hourly rates (profit cost(£0) +  counsel cost(£0)) + detention travel & waiting costs(£10000) |
+      | # | UFN        | Value | Comment                                                                                                 |
+      | 1 | 010523/001 | £ 0   | Priced at hourly rates (profit cost(£0) +  counsel cost(£0)) + detention travel & waiting costs(£10000) |
+
+  Scenario: Claims priced with: hourly rates Scheme with zero pc and cc , detention travel & waiting costs without JR form filling cost
+    When the following outcomes are bulkloaded:
+      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | JR_FORM_FILLING |
+      | 1 | 010523/001 | CM         |      01/05/2023 |          01/08/2023 |          10 |            0 | N             |        10000 |             100 |
+    When user confirms the submission
+    And user is on the pricing outcome details page
+    Then user should see the following outcomes:
+      | # | UFN        | Value       | Comment                                                                                                 |
+      | 1 | 010523/001 | £ 10,010.00 | Priced at hourly rates (profit cost(£0) +  counsel cost(£0)) + detention travel & waiting costs(£10000) |
 
   Scenario: Claims priced with: hourly rates Scheme with disbursements
     When the following outcomes are bulkloaded:
@@ -103,8 +113,8 @@ Feature: Pricing: IMMA: Illegal Immigration Act
     When user confirms the submission
     And user is on the pricing outcome details page
     Then user should see the following outcomes:
-      | # | UFN        | Value    | Comment                                                                                         |
-      | 1 | 010523/001 | £ 250.00 | Priced at hourly rates (profit cost(£200) +  counsel cost(£28)) - NRM_ADVICE Bolt On fee (£150) |
+      | # | UFN        | Value    | Comment                                                                                                                                                                                  |
+      | 1 | 010523/001 | £ 250.00 | Priced at hourly rates (profit cost(£200) +  counsel cost(£28)) + detention travel & waiting costs(£10) + disbursement amount(£10) + disbursement vat(£2)- NRM_ADVICE Bolt On fee (£150) |
 
   Scenario: Claims priced with: hourly rates Scheme without NRM advice, IRC work, JR_FORM_FILLING
     When the following outcomes are bulkloaded:
