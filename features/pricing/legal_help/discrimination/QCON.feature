@@ -1,6 +1,6 @@
 Feature: Pricing: QCON: Contracts
 
-  Background:
+  Background: 
     Given a test firm user is logged in CWA
     And user prepares to submit outcomes for test provider "LEGAL HELP.EDU#10"
     Given the following Matter Types are chosen:
@@ -15,6 +15,16 @@ Feature: Pricing: QCON: Contracts
     Then user should see the following outcomes:
       | # | UFN        | Value    | Comment                                                         |
       | 1 | 010919/001 | £ 228.00 | Priced at hourly rates (profit cost(£200) +  counsel cost(£28)) |
+
+  Scenario: Claims priced with: hourly rates Scheme with nil claims 
+    When the following outcomes are bulkloaded:
+      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT |
+      | 1 | 010919/001 | CM         |      01/09/2019 |           0 |            0 | N             |                100.0 |                20 |
+    When user confirms the submission
+    And user is on the pricing outcome details page
+    Then user should see the following outcomes:
+      | # | UFN        | Value    | Comment                                                                           |
+      | 1 | 010919/001 | £ 120.00 | Priced at hourly rates with nil claims (profit cost(£0) +  counsel cost(£0) + DibursementAmount(£100) + DisbursementVat(£20) |
 
   Scenario: Claims priced with: Disbursements
     When the following outcomes are bulkloaded:

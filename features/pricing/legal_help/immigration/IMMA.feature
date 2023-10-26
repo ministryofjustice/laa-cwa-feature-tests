@@ -16,25 +16,25 @@ Feature: Pricing: IMMA: Illegal Immigration Act
       | # | UFN        | Value       | Comment                                                                                                    |
       | 1 | 010523/001 | £ 10,228.00 | Priced at hourly rates (profit cost(£200) +  counsel cost(£28)) + detention travel & waiting costs(£10000) |
 
-  Scenario: Claims priced with: hourly rates Scheme with zero pc and cc , detention travel & waiting costs without JR form filling cost
+  Scenario: Claims priced with: hourly rates Scheme with zero pc and cc , detention travel & waiting costs without JR form filling cost with nil cliams
     When the following outcomes are bulkloaded:
       | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | JR_FORM_FILLING |
       | 1 | 010523/001 | CM         |      01/05/2023 |          01/08/2023 |           0 |            0 | N             |        10000 |             100 |
     When user confirms the submission
     And user is on the pricing outcome details page
     Then user should see the following outcomes:
-      | # | UFN        | Value | Comment                                                                                                 |
-      | 1 | 010523/001 | £ 0   | Priced at hourly rates (profit cost(£0) +  counsel cost(£0)) + detention travel & waiting costs(£10000) |
+      | # | UFN        | Value  | Comment                                                                                                         |
+      | 1 | 010523/001 | £ 0.00 | Priced at hourly rates (profit cost(£0) +  counsel cost(£0)) ignoring  detention travel & waiting costs(£10000) |
 
-  Scenario: Claims priced with: hourly rates Scheme with zero pc and cc , detention travel & waiting costs without JR form filling cost
+  Scenario: Claims priced with: hourly rates Scheme with pc and zero cc , detention travel & waiting costs without JR form filling cost
     When the following outcomes are bulkloaded:
       | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | JR_FORM_FILLING |
       | 1 | 010523/001 | CM         |      01/05/2023 |          01/08/2023 |          10 |            0 | N             |        10000 |             100 |
     When user confirms the submission
     And user is on the pricing outcome details page
     Then user should see the following outcomes:
-      | # | UFN        | Value       | Comment                                                                                                 |
-      | 1 | 010523/001 | £ 10,010.00 | Priced at hourly rates (profit cost(£0) +  counsel cost(£0)) + detention travel & waiting costs(£10000) |
+      | # | UFN        | Value       | Comment                                                                                                  |
+      | 1 | 010523/001 | £ 10,010.00 | Priced at hourly rates (profit cost(£10) +  counsel cost(£0)) + detention travel & waiting costs(£10000) |
 
   Scenario: Claims priced with: hourly rates Scheme with disbursements
     When the following outcomes are bulkloaded:
@@ -48,13 +48,13 @@ Feature: Pricing: IMMA: Illegal Immigration Act
 
   Scenario: Claims priced with: Additional Payments though not entitiled
     When the following outcomes are bulkloaded:
-      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | CMRH_ORAL | CMRH_TELEPHONE | SUBSTANTIVE_HEARING | ADJOURNED_HEARING_FEE |
-      | 1 | 010523/001 | CM         |      01/05/2023 |          01/08/2023 |        5000 |         4000 | N             |         1 |              1 | Y                   |                     1 |
+      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | CMRH_ORAL | CMRH_TELEPHONE | SUBSTANTIVE_HEARING | ADJOURNED_HEARING_FEE | HO_INTERVIEW |
+      | 1 | 010523/001 | CM         |      01/05/2023 |          01/08/2023 |        5000 |         4000 | N             |         1 |              1 | Y                   |                     1 |            3 |
     When user confirms the submission
     And user is on the pricing outcome details page
     Then user should see the following outcomes:
-      | # | UFN        | Value      | Comment                                                                                                                                                                                                                                                    |
-      | 1 | 010523/001 | £ 9,000.00 | Priced at hourly rates Profit_Cost(£5000) + Counsel_Cost(£4000) = £9000, ignoring additional payments as code is not entitiled for additional payments CMRH_ORAL(£166) + CMRH_TELEPHONE(£90) + SUBSTANTIVE_HEARING(£302) +  ADJOURNED_HEARING(£161) = null |
+      | # | UFN        | Value      | Comment                                                                                                                                                                                                                                                                   |
+      | 1 | 010523/001 | £ 9,000.00 | Priced at hourly rates Profit_Cost(£5000) + Counsel_Cost(£4000) = £9000, ignoring additional payments as code is not entitiled for additional payments CMRH_ORAL(£166) + CMRH_TELEPHONE(£90) + SUBSTANTIVE_HEARING(£302) +  ADJOURNED_HEARING(£161) + HO_INTERVIEW = null |
 
   Scenario: Claims priced with: hourly rates Scheme with disbursements and disbursements_vat
     When the following outcomes are bulkloaded:
@@ -95,6 +95,26 @@ Feature: Pricing: IMMA: Illegal Immigration Act
     Then user should see the following outcomes:
       | # | UFN        | Value       | Comment                                                                                                                                                                            |
       | 1 | 010523/001 | £ 19,200.00 | Priced at hourly rates (profit cost(£2000) +  counsel cost(£3000) +  detention travel & waiting costs(£10000) + vat(£3000))) + disbursement amount(£1000) + disbursement vat(£200) |
+
+  Scenario: Stage Claims priced with: hourly rates with detention travel & waiting costs  with  nil cliams
+    When the following outcomes are bulkloaded:
+      | # | UFN        | CLAIM_TYPE | OUTCOME_CODE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT |
+      | 1 | 010523/001 | SC         | --           |      01/05/2023 |          01/08/2023 |           0 |            0 | Y             |        10000 |               1000.0 |               200 |
+    When user confirms the submission
+    And user is on the pricing outcome details page
+    Then user should see the following outcomes:
+      | # | UFN        | Value      | Comment                                                                                                                                                                             |
+      | 1 | 010523/001 | £ 1,200.00 | Priced at hourly rates with nil claims (profit cost(£0) +  counsel cost(£0) ignores  detention travel & waiting costs(£10000) + disbursement amount(£1000) + disbursement vat(£200) |
+
+  Scenario: Claims priced with: hourly rates with detention travel & waiting costs
+    When the following outcomes are bulkloaded:
+      | # | UFN        | CLAIM_TYPE | OUTCOME_CODE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT |
+      | 1 | 010523/001 | SC         | --           |      01/05/2023 |          01/08/2023 |           0 |         3000 | Y             |        10000 |               1000.0 |               200 |
+    When user confirms the submission
+    And user is on the pricing outcome details page
+    Then user should see the following outcomes:
+      | # | UFN        | Value       | Comment                                                                                                                                                                         |
+      | 1 | 010523/001 | £ 16,800.00 | Priced at hourly rates (profit cost(£0) +  counsel cost(£3000) +  detention travel & waiting costs(£10000) + vat(£2600))) + disbursement amount(£1000) + disbursement vat(£200) |
 
   Scenario: Claims priced with: hourly rates
     When the following outcomes are bulkloaded:

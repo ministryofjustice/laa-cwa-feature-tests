@@ -16,6 +16,16 @@ Feature: Pricing: EADM: Admission/choice of an institution (non-SEN and non-DDA)
       | # | UFN        | Value    | Comment                                                                            |
       | 1 | 010120/001 | £ 272.00 | Standard fee for MT1 EDAM £272 , priced at fixed fee even though PC+CC > Fixed fee |
 
+  Scenario: Claims priced with: Standard Fee Scheme with nil claims
+    When the following outcomes are bulkloaded:
+      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR |
+      | 1 | 010120/001 | CM         |      01/01/2020 |          31/03/2020 |           0 |            0 | N             |
+    When user confirms the submission
+    And user is on the pricing outcome details page
+    Then user should see the following outcomes:
+      | # | UFN        | Value  | Comment                                                              |
+      | 1 | 010120/001 | £ 0.00 | Standard fee for MT1 EDAM £272 , priced at nil cliams  PC=0 , CC=0   |
+
   Scenario: Claims priced with: Disbursements
     When the following outcomes are bulkloaded:
       | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | VAT_INDICATOR | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT |

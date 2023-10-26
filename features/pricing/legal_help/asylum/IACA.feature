@@ -16,6 +16,16 @@ Feature: Pricing: IACA: Asylum - Stage 2a (CLR)
       | # | UFN        | Value    | Comment                                                                            |
       | 1 | 010120/001 | £ 227.00 | Standard fee for MT1 IACA £227 , priced at fixed fee even though PC+CC > Fixed fee |
 
+  Scenario: Claims priced with: Standard Fee Scheme , nil claims
+    When the following outcomes are bulkloaded:
+      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS |
+      | 1 | 010120/001 | CM         |      01/04/2020 |          31/03/2020 |           0 |            0 | N             |        10000 |
+    When user confirms the submission
+    And user is on the pricing outcome details page
+    Then user should see the following outcomes:
+      | # | UFN        | Value  | Comment                                                                                                |
+      | 1 | 010120/001 | £ 0.00 | Standard fee for MT1 IACA £227 , priced at nil claims as PC, CC is "0", ignores detention travel costs |
+
   Scenario: Claims priced with: Additional Payments
     When the following outcomes are bulkloaded:
       | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | VAT_INDICATOR | CMRH_ORAL | CMRH_TELEPHONE |
