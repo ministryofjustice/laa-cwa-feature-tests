@@ -24,6 +24,7 @@ Feature: PRIE outcome pricing
       | 190719/006 |       49.82 | N             |                       0.00 |               884.12 |                 0.00 |              0.00 |
       | 190719/007 |       49.82 | Y             |                       0.00 |               884.12 |                 0.00 |              0.00 |
       | 190719/008 |       49.82 | Y             |                       0.00 |               884.12 |               100.00 |             20.00 |
+      | 190719/009 |         0   | Y             |                       0.00 |               884.12 |               100.00 |             20.00 |
     When user confirms the submission
     And user is on the pricing outcome details page
     Then user should see the following outcomes:
@@ -36,6 +37,7 @@ Feature: PRIE outcome pricing
       | 6 | 190719/006 | £ 1,454.44 | Fixed fee = 1454.44 where Profit Costs greater than 49.81 also PC+ waiting cost > £933.33, total value = fixed fee(1454.44) = £1454.44                                                                                                                    |
       | 7 | 190719/007 | £ 1,745.33 | Fixed fee = 1454.44 where Profit Costs greater than 49.81 also PC+ waiting cost > £933.33, vat indicator = Y , total value = fixed fee(1454.44) + 20% vat on fixed fee(20% of £1454.44 = £290.89) = £1745.33                                              |
       | 8 | 190719/008 | £ 1,865.33 | Fixed fee = 1454.44 where Profit Costs greater than 49.81 also PC+ waiting cost > £933.33, vat indicator = Y , total value = fixed fee(1454.44) + 20% vat on fixed fee(20% of £1454.44 = £290.89) + Disbursements(£100) + DisbursementVat(£20) = £1865.33 |
+      | 9 | 190719/009 | £ 0.00     | Fixed fee = 0 where Profit Costs less than 49.82 hence total value = £0.00 |
 
   Scenario: Bulkload PRIE outcomes and If profit >= escape threshold, escape case
     And the following outcomes are bulkloaded:
