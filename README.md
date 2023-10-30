@@ -1,4 +1,5 @@
 # CWA Feature Tests
+Status  [![CircleCI](https://dl.circleci.com/status-badge/img/gh/ministryofjustice/laa-cwa-feature-tests/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/ministryofjustice/laa-cwa-feature-tests/tree/main)
 
 Feature tests for CWA are used to replace some of the manual testing.
 
