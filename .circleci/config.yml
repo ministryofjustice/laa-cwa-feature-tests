@@ -4,6 +4,7 @@ orbs:
   aws-cli: circleci/aws-cli@4.0.0
   aws-ecr: circleci/aws-ecr@8.2.1
   helm: circleci/helm@2.0.1
+  slack: circleci/slack@4.12.5
 
 # ------------------
 # EXECUTORS
@@ -50,6 +51,11 @@ jobs:
             --wait --timeout 300s
             export POD_NAME=$(helm list -q | tail -1)
             kubectl logs -f ${POD_NAME}
+      - slack/notify:
+          channel: laa-cwa-testing
+          event: fail
+          mentions: '@pcuam-devs'
+          template: basic_fail_1
 
   Build_and_Push_Docker_Image:
     executor: build-executor
@@ -76,12 +82,34 @@ jobs:
           name: Set sanitised branch name
           command: |
             echo 'export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')' >> "$BASH_ENV"
-            source "$BASH_ENV" 
+            source "$BASH_ENV"
       - aws-ecr/build-and-push-image:
           push-image: true
           tag: ${CIRCLE_SHA1},${SANITISED_BRANCH}
           region: $ECR_REGION
           repo: $ECR_REPOSITORY
+      - slack/notify:
+          channel: laa-cwa-testing
+          event: fail
+          mentions: '@pcuam-devs'
+          template: basic_fail_1
+
+  Notify_Slack_For_Approval:
+    executor: deploy-executor
+    steps:
+      - slack/notify:
+          channel: laa-cwa-testing
+          event: always
+          mentions: '@pcuam-devs'
+          template: basic_on_hold_1
+  Notify_Slack_For_Success:
+    executor: deploy-executor
+    steps:
+      - slack/notify:
+          channel: laa-cwa-testing
+          event: always
+          mentions: '@pcuam-devs'
+          template: success_tagged_deploy_1
 
 
 workflows:
@@ -89,6 +117,10 @@ workflows:
   build_and_push:
     jobs:
       - Build_and_Push_Docker_Image
+      - Notify_Slack_For_Approval:
+          requires:
+            - Build_and_Push_Docker_Image
+    when: on_success
 
   deploy_tests:
     jobs:
@@ -97,3 +129,19 @@ workflows:
       - Deploy_tests_on_cloud_platform:
           requires:
             - hold_test_deployment
+
+  scheduled_ui_test_run:
+    jobs:
+      - Deploy_tests_on_cloud_platform
+      - Notify_Slack_For_Success:
+          requires:
+            - Deploy_tests_on_cloud_platform
+    when: on_success
+    triggers:
+      - schedule:
+          cron: "30 1 * * *"
+          filters:
+           branches:
+            only:
+            - circleci-slack
+
