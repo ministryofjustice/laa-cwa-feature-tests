@@ -53,9 +53,9 @@ jobs:
             kubectl logs -f ${POD_NAME}
       - slack/notify:
           channel: laa-cwa-testing
-          event: fail
+          event: pass
           mentions: '@pcuam-devs'
-          template: basic_fail_1
+          template: basic_success_1
 
   Build_and_Push_Docker_Image:
     executor: build-executor
@@ -109,7 +109,7 @@ jobs:
           channel: laa-cwa-testing
           event: always
           mentions: '@pcuam-devs'
-          template: success_tagged_deploy_1
+          template: basic_success_1
 
 
 workflows:
