@@ -143,5 +143,5 @@ workflows:
           filters:
            branches:
             only:
-            - circleci-slack
+            - main
 
