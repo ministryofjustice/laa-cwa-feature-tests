@@ -26,7 +26,7 @@ If you already have it, you can skip this step.
 Please note: these instructions support the `rbenv` Ruby version management tool
 only. Other tools might be preferable based on your experience.
 
-#### Install rbenv
+### Install rbenv
 
 Install `rbenv` following the steps available at:
 https://github.com/rbenv/rbenv#using-package-managers
