@@ -219,7 +219,7 @@ When('user confirms the submission') do
   @bulk_load_page = BulkLoadPage.new
   @bulk_load_page.wait_until_confirm_submission_visible(wait: 20)
   @bulk_load_page.confirm_submission.double_click
-end
+byebug end
 
 When("user views the submission details") do
   @bulk_load_results_page = BulkLoadResultsPage.new
