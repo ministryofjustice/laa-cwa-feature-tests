@@ -5,6 +5,7 @@ class BulkLoadPage < SitePrism::Page
   element :firm_name, :css, '#FirmName'
   element :bulk_load_file, :xpath, '//*[@id="FileUploadField_oafileUpload"]'
   element :next_button, :css, '#Next_uixr'
+  element :next_button_top, :css, '#Next'
   element :confirm_submission, :xpath, '//*[@id="Yes"]'
   element :errors, :xpath, '/html/body/form/span[2]/div[1]/table/tbody/tr/td/table'
 end
