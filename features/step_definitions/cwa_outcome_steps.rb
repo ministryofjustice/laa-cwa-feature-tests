@@ -25,14 +25,6 @@ end
 
 
   When("user adds outcomes for {string} {string} with fields like this for dulplicate claims:") do |area_of_law, category_of_law, table|
-    # submission_details_page = SubmissionDetailsPage.new
-    # if !submission_details_page.has_text?(/No results found/)
-    #   STDOUT.print 'Cleaning existing outcomes for test reference...'
-    #   submission_details_page.select_all
-    #   submission_details_page.delete_button.click
-    #   submission_details_page.confirm_delete_button.click
-    #   STDOUT.puts ' done.'
-    # end
     outcome_data = table.hashes
     @submissions_saved = outcome_data.size
     outcome_data.each do |outcome|
@@ -46,7 +38,6 @@ end
       )
       outcome['schedule_ref'] = CWAProvider.submission.schedule_ref
       builder.overrides = outcome
-  
       page = AddOutcomePage.new(builder)
       page.add_outcome
     end

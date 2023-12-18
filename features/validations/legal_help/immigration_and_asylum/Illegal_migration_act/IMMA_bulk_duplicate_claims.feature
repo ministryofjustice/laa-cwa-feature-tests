@@ -21,7 +21,7 @@ Feature: duplicate claims validations for Illegal migration act
       | IMMA:IMRN |
     And the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE  | OUTCOME_CODE |
-      | 1 |     001 | 010323/001 | SC         |      01/03/2023 |          01/05/2023  | --           |
+      | 1 |     001 | 010323/001 |SC          |      01/03/2023 |          01/05/2023  | --           |
       | 2 |     001 | 010323/001 | CM         |      01/03/2023 |          01/08/2023  | IA           |
     Then there should be no problem outcomes
     Then user confirms the submission
@@ -71,6 +71,7 @@ Feature: duplicate claims validations for Illegal migration act
       | 4 |     001 | 010323/001 | DC         |      01/03/2023 |          01/07/2023 | --           |
     Then there should be no problem outcomes
     Then user confirms the submission
+
 
   Scenario: 7 - Add new completed matter claim when there is an existing stage disbursement claim with same UFN, UCN
     Given the following Matter Types are chosen:
@@ -145,11 +146,11 @@ Feature: duplicate claims validations for Illegal migration act
       | IMMA:IMRN |
     And the following outcomes are bulkloaded and confirmed:
       | # | CASE_ID | client_date_of_birth | ucn             | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 |     001 |           14/06/1962 | 14091962/T/PERS | 010323/001 | CM         |      01/03/2023 |          01/05/2023 | IA           |
+      | 1 |     001 |           14/06/1962 | 14061962/T/PERS | 010323/001 | CM         |      01/03/2023 |          01/05/2023 | IA           |
     When user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#4" again
     And the following outcomes are bulkloaded:
       | # | CASE_ID | client_date_of_birth | ucn             | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 2 |     001 |           14/06/1963 | 14091963/T/PERS | 010323/001 | CM         |      01/03/2023 |          01/08/2023 | IB           |
+      | 2 |     001 |           14/06/1963 | 14061963/T/PERS | 010323/001 | CM         |      01/03/2023 |          01/08/2023 | IB           |
     Then user should see the outcome results page
     And the following errors:
       | Matter Type / Stage Reached | UFN        | Client Surname | Error Type                   | Description                                                                                                                                         |
@@ -160,11 +161,11 @@ Feature: duplicate claims validations for Illegal migration act
       | IMMA:IMRN |
     And the following outcomes are bulkloaded and confirmed:
       | # | CASE_ID | client_date_of_birth | ucn             | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 |     001 |           14/06/1962 | 14091962/T/PERS | 010323/001 | SC         |      01/03/2023 |          01/05/2023 | --           |
+      | 1 |     001 |           14/06/1962 | 14061962/T/PERS | 010323/001 | SC         |      01/03/2023 |          01/05/2023 | --           |
     When user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#4" again
     And the following outcomes are bulkloaded:
       | # | CASE_ID | client_date_of_birth | ucn             | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 2 |     001 |           14/06/1963 | 14091963/T/PERS | 010323/001 | SC         |      01/03/2023 |          01/08/2023 | --           |
+      | 2 |     001 |           14/06/1963 | 14061963/T/PERS | 010323/001 | SC         |      01/03/2023 |          01/08/2023 | --           |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE                                                                                              |
       | 1 | This claim contains a different UCN, to one reported in a previous submission, in which the same UFN was reported. |
@@ -174,11 +175,11 @@ Feature: duplicate claims validations for Illegal migration act
       | IMMA:IMRN |
     And the following outcomes are bulkloaded and confirmed:
       | # | CASE_ID | client_date_of_birth | ucn             | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 |     001 |           14/06/1962 | 14091962/T/PERS | 010323/001 | DC         |      01/03/2023 |          01/05/2023 | --           |
+      | 1 |     001 |           14/06/1962 | 14061962/T/PERS | 010323/001 | DC         |      01/03/2023 |          01/05/2023 | --           |
     When user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#4" again
     And the following outcomes are bulkloaded:
       | # | CASE_ID | client_date_of_birth | ucn             | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 2 |     001 |           14/06/1963 | 14091963/T/PERS | 010323/001 | DC         |      01/03/2023 |          01/08/2023 | --           |
+      | 2 |     001 |           14/06/1963 | 14061963/T/PERS | 010323/001 | DC         |      01/03/2023 |          01/08/2023 | --           |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE                                                                                              |
       | 1 | This claim contains a different UCN, to one reported in a previous submission, in which the same UFN was reported. |
@@ -302,13 +303,13 @@ Feature: duplicate claims validations for Illegal migration act
       | IMXL:IIRC |
     And the following outcomes are bulkloaded and confirmed:
       | # | CASE_ID | UFN        | client_date_of_birth | ucn             | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 |     001 | 010323/001 |           14/06/1962 | 14091962/T/PERS | SC         |      01/03/2023 |          01/05/2023 | --           |
+      | 1 |     001 | 010323/001 |           14/06/1962 | 14061962/T/PERS | SC         |      01/03/2023 |          01/05/2023 | --           |
     Given the following Matter Types are chosen:
       | IMMA:IMRN |
     When user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#4" again
     And the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | client_date_of_birth | ucn             | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 2 |     001 | 010323/001 |           14/06/1963 | 14091963/T/PERS | DC         |      01/03/2023 |          01/08/2023 | --           |
+      | 2 |     001 | 010323/001 |           14/06/1963 | 14061963/T/PERS | DC         |      01/03/2023 |          01/08/2023 | --           |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE                                                                                              |
       | 1 | This claim contains a different UCN, to one reported in a previous submission, in which the same UFN was reported. |
@@ -318,13 +319,13 @@ Feature: duplicate claims validations for Illegal migration act
       | IMXL:IIRC |
     And the following outcomes are bulkloaded and confirmed:
       | # | CASE_ID | UFN        | client_date_of_birth | ucn             | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 |     001 | 010323/001 |           14/06/1962 | 14091962/T/PERS | SC         |      01/03/2023 |          01/05/2023 | --           |
+      | 1 |     001 | 010323/001 |           14/06/1962 | 14061962/T/PERS | SC         |      01/03/2023 |          01/05/2023 | --           |
     Given the following Matter Types are chosen:
       | IMMA:IMRN |
     When user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#4" again
     And the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | client_date_of_birth | ucn             | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 2 |     001 | 010323/001 |           14/06/1963 | 14091963/T/PERS | CM         |      01/03/2023 |          01/08/2023 | IA           |
+      | 2 |     001 | 010323/001 |           14/06/1963 | 14061963/T/PERS | CM         |      01/03/2023 |          01/08/2023 | IA           |
     Then user should see the outcome results page
     And the following errors:
       | Matter Type / Stage Reached | UFN        | Client Surname | Error Type                   | Description                                                                                                                                         |
@@ -335,13 +336,13 @@ Feature: duplicate claims validations for Illegal migration act
       | IMXL:IIRC |
     And the following outcomes are bulkloaded and confirmed:
       | # | CASE_ID | UFN        | client_date_of_birth | ucn             | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 |     001 | 010323/001 |           14/06/1962 | 14091962/T/PERS | DC         |      01/03/2023 |          01/05/2023 | --           |
+      | 1 |     001 | 010323/001 |           14/06/1962 | 14061962/T/PERS | DC         |      01/03/2023 |          01/05/2023 | --           |
     Given the following Matter Types are chosen:
       | IMMA:IMRN |
     When user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#4" again
     And the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | client_date_of_birth | ucn             | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 2 |     001 | 010323/001 |           14/06/1963 | 14091963/T/PERS | DC         |      01/03/2023 |          01/08/2023 | --           |
+      | 2 |     001 | 010323/001 |           14/06/1963 | 14061963/T/PERS | DC         |      01/03/2023 |          01/08/2023 | --           |
     Then user should see the outcome results page
     And the following errors:
       | Matter Type / Stage Reached | UFN        | Client Surname | Error Type              | Description                                                                                                        |
@@ -352,13 +353,13 @@ Feature: duplicate claims validations for Illegal migration act
       | IMXL:IIRC |
     And the following outcomes are bulkloaded and confirmed:
       | # | CASE_ID | UFN        | client_date_of_birth | ucn             | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 |     001 | 010323/001 |           14/06/1962 | 14091962/T/PERS | SC         |      01/03/2023 |          01/05/2023 | --           |
+      | 1 |     001 | 010323/001 |           14/06/1962 | 14061962/T/PERS | SC         |      01/03/2023 |          01/05/2023 | --           |
     Given the following Matter Types are chosen:
       | IMMA:IMRN |
     When user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#4" again
     And the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | client_date_of_birth | ucn             | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 2 |     001 | 010323/001 |           14/06/1963 | 14091963/T/PERS | SC         |      01/03/2023 |          01/08/2023 | --           |
+      | 2 |     001 | 010323/001 |           14/06/1963 | 14061963/T/PERS | SC         |      01/03/2023 |          01/08/2023 | --           |
     Then user should see the outcome results page
     And the following errors:
       | Matter Type / Stage Reached | UFN        | Client Surname | Error Type              | Description                                                                                                        |
@@ -369,13 +370,13 @@ Feature: duplicate claims validations for Illegal migration act
       | IMMA:IMRN |
     And the following outcomes are bulkloaded and confirmed:
       | # | CASE_ID | UFN        | client_date_of_birth | ucn             | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 |     001 | 010323/001 |           14/06/1962 | 14091962/T/PERS | SC         |      01/03/2023 |          01/05/2023 | --           |
+      | 1 |     001 | 010323/001 |           14/06/1962 | 14061962/T/PERS | SC         |      01/03/2023 |          01/05/2023 | --           |
     Given the following Matter Types are chosen:
       | IMXL:IIRC |
     When user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#4" again
     And the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | client_date_of_birth | ucn             | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 2 |     001 | 010323/001 |           14/06/1963 | 14091963/T/PERS | CM         |      01/03/2023 |          01/08/2023 | IA           |
+      | 2 |     001 | 010323/001 |           14/06/1963 | 14061963/T/PERS | CM         |      01/03/2023 |          01/08/2023 | IA           |
     Then user should see the outcome results page
     And the following errors:
       | Matter Type / Stage Reached | UFN        | Client Surname | Error Type                        | Description                                                                                                                                         |
@@ -386,13 +387,13 @@ Feature: duplicate claims validations for Illegal migration act
       | IMMA:IMRN |
     And the following outcomes are bulkloaded and confirmed:
       | # | CASE_ID | UFN        | client_date_of_birth | ucn             | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 |     001 | 010323/001 |           14/06/1962 | 14091962/T/PERS | CM         |      01/03/2023 |          01/05/2023 | IA           |
+      | 1 |     001 | 010323/001 |           14/06/1962 | 14061962/T/PERS | CM         |      01/03/2023 |          01/05/2023 | IA           |
     Given the following Matter Types are chosen:
       | IMXL:IIRC |
     When user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#4" again
     And the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | client_date_of_birth | ucn             | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 2 |     001 | 010323/001 |           14/06/1963 | 14091963/T/PERS | CM         |      01/03/2023 |          01/08/2023 | IA           |
+      | 2 |     001 | 010323/001 |           14/06/1963 | 14061963/T/PERS | CM         |      01/03/2023 |          01/08/2023 | IA           |
     Then user should see the outcome results page
     And the following errors:
       | Matter Type / Stage Reached | UFN        | Client Surname | Error Type                        | Description                                                                                                                                                                                                                                                                                                                                                                                                         |
@@ -403,13 +404,13 @@ Feature: duplicate claims validations for Illegal migration act
       | IMMA:IMRN |
     And the following outcomes are bulkloaded and confirmed:
       | # | CASE_ID | UFN        | client_date_of_birth | ucn             | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 |     001 | 010323/001 |           14/06/1962 | 14091962/T/PERS | SC         |      01/03/2023 |          01/05/2023 | --           |
+      | 1 |     001 | 010323/001 |           14/06/1962 | 14061962/T/PERS | SC         |      01/03/2023 |          01/05/2023 | --           |
     Given the following Matter Types are chosen:
       | IMXL:IIRC |
     When user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#4" again
     And the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | client_date_of_birth | ucn             | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 2 |     001 | 010323/001 |           14/06/1963 | 14091963/T/PERS | SC         |      01/03/2023 |          01/08/2023 | --           |
+      | 2 |     001 | 010323/001 |           14/06/1963 | 14061963/T/PERS | SC         |      01/03/2023 |          01/08/2023 | --           |
     Then user should see the outcome results page
     And the following errors:
       | Matter Type / Stage Reached | UFN        | Client Surname | Error Type              | Description                                                                                                        |
@@ -420,13 +421,13 @@ Feature: duplicate claims validations for Illegal migration act
       | IMMA:IMRN |
     And the following outcomes are bulkloaded and confirmed:
       | # | CASE_ID | UFN        | client_date_of_birth | ucn             | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 |     001 | 010323/001 |           14/06/1962 | 14091962/T/PERS | DC         |      01/03/2023 |          01/05/2023 | --           |
+      | 1 |     001 | 010323/001 |           14/06/1962 | 14061962/T/PERS | DC         |      01/03/2023 |          01/05/2023 | --           |
     Given the following Matter Types are chosen:
       | IMXL:IIRC |
     When user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#4" again
     And the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | client_date_of_birth | ucn             | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 2 |     001 | 010323/001 |           14/06/1963 | 14091963/T/PERS | DC         |      01/03/2023 |          01/08/2023 | --           |
+      | 2 |     001 | 010323/001 |           14/06/1963 | 14061963/T/PERS | DC         |      01/03/2023 |          01/08/2023 | --           |
     Then user should see the outcome results page
     And the following errors:
       | Matter Type / Stage Reached | UFN        | Client Surname | Error Type              | Description                                                                                                        |
@@ -437,11 +438,11 @@ Feature: duplicate claims validations for Illegal migration act
       | IMMA:IMRN |
     And the following outcomes are bulkloaded and confirmed:
       | # | CASE_ID | client_date_of_birth | ucn             | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 |     001 |           14/06/1962 | 14091962/T/PERS | 010323/001 | SC         |      01/03/2023 |          01/05/2023 | --           |
+      | 1 |     001 |           14/06/1962 | 14061962/T/PERS | 010323/001 | SC         |      01/03/2023 |          01/05/2023 | --           |
     When user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#4" again
     And the following outcomes are bulkloaded:
       | # | CASE_ID | client_date_of_birth | ucn             | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 2 |     001 |           14/06/1963 | 14091963/T/PERS | 010323/001 | CM         |      01/03/2023 |          01/08/2023 | IA           |
+      | 2 |     001 |           14/06/1963 | 14061963/T/PERS | 010323/001 | CM         |      01/03/2023 |          01/08/2023 | IA           |
     Then user should see the outcome results page
     And the following errors:
       | Matter Type / Stage Reached | UFN        | Client Surname | Error Type                   | Description                                                                                                                                         |
@@ -469,12 +470,32 @@ Feature: duplicate claims validations for Illegal migration act
       | IMMA:IMRN |
     And the following outcomes are bulkloaded and confirmed:
       | # | CASE_ID | client_date_of_birth | ucn             | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 |     001 |           14/06/1962 | 14091962/T/PERS | 010323/001 | SC         |      01/03/2023 |          01/05/2023 | --           |
+      | 1 |     001 |           14/06/1962 | 14061962/T/PERS | 010323/001 | SC         |      01/03/2023 |          01/05/2023 | --           |
     When user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#4" again
     And the following outcomes are bulkloaded:
       | # | CASE_ID | client_date_of_birth | ucn             | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 2 |     001 |           14/06/1963 | 14091963/T/PERS | 010323/001 | DC         |      01/03/2023 |          01/08/2023 | --           |
+      | 2 |     001 |           14/06/1963 | 14061963/T/PERS | 010323/001 | DC         |      01/03/2023 |          01/08/2023 | --           |
     Then user should see the outcome results page
     And the following errors:
       | Matter Type / Stage Reached | UFN        | Client Surname | Error Type                   | Description                                                                                                                                         |
       | IMMA:IMRN                   | 010323/001 | Person 001     | IMA 2023 UCN Validation      | This claim contains a different UCN, to one reported in a previous submission, in which the same UFN was reported.                                  |
+
+
+
+  Scenario: 2 - Add new completed matter claim when there is an existing stage claim with same UFN, UCN
+    Given the following Matter Types are chosen:
+      | IMMA:IMRN |
+    And the following outcomes are bulkloaded:
+      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE  | OUTCOME_CODE |procurement_area|access_point|
+      | 1 |     001 | 010323/001 | CM         |      01/03/2023 |          01/08/2023  | IA           |||
+    Then there should be no problem outcomes
+    Then user confirms the submission
+
+    Scenario: 2 - Add new completed matter claim when there is an existing stage claim with same UFN, UCN
+    Given the following Matter Types are chosen:
+      | IMMA:IMRN |
+    And the following outcomes are bulkloaded:
+      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE  | OUTCOME_CODE |
+      | 1 |     001 | 020223/001 | SC         |      02/02/2023 |          01/08/2023  | --           |
+    Then there should be no problem outcomes
+    Then user confirms the submission

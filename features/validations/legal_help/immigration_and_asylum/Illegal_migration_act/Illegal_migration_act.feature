@@ -31,24 +31,23 @@ Feature: Validation for Illegal Immigration Act
   @delete_outcome_after @manual_submission @valid
   Scenario Outline: Add valid asylum claim for code combination IMMA:IMRN. Completed Matter Claims
     Case start date has to be on or after 01/01/2024. Date is set to 01/05/2023 for testing purpose
-    Valid outcome codes are: -- IA, IB, IC, ID, IE, IF, IG, IU, IV, IW, IX, IY, IZ
+    Valid outcome codes are: IA, IB, IC, ID, IE, IF, IG, IU, IV, IW, IX, IY, IZ
 
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
       | case_id | matter_type | case_start_date | outcome_code |
-      |     001 | IMMA:IMRN   |      01/05/2023 | --           |
-      |     002 | IMMA:IMRN   |      01/05/2023 | IA           |
-      |     003 | IMMA:IMRN   |      01/05/2023 | IB           |
-      |     004 | IMMA:IMRN   |      01/05/2023 | IC           |
-      |     005 | IMMA:IMRN   |      01/05/2023 | ID           |
-      |     006 | IMMA:IMRN   |      01/05/2023 | IE           |
-      |     007 | IMMA:IMRN   |      01/05/2023 | IF           |
-      |     008 | IMMA:IMRN   |      01/05/2023 | IG           |
-      |     010 | IMMA:IMRN   |      01/05/2023 | IU           |
-      |     011 | IMMA:IMRN   |      01/05/2023 | IV           |
-      |     012 | IMMA:IMRN   |      01/05/2023 | IW           |
-      |     013 | IMMA:IMRN   |      01/05/2023 | IX           |
-      |     014 | IMMA:IMRN   |      01/05/2023 | IY           |
-      |     015 | IMMA:IMRN   |      01/05/2023 | IZ           |
+      |     001 | IMMA:IMRN   |      01/05/2023 | IA           |
+      |     002 | IMMA:IMRN   |      01/05/2023 | IB           |
+      |     003 | IMMA:IMRN   |      01/05/2023 | IC           |
+      |     004 | IMMA:IMRN   |      01/05/2023 | ID           |
+      |     005 | IMMA:IMRN   |      01/05/2023 | IE           |
+      |     006 | IMMA:IMRN   |      01/05/2023 | IF           |
+      |     007 | IMMA:IMRN   |      01/05/2023 | IG           |
+      |     008 | IMMA:IMRN   |      01/05/2023 | IU           |
+      |     009 | IMMA:IMRN   |      01/05/2023 | IV           |
+      |     010 | IMMA:IMRN   |      01/05/2023 | IW           |
+      |     011 | IMMA:IMRN   |      01/05/2023 | IX           |
+      |     012 | IMMA:IMRN   |      01/05/2023 | IY           |
+      |     013 | IMMA:IMRN   |      01/05/2023 | IZ           |
     Then the outcome saves successfully
 
   @delete_outcome_after @manual_submission @valid
@@ -94,14 +93,14 @@ Feature: Validation for Illegal Immigration Act
   Scenario: completed matter claim with counsel cost zero
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
       | case_id | matter_type | case_start_date | excl_case_funding_ref | counsel_cost | work_concluded_date | claim_type | ho_ucn   | ho_interview | outcome_code | procurement_area | access_point |
-      |     001 | IMMA:IMRN   |      01/05/2023 |             1234567AB |            0 |          01/08/2023 | CM         | 12345678 |            0 | --           | PA20000          | AP20000      |
+      |     001 | IMMA:IMRN   |      01/05/2023 |             1234567AB |            0 |          01/08/2023 | CM         | 12345678 |            0 | IA           | PA20000          | AP20000      |
     Then the outcome saves successfully
 
   @delete_outcome_after @manual_submission @valid
   Scenario: completed matter claim with counsel cost non zero
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
       | case_id | matter_type | case_start_date | excl_case_funding_ref | counsel_cost | work_concluded_date | claim_type | ho_ucn   | ho_interview | outcome_code | procurement_area | access_point |
-      |     001 | IMMA:IMRN   |      01/05/2023 |             1234567AB |            1 |          01/08/2023 | CM         | 12345678 |            0 | --           | PA20000          | AP20000      |
+      |     001 | IMMA:IMRN   |      01/05/2023 |             1234567AB |            1 |          01/08/2023 | CM         | 12345678 |            0 | IB           | PA20000          | AP20000      |
     Then the outcome does not save and the error message "<error message>" appears
 
     Examples: 

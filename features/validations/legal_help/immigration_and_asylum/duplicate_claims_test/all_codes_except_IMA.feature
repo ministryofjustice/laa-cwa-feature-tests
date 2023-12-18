@@ -140,7 +140,7 @@ Feature: duplicate claims validations for other codes not IMMA:IMRN
       | 2 |     001 | 010323/001 | CM         |      01/03/2023 |          01/08/2023 | IA           |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE                                                                                                                                                                                                                                                                                                                                                                                                   |
-      | 1 | The outcome you have entered has the same UFN as another outcome in your submission but breaks one of the following rules:\nAll outcomes with the same UFN must be in the same category of law.\nUFNs can only be repeated for Immigration or Mental Health stage bills.\nCases with matching UFNs must also have matching UCNs (Unique Client Numbers).\nPlease correct your outcome so it adheres to all these rules. |
+      | 1 | The outcome you have entered has the same UFN as another outcome in your submission but breaks one of the following rules: All outcomes with the same UFN must be in the same category of law. UFNs can only be repeated for Immigration or Mental Health stage bills. Cases with matching UFNs must also have matching UCNs (Unique Client Numbers). Please correct your outcome so it adheres to all these rules. |
 
   Scenario: Add new completed matter claim with different immigration matter codes when there is an existing completed matter with same UFN, UCN for IMLB:IDOM with different outcome code
     Given the following Matter Types are chosen:

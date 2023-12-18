@@ -6,35 +6,23 @@ Feature: Pricing: IMMA: Illegal Immigration Act
     Given the following Matter Types are chosen:
       | IMMA:IMRN |
 
-  Scenario: Completed matter claim priced with: hourly rates Scheme with pc and zero cc ,with disbursement and disbursement vat
+  Scenario: Claims priced with: hourly rates with detention travel & waiting costs
     When the following outcomes are bulkloaded:
-      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT |
-      | 1 | 010523/001 | CM         |      01/05/2023 |          01/08/2023 |          10 |            0 | N             |               1500.0 |               300 |
-    When user confirms the submission
-    And user is on the pricing outcome details page
-    Then user should see the following outcomes:
-      | # | UFN        | Value      | Comment                                                                                                          |
-      | 1 | 010523/001 | £ 1,810.00 | Priced at hourly rates (profit cost(£10) +  counsel cost(£0)) + disbursement vat(£1500) + disbursement vat(£300) |
+      | # | UFN        | CLAIM_TYPE | OUTCOME_CODE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT |
+      | 1 | 010523/001 | DC         | --           |      01/05/2023 |          01/08/2023 |           0 |            0 | N             |            0 |                 1501 |                 0 |
+    Then user should see the outcome results page
+    And the following errors:
+      | Matter Type / Stage Reached | UFN        | Client Surname | Error Type                               | Description                                                                      |
+      | IMMA:IMRN                   | 010323/001 | Person 001     | IMA 2023 Completed Claim Type Validation | A Completed claim has already been submitted in which the same UFN was reported. |
 
-  Scenario: Stage claim priced with: hourly rates with disbursement > 1501
-    When the following outcomes are bulkloaded:
-      | # | UFN        | CLAIM_TYPE | OUTCOME_CODE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT | PRIOR_AUTHORITY_REF |
-      | 1 | 010523/001 | SC         | --           |      01/05/2023 |          01/08/2023 |           0 |            0 | N             |            0 |                 1501 |                 0 | A000000             |
-    When user confirms the submission
-    And user is on the pricing outcome details page
-    Then user should see the following outcomes:
-      | # | UFN        | Value      | Comment                                                                                                       |
-      | 1 | 010523/001 | £ 1,501.00 | Priced at hourly rates (profit cost(£0) +  counsel cost(£0)) + disbursement vat(£1501) + disbursement vat(£0) |
-
-  Scenario: Disbursement claim priced with: hourly rates with detention travel & waiting costs
+  Scenario: Claims priced with: hourly rates with detention travel & waiting costs
     When the following outcomes are bulkloaded:
       | # | UFN        | CLAIM_TYPE | OUTCOME_CODE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT | PRIOR_AUTHORITY_REF |
       | 1 | 010523/001 | DC         | --           |      01/05/2023 |          01/08/2023 |           0 |            0 | N             |            0 |                 1501 |                 0 | A000000             |
-    When user confirms the submission
-    And user is on the pricing outcome details page
-    Then user should see the following outcomes:
-      | # | UFN        | Value      | Comment                                                                                                       |
-      | 1 | 010523/001 | £ 1,501.00 | Priced at hourly rates (profit cost(£0) +  counsel cost(£0)) + disbursement vat(£1501) + disbursement vat(£0) |
+    Then user should see the outcome results page
+    And the following errors:
+      | Matter Type / Stage Reached | UFN        | Client Surname | Error Type                               | Description                                                                      |
+      | IMMA:IMRN                   | 010323/001 | Person 001     | IMA 2023 Completed Claim Type Validation | A Completed claim has already been submitted in which the same UFN was reported. |
 
   Scenario: 17 - Claims priced with: hourly rates with detention travel & waiting costs
     When the following outcomes are bulkloaded:
@@ -43,20 +31,18 @@ Feature: Pricing: IMMA: Illegal Immigration Act
       | 2 |     001 | 010523/001 | DC         | --           |      01/05/2023 |          01/08/2023 |           0 |            0 | N             |            0 |                    0 |                 0 |                     |
     Then user should see the outcome results page
     And the following errors:
-      | Matter Type / Stage Reached | UFN        | Client Surname | Error Type                      | Description                                                                                                                                                                                                                                                                                 |
-      | IMMA:IMRN                   | 010523/001 | Person 001     | IMA 2023 Profit Cost Validation | Prior Authority is required to exceed the profit costs limit for this type of work. The total profit costs reported on this matter, across multiple claims, exceeds £3000 therefore please enter a valid prior authority number or reduce your profit costs claim to the appropriate limit. |
+      | Matter Type / Stage Reached | UFN        | Client Surname | Error Type                               | Description                                                                      |
+      | IMMA:IMRN                   | 010323/001 | Person 001     | IMA 2023 Completed Claim Type Validation | A Completed claim has already been submitted in which the same UFN was reported. |
 
   Scenario: 18 - Claims priced with: hourly rates with detention travel & waiting costs
     When the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | CLAIM_TYPE | OUTCOME_CODE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT | PRIOR_AUTHORITY_REF |
       | 1 |     001 | 010523/001 | SC         | --           |      01/05/2023 |          30/05/2023 |        3001 |            0 | N             |            0 |                 1501 |                 0 | A000000             |
       | 2 |     001 | 010523/001 | DC         | --           |      01/05/2023 |          01/08/2023 |           0 |            0 | N             |            0 |                    0 |                 0 |                     |
-    When user confirms the submission
-    And user is on the pricing outcome details page
-    Then user should see the following outcomes:
-      | # | UFN        | Value      | Comment                                                                                   |
-      | 1 | 010523/001 | £ 0.00    | Priced at hourly rates (profit cost(£3001) +  counsel cost(£0)) + disbursement vat(£1501) |
-      | 2 | 010523/001 | £ 4,502.00 | Priced at hourly rates (profit cost(£3001) +  counsel cost(£0)) + disbursement vat(£1501) |
+    Then user should see the outcome results page
+    And the following errors:
+      | Matter Type / Stage Reached | UFN        | Client Surname | Error Type                               | Description                                                                      |
+      | IMMA:IMRN                   | 010323/001 | Person 001     | IMA 2023 Completed Claim Type Validation | A Completed claim has already been submitted in which the same UFN was reported. |
 
   Scenario: 19 - Claims priced with: hourly rates with detention travel & waiting costs
     When the following outcomes are bulkloaded:
