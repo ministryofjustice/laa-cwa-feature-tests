@@ -105,7 +105,6 @@ Then('the following results are expected:') do |table|
     expect(page).to have_content('Bulk Load Information', wait: 30)
     expect(error).to have_content(expected, wait:20)
   end
-  byebug
 end
 
 When('user bulk loads {string} for the test firm') do |file|
@@ -206,7 +205,6 @@ Then('the following errors:') do |table|
       expect(actual_value).to eq(expected_value)
     end
   end
-  byebug
 end
 
 When('a user successfully bulk loads {string} for the test firm') do |file|
