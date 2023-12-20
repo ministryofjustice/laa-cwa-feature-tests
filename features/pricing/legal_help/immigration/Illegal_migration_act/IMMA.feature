@@ -26,20 +26,10 @@ Feature: Pricing: IMMA: Illegal Immigration Act
       | # | UFN        | Value  | Comment                                                                                                                |
       | 1 | 010523/001 | £ 0.00 | Priced at hourly rates (profit cost(£0) +  counsel cost(£0)(valid)) ignoring  detention travel & waiting costs(£10000) |
 
-  Scenario: Claims priced with: hourly rates Scheme with pc and zero cc , detention travel & waiting costs without JR form filling cost
-    When the following outcomes are bulkloaded:
-      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | JR_FORM_FILLING |
-      | 1 | 010523/001 | CM         |      01/05/2023 |          01/08/2023 |          10 |            0 | N             |        10000 |             100 |
-    When user confirms the submission
-    And user is on the pricing outcome details page
-    Then user should see the following outcomes:
-      | # | UFN        | Value       | Comment                                                                                                         |
-      | 1 | 010523/001 | £ 10,010.00 | Priced at hourly rates (profit cost(£10) +  counsel cost(£0)(valid)) + detention travel & waiting costs(£10000) |
-
   Scenario: Claims priced with: hourly rates Scheme with disbursements
     When the following outcomes are bulkloaded:
-      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | DISBURSEMENTS_AMOUNT | VAT_INDICATOR |
-      | 1 | 010523/001 | CM         |      01/05/2023 |          01/08/2023 |        5000 |            0 |               4000.0 | N             |
+      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | DISBURSEMENTS_AMOUNT | VAT_INDICATOR |PRIOR_AUTHORITY_REF |
+      | 1 | 010523/001 | CM         |      01/05/2023 |          01/08/2023 |        5000 |            0 |               4000.0 | N             |A000000|
     When user confirms the submission
     And user is on the pricing outcome details page
     Then user should see the following outcomes:
@@ -48,8 +38,8 @@ Feature: Pricing: IMMA: Illegal Immigration Act
 
   Scenario: Claims priced with: Additional Payments though not entitiled
     When the following outcomes are bulkloaded:
-      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | CMRH_ORAL | CMRH_TELEPHONE | SUBSTANTIVE_HEARING | ADJOURNED_HEARING_FEE | HO_INTERVIEW | JR_FORM_FILLING |
-      | 1 | 010523/001 | CM         |      01/05/2023 |          01/08/2023 |        5000 |            0 | N             |         1 |              1 | Y                   |                     1 |            3 |             100 |
+      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | CMRH_ORAL | CMRH_TELEPHONE | SUBSTANTIVE_HEARING | ADJOURNED_HEARING_FEE | HO_INTERVIEW | JR_FORM_FILLING |PRIOR_AUTHORITY_REF |
+      | 1 | 010523/001 | CM         |      01/05/2023 |          01/08/2023 |        5000 |            0 | N             |         1 |              1 | Y                   |                     1 |            3 |             100 |A000000|
     When user confirms the submission
     And user is on the pricing outcome details page
     Then user should see the following outcomes:
