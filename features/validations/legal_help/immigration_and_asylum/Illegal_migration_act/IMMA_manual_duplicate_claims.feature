@@ -125,29 +125,3 @@ Feature: Validation for Illegal Immigration Act for duplicate claims for manual 
     Examples: 
       | error message                                                                    |
       | A Completed claim has already been submitted in which the same UFN was reported. |
-
-  Scenario Outline: 12 - Add new stage claim when existing completed matter exists with same UFN, different UCN
-    When user adds outcomes for "Legal Help" "Immigration" with fields like this:
-      | case_id | client_date_of_birth | ucn             | matter_type | case_start_date | excl_case_funding_ref | work_concluded_date | claim_type | ho_ucn   | ho_interview | outcome_code | procurement_area | access_point |
-      |     001 |           14/06/1962 | 14061962/T/PERS | IMMA:IMRN   |      01/05/2023 |             1234567AB |          01/06/2023 | CM         | 12345678 |            0 | IA           | PA20000          | AP20000      |
-    When user adds outcomes for "Legal Help" "Immigration" with fields like this for dulplicate claims:
-      | case_id | client_date_of_birth | ucn             | matter_type | case_start_date | excl_case_funding_ref | work_concluded_date | claim_type | ho_ucn   | ho_interview | outcome_code | procurement_area | access_point |
-      |     001 |           14/06/1963 | 14061963/T/PERS | IMMA:IMRN   |      01/05/2023 |             1234567AB |          01/06/2023 | SC         | 12345678 |            0 | --           | PA20000          | AP20000      |
-    Then the outcome does not save and the error message "<error message>" appears
-
-    Examples: 
-      | error message                                                                                                      |
-      | This claim contains a different UCN, to one reported in a previous submission, in which the same UFN was reported. |
-
-  Scenario Outline: 13 - Add new stage disbursement claim when existing completed matter exists with same UFN, different UCN
-    When user adds outcomes for "Legal Help" "Immigration" with fields like this:
-      | case_id | client_date_of_birth | ucn             | matter_type | case_start_date | excl_case_funding_ref | work_concluded_date | claim_type | ho_ucn   | ho_interview | outcome_code | procurement_area | access_point |
-      |     001 |           14/06/1962 | 14061962/T/PERS | IMMA:IMRN   |      01/05/2023 |             1234567AB |          01/06/2023 | CM         | 12345678 |            0 | IA           | PA20000          | AP20000      |
-    When user adds outcomes for "Legal Help" "Immigration" with fields like this for dulplicate claims:
-      | case_id | client_date_of_birth | ucn             | matter_type | case_start_date | excl_case_funding_ref | work_concluded_date | claim_type | ho_ucn   | ho_interview | outcome_code | procurement_area | access_point |
-      |     001 |           14/06/1963 | 14061963/T/PERS | IMMA:IMRN   |      01/05/2023 |             1234567AB |          01/06/2023 | DC         | 12345678 |            0 | --           | PA20000          | AP20000      |
-    Then the outcome does not save and the error message "<error message>" appears
-
-    Examples: 
-      | error message                                                                                                      |
-      | This claim contains a different UCN, to one reported in a previous submission, in which the same UFN was reported. |

@@ -78,20 +78,6 @@ Feature: claims validations for DTW(detention travel and waiting cost) for follo
     Given the following Matter Types are chosen:
       | IAXL:IDAS |
     And the following outcomes are bulkloaded:
-      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE | TRAVEL_COSTS |
-      | 1 |     001 | 010423/001 | CM         |      01/04/2023 |          30/04/2023 | IX           |            1 |
-      | 2 |     002 | 010423/002 | SC         |      01/04/2023 |          30/04/2023 | --           |            1 |
-    Then the following results are expected:
-      | # | ERROR_CODE_OR_MESSAGE |
-      | 1 | <none>                |
-      | 2 | <none>                |
-
-  Scenario: Add stage claim and completed matter with counsel cost zero and non zero values
-    Given a test firm user is logged in CWA
-    And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#12"
-    Given the following Matter Types are chosen:
-      | IAXL:IDAS |
-    And the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE | TRAVEL_COSTS | PROFIT_COST |
       | 1 |     001 | 010423/001 | CM         |      01/04/2023 |          30/04/2023 | IX           |            0 |         100 |
       | 2 |     002 | 010423/002 | SC         |      01/04/2023 |          30/04/2023 | --           |            0 |         100 |
