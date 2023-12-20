@@ -62,7 +62,7 @@ Feature: Stage billing validations for Asylum and Immigration (this is set to 1 
       | 1 | Stage disbursement claims can only be claimed where 1 months have elapsed from the date the matter was opened. Please refer to the guidelines. |
       | 2 | <none>                                                                                                                                         |
 
-  Scenario: Add new stage disbursement claim *before* 3 months have elapsed since the claim date of the previous stage disbursment claim
+  Scenario: Add new stage disbursement claim *before* 1 months have elapsed since the claim date of the previous stage disbursment claim
     Given the following Matter Types are chosen:
       | IMCC:IDOM |
     And the following outcomes are bulkloaded and confirmed:
