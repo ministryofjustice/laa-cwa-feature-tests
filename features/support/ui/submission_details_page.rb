@@ -1,6 +1,7 @@
 class SubmissionDetailsOutcomeSection < SitePrism::Section
   element :select_checkbox, :xpath, "*/input[@title = 'Select']"
   element :ufn, :xpath, ".//*[contains(@title,'UFN')]"
+  element :case_reference, :xpath, ".//*[contains(@title,'Case Reference')]"
   element :stage_reached, :xpath, ".//*[contains(@title,'Stage Reached')]"
   element :value, :xpath, ".//*[contains(@title,'Value')]"
   element :escape_fee_img, :xpath, ".//*[contains(@title,'Escape Fee Case')]"

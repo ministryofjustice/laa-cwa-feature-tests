@@ -23,6 +23,27 @@ Then('the outcome saves successfully') do
   end
 end
 
+
+  When("user adds outcomes for {string} {string} with fields like this for dulplicate claims:") do |area_of_law, category_of_law, table|
+    outcome_data = table.hashes
+    @submissions_saved = outcome_data.size
+    outcome_data.each do |outcome|
+      submission_list_page = SubmissionListPage.new
+      submission_list_page.add_outcome_button.click
+      builder = Helpers::ScreenFieldBuilder.from(
+        category_of_law: category_of_law.downcase.gsub(' ', '_'),
+        area_of_law: area_of_law.downcase.gsub(' ', '_'),
+        matter_type: outcome['matter_type'],
+        claim_type: outcome['claim_type']
+      )
+      outcome['schedule_ref'] = CWAProvider.submission.schedule_ref
+      builder.overrides = outcome
+      page = AddOutcomePage.new(builder)
+      page.add_outcome
+    end
+  end
+
+
 When("user adds outcomes for {string} {string} with fields like this:") do |area_of_law, category_of_law, table|
   submission_details_page = SubmissionDetailsPage.new
   if !submission_details_page.has_text?(/No results found/)
