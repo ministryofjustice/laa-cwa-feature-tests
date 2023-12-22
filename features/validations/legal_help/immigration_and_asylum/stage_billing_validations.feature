@@ -55,8 +55,8 @@ Feature: Stage billing validations for Asylum and Immigration (this is set to 1 
       | IMCD:ITWE |
     When the following outcomes are bulkloaded:
       | # | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 | DC         | 01/01/2020      | 31/01/2020          | --           |
-      | 2 | DC         | 01/01/2020      | 01/04/2020          | --           |
+      | 1 | DC         | 01/01/2020      | 28/01/2020          | --           |
+      | 2 | DC         | 01/01/2020      | 03/03/2020          | --           |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE                                                                                                                          |
       | 1 | Stage disbursement claims can only be claimed where 1 months have elapsed from the date the matter was opened. Please refer to the guidelines. |
@@ -64,42 +64,42 @@ Feature: Stage billing validations for Asylum and Immigration (this is set to 1 
 
   Scenario: Add new stage disbursement claim *before* 1 months have elapsed since the claim date of the previous stage disbursment claim
     Given the following Matter Types are chosen:
-      | IMCC:IDOM |
+      | IACC:IASY |
     And the following outcomes are bulkloaded and confirmed:
       | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
       | 1 | 001     | 010120/001 | DC         | 01/01/2020      | 01/02/2020          | --           |
     When user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#4" again
     And the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 2 | 001     | 010120/001 | DC         | 01/01/2020      | 02/02/2020          | --           |
+      | 2 | 001     | 010120/001 | DC         | 01/01/2020      | 26/02/2020          | --           |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE                                                                                                                                                              |
       | 2 | Stage disbursement claims can only be claimed where 1 months have elapsed since the entitlement to claim arose or an application for payment was made. Please refer to guidelines. |
 
-  Scenario: Add new stage disbursement claim *after* 3 months have elapsed since the claim date of the previous stage disbursment claim
+  Scenario: Add new stage disbursement claim *after* 1 months have elapsed since the claim date of the previous stage disbursment claim
     Given the following Matter Types are chosen:
-      | IMCC:IDOM |
+      | IMCD:IILL |
     And the following outcomes are bulkloaded and confirmed:
       | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 | 001     | 010120/001 | DC         | 01/01/2020      | 01/04/2020          | --           |
+      | 1 | 001     | 010120/001 | DC         | 01/01/2020      | 01/02/2020          | --           |
     When user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#4" again
     And the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 2 | 001     | 010120/001 | DC         | 01/01/2020      | 01/07/2020          | --           |
+      | 2 | 001     | 010120/001 | DC         | 01/01/2020      | 01/03/2020          | --           |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE |
       | 2 | <none>                |
 
   Scenario: Add new stage disbursement claim when there is an existing completed matter
     Given the following Matter Types are chosen:
-      | IMCC:IDOM |
+      | IMCD:IOTH |
     And the following outcomes are bulkloaded and confirmed:
       | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
       | 1 | 001     | 010120/001 | CM         | 01/01/2020      | 01/04/2020          | --           |
     When user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#4" again
     And the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 2 | 001     | 010120/001 | DC         | 01/01/2020      | 02/04/2020          | --           |
+      | 2 | 001     | 010120/001 | DC         | 01/01/2020      | 01/04/2020          | --           |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE                                                                                                                                                                                                                                     |
       | 2 | It is not possible to process this claim, as a Completed Matter Claim has been identified in the system. Please contact your Relationship manager by email with all the relevant case details if you need to make any amendments to previous submissions. |
@@ -107,7 +107,7 @@ Feature: Stage billing validations for Asylum and Immigration (this is set to 1 
   @bugfix
   Scenario: Add new stage disbursement claim with *less* than 6 months between case start date and claim date when there is an existing completed matter
     Given the following Matter Types are chosen:
-      | IMCC:IDOM |
+      | IMCD:IFVI |
     And the following outcomes are bulkloaded and confirmed:
       | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
       | 1 | 001     | 010120/001 | CM         | 01/01/2020      | 01/04/2020          | --           |
@@ -122,7 +122,7 @@ Feature: Stage billing validations for Asylum and Immigration (this is set to 1 
   @bugfix
   Scenario: Add new stage disbursement claim with *more* than 6 months between case start date and claim date when there is an existing completed matter
     Given the following Matter Types are chosen:
-      | IMCC:IDOM |
+      | IACC:IRVL |
     And the following outcomes are bulkloaded and confirmed:
       | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
       | 1 | 001     | 010120/001 | CM         | 01/01/2020      | 01/04/2020          | --           |
