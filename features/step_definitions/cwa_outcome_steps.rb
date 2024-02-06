@@ -64,7 +64,9 @@ When("user adds outcomes for {string} {string} with fields like this:") do |area
       matter_type: outcome['matter_type'],
       claim_type: outcome['claim_type']
     )
-    outcome['schedule_ref'] = CWAProvider.submission.schedule_ref
+    if !outcome.has_key?("schedule_ref")
+            outcome['schedule_ref'] = CWAProvider.submission.schedule_ref
+    end
     builder.overrides = outcome
 
     page = AddOutcomePage.new(builder)
@@ -115,26 +117,6 @@ When ("user adds an outcome for {string} {string} with {string}, {string}, {stri
       category_of_law: category_of_law.downcase.gsub(' ', '_')
     )
 
-    builder.overrides = outcome_data
-    page = AddOutcomePage.new(builder)
-    page.add_outcome
-  end
-
-  When ("user adds an manual outcome {string} {string} with {string}, {string}, {string}, {string}, {string}, {string} and {string}") do |area_of_law, category_of_law, case_id, matter_type, irc_surgery, stage_reached, case_start_date, pa, ap |
-    outcome_data = Hash.new
-    outcome_data["matter_type"] = matter_type
-    outcome_data["case_start_date"] = case_start_date
-    outcome_data["procurement_area"] = pa
-    outcome_data["access_point"] = ap
-    outcome_data["case_id"] = case_id
-    outcome_data["stage_reached"] = stage_reached
-    outcome_data["irc_surgery"]= irc_surgery
-    submission_list_page = SubmissionListPage.new
-    submission_list_page.add_outcome_button.click
-        builder = Helpers::ScreenFieldBuilder.from(
-      area_of_law: area_of_law.downcase.gsub(' ', '_'),
-      category_of_law: category_of_law.downcase.gsub(' ', '_')
-    )
     builder.overrides = outcome_data
     page = AddOutcomePage.new(builder)
     page.add_outcome
