@@ -120,16 +120,36 @@ When ("user adds an outcome for {string} {string} with {string}, {string}, {stri
     page.add_outcome
   end
 
+  When ("user adds an manual outcome {string} {string} with {string}, {string}, {string}, {string}, {string}, {string} and {string}") do |area_of_law, category_of_law, case_id, matter_type, irc_surgery, stage_reached, case_start_date, pa, ap |
+    outcome_data = Hash.new
+    outcome_data["matter_type"] = matter_type
+    outcome_data["case_start_date"] = case_start_date
+    outcome_data["procurement_area"] = pa
+    outcome_data["access_point"] = ap
+    outcome_data["case_id"] = case_id
+    outcome_data["stage_reached"] = stage_reached
+    outcome_data["irc_surgery"]= irc_surgery
+    submission_list_page = SubmissionListPage.new
+    submission_list_page.add_outcome_button.click
+        builder = Helpers::ScreenFieldBuilder.from(
+      area_of_law: area_of_law.downcase.gsub(' ', '_'),
+      category_of_law: category_of_law.downcase.gsub(' ', '_')
+    )
+    builder.overrides = outcome_data
+    page = AddOutcomePage.new(builder)
+    page.add_outcome
+  end
+
 Then("the outcome does not save and gives an error containing:") do |string|
   page = AddOutcomePage.new
   expect(page).to have_content('Error')
   expect(page).to have_content(string)
 end
 
-Then("the outcome does not save and the error message {string} appears") do |error_message|
+Then("the outcome does not save and the {string} appears") do |error_message|
   page = AddOutcomePage.new
-  expect(page).to have_errors
-  expect(page.errors.text).to include(error_message)
+  expect(page).to have_content('Error')
+  expect(page).to have_content(error_message, wait:5)
 end
 
 Then("the outcome does not save and this popup error appears:") do |string|
