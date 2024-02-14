@@ -21,7 +21,13 @@ Feature: Validate Procurement Area field
       Values greater than 0.00 cannot be entered in the Detention Travel and Waiting Costs Excluding VAT field for this claim. For hourly rate cases any Detention Travel and Wait related costs should be claimed as part of your profit costs and entered in the profit costs field.
       """
 
-  Scenario Outline: validate procurement area for ASYLUM with case start date < 15/11/2010 with specific PA/AP codes
+  Scenario Outline: validate DTW with ASYLUM codes and DTW "0"
+    When user adds outcomes for "Legal Help" "Immigration" with fields like this:
+      | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery | detention_travel_waiting_costs |
+      |     402 |              | IALH:IOUT   | IE            |      01/01/1996 | PA00142          | AP00187      | No          |                              0 |
+    Then the outcome saves successfully
+
+  Scenario Outline: validate DTW with ASYLUM codes and DTW valid
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
       | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery | detention_travel_waiting_costs |
       |     403 |              | IAAP:IGOL   | IE            |      01/01/1996 | PA00142          | AP00187      | No          |                             10 |
@@ -30,62 +36,68 @@ Feature: Validate Procurement Area field
       Values greater than 0.00 cannot be entered in the Detention Travel and Waiting Costs Excluding VAT field for this claim. For hourly rate cases any Detention Travel and Wait related costs should be claimed as part of your profit costs and entered in the profit costs field.
       """
 
-  Scenario Outline: validate procurement area for ASYLUM with case start date < 15/11/2010 with specific PA/AP codes
+  Scenario Outline: validate DTW with IMMIGRATION codes and DTW valid
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
-      | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery | detention_travel_waiting_costs |
-      |     404 |              | IMLH:ILEA   | IE            |      01/01/1996 | PA00142          | AP00187      | No          |                             10 |
+      | case_id | matter_type | case_start_date | procurement_area | access_point | irc_surgery | detention_travel_waiting_costs | exemption_criteria_satisfied |
+      |     404 | IMLH:ILEA   |      01/04/2023 | PA00142          | AP00187      | No          |                             10 | TR001                        |
     Then the outcome does not save and gives an error containing:
       """
       Values greater than 0.00 cannot be entered in the Detention Travel and Waiting Costs Excluding VAT field for this claim. For hourly rate cases any Detention Travel and Wait related costs should be claimed as part of your profit costs and entered in the profit costs field.
       """
 
-  Scenario Outline: validate procurement area for ASYLUM with case start date < 15/11/2010 with specific PA/AP codes
+  Scenario Outline: validate DTW with IMMIGRATION codes and DTW valid
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
-      | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery | detention_travel_waiting_costs |
-      |     405 |              | IMAP:ILEA   | IE            |      01/01/1996 | PA00142          | AP00187      | No          |                             10 |
+      | case_id | matter_type | case_start_date | procurement_area | access_point | irc_surgery | detention_travel_waiting_costs | exemption_criteria_satisfied |
+      |     405 | IMAP:ILEA   |      01/04/2023 | PA00142          | AP00187      | No          |                             10 | TR001                        |
     Then the outcome does not save and gives an error containing:
       """
       Values greater than 0.00 cannot be entered in the Detention Travel and Waiting Costs Excluding VAT field for this claim. For hourly rate cases any Detention Travel and Wait related costs should be claimed as part of your profit costs and entered in the profit costs field.
       """
 
-  Scenario Outline: validate procurement area for ASYLUM with case start date < 15/11/2010 with specific PA/AP codes
+  Scenario Outline: validate DTW with ASYLUM codes and DTW valid
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
-      | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery | detention_travel_waiting_costs |
-      |     406 |              | IAXL:IEAP   | IE            |      01/01/1996 | PA00142          | AP00187      | No          |                             10 |
+      | case_id | matter_type | case_start_date | procurement_area | access_point | irc_surgery | detention_travel_waiting_costs | exemption_criteria_satisfied |
+      |     406 | IAXL:IFRA   |      01/04/2023 | PA00142          | AP00187      | No          |                             10 | TR001                        |
     Then the outcome does not save and gives an error containing:
       """
       Values greater than 0.00 cannot be entered in the Detention Travel and Waiting Costs Excluding VAT field for this claim. For hourly rate cases any Detention Travel and Wait related costs should be claimed as part of your profit costs and entered in the profit costs field.
       """
 
-  Scenario Outline: validate procurement area for ASYLUM with case start date < 15/11/2010 with specific PA/AP codes
+  Scenario Outline: validate DTW with ASYLUM codes and DTW valid
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
-      | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery | detention_travel_waiting_costs |
-      |     407 |              | IAXC:IOUT   | IE            |      01/01/1996 | PA00142          | AP00187      | No          |                             10 |
+      | case_id | matter_type | case_start_date | procurement_area | access_point | irc_surgery | detention_travel_waiting_costs | exemption_criteria_satisfied |
+      |     407 | IAXC:IOUT   |      01/04/2023 | PA00142          | AP00187      | No          |                             10 | TR001                        |
     Then the outcome does not save and gives an error containing:
       """
       Values greater than 0.00 cannot be entered in the Detention Travel and Waiting Costs Excluding VAT field for this claim. For hourly rate cases any Detention Travel and Wait related costs should be claimed as part of your profit costs and entered in the profit costs field.
       """
 
-  Scenario Outline: validate procurement area for ASYLUM with case start date < 15/11/2010 with specific PA/AP codes
+  Scenario Outline: validate DTW with IMMIGRATION codes and DTW valid
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
-      | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery | detention_travel_waiting_costs |
-      |     408 |              | IMXL:ILEA   | IE            |        01/11/07 | PA00142          | AP00187      | No          |                             10 |
+      | case_id | matter_type | case_start_date | procurement_area | access_point | irc_surgery | detention_travel_waiting_costs | exemption_criteria_satisfied |
+      |     408 | IMXL:ILEA   |        01/04/23 | PA00142          | AP00187      | No          |                             10 | TR001                        |
     Then the outcome does not save and gives an error containing:
       """
       Values greater than 0.00 cannot be entered in the Detention Travel and Waiting Costs Excluding VAT field for this claim. For hourly rate cases any Detention Travel and Wait related costs should be claimed as part of your profit costs and entered in the profit costs field.
       """
 
-  Scenario Outline: validate procurement area for ASYLUM with case start date < 15/11/2010 with specific PA/AP codes
+  Scenario Outline: validate DTW with IMMIGRATION codes and DTW valid
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
-      | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery | detention_travel_waiting_costs |
-      |     409 |              | IMXC:ILEA   | IE            |        01/11/07 | PA00142          | AP00187      | No          |                             10 |
+      | case_id | matter_type | case_start_date | procurement_area | access_point | irc_surgery | detention_travel_waiting_costs | exemption_criteria_satisfied |
+      |     409 | IMXC:ILEA   |        01/04/23 | PA00142          | AP00187      | No          |                             10 | TR001                        |
     Then the outcome does not save and gives an error containing:
       """
       Values greater than 0.00 cannot be entered in the Detention Travel and Waiting Costs Excluding VAT field for this claim. For hourly rate cases any Detention Travel and Wait related costs should be claimed as part of your profit costs and entered in the profit costs field.
       """
 
-  Scenario Outline: validate procurement area for ASYLUM with case start date < 15/11/2010 with specific PA/AP codes
+  Scenario Outline: validate DTW with ASYLUM codes and DTW valid
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
-      | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery | detention_travel_waiting_costs |
-      |     410 |              | IAXL:IDAS   | IE            |      01/01/1996 | PA00142          | AP00187      | No          |                             10 |
+      | case_id | matter_type | case_start_date | procurement_area | access_point | irc_surgery | detention_travel_waiting_costs |
+      |     410 | IAXL:IDAS   |      01/04/2023 | PA00142          | AP00187      | No          |                             10 |
+    Then the outcome saves successfully
+
+  Scenario Outline: validate DTW with IMMIGRATION codes and DTW valid
+    When user adds outcomes for "Legal Help" "Immigration" with fields like this:
+      | case_id | matter_type | case_start_date | procurement_area | access_point | irc_surgery | detention_travel_waiting_costs | exemption_criteria_satisfied |
+      |     411 | IMLB:ILEA   |      01/04/2023 | PA00142          | AP00187      | No          |                              0 | TR001                        |
     Then the outcome saves successfully
