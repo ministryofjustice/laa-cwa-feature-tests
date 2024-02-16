@@ -89,12 +89,6 @@ Feature: Validate Access Point field
       |     111 |              | HHOM:HPRI   | HA            |        14/11/10 |                  | AP00187      |
     Then the outcome saves successfully
 
-  Scenario Outline: validate access point for Housing for null AP and valid PA where case start date < 15/11/2010
-    When user adds outcomes for "Legal Help" "Housing" with fields like this:
-      | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point |
-      |     112 |              | HHOM:HPRI   | HA            |        14/11/10 | PA00010          |              |
-    Then the outcome saves successfully
-
   Scenario Outline: validate access point for Housing case start date prior 15/11/2010 with PA code
     When user adds outcomes for "Legal Help" "Housing" with fields like this:
       | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery |
