@@ -67,6 +67,9 @@ When("user adds outcomes for {string} {string} with fields like this:") do |area
     if !outcome.has_key?("schedule_ref")
             outcome['schedule_ref'] = CWAProvider.submission.schedule_ref
     end
+    if !outcome.has_key?("case_start_date")
+      outcome['case_start_date'] = (Date.today + 1).strftime("%d-%b-%Y") 
+    end
     builder.overrides = outcome
 
     page = AddOutcomePage.new(builder)
