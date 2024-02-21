@@ -43,7 +43,6 @@ end
     end
   end
 
-
 When("user adds outcomes for {string} {string} with fields like this:") do |area_of_law, category_of_law, table|
   submission_details_page = SubmissionDetailsPage.new
   if !submission_details_page.has_text?(/No results found/)
@@ -67,7 +66,7 @@ When("user adds outcomes for {string} {string} with fields like this:") do |area
     if !outcome.has_key?("schedule_ref")
             outcome['schedule_ref'] = CWAProvider.submission.schedule_ref
     end
-    if !outcome.has_key?("case_start_date")
+    if (!outcome.has_key?("case_start_date") && !area_of_law == "Crime Lower")
       outcome['case_start_date'] = (Date.today + 1).strftime("%d-%b-%Y") 
     end
     builder.overrides = outcome
