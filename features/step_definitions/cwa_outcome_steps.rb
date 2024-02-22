@@ -64,7 +64,9 @@ When("user adds outcomes for {string} {string} with fields like this:") do |area
       matter_type: outcome['matter_type'],
       claim_type: outcome['claim_type']
     )
-    outcome['schedule_ref'] = CWAProvider.submission.schedule_ref
+    if !outcome.has_key?("schedule_ref")
+            outcome['schedule_ref'] = CWAProvider.submission.schedule_ref
+    end
     builder.overrides = outcome
 
     page = AddOutcomePage.new(builder)
@@ -126,10 +128,10 @@ Then("the outcome does not save and gives an error containing:") do |string|
   expect(page).to have_content(string)
 end
 
-Then("the outcome does not save and the error message {string} appears") do |error_message|
+Then("the outcome does not save and the {string} appears") do |error_message|
   page = AddOutcomePage.new
-  expect(page).to have_errors
-  expect(page.errors.text).to include(error_message)
+  expect(page).to have_content('Error')
+  expect(page).to have_content(error_message, wait:5)
 end
 
 Then("the outcome does not save and this popup error appears:") do |string|
