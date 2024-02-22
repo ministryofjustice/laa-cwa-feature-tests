@@ -4,6 +4,13 @@ Feature: Validation for Illegal Immigration Act
     Given user is on their "LEGAL HELP" submission details page
 
   @delete_outcome_after @manual_submission @invalid
+  Scenario Outline: ECF code is allowed
+    When user adds outcomes for "Legal Help" "Immigration" with fields like this:
+      | case_id | matter_type | exemption_criteria_satisfied | excl_case_funding_ref | case_start_date | procurement_area | access_point |
+      |     001 | IMMA:IMRN   |                              |             1234567AB |      01/05/2023 | PA20000          | AP20000      |
+    Then the outcome saves successfully
+
+  @delete_outcome_after @manual_submission @invalid
   Scenario Outline: No ECS code is allowed
     When user adds an outcome for "Legal Help" "Immigration" with "<case id>", "<mt>", "<ecs code>", "<ecf ref>", "<case start date>", "<pa>" and "<ap>"
     Then the outcome does not save and the error message "<error message>" appears
@@ -21,34 +28,26 @@ Feature: Validation for Illegal Immigration Act
       |     009 | IMMA:IMRN | TR001    | 1234567AB |      01/05/2023 | PA20000 | AP20000 | The Exemption Criteria Satisfied code is not valid for this matter type combination.                                                                                                                              |
       |     010 | IMMA:IMRN | TR001    |           |      01/05/2023 | PA20000 | AP20000 | The Exemption Criteria Satisfied code is not valid for this matter type combination.                                                                                                                              |
 
-  @delete_outcome_after @manual_submission @invalid
-  Scenario Outline: ECF code is allowed
-    When user adds outcomes for "Legal Help" "Immigration" with fields like this:
-      | case_id | matter_type | exemption_criteria_satisfied | excl_case_funding_ref | case_start_date | procurement_area | access_point |
-      |     001 | IMMA:IMRN   |                              |             1234567AB |      01/05/2023 | PA20000          | AP20000      |
-    Then the outcome saves successfully
-
   @delete_outcome_after @manual_submission @valid
   Scenario Outline: Add valid asylum claim for code combination IMMA:IMRN. Completed Matter Claims
     Case start date has to be on or after 01/01/2024. Date is set to 01/05/2023 for testing purpose
-    Valid outcome codes are: -- IA, IB, IC, ID, IE, IF, IG, IU, IV, IW, IX, IY, IZ
+    Valid outcome codes are: IA, IB, IC, ID, IE, IF, IG, IU, IV, IW, IX, IY, IZ
 
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
       | case_id | matter_type | case_start_date | outcome_code |
-      |     001 | IMMA:IMRN   |      01/05/2023 | --           |
-      |     002 | IMMA:IMRN   |      01/05/2023 | IA           |
-      |     003 | IMMA:IMRN   |      01/05/2023 | IB           |
-      |     004 | IMMA:IMRN   |      01/05/2023 | IC           |
-      |     005 | IMMA:IMRN   |      01/05/2023 | ID           |
-      |     006 | IMMA:IMRN   |      01/05/2023 | IE           |
-      |     007 | IMMA:IMRN   |      01/05/2023 | IF           |
-      |     008 | IMMA:IMRN   |      01/05/2023 | IG           |
-      |     010 | IMMA:IMRN   |      01/05/2023 | IU           |
-      |     011 | IMMA:IMRN   |      01/05/2023 | IV           |
-      |     012 | IMMA:IMRN   |      01/05/2023 | IW           |
-      |     013 | IMMA:IMRN   |      01/05/2023 | IX           |
-      |     014 | IMMA:IMRN   |      01/05/2023 | IY           |
-      |     015 | IMMA:IMRN   |      01/05/2023 | IZ           |
+      |     001 | IMMA:IMRN   |      01/05/2023 | IA           |
+      |     002 | IMMA:IMRN   |      01/05/2023 | IB           |
+      |     003 | IMMA:IMRN   |      01/05/2023 | IC           |
+      |     004 | IMMA:IMRN   |      01/05/2023 | ID           |
+      |     005 | IMMA:IMRN   |      01/05/2023 | IE           |
+      |     006 | IMMA:IMRN   |      01/05/2023 | IF           |
+      |     007 | IMMA:IMRN   |      01/05/2023 | IG           |
+      |     008 | IMMA:IMRN   |      01/05/2023 | IU           |
+      |     009 | IMMA:IMRN   |      01/05/2023 | IV           |
+      |     010 | IMMA:IMRN   |      01/05/2023 | IW           |
+      |     011 | IMMA:IMRN   |      01/05/2023 | IX           |
+      |     012 | IMMA:IMRN   |      01/05/2023 | IY           |
+      |     013 | IMMA:IMRN   |      01/05/2023 | IZ           |
     Then the outcome saves successfully
 
   @delete_outcome_after @manual_submission @valid

@@ -23,6 +23,27 @@ Then('the outcome saves successfully') do
   end
 end
 
+
+  When("user adds outcomes for {string} {string} with fields like this for dulplicate claims:") do |area_of_law, category_of_law, table|
+    outcome_data = table.hashes
+    @submissions_saved = outcome_data.size
+    outcome_data.each do |outcome|
+      submission_list_page = SubmissionListPage.new
+      submission_list_page.add_outcome_button.click
+      builder = Helpers::ScreenFieldBuilder.from(
+        category_of_law: category_of_law.downcase.gsub(' ', '_'),
+        area_of_law: area_of_law.downcase.gsub(' ', '_'),
+        matter_type: outcome['matter_type'],
+        claim_type: outcome['claim_type']
+      )
+      outcome['schedule_ref'] = CWAProvider.submission.schedule_ref
+      builder.overrides = outcome
+      page = AddOutcomePage.new(builder)
+      page.add_outcome
+    end
+  end
+
+
 When("user adds outcomes for {string} {string} with fields like this:") do |area_of_law, category_of_law, table|
   submission_details_page = SubmissionDetailsPage.new
   if !submission_details_page.has_text?(/No results found/)
@@ -43,7 +64,9 @@ When("user adds outcomes for {string} {string} with fields like this:") do |area
       matter_type: outcome['matter_type'],
       claim_type: outcome['claim_type']
     )
-    outcome['schedule_ref'] = CWAProvider.submission.schedule_ref
+    if !outcome.has_key?("schedule_ref")
+            outcome['schedule_ref'] = CWAProvider.submission.schedule_ref
+    end
     builder.overrides = outcome
 
     page = AddOutcomePage.new(builder)
@@ -105,10 +128,10 @@ Then("the outcome does not save and gives an error containing:") do |string|
   expect(page).to have_content(string)
 end
 
-Then("the outcome does not save and the error message {string} appears") do |error_message|
+Then("the outcome does not save and the {string} appears") do |error_message|
   page = AddOutcomePage.new
-  expect(page).to have_errors
-  expect(page.errors.text).to include(error_message)
+  expect(page).to have_content('Error')
+  expect(page).to have_content(error_message, wait:5)
 end
 
 Then("the outcome does not save and this popup error appears:") do |string|

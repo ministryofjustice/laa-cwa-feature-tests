@@ -82,7 +82,7 @@ module Helpers
           value = case field
             when 'CASE_ID'
               case_id
-            when 'CASE_REF_NUMBER', 'CLIENT_SURNAME'
+            when 'CLIENT_SURNAME'
               "#{client_surname} #{case_id}"
             when 'CASE_START_DATE'
               case_start_date || now.strftime("%d/%m/%Y")

@@ -1,43 +1,66 @@
-base_mediation: &base_mediation
+base_defaults: &base_defaults
   case_id:
-  case_ref_number:
+  case_ref_number: TestCaseRef
   case_start_date:
-  client2_date_of_birth:
-  client2_disability:
-  client2_ethnicity:
-  client2_forename:
-  client2_gender:
-  client2_legally_aided:
-  client2_post_code:
-  client2_postal_appl_accp:
-  client2_surname:
-  client2_ucn:
-  client_date_of_birth:
-  client_forename:
-  client_legally_aided:
-  client_post_code:
-  client_surname:
-  disability:
-  disbursements_amount:
-  disbursements_vat:
-  ethnicity:
-  gender:
-  outreach:
-  postal_appl_accp:
-  referral:
+  client2_date_of_birth: 14/09/1962
+  client2_disability: UKN
+  client2_ethnicity: 99
+  client2_forename: client2
+  client2_gender: M
+  client2_legally_aided: Y
+  client2_post_code: SW1H 9EA
+  client2_postal_appl_accp: Y
+  client2_surname: client2surname
+  client2_ucn: 14091962/c/clie
+  client_date_of_birth: 14/09/1961
+  client_forename: client1
+  client_legally_aided: Y
+  client_post_code: SW1H 9EA
+  client_surname: client1surname
+  disability: UKN
+  disbursements_amount: 0
+  disbursements_vat: 0
+  ethnicity: 99
+  gender: F
+  outreach: "000"
+  postal_appl_accp: Y
+  referral: 10
   schedule_ref:
-  ucn:
-  unique_case_id:
-  vat_indicator:
+  ucn: 14091961/c/clie
+  unique_case_id: 011119/001
+  vat_indicator: N
+
+base_mediation_defaults: &base_mediation_defaults
+  med_concluded_date:
+  mediation_time: 0
+  number_of_mediation_sessions: 1
+  outcome_code: "A - Mediation agreement"
 
 mediation:
-  #MT1 code
-  MEDI:
-    <<: *base_mediation
+  mediation:
+    MEDI:MDAC:
+     <<: *base_defaults
+     <<: *base_mediation_defaults
+    MEDI:MDAS:
+     <<: *base_defaults
+     <<: *base_mediation_defaults
+    MEDI:MDCC:
+     <<: *base_defaults
+     <<: *base_mediation_defaults
+    MEDI:MDCS:
+     <<: *base_defaults
+     <<: *base_mediation_defaults
+    MEDI:MDPC:
+     <<: *base_defaults
+     <<: *base_mediation_defaults
+    MEDI:MDPS:
+     <<: *base_defaults
+     <<: *base_mediation_defaults
 
-  ASSM:
-    <<: *base_mediation
-    med_concluded_date:
-    mediation_time:
-    number_of_mediation_sessions:
-    outcome_code:
+  assessment_meetings:
+    ASSM:ASSA:
+     <<: *base_defaults
+    ASSM:ASSS:
+     <<: *base_defaults
+    ASSM:ASST:
+     <<: *base_defaults

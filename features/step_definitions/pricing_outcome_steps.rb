@@ -96,6 +96,18 @@ Then('user should see the following outcomes:') do |table|
   end
 end
 
+Then('user should see the following outcomes for accummulated claims:') do |table|
+  @submission_details_page = SubmissionDetailsPage.new
+  outcome_data = table.hashes
+  outcome_data.each do |row|
+    STDOUT.puts("Checking " + row['CASE_REF_NUMBER'])
+    current_outcome = @submission_details_page.outcomes.find do |outcome|
+      outcome.case_reference.text == row['CASE_REF_NUMBER']
+    end
+    expect(current_outcome.value.text).to eq(row['Value'])
+  end
+end
+
 Then("user should see the outcome with one of these stage reached codes:") do |table|
   stage_reached_codes = table.raw
   stage_reached_codes.include?(@current_outcome.stage_reached.text)

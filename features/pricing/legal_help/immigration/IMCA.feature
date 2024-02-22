@@ -89,6 +89,20 @@ Feature: Pricing: IMCA: Immigration - Stage 2a (CLR)
       | escape threhold 3 * standard fee (£227) = £681, Profit_Cost(£712) + Counsel_Cost(£225) - Additioanal_payments(CMRH_ORAL(£166) + CMRH_TELEPHONE(£90)= £681 |
 
   @escape_fee_flag
+  Scenario: Claims priced with: Escape Fee Flag nil claims (additional payments)
+    When the following outcomes are bulkloaded:
+      | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | CMRH_ORAL | CMRH_TELEPHONE |
+      | 1 | 010413/001 | CM         |      01/04/2013 |          31/03/2023 |           0 |            0 | N             |         1 |              1 |
+    When user confirms the submission
+    And user is on the pricing outcome details page
+    Then user should see the following outcomes:
+      | # | UFN        | Value  | Comment                                                                                        |
+      | 1 | 010413/001 | £ 0.00 | Standard fee(£227) + CMRH_ORAL(£166) + CMRH_TELEPHONE(£90) all ignored as priced at nil claims |
+    Then the outcomes are NOT flagged as escape fee cases
+      | Comment                                                                                                                    |
+      | escape threhold 3 * standard fee (£227) = £681, Profit_Cost(£0) + Counsel_Cost(£0) does not escape as priced at nil claims |
+
+  @escape_fee_flag
   Scenario: Claims priced with: NO Escape Fee Flag (additional payments)
     When the following outcomes are bulkloaded:
       | # | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | CMRH_ORAL | CMRH_TELEPHONE |

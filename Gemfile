@@ -9,9 +9,6 @@ group :test do
   gem 'rspec', '~> 3.10.0'
   gem 'selenium-webdriver', '~> 3.142.7'
   gem 'site_prism', '~> 3.7.3'
-  gem 'execjs'
-  gem 'date'
-  gem 'sequel'
   gem 'report_builder', '~> 1.9'
   gem "timecop", "~> 0.9.8"
   gem "parallel_tests"

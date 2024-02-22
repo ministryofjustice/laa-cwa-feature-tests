@@ -18,6 +18,7 @@ Feature:PROW outcome pricing
           | 1 | 190920/001 | 19/10/2020     | 100.0       | N             |
           | 2 | 190920/002 | 19/10/2020     | 100.0       | Y             |
           | 3 | 190920/003 | 19/10/2020     | 300.0       | Y             |
+          # | 4 | 190920/004 | 19/10/2020     |   0         | Y             |  This seems to be bug , TA-2420 will look into this
         When user confirms the submission
         And user is on the pricing outcome details page
         Then user should see the following outcomes:
@@ -25,6 +26,7 @@ Feature:PROW outcome pricing
           | 1 | 190920/001 | £ 181.40   |
           | 2 | 190920/002 | £ 217.68   |
           | 3 | 190920/003 | £ 217.68   |
+          # | 4 | 190920/004 | £ 217.68   | 
 
       @disbursements
       Scenario: Bulkload PROW codes outcomes and test disbursements are paid correctly
@@ -33,11 +35,13 @@ Feature:PROW outcome pricing
         And the following outcomes are bulkloaded:
           | # | UFN        | REP_ORDER_DATE | PROFIT_COST | DISBURSEMENTS_AMOUNT |
           | 1 | 190920/001 | 19/10/2020     | 100.0       | 100.0                |
+          # | 2 | 190920/002 | 19/10/2020     |   0         | 100.0                | This seems to be bug , TA-2420 will look into this
         When user confirms the submission
         And user is on the pricing outcome details page
         Then user should see the following outcomes:
           | # | UFN        | Value      |
           | 1 | 190920/001 | £ 281.40   |
+          # | 2 | 190920/002 | £ 281.40   |
 
       @disbursements_vat
       Scenario: Bulkload PROW code and test disbursement VAT is applied correctly
