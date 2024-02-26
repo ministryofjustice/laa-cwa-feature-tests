@@ -1,1 +1,2 @@
-default: --publish-quiet
+default:  --profile html_report
+html_report: --publish-quiet --format pretty  --format html --out reports/<%= Time.now.strftime("%d-%m-%y_%H:%M")%>-report.html
