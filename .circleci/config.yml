@@ -51,11 +51,11 @@ jobs:
             --wait --timeout 300s
             export POD_NAME=$(helm list -q | tail -1)
             kubectl logs -f ${POD_NAME}
-      - slack/notify:
-          channel: laa-cwa-testing
-          event: pass
-          mentions: '@pcuam-devs'
-          template: basic_success_1
+      # - slack/notify:
+      #     channel: laa-cwa-testing
+      #     event: pass
+      #     mentions: '@pcuam-devs'
+      #     template: basic_success_1
 
   Build_and_Push_Docker_Image:
     executor: build-executor
@@ -117,10 +117,10 @@ workflows:
   build_and_push:
     jobs:
       - Build_and_Push_Docker_Image
-      - Notify_Slack_For_Approval:
-          requires:
-            - Build_and_Push_Docker_Image
-    when: on_success
+    #   - Notify_Slack_For_Approval:
+    #       requires:
+    #         - Build_and_Push_Docker_Image
+    # when: on_success
 
   deploy_tests:
     jobs:
