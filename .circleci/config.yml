@@ -48,7 +48,7 @@ jobs:
             helm install --generate-name ./charts/cwa-tests \
             -f charts/cwa-tests/Values.yaml \
             --set ecr.image.tag=${SANITISED_BRANCH} \
-            --wait --timeout 300s
+            --wait --timeout 1000s
             export POD_NAME=$(helm list -q | tail -1)
             kubectl logs -f ${POD_NAME}
       # - slack/notify:
