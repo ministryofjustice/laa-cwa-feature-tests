@@ -40,6 +40,7 @@ jobs:
             kubectl config set-credentials circleci --token=<< parameters.token >>
             kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=<< parameters.environment >>
             kubectl config use-context ${K8S_CLUSTER_NAME}
+            --wait --timeout 1000s
             kubectl get pods
       - run:
           name: Deploy helm chart
