@@ -130,7 +130,7 @@ Then("the outcome does not save and gives an error containing:") do |string|
   expect(page).to have_content(string)
 end
 
-Then("the outcome does not save and the {string} appears") do |error_message|
+Then("the outcome does not save and the error message {string} appears") do |error_message|
   page = AddOutcomePage.new
   expect(page).to have_content('Error')
   expect(page).to have_content(error_message, wait:5)
