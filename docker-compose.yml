@@ -1,0 +1,7 @@
+version: '3.4'
+services:
+  laa-cwa-feature-tests:
+    build: .
+    volumes:
+      - /usr/src/app
+      - ./reports:/usr/src/app/reports
