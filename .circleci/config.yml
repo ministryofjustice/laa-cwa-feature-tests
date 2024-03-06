@@ -42,6 +42,9 @@ jobs:
             kubectl config use-context ${K8S_CLUSTER_NAME}
             kubectl get pods
       - run:
+          name: Clean namespace
+          command:  helm ls -n << parameters.environment >> --short | xargs -L1 -I {} helm uninstall {} -n << parameters.environment >>
+      - run:
           name: Deploy helm chart
           command: |
             export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
@@ -51,7 +54,9 @@ jobs:
             --wait --timeout 300s
             export POD_NAME=$(helm list -q | tail -1)
             kubectl logs -f ${POD_NAME}
-            helm ls -n << parameters.environment >> --short | xargs -L1 -I {} helm uninstall {} -n << parameters.environment >>
+      - run:
+          name: Clean namespace
+          command:  helm ls -n << parameters.environment >> --short | xargs -L1 -I {} helm uninstall {} -n << parameters.environment >>
       - slack/notify:
           channel: laa-cwa-testing
           event: pass
