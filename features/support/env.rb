@@ -7,7 +7,7 @@ require 'site_prism'
 require 'builder'
 
 Capybara.register_driver :firefox do |app|
-  capabilities = Selenium::WebDriver::Remote::Capabilities.firefox(
+  capabilities = Selenium::WebDriver::Options.firefox(
     accept_insecure_certs: true
   )
   options = Selenium::WebDriver::Firefox::Options.new()
@@ -16,9 +16,7 @@ Capybara.register_driver :firefox do |app|
   Capybara::Selenium::Driver.new(
     app,
     browser: :firefox,
-    marionette: true,
-    desired_capabilities: capabilities,
-    options: options
+    options: capabilities,
   )
 end
 
