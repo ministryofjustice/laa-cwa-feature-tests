@@ -11,7 +11,7 @@ Capybara.register_driver :firefox do |app|
     accept_insecure_certs: true
   )
   options = Selenium::WebDriver::Firefox::Options.new()
-  options.add_argument('-headless') if ENV['HEADLESS'] == 'true'
+  options.add_argument('--headless') if ENV['HEADLESS'] == 'true'
   options.add_argument('--incognito')
   Capybara::Selenium::Driver.new(
     app,
