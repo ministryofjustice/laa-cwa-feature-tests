@@ -7,17 +7,15 @@ require 'site_prism'
 require 'builder'
 
 Capybara.register_driver :firefox do |app|
-  capabilities = Selenium::WebDriver::Remote::Capabilities.firefox(
+  options = Selenium::WebDriver::Options.firefox(
     accept_insecure_certs: true
   )
   options = Selenium::WebDriver::Firefox::Options.new()
-  options.args << '--headless' if ENV['HEADLESS'] == 'true'
-  options.args << '--incognito'
+  options.add_argument('--headless') if ENV['HEADLESS'] == 'true'
+  options.add_argument('--incognito')
   Capybara::Selenium::Driver.new(
     app,
     browser: :firefox,
-    marionette: true,
-    desired_capabilities: capabilities,
     options: options
   )
 end
