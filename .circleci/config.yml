@@ -54,6 +54,13 @@ jobs:
       - run:
           name: Clean namespace
           command:  helm ls -n << parameters.environment >> --short | xargs -L1 -I {} helm uninstall {} -n << parameters.environment >>
+      - run:
+          name: Copy Test Reports from Pod
+          command: |
+            # Copy test reports from Kubernetes pod to local directory
+            kubectl cp ${POD_NAME}:/reports ./test-reports
+      - store_artifacts:
+          path: ./test-reports
       - slack/notify:
           channel: laa-cwa-testing
           event: pass
