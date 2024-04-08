@@ -33,6 +33,10 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Create Directory
+          command: |
+            mkdir -p test-reports
+      - run:
           name: Authenticate with cluster
           command: |
             echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
@@ -56,11 +60,12 @@ jobs:
           command: |
             # Copy test reports from Kubernetes pod to local directory
             kubectl cp << parameters.environment >>/${POD_NAME}:/reports ./test-reports
+      - store_artifacts:
+          path: ./test-reports
       - run:
           name: Clean namespace
           command:  helm ls -n << parameters.environment >> --short | xargs -L1 -I {} helm uninstall {} -n << parameters.environment >>
-      - store_artifacts:
-          path: ./test-reports
+      
       - slack/notify:
           channel: laa-cwa-testing
           event: pass
