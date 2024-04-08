@@ -52,15 +52,16 @@ jobs:
             export POD_NAME=$(helm list -q | tail -1)
             kubectl logs -f ${POD_NAME}
       - run:
+          name: Creating Artifacts folder
+          command: |
+            mkdir /tmp/artifacts;
+            echo "Test reports for CWA UI tests" > /tmp/artifacts/art-2;
+      - store_artifacts:
+          path: reports
+          destination: test-reports
+      - run:
           name: Clean namespace
           command:  helm ls -n << parameters.environment >> --short | xargs -L1 -I {} helm uninstall {} -n << parameters.environment >>
-      - run:
-          name: Copy Test Reports from Pod
-          command: |
-            # Copy test reports from Kubernetes pod to local directory
-            kubectl cp ${POD_NAME}:/reports ./test-reports
-      - store_artifacts:
-          path: ./test-reports
       - slack/notify:
           channel: laa-cwa-testing
           event: pass
@@ -121,7 +122,6 @@ jobs:
           mentions: '@pcuam-devs'
           template: basic_success_1
 
-
 workflows:
   version: 2
   build_and_push:
@@ -154,4 +154,3 @@ workflows:
            branches:
             only:
             - main
-
