@@ -58,9 +58,9 @@ jobs:
       - run:
           name: Creating Artifacts folder
           command: |
-            mkdir -p reports-${CIRCLE_BUILD_NUM};
+            mkdir /tmp/artifacts;
       - store_artifacts:
-          path: reports-${CIRCLE_BUILD_NUM}
+          path: reports
           destination: test-reports
       - run:
           name: Clean namespace
