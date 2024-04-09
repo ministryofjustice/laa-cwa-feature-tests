@@ -56,18 +56,13 @@ jobs:
             export POD_NAME=$(helm list -q | tail -1)
             kubectl logs -f ${POD_NAME}
       - run:
-          name: Retrieve Test Report
-          command: |
-           # Assuming the pod name is "my-test-pod"
-           kubectl cp << parameters.environment >>/${POD_NAME}:/app/reports ./reports
-      - run:
-          name: Creating Dummy Artifacts
+          name: Creating Artifacts folder
           command: |
             mkdir /tmp/artifacts;
-            echo "my artifact files in a dir" > /tmp/artifacts/art-2;
+            echo "Test reports for CWA UI tests" > /tmp/artifacts/art-2;
       - store_artifacts:
           path: reports
-          destination: artifact-file
+          destination: test-reports
       - run:
           name: Clean namespace
           command:  helm ls -n << parameters.environment >> --short | xargs -L1 -I {} helm uninstall {} -n << parameters.environment >>
