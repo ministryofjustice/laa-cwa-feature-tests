@@ -23,4 +23,4 @@ spec:
       limits:
         cpu: 4000m
         memory: 8192Mi
-    command: ["/bin/sh", "-ec", "bundle exec cucumber features/validations/legal_help/immigration_and_asylum/nrm_advice.feature"]
+    command: ["/bin/sh", "-ec", "bundle exec cucumber"]
