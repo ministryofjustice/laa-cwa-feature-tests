@@ -55,7 +55,7 @@ jobs:
           name: List Directory Contents
           command: |
            # Assuming the pod name is "my-test-pod"
-           kubectl exec my-test-pod -- ls -l /usr/src/app
+           kubectl exec ${POD_NAME} -- ls -l /usr/src/app
       - run:
           name: Creating Artifacts folder
           command: |
