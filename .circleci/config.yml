@@ -61,7 +61,7 @@ jobs:
             mkdir /tmp/artifacts;
             echo "Test reports for CWA UI tests" > /tmp/artifacts/art-2;
       - store_artifacts:
-          path: reports
+          path: reports-${CIRCLE_BUILD_NUM}
           destination: test-reports
       - run:
           name: Clean namespace
