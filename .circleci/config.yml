@@ -52,16 +52,12 @@ jobs:
             export POD_NAME=$(helm list -q | tail -1)
             kubectl logs -f ${POD_NAME}
       - run:
-          name: List Directory Contents
-          command: |
-           # Assuming the pod name is "my-test-pod"
-           kubectl exec ${POD_NAME} -- ls -l /usr/src/app
-      - run:
           name: Creating Artifacts folder
           command: |
             mkdir /tmp/artifacts;
+            echo "Test reports for CWA UI tests" > /tmp/artifacts/art-2;
       - store_artifacts:
-          path: /usr/src/app
+          path: reports
           destination: test-reports
       - run:
           name: Clean namespace
@@ -126,7 +122,6 @@ jobs:
           mentions: '@pcuam-devs'
           template: basic_success_1
 
-
 workflows:
   version: 2
   build_and_push:
@@ -159,4 +154,3 @@ workflows:
            branches:
             only:
             - main
-
