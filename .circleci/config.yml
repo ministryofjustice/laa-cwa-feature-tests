@@ -52,6 +52,11 @@ jobs:
             export POD_NAME=$(helm list -q | tail -1)
             kubectl logs -f ${POD_NAME}
       - run:
+          name: List Directory Contents
+          command: |
+           # Assuming the pod name is "my-test-pod"
+           kubectl exec my-test-pod -- ls -l /usr/src/app
+      - run:
           name: Creating Artifacts folder
           command: |
             mkdir /tmp/artifacts;
