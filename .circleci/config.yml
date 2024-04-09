@@ -58,8 +58,7 @@ jobs:
       - run:
           name: Creating Artifacts folder
           command: |
-            mkdir /tmp/artifacts;
-            echo "Test reports for CWA UI tests" > /tmp/artifacts/art-2;
+            mkdir -p reports-${CIRCLE_BUILD_NUM};
       - store_artifacts:
           path: reports-${CIRCLE_BUILD_NUM}
           destination: test-reports
