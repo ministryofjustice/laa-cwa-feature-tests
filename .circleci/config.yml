@@ -66,11 +66,8 @@ jobs:
             mkdir /tmp/artifacts;
             echo "my artifact files in a dir" > /tmp/artifacts/art-2;
       - store_artifacts:
-          path: /tmp/artifacts
-          destination: artifact-file
-      - store_artifacts:
           path: reports
-          destination: test-reports
+          destination: artifact-file
       - run:
           name: Clean namespace
           command:  helm ls -n << parameters.environment >> --short | xargs -L1 -I {} helm uninstall {} -n << parameters.environment >>
