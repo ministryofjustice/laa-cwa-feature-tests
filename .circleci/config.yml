@@ -60,7 +60,7 @@ jobs:
           command: |
             mkdir /tmp/artifacts;
       - store_artifacts:
-          path: reports
+          path: reports/cucumber_report.html
           destination: test-reports
       - run:
           name: Clean namespace
