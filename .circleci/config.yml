@@ -33,10 +33,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Create Directory
-          command: |
-            mkdir -p test-reports
-      - run:
           name: Authenticate with cluster
           command: |
             echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
@@ -60,7 +56,7 @@ jobs:
           command: |
             mkdir /tmp/artifacts;
       - store_artifacts:
-          path: reports/cucumber_report.html
+          path: /usr/src/app
           destination: test-reports
       - run:
           name: Clean namespace
