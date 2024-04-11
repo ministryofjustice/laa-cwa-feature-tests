@@ -144,6 +144,9 @@ legal_help:
       court_location_hpcds:
       tolerance_indicator:
 
+    early_legal_advice:
+      <<: *base_cm
+
     debt:
       <<: *base_cm
       #debt specific fields
