@@ -128,6 +128,7 @@ Then("the outcome does not save and gives an error containing:") do |string|
   page = AddOutcomePage.new
   expect(page).to have_content('Error')
   expect(page).to have_content(string)
+  byebug
 end
 
 Then("the outcome does not save and the error message {string} appears") do |error_message|
