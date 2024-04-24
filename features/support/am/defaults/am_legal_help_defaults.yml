@@ -142,6 +142,11 @@ legal_help:
       outcome_code: HF
       tolerance_indicator: N
 
+    early_legal_advice:
+      <<: *base_defaults_cm
+      #ELA specific fields
+      stage_reached: LA
+      outcome_code: LA
 
     debt:
       <<: *base_defaults
