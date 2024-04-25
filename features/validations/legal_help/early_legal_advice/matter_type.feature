@@ -398,20 +398,20 @@ Feature: HLPAS Bulk load validations
     Given the following Matter Types are chosen:
       | LWOT:LCRE |
     And the following outcomes are bulkloaded:
-      | # | CASE_ID | UFN        | CASE_START_DATE | OUTCOME_CODE | STAGE_REACHED | PROCUREMENT_AREA |
-      | 1 |     001 | 010323/001 |      01/04/2024 | LA           | LA            | HP00001          |
-      | 2 |     001 | 010323/001 |      01/04/2024 | LB           | LB            | HP00002          |
+      | # | CASE_ID | CASE_START_DATE | OUTCOME_CODE | STAGE_REACHED | PROCUREMENT_AREA |
+      | 1 |     001 |      01/04/2024 | LA           | LA            | HP00001          |
+      | 2 |     001 |      01/04/2024 | LB           | LB            | HP00002          |
     Then the following results are expected:
-      | # | MATTER_TYPE | ERROR_CODE_OR_MESSAGE |
-      | 1 | LWOT:LCRE   | <none>                |
+      | # | MATTER_TYPE | ERROR_CODE_OR_MESSAGE                                                                                                                                                                                                        |
+      | 1 | LWOT:LCRE   | The UFN you have entered has been used for a previous Legal Help outcome reported under this office account number 0J180R. Please enter a unique UFN number. You may need to change the Case ID to ensure that UFN is valid. |
 
   Scenario: Bulkload HLPAS outcomes with duplicate claims
     Given the following Matter Types are chosen:
-      | HANT:HHAC |
+      | LWOT:LCRE |
     And the following outcomes are bulkloaded:
-      | # | CASE_ID | UFN          | CASE_START_DATE | OUTCOME_CODE | STAGE_REACHED | PROCUREMENT_AREA | OUTCOME_CODE |
-      | 1 |     001 | 25022024/001 |      25/02/2024 | HM           | HA            | PA00007          | HM           |
-      | 2 |     001 | 25022024/001 |      25/02/2024 | HM           | HA            | PA00007          | HM           |
+      | # | CASE_ID | CLIENT_DATE_OF_BIRTH | UCN             | CASE_START_DATE | OUTCOME_CODE | STAGE_REACHED | PROCUREMENT_AREA |
+      | 1 |     001 |           14/06/1963 | 14061963/T/PERS |      01/04/2024 | LA           | LA            | HP00001          |
+      | 2 |     001 |           14/06/1962 | 14061962/T/PERS |      01/04/2024 | LB           | LB            | HP00002          |
     Then the following results are expected:
-      | # | MATTER_TYPE | ERROR_CODE_OR_MESSAGE |
-      | 1 | HANT:HHAC   | <none>                |
+      | # | MATTER_TYPE | ERROR_CODE_OR_MESSAGE                                                                                                                                                                                                        |
+      | 1 | LWOT:LCRE   | The UFN you have entered has been used for a previous Legal Help outcome reported under this office account number 0J180R. Please enter a unique UFN number. You may need to change the Case ID to ensure that UFN is valid. |

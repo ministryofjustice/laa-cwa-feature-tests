@@ -79,7 +79,6 @@ When(/^the following outcomes are bulkloaded(\sand\sconfirmed)?:$/) do |confirm,
   step('user confirms the submission') if
   confirm
   sleep(1)
-  byebug
 end
 
 Then('the following results are expected:') do |table|
@@ -89,7 +88,6 @@ Then('the following results are expected:') do |table|
       row.tap { |r| r[:matter_type] = matter_type }
     end
   end
-  byebug
   expect(page).to have_content('Bulk Load Information', wait: 60)
   page.execute_script "window.scrollTo(0,500)"
   actual_results = @bulk_load_results_page.errors.reduce({}) do |collected, current|
