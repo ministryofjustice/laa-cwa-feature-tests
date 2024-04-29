@@ -2,5 +2,4 @@
 .DS_Store
 Brewfile.lock.json
 features_report.html
-reports/cucumber_report.html
 cucumber_web_report.html
