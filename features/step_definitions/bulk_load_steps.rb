@@ -1,6 +1,6 @@
 require 'timecop'
 
-Given(/^user prepares to submit outcomes for test provider "(.*)"(\s+again)?$/) do |ref, again|
+Given( /^user prepares to submit outcomes for test provider "(.*)"(\s+again)?$/) do |ref, again|
   @submission = CWAProvider.submission_by_ref(ref)
 
   navigator = NavigatorPage.new
