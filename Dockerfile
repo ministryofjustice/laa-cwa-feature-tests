@@ -21,7 +21,7 @@ RUN apt-get update \
     && unzip instantclient-sdk-linuxx64.zip -d /opt/oracle/instantclient \
     && rm instantclient-basiclite-linuxx64.zip instantclient-sqlplus-linuxx64.zip instantclient-sdk-linuxx64.zip\
     && cd instantclient \
-    && mv instantclient_21_13/* .  \
+    && mv instantclient_23_4/* .  \
     && echo /opt/oracle/instantclient > /etc/ld.so.conf.d/oracle-instantclient.conf \
     && ldconfig
 
