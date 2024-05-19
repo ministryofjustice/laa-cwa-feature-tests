@@ -1,4 +1,5 @@
 # CWA Feature Tests
+Status  [![CircleCI](https://dl.circleci.com/status-badge/img/gh/ministryofjustice/laa-cwa-feature-tests/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/ministryofjustice/laa-cwa-feature-tests/tree/main)
 
 Feature tests for CWA are used to replace some of the manual testing.
 
@@ -25,7 +26,7 @@ If you already have it, you can skip this step.
 Please note: these instructions support the `rbenv` Ruby version management tool
 only. Other tools might be preferable based on your experience.
 
-#### Install rbenv
+### Install rbenv
 
 Install `rbenv` following the steps available at:
 https://github.com/rbenv/rbenv#using-package-managers
@@ -243,7 +244,7 @@ dev:
 
 The details in this file should match the details in the CWA environment.
 
-## Development
+#### Development
 
 Existing test features are written following the BDD approach.
 

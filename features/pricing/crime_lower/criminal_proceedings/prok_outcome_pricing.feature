@@ -49,7 +49,7 @@ Scenario: Manually enter PROK outcomes using the mag court fee scheme from 01-AP
 
   When user adds outcomes for "Crime Lower" "Criminal Proceedings" with fields like this:
   | matter_type | rep_order_date | standard_fee_cat | profit_cost | ufn        | work_concluded_date | police_station | maat_id |
-  | PROK        | 01-APR-2016    | 1EW              | 248.71      | 010416/001 | 02-APR-2016         | C1013          | 1234567890 |
+  | PROK        | 01-APR-2016    | 1EW              | 248.71      | 010416/002 | 02-APR-2016         | C1013          | 1234567890 |
   Then the outcome saves successfully
 
 #@invalid @crime_lower @delete_outcome_before @XXLSC_MAGISTRATE_COURT_FEES
@@ -101,7 +101,7 @@ Scenario: Manually enter PROK outcomes using the mag court fee scheme from 01-AP
 
   When user adds outcomes for "Crime Lower" "Criminal Proceedings" with fields like this:
   | matter_type | rep_order_date | standard_fee_cat | profit_cost | ufn        | work_concluded_date | police_station | maat_id |
-  | PROK        | 01-APR-2016    | 1EW              | 249.71      | 010416/002 | 02-APR-2016         | C1013          | 1234567890 |
+  | PROK        | 01-APR-2016    | 1EW              | 249.71      | 010416/003 | 02-APR-2016         | C1013          | 1234567890 |
   Then the outcome does not save and gives an error containing:
   """
   The fee you have entered is not valid for Category 1: Either Way / PROK matters. Please enter a valid fee in the profit costs field.

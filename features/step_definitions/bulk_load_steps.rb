@@ -1,4 +1,6 @@
-Given(/^user prepares to submit outcomes for test provider "(.*)"(\s+again)?$/) do |ref, again|
+require 'timecop'
+
+Given( /^user prepares to submit outcomes for test provider "(.*)"(\s+again)?$/) do |ref, again|
   @submission = CWAProvider.submission_by_ref(ref)
 
   navigator = NavigatorPage.new
@@ -52,6 +54,14 @@ Given('the following Matter Types are chosen:') do |table|
   @matter_types = table.raw.flatten
 end
 
+Given('set system date to tomorrow') do
+  Timecop.freeze(Date.today + 1)
+end
+
+Given('reset system date') do
+  Timecop.unfreeze
+end
+
 When(/^the following outcomes are bulkloaded(\sand\sconfirmed)?:$/) do |confirm, table|
   @bulk_load_page = BulkLoadPage.new
   expect(page).to have_content("Bulk Load File Selection", wait: 5)
@@ -64,8 +74,11 @@ When(/^the following outcomes are bulkloaded(\sand\sconfirmed)?:$/) do |confirm,
   @bulk_load_page.bulk_load_file.send_keys(file_name)
   @bulk_load_page.wait_until_next_button_visible(wait: 5)
   @bulk_load_page.next_button.double_click
+  # @bulk_load_page.next_button_top.double_click
+  find('#Next:enabled', wait: 10).click
   step('user confirms the submission') if
   confirm
+  sleep(1)
 end
 
 Then('the following results are expected:') do |table|
@@ -156,6 +169,15 @@ Then("there should be no problem outcomes") do
   expect(@bulk_load_page.summary.problem_outcomes.text).to eq('1119')
 end
 
+Then("there should be other outcomes like follows") do
+  @bulk_load_page = BulkLoadResultsPage.new
+  @bulk_load_page.wait_until_summary_visible(wait: 20)
+  expect(@bulk_load_page.summary.total_outcomes.text).to eq('3')
+  expect(@bulk_load_page.summary.problem_outcomes.text).to eq('1')
+  expect(@bulk_load_page.summary.duplicate_outcomes.text).to eq('0')
+  expect(@bulk_load_page.summary.invalid_outcomes_nms.text).to eq('1')
+end
+
 Then("there should be no duplicate outcomes") do
   expect(@bulk_load_page).to have_summary
   expect(@bulk_load_page.summary).to have_duplicate_outcomes
@@ -176,15 +198,6 @@ Then('user should see the bulk load results page') do
   expect(@bulk_load_page).to be_loaded
 end
 
-Then('the following summary for the submission:') do |table|
-  table_to_hash_array(table).each.with_index do |row, index|
-    row.each_pair do |element_name, expected_value|
-      actual_row = @bulk_load_results_page.summary[index]
-      actual_value = actual_row.public_send(element_name).text
-      expect(actual_value).to eq(expected_value)
-    end
-  end
-end
 
 Then('the following errors:') do |table|
   table_to_hash_array(table).each.with_index do |row, index|
@@ -208,20 +221,11 @@ end
 
 When('user confirms the submission') do
   @bulk_load_page = BulkLoadPage.new
-  @bulk_load_page.wait_until_confirm_submission_visible(wait: 10)
-  @bulk_load_page.confirm_submission.click
+  @bulk_load_page.wait_until_confirm_submission_visible(wait: 20)
+  @bulk_load_page.confirm_submission.double_click
 end
 
 When("user views the submission details") do
   @bulk_load_results_page = BulkLoadResultsPage.new
   @bulk_load_results_page.submissions.first.bulk_load_update_link.click
-end
-
-Then('user should see the submission reference in the submission list page') do
-  submission = CWAProvider.submissions.find { |s| s.area_of_law == 'LEGAL HELP' }
-
-  matches_reference = ->(submission) do
-    submission.schedule_submission_reference.text == submission.schedule_number
-  end
-  expect(@bulk_load_results_page.submissions.any?(&matches_reference)).to eq(true)
 end

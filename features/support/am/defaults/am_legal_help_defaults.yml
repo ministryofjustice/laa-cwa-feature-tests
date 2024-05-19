@@ -142,6 +142,11 @@ legal_help:
       outcome_code: HF
       tolerance_indicator: N
 
+    early_legal_advice:
+      <<: *base_defaults_cm
+      #ELA specific fields
+      stage_reached: LA
+      outcome_code: LA
 
     debt:
       <<: *base_defaults
@@ -183,17 +188,42 @@ legal_help:
       immigration:
         <<: *base_defaults
         claim_type:  Stage Claim
+        procurement_area: PA00158
+        access_point: AP00137
+        stage_reached:
+        outcome_code:
+        travel_time: 0
+        waiting_time: 0
+        advice_time: 0
+        profit_cost: 0
+        counsel_cost: 0
+        vat_indicator: N
+        travel_waiting_costs: 0
+        ho_ucn: A9999999
+        ho_interview: 0
+        legacy_case: N
+        substantive_hearing: N
+        cmrh_oral: 0
+        ait_hearing_centre: 16
+        cmrh_telephone: 0
+        adjourned_hearing_fee: 0
 
       immigration_and_asylum:
         <<: *base_defaults
+
 
   disbursement_claim:
       immigration:
         <<: *base_defaults
         claim_type:  Disbursements Claim
+        procurement_area: PA00158
+        access_point: AP00137
+        ho_ucn: A9999999
+        ho_interview: 0
 
       immigration_and_asylum:
         <<: *base_defaults
+
 
       mental_health:
         <<: *base_defaults

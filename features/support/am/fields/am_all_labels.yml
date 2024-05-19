@@ -120,6 +120,7 @@ maat_id:
 matter_type:
   - Matter Type
   - Stage Reached
+  - Work Type
 med_concluded_date:
   - Work Concluded Date
 mediation_time:
@@ -130,7 +131,7 @@ meetings_attended:
   - Meetings attended
 mht_ref_number:
   - Mental Health Tribunal Reference Number
-nrm_advice:
+national_ref_mechanism_advice:
   - NRM Advice
 no_of_clients:
   - Number of Clients Seen at the Surgery
@@ -188,10 +189,11 @@ tolerance_indicator:
   - Tolerance Indicator
 transfer_date:
   - Transfer Date
+detention_travel_waiting_costs:
+ - Detention Travel & Waiting Costs Excluding VAT
 travel_costs:
   - Travel
   - Travel costs excluding VAT
-  - Detention Travel & Waiting Costs Excluding VAT
   - Detention Travel Costs excluding VAT
 travel_time:
   - Travel Time

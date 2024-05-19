@@ -102,7 +102,11 @@ module Helpers
       end
 
       def load_yaml(filename)
-        YAML.load_file(File.expand_path(filename))
+        begin
+          YAML.load_file(File.expand_path(filename), aliases: true)
+        rescue ArgumentError
+          YAML.load_file(File.expand_path(filename))
+        end
       end
 
       def overrides
@@ -172,20 +176,21 @@ module Helpers
     class Mediation < Base
       def fields
         @fields ||= load_fields
-          .fetch(matter_type_code)
+          .fetch(area_of_law)
+          .fetch(category_of_law)
+          .fetch(matter_type)
           .transform_keys(&:to_sym)
       end
-
       def defaults
         @defaults ||= load_defaults
-          .fetch(matter_type_code)
+          .fetch(area_of_law)
+          .fetch(category_of_law)
+          .fetch(matter_type)
           .transform_keys(&:to_sym)
       end
-
       private
-
-      def matter_type_code
-        extra_args.fetch(:matter_type_code)&.to_s
+      def matter_type
+        extra_args.fetch(:matter_type)&.to_s
       end
     end
   end

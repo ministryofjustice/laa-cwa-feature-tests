@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    meta.helm.sh/release-name: {{ .Chart.Name }}
+    meta.helm.sh/release-namespace: {{ .Values.global.namespace }}
+
+spec:
+  restartPolicy: Never
+  serviceAccountName: {{ .Values.global.serviceAccount }}
+  containers:
+  - name: laa-pcuam-cwa-tests
+    image: {{ .Values.ecr.image.registryAddress }}/{{ .Values.ecr.image.regPath }}:{{ .Values.ecr.image.tag }}
+    env:
+    - name: TEST_ENV
+      value: {{ .Values.global.test_env }}
+    resources:
+      requests:
+        cpu: 1000m
+        memory: 8192Mi
+      limits:
+        cpu: 4000m
+        memory: 8192Mi
+    command: ["/bin/sh", "-ec", "bundle exec cucumber"]

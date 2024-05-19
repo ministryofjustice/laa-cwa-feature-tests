@@ -5,9 +5,16 @@ group :test do
   gem 'builder', '~> 3.2'
   gem 'byebug'
   gem 'cucumber', '~> 7.1.0'
-  gem 'capybara', '~> 3.35.3'
+  gem 'capybara', '~> 3.36.0'
   gem 'rspec', '~> 3.10.0'
-  gem 'selenium-webdriver', '~> 3.142.7'
-  gem 'site_prism', '~> 3.7.3'
+  gem 'selenium-webdriver', '~> 4.4'
+  gem 'site_prism', '~> 4.0.0'
+  gem 'report_builder', '~> 1.9'
+  gem "timecop", "~> 0.9.8"
+  gem "parallel_tests"
   gem 'parallel_tests', group: [:development, :test]
+end
+
+group :docker do
+  gem 'ruby-oci8', '~> 2.2.12'
 end

@@ -7,7 +7,7 @@ Feature: Stage billing validations for Mental health
     | case_id | matter_type | case_start_date | work_concluded_date | claim_type |
     | 099     | MHAS:MCOM   | 01/01/2020      | 01/04/2020          | DC         |
     When the outcome saves successfully
-    And user adds outcomes for "Legal Help" "Mental Health" with fields like this:
+    And user adds outcomes for "Legal Help" "Mental Health" with fields like this again:
     | case_id | matter_type | case_start_date | work_concluded_date | claim_type |
     | 099     | MHAS:MCOM   | 01/01/2020      | 01/06/2020          | DC         |
     Then the outcome does not save and gives an error containing:
@@ -22,7 +22,7 @@ Feature: Stage billing validations for Mental health
     | case_id | matter_type | case_start_date | work_concluded_date | claim_type |
     | 099     | MHAS:MCOM   | 01/01/2020      | 01/04/2020          | DC         |
     When the outcome saves successfully
-    And user adds outcomes for "Legal Help" "Mental Health" with fields like this:
+    And user adds outcomes for "Legal Help" "Mental Health" with fields like this again:
     | case_id | matter_type | case_start_date | work_concluded_date | claim_type |
     | 099     | MHAS:MCOM   | 01/01/2020      | 01/07/2020          | DC         |
     Then the outcome saves successfully
