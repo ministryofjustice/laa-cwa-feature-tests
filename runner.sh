@@ -1,9 +1,9 @@
 #!/bin/bash
 
-export HEADLESS='true'
+export HEADLESS='false'
 export TEST_ENV='tst'
 
-cucumber  --format pretty --expand --format json -o "report.json"
+# cucumber  --format pretty --expand --format json -o "report.json"
 
 bundle exec parallel_cucumber features/validations -n 3
 

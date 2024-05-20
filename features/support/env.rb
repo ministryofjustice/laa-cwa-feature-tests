@@ -6,21 +6,54 @@ require 'selenium-webdriver'
 require 'site_prism'
 require 'builder'
 
-Capybara.register_driver :firefox do |app|
-  options = Selenium::WebDriver::Options.firefox(
-    accept_insecure_certs: true
-  )
-  options = Selenium::WebDriver::Firefox::Options.new()
+# Capybara.register_driver :chrome do |app|
+#   options = Selenium::WebDriver::Chrome::Options.new
+#   options.add_argument('--headless') if ENV['HEADLESS'] == 'true'
+#   Selenium::WebDriver.logger.level = :error
+
+
+#   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options, driver_path: 'features/support/driver/chromedriver')
+
+# end
+
+# Capybara.register_driver :chrome do |app|
+#   options = Selenium::WebDriver::Chrome::Options.new
+#   options.add_argument('--headless') if ENV['HEADLESS'] == 'true'
+#   Selenium::WebDriver.logger.level = :error
+
+#   Selenium::WebDriver::Chrome.path = 'features/support/driver/chromedriver'
+#   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+# end
+
+# Capybara.register_driver :chrome do |app|
+#   options = Selenium::WebDriver::Chrome::Options.new
+#   options.add_argument('--headless') if ENV['HEADLESS'] == 'true'
+#   Selenium::WebDriver.logger.level = :error
+
+#   Selenium::WebDriver::Chrome.driver_path = File.expand_path('features/support/driver/chromedriver')
+#   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+# end
+
+Capybara.register_driver :chrome do |app|
+  options = Selenium::WebDriver::Chrome::Options.new
   options.add_argument('--headless') if ENV['HEADLESS'] == 'true'
-  options.add_argument('--incognito')
+  options.add_argument('--disable-gpu')
+  options.add_argument('--no-sandbox')
+  options.add_argument('--disable-dev-shm-usage')
+  Selenium::WebDriver.logger.level = :error
+
+  # Configure the service with the path to ChromeDriver
+  service = Selenium::WebDriver::Service.chrome(path: File.expand_path('features/support/driver/chromedriver'))
+
   Capybara::Selenium::Driver.new(
     app,
-    browser: :firefox,
-    options: options
+    browser: :chrome,
+    options: options,
+    service: service
   )
 end
 
-Capybara.default_driver = :firefox
+Capybara.default_driver = :chrome
 Capybara.default_max_wait_time = 5
 Capybara.current_window.resize_to(1920,1080)
 

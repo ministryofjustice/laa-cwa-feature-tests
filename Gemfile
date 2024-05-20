@@ -11,7 +11,6 @@ group :test do
   gem 'site_prism', '~> 4.0.0'
   gem 'report_builder', '~> 1.9'
   gem "timecop", "~> 0.9.8"
-  gem "parallel_tests"
   gem 'parallel_tests', group: [:development, :test]
 end
 
