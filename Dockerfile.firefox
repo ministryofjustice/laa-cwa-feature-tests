@@ -1,0 +1,61 @@
+# Use the ruby:2.7-slim base image
+FROM --platform=linux/amd64 ruby:2.7
+
+RUN apt-get update; apt-get -y install wget build-essential curl vim
+
+# Install geckodriver and ceritificates
+RUN apt-get install -y --no-install-recommends ca-certificates curl firefox-esr \
+ && rm -fr /var/lib/apt/lists/* \
+ && curl -L https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz | tar xz -C /usr/local/bin
+
+#download firefox
+WORKDIR /tmp
+RUN apt-get update && apt-get install -y curl \
+    && curl -L -o firefox.tar.bz2 'https://download.mozilla.org/?product=firefox-latest&os=linux64' \
+    && tar -xjf firefox.tar.bz2 \
+    && mv firefox /opt
+RUN apt-get update && apt-get install -y libdbus-glib-1-2 libxt6 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+ENV PATH="/opt/firefox:${PATH}"
+
+# Copy your Ruby application files to the container (if needed)
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+COPY ../.bundle ./.bundle
+COPY ../lib ./lib
+COPY ../Gemfile .
+COPY ../Gemfile.lock .
+COPY ../cucumber.yml .
+COPY ../cucumber_web_report.html .
+COPY ../report.json .
+COPY ../.ruby-version .
+
+# Install all ruby gems from gemfile
+RUN bundle config set --local with docker
+RUN bundle install
+
+COPY ../features ./features
+COPY ../run_tests.rb .
+
+# Set any other environment variables you may need (if applicable)
+ENV HEADLESS=true
+ENV BROWSER=firefox
+# Temporary env vars for testing
+ENV REDIS_SERVICE_HOST=cwa-test-redis-service
+ENV CWA_TEST_PROVIDER_API=cwa-test-provider-service
+ENV FT_API=true
+ENV TEST_ENV=dev
+
+# Add new user to execute tests
+RUN groupadd -g 2000 testgroup && useradd -g testgroup testuser -u 1000 -m
+
+### Update ownership for local repository and tests
+RUN chown testuser:testgroup -R /usr/src/app
+
+### Switch user to testuser
+USER 1000
+
+ENTRYPOINT ["ruby","run_tests.rb"]
+#ENTRYPOINT ["tail", "-f", "/dev/null"]

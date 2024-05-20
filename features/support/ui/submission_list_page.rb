@@ -11,6 +11,7 @@ class SubmissionListPage < SitePrism::Page
   element :search_button, :xpath, '//button[1]'
   element :add_outcome_button, :id, 'AddOutcome'
   element :area_of_law_search, "select[id='AreaOfLawSearch']"
+  element :submission_period, :xpath, '//*[@id="SearchSubmissionPeriod"]'
 
   sections :submissions, SubmissionListSection, :xpath, '//*[@id="SubmissionHeadersTab"]/table[2]/tbody/tr[1]/following-sibling::tr[position() > 0]'
 end

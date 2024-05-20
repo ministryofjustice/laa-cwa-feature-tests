@@ -48,6 +48,15 @@ end
 
 After do |scenario|
   byebug if scenario.failed? && ENV['DEBUG_FAILURES'] == 'true'
+  #call the API and unlock the provider account in use
+  if ENV['FT_API'] == 'true'
+    api_endpoint = ENV.fetch('CWA_TEST_PROVIDER_API')
+    url = URI("https://#{api_endpoint}:8080/api/provider/unlockById/#{CWAProvider.submission.id}")
+    http = Net::HTTP.new(url.host, url.port)
+    request = Net::HTTP::Put.new(url)
+    response = http.request(request)
+    puts response.read_body
+  end
 end
 
 at_exit do

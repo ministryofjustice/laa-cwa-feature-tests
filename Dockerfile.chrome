@@ -1,0 +1,58 @@
+# Use the ruby:2.7-slim base image
+FROM --platform=linux/amd64 ruby:2.7
+
+RUN apt-get update; apt-get -y install wget build-essential curl
+
+RUN apt-get update && apt-get install -y unzip && \
+CHROME_DRIVER_VERSION=`curl -sS https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_STABLE` && \
+wget -N https://storage.googleapis.com/chrome-for-testing-public/$CHROME_DRIVER_VERSION/linux64/chromedriver-linux64.zip -P ~/ && \
+unzip ~/chromedriver-linux64.zip -d ~/ && \
+rm ~/chromedriver-linux64.zip && \
+chown root:root ~/chromedriver-linux64/chromedriver && \
+chmod 755 ~/chromedriver-linux64/chromedriver && \
+mv ~/chromedriver-linux64/chromedriver /usr/bin/chromedriver && \
+sh -c 'wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -' && \
+sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+RUN apt-get update
+RUN apt-get install -y google-chrome-stable
+
+# Copy your Ruby application files to the container (if needed)
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+COPY ./.bundle .bundle
+COPY ./lib .lib
+COPY ./Gemfile .
+#COPY . ./Gemfile.lock .
+COPY ./cucumber.yml .
+#COPY ../cucumber_web_report.html .
+#COPY ../report.json .
+COPY ./.ruby-version .
+# Install all ruby gems from gemfile
+# Install all ruby gems from gemfile
+RUN bundle config set --local with docker
+RUN bundle install
+
+COPY ./features features
+
+# Set any other environment variables you may need (if applicable)
+ENV HEADLESS=true
+ENV BROWSER=chrome
+# Temporary env vars for testing
+ENV REDIS_SERVICE_HOST=cwa-test-redis-service
+ENV CWA_TEST_PROVIDER_API=cwa-test-provider-service
+ENV FT_API=true
+ENV TEST_ENV=dev
+
+COPY ./run_tests.rb .
+
+# Add new user to execute tests
+RUN groupadd -g 2000 testgroup && useradd -g testgroup testuser -u 1000 -m
+
+### Update ownership for local repository and tests
+RUN chown testuser:testgroup -R /usr/src/app
+
+### Switch user to testuser
+USER 1000
+
+ENTRYPOINT ["ruby","run_tests.rb"]
