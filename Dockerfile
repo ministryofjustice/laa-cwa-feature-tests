@@ -13,15 +13,15 @@ RUN apt-get update \
     && apt-get -y install vim \
     && mkdir -p /opt/oracle \
     && cd /opt/oracle \
-    && wget https://download.oracle.com/otn_software/linux/instantclient/instantclient-basiclite-linuxx64.zip \
-    && wget https://download.oracle.com/otn_software/linux/instantclient/instantclient-sqlplus-linuxx64.zip \
-    && wget https://download.oracle.com/otn_software/linux/instantclient/instantclient-sdk-linuxx64.zip \
-    && unzip instantclient-basiclite-linuxx64.zip -d /opt/oracle/instantclient \
-    && unzip instantclient-sqlplus-linuxx64.zip -d /opt/oracle/instantclient \
-    && unzip instantclient-sdk-linuxx64.zip -d /opt/oracle/instantclient \
-    && rm instantclient-basiclite-linuxx64.zip instantclient-sqlplus-linuxx64.zip instantclient-sdk-linuxx64.zip\
+    && wget https://download.oracle.com/otn_software/linux/instantclient/2340000/instantclient-basiclite-linux.x64-23.4.0.24.05.zip \
+    && wget https://download.oracle.com/otn_software/linux/instantclient/2340000/instantclient-sqlplus-linux.x64-23.4.0.24.05.zip \
+    && wget https://download.oracle.com/otn_software/linux/instantclient/2340000/instantclient-sdk-linux.x64-23.4.0.24.05.zip \
+    && unzip -o instantclient-basiclite-linux.x64-23.4.0.24.05.zip -d /opt/oracle/instantclient \
+    && unzip -o instantclient-sqlplus-linux.x64-23.4.0.24.05.zip -d /opt/oracle/instantclient \
+    && unzip -o instantclient-sdk-linux.x64-23.4.0.24.05.zip -d /opt/oracle/instantclient \
+    && rm instantclient-basiclite-linux.x64-23.4.0.24.05.zip instantclient-sqlplus-linux.x64-23.4.0.24.05.zip instantclient-sdk-linux.x64-23.4.0.24.05.zip\
     && cd instantclient \
-    && mv instantclient_21_13/* .  \
+    && mv instantclient_23_4/* .  \
     && echo /opt/oracle/instantclient > /etc/ld.so.conf.d/oracle-instantclient.conf \
     && ldconfig
 
