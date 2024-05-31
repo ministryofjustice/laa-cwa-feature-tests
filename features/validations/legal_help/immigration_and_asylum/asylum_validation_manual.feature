@@ -4,11 +4,11 @@ Feature: Validation for Immigration and Asylum claims
     Given user is on their "LEGAL HELP" submission details page
 
   @delete_outcome_after @manual_submission @valid @irc
-  Scenario Outline: Add valid Immigration and Asylum claims using Derwentside IRC for PA/AP
+  Scenario Outline: Add valid Immigration and Asylum claims using Derwentside IRC for PA/AP , start date changed for PA/AP in line with guidance
     When user adds outcomes for "Legal Help" "Immigration And Asylum" with fields like this:
       | case_id | matter_type | case_start_date | procurement_area | access_point | irc_surgery |
-      |     001 | IAXL:IDAS   |        01/11/19 | PA00188          | AP00186      | No          |
-      |     002 | IAXL:IDAS   |        01/11/19 | PA00188          | AP00187      | No          |
+      |     001 | IAXL:IDAS   |        18/10/21 | PA00188          | AP00186      | No          |
+      |     002 | IAXL:IDAS   |        18/10/21 | PA00188          | AP00187      | No          |
     Then the outcome saves successfully
 
   @delete_outcome_after @manual_submission @valid @idif
