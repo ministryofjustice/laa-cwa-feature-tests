@@ -55,7 +55,7 @@ Feature: Validation for Prior authority number
       | # | CASE_ID | UFN        | CLAIM_TYPE | OUTCOME_CODE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT | PRIOR_AUTHORITY_REF |
       | 1 |     001 | 010523/001 | CM         | IA           |      01/05/2023 |          30/05/2023 |           0 |            0 | N             |            0 |                 1000 |                 0 | a000000             |
     Then user should see the outcome results page
-    And successful outcomes should equal 1
+    And problem outcomes should equal 1
     Then the outcome does not save and gives an error containing:
       """
       The Prior Authority Reference number entered is incorrect. Please check again and enter the correct reference number.

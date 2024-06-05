@@ -160,6 +160,14 @@ Then(/successful outcomes should equal (\d*)/) do |num_of_successful_outcomes|
   expect(@bulk_load_page.summary.successful_outcomes.text).to eq(num_of_successful_outcomes)
 end
 
+Then(/problem outcomes should equal (\d*)/) do |num_of_problem_outcomes|
+  @bulk_load_page = BulkLoadResultsPage.new
+  @bulk_load_page.wait_until_summary_visible(wait: 60)
+  expect(@bulk_load_page.summary).to have_problem_outcomes
+  expect(@bulk_load_page.summary.problem_outcomes.text).to eq(num_of_problem_outcomes)
+end
+
+
 Then("there should be no problem outcomes") do
   @bulk_load_page = BulkLoadResultsPage.new
   @bulk_load_page.wait_until_summary_visible(wait: 20)
