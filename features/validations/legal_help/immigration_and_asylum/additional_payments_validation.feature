@@ -173,3 +173,28 @@ Scenario: Validation for IMLH:IPAS does not allow additional payments for cases 
       | IMLH:IPAS                   | 011012/104     | ADDITIONAL_PAY_VALIDATION | As this claim involves one of the Matter Type Code IPAS or IMER, work in relation to the following cannot be claimed: HO interview Fee(s), Adjourned Hearing Fee(s), Substantive Hearing Fee, CMRH Oral Fee(s), CMRH Telephone Fee(s). Please amend your claim accordingly. |
       | IMLH:IPAS                   | 011012/105     | VALIDATION4 | 1 is not a valid ADJOURNED_HEARING_FEE |
       | IMLH:IPAS                   | 011012/105     | ADDITIONAL_PAY_VALIDATION | As this claim involves one of the Matter Type Code IPAS or IMER, work in relation to the following cannot be claimed: HO interview Fee(s), Adjourned Hearing Fee(s), Substantive Hearing Fee, CMRH Oral Fee(s), CMRH Telephone Fee(s). Please amend your claim accordingly. |
+
+
+Scenario: Validation for IMLH:IPAS does not allow additional payments for cases after 01/10/12
+    And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#12"
+    Given the following Matter Types are chosen:
+      | IMLH:IPAS |
+    When the following outcomes are bulkloaded:
+      | # | UFN        |CASE_ID| CLAIM_TYPE | CASE_START_DATE | PROFIT_COST | VAT_INDICATOR | CMRH_ORAL | CMRH_TELEPHONE | SUBSTANTIVE_HEARING | ADJOURNED_HEARING_FEE | HO_INTERVIEW | STAGE_REACHED |
+      | 1 | 011012/101 | 101|CM         |    01/10/2012 |         101   | N             |         0 |              0 |             N       |                     0 |            0     | IE            |
+    Then user should see the outcome results page
+    And the following errors:
+      | Matter Type / Stage Reached | UFN            | Error Type                              | Description                                                                                                                                                                                                                                                                                    |
+      | IMLH:IPAS                   | 011012/101     | PROFIT_DISB_COST_VALIDATION | The total of the figures recorded against the Profit Costs Excluding VAT and/or Disbursements Excluding VAT exceed permissible limit for this matter of £100.00 (as it has been reported with the code IPAS or IMER). |
+
+Scenario: Validation for IMLH:IPAS does not allow additional payments for cases after 01/10/12
+    And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#12"
+    Given the following Matter Types are chosen:
+      | IMLH:IMER |
+    When the following outcomes are bulkloaded:
+      | # | UFN        |CASE_ID| CLAIM_TYPE | CASE_START_DATE | PROFIT_COST | VAT_INDICATOR | CMRH_ORAL | CMRH_TELEPHONE | SUBSTANTIVE_HEARING | ADJOURNED_HEARING_FEE | HO_INTERVIEW | STAGE_REACHED |
+      | 1 | 011012/101 | 101   |CM          |    01/10/2012   |         101 | N             |         0 |              0 |             N       |                     0 |            0     | IE        |
+    Then user should see the outcome results page
+    And the following errors:
+      | Matter Type / Stage Reached | UFN            | Error Type                              | Description                                                                                                                                                                                                                                                                                    |
+      | IMLH:IMER                   | 011012/101     | PROFIT_DISB_COST_VALIDATION | The total of the figures recorded against the Profit Costs Excluding VAT and/or Disbursements Excluding VAT exceed permissible limit for this matter of £100.00 (as it has been reported with the code IPAS or IMER). |
