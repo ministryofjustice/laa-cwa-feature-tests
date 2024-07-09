@@ -254,3 +254,34 @@ Scenario: Validation for IMLH:IMER does not allow counsel costs > 0  for cases a
       | IMLH:IMER                   | 011012/101     | COUNSEL_COST_VALIDATION | As this claim involves one of the Matter Type Codes IPAS or IMER, Counsel costs cannot be claimed. Please ensure this field is set to zero. |
       | IMLH:IMER                   | 011012/102     | COUNSEL_COST_VALIDATION | As this claim involves one of the Matter Type Codes IPAS or IMER, Counsel costs cannot be claimed. Please ensure this field is set to zero. |
       | IMLH:IMER                   | 011012/102     | Invalid SR-OC Combination | The reporting code combination that has been used is not valid. Please amend accordingly. |
+
+Scenario: Validation for IMLH:IPAS does not allow JR Form Filling costs > 0  for cases after 01/10/12 with CM and SC claim types
+    And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#12"
+    Given the following Matter Types are chosen:
+      | IMLH:IPAS |
+    When the following outcomes are bulkloaded:
+      | # | UFN        |CASE_ID| CLAIM_TYPE | CASE_START_DATE | PROFIT_COST  |COUNSEL_COST | VAT_INDICATOR | CMRH_ORAL | CMRH_TELEPHONE | SUBSTANTIVE_HEARING | ADJOURNED_HEARING_FEE | HO_INTERVIEW | STAGE_REACHED |OUTCOME_CODE|JR_FORM_FILLING|
+      | 1 | 011012/101 | 101   |CM          |    01/10/2012 |         100    |   0         | N             |         0  |        0      |             N       |                     0 |            0 | IE            |IX          |1              |
+      | 2 | 011012/102 | 102   |SC          |    01/10/2012 |         100    |   0         | N             |         0  |        0      |             N       |                     0 |            0 | IE            |--          |1              |
+    Then user should see the outcome results page
+    And the following errors:
+      | Matter Type / Stage Reached | UFN            | Error Type                      | Description                                                                                                                                                                                                                                                                                    |
+      | IMLH:IPAS                   | 011012/101     | JR_FORM_FILLING_COST_VALIDATION | As this claim involves one of the Matter Type Codes IPAS or IMER, JR/Form Filling costs cannot be claimed. Please ensure this field is set to zero. |
+      | IMLH:IPAS                   | 011012/102     | JR_FORM_FILLING_COST_VALIDATION | As this claim involves one of the Matter Type Codes IPAS or IMER, JR/Form Filling costs cannot be claimed. Please ensure this field is set to zero. |
+      | IMLH:IPAS                   | 011012/102     | Invalid SR-OC Combination       | The reporting code combination that has been used is not valid. Please amend accordingly. |
+
+Scenario: Validation for IMLH:IMER does not allow JR Form Filling costs > 0  for cases after 01/10/12 with CM and SC claim types
+    And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#12"
+    Given the following Matter Types are chosen:
+      | IMLH:IMER |
+    When the following outcomes are bulkloaded:
+      | # | UFN        |CASE_ID| CLAIM_TYPE | CASE_START_DATE | PROFIT_COST |COUNSEL_COST| VAT_INDICATOR | CMRH_ORAL | CMRH_TELEPHONE | SUBSTANTIVE_HEARING | ADJOURNED_HEARING_FEE | HO_INTERVIEW | STAGE_REACHED |OUTCOME_CODE|JR_FORM_FILLING|
+      | 1 | 011012/101 | 101   |CM          |    01/10/2012   |         100 |0           | N             |         0 |              0 |             N       |                     0 |            0     | IE        |IX          |1              |
+      | 2 | 011012/102 | 102   |SC          |    01/10/2012   |         100 |0           | N             |         0 |              0 |             N       |                     0 |            0     | IE        |--          |1              |
+
+    Then user should see the outcome results page
+    And the following errors:
+      | Matter Type / Stage Reached | UFN            | Error Type                      | Description                                                                                                                                                                                                                                                                                    |
+      | IMLH:IMER                   | 011012/101     | JR_FORM_FILLING_COST_VALIDATION | As this claim involves one of the Matter Type Codes IPAS or IMER, JR/Form Filling costs cannot be claimed. Please ensure this field is set to zero. |
+      | IMLH:IMER                   | 011012/102     | JR_FORM_FILLING_COST_VALIDATION | As this claim involves one of the Matter Type Codes IPAS or IMER, JR/Form Filling costs cannot be claimed. Please ensure this field is set to zero. |
+      | IMLH:IMER                   | 011012/102     | Invalid SR-OC Combination       | The reporting code combination that has been used is not valid. Please amend accordingly. |      
