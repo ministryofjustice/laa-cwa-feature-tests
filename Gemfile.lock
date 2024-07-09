@@ -109,7 +109,7 @@ PLATFORMS
 DEPENDENCIES
   awesome_print (~> 1.9.2)
   builder (~> 3.2)
-  byebug
+  byebug (~> 11.1.0)
   capybara (~> 3.37.0)
   cucumber (~> 7.1.0)
   parallel_tests

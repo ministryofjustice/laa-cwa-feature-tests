@@ -3,7 +3,7 @@ source 'http://rubygems.org'
 group :test do
   gem 'awesome_print', '~> 1.9.2'
   gem 'builder', '~> 3.2'
-  gem 'byebug'
+  gem 'byebug', '~> 11.1.0'
   gem 'cucumber', '~> 7.1.0'
   gem 'capybara', '~> 3.37.0'
   gem 'rspec', '~> 3.10.0'

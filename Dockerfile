@@ -1,5 +1,5 @@
-# Use the ruby:2.7-slim base image
-FROM --platform=linux/amd64 ruby:2.7-slim
+# Use the ruby:3.0.0 base image
+FROM --platform=linux/amd64 ruby:3.0.0
 
 # Set environment variables for Oracle Instant Client
 ENV ORACLE_HOME /opt/oracle/instantclient
