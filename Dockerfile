@@ -25,6 +25,9 @@ RUN apt-get update \
     && echo /opt/oracle/instantclient > /etc/ld.so.conf.d/oracle-instantclient.conf \
     && ldconfig
 
+# Update RubyGems
+RUN gem update --system
+
 
 # Install geckodriver and ceritificates
 RUN apt-get install -y --no-install-recommends ca-certificates curl firefox-esr \
