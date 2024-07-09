@@ -24,8 +24,8 @@ criminal_investigations:
     <<: *criminal_investigations_base
     dscc_number:
     duty_solicitor:
-    no_of_police_station:
-    no_of_suspects:
+    number_of_police_station:
+    number_of_suspects:
     police_station:
     schedule_ref:
     travel_costs:
@@ -36,8 +36,8 @@ criminal_investigations:
     <<: *criminal_investigations_base
     crime_matter_type:
     duty_solicitor:
-    no_of_police_station:
-    no_of_suspects:
+    number_of_police_station:
+    number_of_suspects:
     outcome_code:
     police_station:
     schedule_ref:
@@ -51,8 +51,8 @@ criminal_investigations:
     dscc_number:
     duty_solicitor:
     excess_travel_costs:
-    no_of_police_station:
-    no_of_suspects:
+    number_of_police_station:
+    number_of_suspects:
     outcome_code:
     police_station:
     schedule_ref:
@@ -126,8 +126,8 @@ criminal_proceedings_base: &criminal_proceedings_base
   # duty_solicitor:
   # item_id:
   maat_id:
-  no_of_police_station: 1
-  no_of_suspects: 1
+  number_of_police_station: 1
+  number_of_suspects: 1
   police_station:
   profit_cost:
   rep_order_date:
