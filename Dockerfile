@@ -26,7 +26,7 @@ RUN apt-get update \
     && ldconfig
 
 # Update RubyGems
-RUN gem update --system
+RUN gem update --system 3.2.3
 
 
 # Install geckodriver and ceritificates
