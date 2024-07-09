@@ -44,10 +44,12 @@ ENV HEADLESS=true
 
 # Install all ruby gems from gemfile
 RUN bundle config set --local with docker
+RUN gem update --system 3.2.3
 RUN bundle install
 
 # Install the ruby-oci8 gem
 RUN gem install ruby-oci8
+
 
 # Add new user to execute tests
 RUN groupadd -g 2000 testgroup && useradd -g testgroup testuser -u 1000 -m
