@@ -1,0 +1,34 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cwa-test-job
+spec:
+  parallelism: 2
+  template:
+    metadata:
+      name: cwa-test-runner-container
+    spec:
+      initContainers:
+      - name: wait-for-redis
+        image: busybox:latest
+        command: ['sh', '-c', 'until nc -vz cwa-test-redis-service 6379; do echo "Waiting for redis..."; sleep 1; done;']
+      initContainers:
+      - name: wait-for-api
+        image: busybox:latest
+        command: ['sh', '-c', 'until nc -vz cwa-test-provider-api 8080; do echo "Waiting for cwa-test-provider-api..."; sleep 1; done;']
+      containers:
+      - name: cwa-test-runner-container
+        image: docker.io/library/laa-cwa-feature-tests-ff:latest
+        imagePullPolicy: Never
+        command: [ "/bin/bash", "-c", "--" ]
+        args: [ "while true; do sleep 30; done;" ]
+        env:
+        - name: TEST_ENV
+          value: dev
+        - name: REDIS_SERVICE_HOST
+          value: cwa-test-redis-service
+        - name: CWA_TEST_PROVIDER_API
+          value: http://cwa-test-provider-api:8080
+        - name: FT_API
+          value: "true"
+      restartPolicy: OnFailure

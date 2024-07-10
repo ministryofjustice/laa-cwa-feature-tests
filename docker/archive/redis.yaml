@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cwa-test-redis-service #service uses the Domain Name cwa-redis-service
+spec:
+  ports:
+    - port: 6379 #The port this service will be available on
+      targetPort: 6379 #The container port the service will forward to
+  #All pods with the app=cwa-redis-service label will be part of this service.
+  selector:
+    app: cwa-test-redis
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cwa-test-redis-deployment
+  labels:
+    app: cwa-test-redis
+spec:
+  selector:
+    matchLabels:
+      app: cwa-test-redis
+  template:
+    metadata:
+      labels:
+        app: cwa-test-redis
+    spec:
+      containers:
+      - name: cwa-test-redis-container
+        image: redis:7.2.4-alpine

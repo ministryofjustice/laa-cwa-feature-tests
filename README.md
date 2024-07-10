@@ -139,11 +139,11 @@ $ export GPG_PUBKEY=<PASTE RECEIVED PUBKEY HASH HERE>
 ```
 
 ```sh
-$ gpg --import $HOME/Downloads/$GPG_PUBKEY
+$ gpg --import $HOME/Downloads/$GPG_PUBKEY.gpg
 ```
 
 ```sh
-$ gpg ––edit–key $GPG_PUBKEY
+$ gpg --edit-key $GPG_PUBKEY
 ```
 
 This will lead to a prompt.
@@ -154,22 +154,27 @@ This will lead to a prompt.
 > fpr
 ```
 
-2. Select a trust level:
+2. Select a trust level (option 5):
 
 ```
 > trust
+Please decide how far you trust this user to correctly verify other users' keys
+(by looking at passports, checking fingerprints from different sources, etc.)
+
+  1 = I don't know or won't say
+  2 = I do NOT trust
+  3 = I trust marginally
+  4 = I trust fully
+  5 = I trust ultimately
+  m = back to the main menu
+
+Your decision?
 ```
 
-3. After verifying the fingerprint, save the changes:
+3. After verifying the fingerprint, save the changes (gpg will exit):
 
 ```
 > save
-```
-
-4. Finally, quit the prompt:
-
-```
-> quit
 ```
 
 ##### Raising new collaborator Pull Request
@@ -186,7 +191,7 @@ Then run:
 $ git-crypt add-gpg-user $GPG_PUBKEY
 ```
 
-A new commit will be automatically added; raise a Pull Request, tag the new
+A new commit will be automatically added; push the change and raise a Pull Request, tag the new
 collaborator and merge it once approved.
 
 
