@@ -55,3 +55,25 @@ end
 Then('their submission details are displayed') do
   expect(page).to have_title("Submission Details", wait:20)
 end
+
+When('the user navigates to the submission review screen') do
+  expect(page.title).to eq("Submission Details")
+  submission_details_page = SubmissionDetailsPage.new
+  submission_details_page.next_button.double_click
+  expect(page).to have_title("Submission Review", wait:20)
+  @submission_page = SubmissionReviewPage.new
+end
+
+When('the user navigates to the submission summary screen') do
+  expect(page.title).to eq("Submission Details").or eq("Submission Review")
+  #if page is Submission Details then go to submission review
+  if page.title == "Submission Details"
+    steps %(
+      When the user navigates to the submission review screen
+    )
+  end
+  submission_review_page = SubmissionReviewPage.new
+  submission_review_page.next_button.double_click
+  expect(page).to have_title("Submission Summary", wait:20)
+  @submission_page = SubmissionSummaryPage.new
+end

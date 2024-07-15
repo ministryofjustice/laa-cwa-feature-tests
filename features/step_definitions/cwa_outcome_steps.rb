@@ -140,3 +140,8 @@ Then("the outcome does not save and this popup error appears:") do |string|
   expect(page.driver.browser.switch_to.alert.text).to have_content(string)
   page.driver.browser.switch_to.alert.dismiss
 end
+
+Then('the no. of reported outcomes is {int}') do |no_reported_outcomes|
+  expect(page.title).to eq("Submission Review").or eq("Submission Summary")
+  expect(@submission_page.summary_section.outcomes).to have_content(no_reported_outcomes)
+end
