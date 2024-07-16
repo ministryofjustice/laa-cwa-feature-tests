@@ -1,3 +1,5 @@
+require_relative 'sections/submission_button_section.rb'
+
 class SubmissionDetailsOutcomeSection < SitePrism::Section
   element :select_checkbox, :xpath, "*/input[@title = 'Select']"
   element :ufn, :xpath, ".//*[contains(@title,'UFN')]"
@@ -19,4 +21,8 @@ class SubmissionDetailsPage < SitePrism::Page
   def select_all
     outcomes.map { |outcome| outcome.select_checkbox.click }
   end
+
+  section :submission_button_section, SubmissionButtonSection
+
+  element :next_button, :xpath, '//*[@id="PageButtons"]/tbody/tr[1]/td[10]/button'
 end
