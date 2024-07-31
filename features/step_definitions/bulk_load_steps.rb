@@ -81,6 +81,56 @@ When(/^the following outcomes are bulkloaded(\sand\sconfirmed)?:$/) do |confirm,
   sleep(1)
 end
 
+Then('the following error message is expected for each:') do |expected_message|
+  @bulk_load_results_page = BulkLoadResultsPage.new
+  @bulk_load_results_page.wait_until_summary_visible(wait: 30)
+
+  actual_results = @bulk_load_results_page.errors.reduce({}) do |memo, error|
+    case_id = error.client_surname.text.split.last
+    if case_id
+      error_message = error.description.text
+      all_errors = memo.fetch(case_id, []) << error_message
+      memo.merge(case_id => all_errors)
+    else
+      memo
+    end
+  end
+
+  @matter_types.flat_map.each.with_index(1) do |matter_type, i|
+    STDOUT.puts("Testing #{matter_type}")
+
+    case_id = "%03d" % i
+    actual_errors = actual_results.fetch(case_id, [])
+
+    expect(actual_errors).to contain_exactly(expected_message)
+  end
+end
+
+Then('no error message is expected for each') do
+  @bulk_load_results_page = BulkLoadResultsPage.new
+  @bulk_load_results_page.wait_until_summary_visible(wait: 30)
+
+  actual_results = @bulk_load_results_page.errors.reduce({}) do |memo, error|
+    case_id = error.client_surname.text.split.last
+    if case_id
+      error_message = error.description.text
+      all_errors = memo.fetch(case_id, []) << error_message
+      memo.merge(case_id => all_errors)
+    else
+      memo
+    end
+  end
+
+  @matter_types.flat_map.each.with_index(1) do |matter_type, i|
+    STDOUT.puts("Testing #{matter_type}")
+
+    case_id = "%03d" % i
+    actual_errors = actual_results.fetch(case_id, [])
+
+    expect(actual_errors).to eq([])
+  end
+end
+
 Then('the following results are expected:') do |table|
   @bulk_load_results_page = BulkLoadResultsPage.new
   expected_results = @matter_types.flat_map do |matter_type|
