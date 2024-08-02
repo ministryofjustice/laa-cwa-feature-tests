@@ -69,8 +69,8 @@ GEM
     regexp_parser (2.9.2)
     report_builder (1.9)
       json (>= 2.3.0)
-    rexml (3.2.8)
-      strscan (>= 3.0.9)
+    rexml (3.3.3)
+      strscan
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
       rspec-expectations (~> 3.10.0)
