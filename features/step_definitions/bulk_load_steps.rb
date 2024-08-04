@@ -285,3 +285,26 @@ When("user views the submission details") do
   @bulk_load_results_page = BulkLoadResultsPage.new
   @bulk_load_results_page.submissions.first.bulk_load_update_link.click
 end
+
+Given('the following outcomes are added to the bulkload file:') do |table|
+  # table is a Cucumber::MultilineArgument::DataTable
+  @xml = prepare_bulkload_xml(
+    submission: @submission,
+    matter_types: @matter_types,
+    new_lines: table_to_hash_array(table)
+  )
+end
+
+And('the bulkload file is submitted') do
+  @bulk_load_page = BulkLoadPage.new
+  expect(page).to have_content("Bulk Load File Selection", wait: 5)
+  file_name = save_tmp_bulkload_xml(@xml.raw)
+  @bulk_load_page.bulk_load_file.send_keys(file_name)
+  @bulk_load_page.wait_until_next_button_visible(wait: 5)
+  @bulk_load_page.next_button.double_click
+end
+
+And('the following new matter starts are added to the bulkload file:') do |table|
+  nms_data = table.hashes
+  @xml.add_nms_data(nms_data)
+end

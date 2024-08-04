@@ -1,3 +1,25 @@
+# Commenting out these tests until we have clarity on how to test NMS data in a bulkload file
+
+# @bulkload
+# Feature: Early Legal Advice validations with New Matter Starts
+
+#   Background: 
+#     Given a test firm user is logged in CWA
+#     And user prepares to submit outcomes for test provider "LEGAL HELP.ELA#17"
+    
+#   @valid @nms
+#   Scenario: Bulkload Early Legal Advice outcomes with NMS data
+#     Given the following Matter Types are chosen:
+#     | LHPC:LHAC |
+#     And the following outcomes are added to the bulkload file:
+#     | # | CASE_START_DATE | CLAIM_TYPE | OUTCOME_CODE | PROCUREMENT_AREA | STAGE_REACHED | 
+#     | 1 |      02/06/2019 | CM         | LB           | HP00016          | LA            |
+#     And the following new matter starts are added to the bulkload file:
+#     | schedule_ref      | procurement_area | access_point | category_of_law | nms |
+#     | 01/2Q389Q/2018/18 | HP00016          | AP00000      | ELA             | 10  |
+#     And the bulkload file is submitted
+#     Then successful outcomes should equal 1
+
 # Commenting out these tests until we have clarity on TA-2643 ticket. 
 
 # Feature: validate NMS with PA ,case start date and schedule start/end dates

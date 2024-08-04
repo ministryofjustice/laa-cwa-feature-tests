@@ -27,6 +27,10 @@ module Helpers
       Helpers::XMLBuilder::XML.new(submission: submission, matter_types: matter_types, new_lines: new_lines).raw
     end
 
+    def prepare_bulkload_xml(submission:, matter_types:, new_lines:)
+      Helpers::XMLBuilder::XML.new(submission: submission, matter_types: matter_types, new_lines: new_lines)
+    end
+
     def parse_bulkload_xml(file_name)
       Nokogiri::Slop(File.read(bulkload_file_path(file_name))).remove_namespaces!
     end
