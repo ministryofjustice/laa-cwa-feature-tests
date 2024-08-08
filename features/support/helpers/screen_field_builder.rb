@@ -4,8 +4,12 @@ require 'forwardable'
 
 module Helpers
   module ScreenFieldBuilder
-    def self.from(*args)
-      Builder.new(*args)
+    def self.from(args)
+      unless args.is_a?(Hash) && args.key?(:area_of_law) && args.key?(:category_of_law)
+        raise ArgumentError, "wrong number of arguments (given #{args.inspect}, expected Hash with keys :area_of_law and :category_of_law)"
+      end
+    
+      Builder.new(args[:area_of_law], args[:category_of_law], **args.except(:area_of_law, :category_of_law))
     end
 
     class Builder
@@ -15,11 +19,11 @@ module Helpers
 
       attr_reader :area_of_law, :category_of_law
 
-      def initialize(area_of_law:, category_of_law:, **extra_args)
+      def initialize(area_of_law, category_of_law, **extra_args)
         @area_of_law = area_of_law.to_s
         @category_of_law = category_of_law.to_s
         @extra_args = extra_args.transform_keys(&:to_sym)
-
+      
         build_object
       end
 
@@ -30,22 +34,14 @@ module Helpers
       def build_object
         case area_of_law
         when 'crime_lower'
-          @object = CrimeLower.new(args)
+          @object = CrimeLower.new(area_of_law: area_of_law, category_of_law: category_of_law, **extra_args)
         when 'legal_help'
-          @object = LegalHelp.new(args)
+          @object = LegalHelp.new(area_of_law: area_of_law, category_of_law: category_of_law, **extra_args)
         when 'mediation'
-          @object = Mediation.new(args)
+          @object = Mediation.new(area_of_law: area_of_law, category_of_law: category_of_law, **extra_args)
         else
           raise ArgumentError, "Area Of Law '#{area_of_law}' not recognised"
         end
-      end
-
-      def args
-        {
-          area_of_law: area_of_law,
-          category_of_law: category_of_law,
-          **extra_args
-        }
       end
     end
 
@@ -144,6 +140,7 @@ module Helpers
         'SC' => 'stage_claim',
         'CM' => 'completed_matter'
       }
+
       def fields
         @fields ||= load_fields
           .fetch(area_of_law)
@@ -181,6 +178,7 @@ module Helpers
           .fetch(matter_type)
           .transform_keys(&:to_sym)
       end
+
       def defaults
         @defaults ||= load_defaults
           .fetch(area_of_law)
@@ -188,7 +186,9 @@ module Helpers
           .fetch(matter_type)
           .transform_keys(&:to_sym)
       end
+
       private
+
       def matter_type
         extra_args.fetch(:matter_type)&.to_s
       end

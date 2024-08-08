@@ -1,5 +1,5 @@
 # Use the ruby:2.7-slim base image
-FROM --platform=linux/amd64 ruby:2.7-slim
+FROM --platform=linux/amd64 ruby:3.0-slim
 
 # Set environment variables for Oracle Instant Client
 ENV ORACLE_HOME /opt/oracle/instantclient
@@ -29,7 +29,7 @@ RUN apt-get update \
 # Install geckodriver and ceritificates
 RUN apt-get install -y --no-install-recommends ca-certificates curl firefox-esr \
  && rm -fr /var/lib/apt/lists/* \
- && curl -L https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz | tar xz -C /usr/local/bin
+ && curl -L https://github.com/mozilla/geckodriver/releases/download/v0.35.0/geckodriver-v0.35.0-linux64.tar.gz | tar xz -C /usr/local/bin
 
 # Copy your Ruby application files to the container (if needed)
 # COPY . .
@@ -44,7 +44,6 @@ ENV HEADLESS=true
 
 # Install all ruby gems from gemfile
 RUN bundle config set --local with docker
-RUN gem update --system 3.2.3
 RUN bundle install
 
 # Install the ruby-oci8 gem
