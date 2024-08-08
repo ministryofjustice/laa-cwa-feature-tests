@@ -5,7 +5,7 @@ group :test do
   gem 'builder', '~> 3.2'
   gem 'byebug', '~> 11.1.0'
   gem 'cucumber', '~> 7.1.0'
-  gem 'capybara', '~> 3.37.0'
+  gem 'capybara', '~> 3.39.2'
   gem 'rspec', '~> 3.10.0'
   gem 'selenium-webdriver', '~> 4.9', '>= 4.9.1'
   gem 'site_prism', '~> 5.0.3'

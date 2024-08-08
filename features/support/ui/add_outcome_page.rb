@@ -7,15 +7,17 @@ class AddOutcomePage < SitePrism::Page
     super()
     @builder = builder
 
-    builder
-      .fields_with_label
-      .each(&method(:add_field)) if builder
+    if builder
+      builder.fields_with_label.each do |field, labels|
+        add_field(field, labels)
+      end
+    end
   end
 
   element :save_button, :id, 'Apply_uixr'
   element :errors, :xpath, '//*[@id="FwkErrorBeanId"]'
 
-  PRIMARY_FIELDS = %i[matter_type crime_matter_type claim_type]
+  PRIMARY_FIELDS = %i[matter_type crime_matter_type claim_type].freeze
   private_constant :PRIMARY_FIELDS
 
   def add_outcome
@@ -25,11 +27,15 @@ class AddOutcomePage < SitePrism::Page
 
     PRIMARY_FIELDS.each do |field|
       next unless values[field]
+
       fill_in(field, values[field])
       values.delete(field)
     end
 
-    values.each(&method(:fill_in))
+    values.each do |field, value|
+      fill_in(field, value)
+    end
+
     page.execute_script "window.scrollBy(0,10000)"
     save_button.click
   end
@@ -39,12 +45,10 @@ class AddOutcomePage < SitePrism::Page
   def fill_in(field, value)
     return if value.to_s.empty?
 
-    if !respond_to?(field)
-      raise NotImplementedError, "Element '#{field}' is not defined on the page"
-    end
+    raise NotImplementedError, "Element '#{field}' is not defined on the page" unless respond_to?(field)
 
-    unless public_send("wait_until_#{field}_visible", { wait: 5 })
-      raise SitePrism::ElementVisibilityTimeoutError, "Element '#{field} is not visible"
+    unless public_send("wait_until_#{field}_visible", wait: 5)
+      raise SitePrism::ElementVisibilityTimeoutError, "Element '#{field}' is not visible"
     end
 
     element = public_send(field)
