@@ -18,6 +18,10 @@ module Helpers
         @xml
       end
 
+      def doc
+        Nokogiri::HTML::DocumentFragment.parse @xml
+      end
+
       def initialise_builder
         @builder = Builder::XmlMarkup.new(indent: 2)
         @builder.instruct!
@@ -55,6 +59,22 @@ module Helpers
 
       def default_field_value(name)
         @submission.lines.find { |d| d.name == name }&.default_value
+      end
+
+      def add_nms_data(new_matter_starts)
+        doc = Nokogiri::XML(self.raw)
+        schedule = doc.search('schedule').last
+        new_matter_starts.each { |n|
+          nms = NewMatterStartsXML.new(
+              n['schedule_ref'],
+              n['procurement_area'], 
+              n['access_point'],
+              n['category_of_law'], 
+              n['nms']
+          )
+          schedule.add_child(nms.section_tag)
+        }
+        @xml = doc
       end
 
       def generate_outcome(new_line, tot_outcomes, outcome)
