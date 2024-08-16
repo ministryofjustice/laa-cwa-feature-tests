@@ -120,7 +120,7 @@ Once added as `git-crypt` collaborator according to
 $ git checkout main && git pull
 $ git-crypt unlock
 ```
-
+#### This is a test not (please delete)
 #### Adding git-crypt collaborators
 
 These steps can be performed by anyone who's already a `git-crypt` collaborator
