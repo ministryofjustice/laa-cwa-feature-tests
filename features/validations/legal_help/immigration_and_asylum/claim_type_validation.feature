@@ -14,7 +14,7 @@ Feature: claim type validations for Immigration and Asylum
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE                                                                                                           |
       | 1 | The claim type for this claim has not been entered. Please refer to the relevant guidance and enter the appropriate claim type. |
-      | 1 | An invalid claim type has been used. Please check the type of claim being entered and refer to relevant guidance.               |
+      | 2 | An invalid claim type has been used. Please check the type of claim being entered and refer to relevant guidance.               |
 
   Scenario: Add DC claim type for IMAP MT1 and ILEA MT2, expect error as DC claim type is invalid for these codes
     Given the following Matter Types are chosen:
