@@ -16,7 +16,6 @@ Feature: Validate Procurement Area field
       |     508 |              | IE            | IMLB:IOUT   |        14/11/10 | PA00149          | AP00187      | No          |
       |     509 |              | IE            | IMLB:IOUT   |        14/11/10 | PA00150          | AP00187      | No          |
       |     510 |              | IE            | IMLB:IOUT   |        14/11/10 | PA00177          | AP00187      | No          |
-      |     511 |              | IE            | IMLB:IOUT   |        14/11/10 | PA00178          | AP00187      |             |
     Then the outcome saves successfully
 
   Scenario Outline: validate procurement area for ASYLUM with case start date < 15/11/2010 with specific PA/AP codes
@@ -32,13 +31,12 @@ Feature: Validate Procurement Area field
       |     519 |              | IALB:IOUT   | IE            |        14/11/10 | PA00149          | AP00187      | No          |
       |     520 |              | IALB:IOUT   | IE            |        14/11/10 | PA00150          | AP00187      | No          |
       |     521 |              | IALB:IOUT   | IE            |        14/11/10 | PA00177          | AP00187      | No          |
-      |     522 |              | IALB:IOUT   | IE            |        14/11/10 | PA00178          | AP00187      |             |
     Then the outcome saves successfully
 
   Scenario Outline: validate procurement area for IMMIGRATION where case start date >= 15/11/2010 with PA/AP code
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
       | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery |
-      |     523 |              | IMLB:IOUT   | IE            |        15/11/10 | PA00178          | AP00187      | No          |
+      |     523 |              | IMLB:IOUT   | IE            |        15/11/10 | PA00500          | AP00000      | No          |
     Then the outcome does not save and gives an error containing:
       """
       Completion of the IRC Surgery fields are required only when a relevant PA and AP code has been selected: PA00142 (Brook House IRC), PA00143 (Campsfield IRC), PA00144 (Colnbrook IRC), PA00147 (Harmondsworth IRC), PA00148 (Tinsley House IRC), PA00150 (Yarl's Wood IRC), PA00177 (Morton Hall IRC) and PA00188 (Derwentside IRC) and AP codes AP00186 (fast track) and AP00187 (non-fast track).
@@ -47,7 +45,7 @@ Feature: Validate Procurement Area field
   Scenario Outline: validate procurement area for ASYLUM where case start date >= 15/11/2010 with PA/AP code
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
       | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery |
-      |     524 |              | IALB:IOUT   | IE            |        15/11/10 | PA00178          | AP00187      | No          |
+      |     524 |              | IALB:IOUT   | IE            |        15/11/10 | PA00500          | AP00000      | No          |
     Then the outcome does not save and gives an error containing:
       """
       Completion of the IRC Surgery fields are required only when a relevant PA and AP code has been selected: PA00142 (Brook House IRC), PA00143 (Campsfield IRC), PA00144 (Colnbrook IRC), PA00147 (Harmondsworth IRC), PA00148 (Tinsley House IRC), PA00150 (Yarl's Wood IRC), PA00177 (Morton Hall IRC) and PA00188 (Derwentside IRC) and AP codes AP00186 (fast track) and AP00187 (non-fast track).
