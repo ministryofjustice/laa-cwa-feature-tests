@@ -122,3 +122,12 @@ Feature: Validate Procurement Area field
       """
       The case start date of this matter is prior to 15-Nov-2010 . A Procurement Area cannot be recorded against this matter. Please amend the outcome details accordingly
       """
+
+ Scenario Outline: validate procurement area for ASYLUM  with PA/AP code combination which is disabled
+    When user adds outcomes for "Legal Help" "Immigration" with fields like this:
+      | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery |
+      |     532 |              | IALB:IOUT   | IE            |        14/11/10 | PA00178          | AP00187      | No          |
+    Then the outcome does not save and gives an error containing:
+      """
+      The Category of Law, Procurement Area and Access Point combination that has been used is not valid for the date that has been recorded. This may be because the combination was end dated prior to this date or because the combination had not yet become active at this date.
+      """
