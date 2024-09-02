@@ -5,6 +5,7 @@ Feature: Debt Bulk load validations
     Given a test firm user is logged in CWA
     And user prepares to submit outcomes for test provider "LEGAL HELP.DEB#1"
 
+@1
   Scenario: Bulkload Civil Debt outcomes with CASE_START_DATE before April 2013
     Given the following Matter Types are chosen:
       | DMCA:DSCH |
@@ -21,6 +22,7 @@ Feature: Debt Bulk load validations
       | 3 | DMCA:DSCH   | XXLSC_AM_LAR2_CLA_EXEMP_MSG |
       | 4 | DMCA:DSCH   | XXLSC_AM_LAR2_CLA_REF_MSG   |
 
+@2
   Scenario: Bulkload Civil Debt outcomes with CASE_START_DATE after April 2013, CLA_EXEMPTION: <NONE>
     Given the following Matter Types are chosen:
       | DIVB:DIBP |
@@ -39,6 +41,7 @@ Feature: Debt Bulk load validations
       | 4 | DIVB:DIBP   | XXLSC_AM_LAR2_CLA_REF_FORMAT  |
       | 5 | DIVB:DIBP   | XXLSC_AM_LAR2_CLA_REF_FORMAT  |
 
+@3
   Scenario: Bulkload Civil Debt outcomes with CASE_START_DATE after April 2013, CLA_EXEMPTION: EPRE
     Note: EPRE can be used along with an already used CLA_REF_NUMBER
     Given the following Matter Types are chosen:
@@ -58,6 +61,7 @@ Feature: Debt Bulk load validations
       | 4 | DIVB:DIBP   | XXLSC_AM_LAR2_CLA_REF_FORMAT   |
       | 5 | DIVB:DIBP   | XXLSC_AM_LAR2_CLA_REF_FORMAT   |
 
+ @4
   Scenario: Bulkload Civil Debt outcomes with CASE_START_DATE after April 2013, CLA_EXEMPTION: ECHI
     Given the following Matter Types are chosen:
       | DIVB:DIBP |
@@ -78,6 +82,7 @@ Feature: Debt Bulk load validations
       | 5 | DIVB:DIBP   | XXLSC_AM_LAR2_CLA_REF_FORMAT  |
       | 6 | DIVB:DIBP   | XXLSC_AM_LAR2_ECHI_CAGE_MSG   |
 
+  @5
   Scenario: Bulkload Civil Debt outcomes with CASE_START_DATE after April 2013, CLA_EXEMPTION: EDET
     Given the following Matter Types are chosen:
       | DIVB:DIBP |
@@ -96,6 +101,7 @@ Feature: Debt Bulk load validations
       | 4 | DIVB:DIBP   | XXLSC_AM_LAR2_CLA_REF_FORMAT  |
       | 5 | DIVB:DIBP   | XXLSC_AM_LAR2_CLA_REF_FORMAT  |
 
+ @6
   Scenario: Bulkload Civil Debt outcomes with CASE_START_DATE after April 2013, CLA_EXEMPTION: <NONEXISTENT>
     Given the following Matter Types are chosen:
       | DIVB:DIBP |
@@ -106,6 +112,7 @@ Feature: Debt Bulk load validations
       | # | MATTER_TYPE | ERROR_CODE_OR_MESSAGE                      |
       | 1 | DIVB:DIBP   | The Exemption code you have reported is not in the correct format. Please enter a valid 4 letter code. |
 
+@7 
   Scenario: Bulkload Civil Debt outcomes with CASE_START_DATE after April 2013 _and_ after 15 May 2020, CLA_EXEMPTION: <NONE>
     Given the following Matter Types are chosen:
       | DIVB:DIBP |
@@ -124,6 +131,7 @@ Feature: Debt Bulk load validations
       | 4 | DIVB:DIBP   | XXLSC_AM_LAR2_CLA_REF_FORMAT  |
       | 5 | DIVB:DIBP   | XXLSC_AM_LAR2_CLA_REF_FORMAT  |
 
+ @8
   Scenario: Bulkload Civil Debt outcomes with CASE_START_DATE after April 2013 _and_ after 15 May 2020, CLA_EXEMPTION: EPRE
     Note: EPRE can be used along with an already used CLA_REF_NUMBER
     Given the following Matter Types are chosen:
@@ -143,6 +151,7 @@ Feature: Debt Bulk load validations
       | 4 | DIVB:DIBP   | XXLSC_AM_LAR2_CLA_REF_FORMAT |
       | 5 | DIVB:DIBP   | XXLSC_AM_LAR2_CLA_REF_FORMAT |
 
+ @9
   Scenario: Bulkload Civil Debt outcomes with CASE_START_DATE after April 2013 _and_ after 15 May 2020, CLA_EXEMPTION: ECHI
     Given the following Matter Types are chosen:
       | DIVB:DIBP |
@@ -163,6 +172,7 @@ Feature: Debt Bulk load validations
       | 5 | DIVB:DIBP   | XXLSC_AM_LAR2_CLA_REF_FORMAT  |
       | 6 | DIVB:DIBP   | XXLSC_AM_LAR2_ECHI_CAGE_MSG   |
 
+@10  
   Scenario: Bulkload Civil Debt outcomes with CASE_START_DATE after April 2013 _and_ after 15 May 2020, CLA_EXEMPTION: EDET
     Given the following Matter Types are chosen:
       | DIVB:DIBP |
@@ -181,6 +191,7 @@ Feature: Debt Bulk load validations
       | 4 | DIVB:DIBP   | XXLSC_AM_LAR2_CLA_REF_FORMAT  |
       | 5 | DIVB:DIBP   | XXLSC_AM_LAR2_CLA_REF_FORMAT  |
 
+@11
   Scenario: Bulkload Civil Debt outcomes with CASE_START_DATE after April 2013 _and_ after 15 May 2020, CLA_EXEMPTION: <NONEXISTENT>
     Given the following Matter Types are chosen:
       | DIVB:DIBP |

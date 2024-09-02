@@ -5,6 +5,7 @@ Feature: HLPAS Bulk load validations
     Given a test firm user is logged in CWA
     And user prepares to submit outcomes for test provider "LEGAL HELP.ELA#16"
 
+@1
   Scenario: Bulkload HLPAS outcomes
     Given the following Matter Types are chosen:
       | LDIB:LBEN |
@@ -256,6 +257,7 @@ Feature: HLPAS Bulk load validations
       | 122 | LWOT:LBEN   | <none>                |
       | 123 | LWOT:LOTH   | <none>                |
 
+@2
   Scenario: Bulkload HLPAS outcomes with all procurement area codes, outcome codes, stage reach codes
     Given the following Matter Types are chosen:
       | LDIB:LBEN |
@@ -374,6 +376,7 @@ Feature: HLPAS Bulk load validations
     Then there should be no problem outcomes
     Then user confirms the submission
 
+@3
   Scenario: Bulkload HLPAS outcomes with invalid procurement area codes for ecf matter
     Given the following Matter Types are chosen:
       | LWOT:LCRE |
@@ -384,6 +387,7 @@ Feature: HLPAS Bulk load validations
       | # | MATTER_TYPE | ERROR_CODE_OR_MESSAGE                                                                                                                                                                                             |
       | 1 | LWOT:LCRE   | It has been indicated that the matter has Exceptional Case Funding (as an ECF Reference has been recorded in the outcome details). The PA and AP must be populated with the values: ECF Matter (PA20000/AP20000). |
 
+@4
   Scenario: Bulkload HLPAS outcomes with valid procurement area codes for ecf matter
     Given the following Matter Types are chosen:
       | LWOT:LCRE |
@@ -393,7 +397,7 @@ Feature: HLPAS Bulk load validations
     Then the following results are expected:
       | # | MATTER_TYPE | ERROR_CODE_OR_MESSAGE |
       | 1 | LWOT:LCRE   | <none>                |
-
+@5
   Scenario: Bulkload HLPAS outcomes with duplicate claims
     Given the following Matter Types are chosen:
       | LWOT:LCRE |
@@ -403,8 +407,11 @@ Feature: HLPAS Bulk load validations
       | 2 |     001 |      01/06/2024 | LB           | LB            | HP00002          |
     Then the following results are expected:
       | # | MATTER_TYPE | ERROR_CODE_OR_MESSAGE                                                                                                                                                                                                        |
-      | 1 | LWOT:LCRE   | The UFN you have entered has been used for a previous Legal Help outcome reported under this office account number 0J180R. Please enter a unique UFN number. You may need to change the Case ID to ensure that UFN is valid. |
+  #    | 1 | LWOT:LCRE   | The UFN you have entered has been used for a previous Legal Help outcome reported under this office account number 0J180R. Please enter a unique UFN number. You may need to change the Case ID to ensure that UFN is valid. |
+     | 1 | LWOT:LCRE   | The UFN you have entered has been used for a previous Legal Help outcome reported under this office account number 2Q280X. Please enter a unique UFN number. You may need to change the Case ID to ensure that UFN is valid. |
 
+
+@6
   Scenario: Bulkload HLPAS outcomes with duplicate claims
     Given the following Matter Types are chosen:
       | LWOT:LCRE |
@@ -414,4 +421,4 @@ Feature: HLPAS Bulk load validations
       | 2 |     001 |           14/06/1962 | 14061962/T/PERS |      01/06/2024 | LB           | LB            | HP00002          |
     Then the following results are expected:
       | # | MATTER_TYPE | ERROR_CODE_OR_MESSAGE                                                                                                                                                                                                        |
-      | 1 | LWOT:LCRE   | The UFN you have entered has been used for a previous Legal Help outcome reported under this office account number 0J180R. Please enter a unique UFN number. You may need to change the Case ID to ensure that UFN is valid. |
+      | 1 | LWOT:LCRE   | The UFN you have entered has been used for a previous Legal Help outcome reported under this office account number 2Q280X. Please enter a unique UFN number. You may need to change the Case ID to ensure that UFN is valid. |
