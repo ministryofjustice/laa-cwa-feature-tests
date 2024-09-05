@@ -39,7 +39,7 @@ Feature: Validate Procurement Area field
       |     521 |              | IMLB:IOUT   | IE            |        15/11/10 | PA00500          | AP00000      | No          |
     Then the outcome does not save and gives an error containing:
       """
-      Completion of the IRC Surgery fields are required only when a relevant PA and AP code has been selected: PA00142 (Brook House IRC), PA00143 (Campsfield IRC), PA00144 (Colnbrook IRC), PA00147 (Harmondsworth IRC), PA00148 (Tinsley House IRC), PA00150 (Yarl's Wood IRC), PA00177 (Morton Hall IRC) and PA00188 (Derwentside IRC) and AP codes AP00186 (fast track) and AP00187 (non-fast track).
+      Completion of the IRC Surgery fields are required only when a relevant PA and AP code has been selected: PA00142 (Brook House IRC), PA00143 (Campsfield IRC), PA00144 (Colnbrook IRC), PA00145 (Dover IRC), PA00146 (Haslar IRC), PA00147 (Harmondsworth IRC), PA00148 (Tinsley House IRC), PA00149 (Lindholme IRC), PA00150 (Yarl's Wood IRC), PA00177 (Morton Hall IRC), PA00178 (Cedars IRC) and PA00188 (Derwentside IRC) and AP codes AP00186 (fast track) and AP00187 (non-fast track).
       """
 
   Scenario Outline: validate procurement area for ASYLUM where case start date >= 15/11/2010 with PA/AP code
@@ -48,7 +48,7 @@ Feature: Validate Procurement Area field
       |     522 |              | IALB:IOUT   | IE            |        15/11/10 | PA00500          | AP00000      | No          |
     Then the outcome does not save and gives an error containing:
       """
-      Completion of the IRC Surgery fields are required only when a relevant PA and AP code has been selected: PA00142 (Brook House IRC), PA00143 (Campsfield IRC), PA00144 (Colnbrook IRC), PA00147 (Harmondsworth IRC), PA00148 (Tinsley House IRC), PA00150 (Yarl's Wood IRC), PA00177 (Morton Hall IRC) and PA00188 (Derwentside IRC) and AP codes AP00186 (fast track) and AP00187 (non-fast track).
+      Completion of the IRC Surgery fields are required only when a relevant PA and AP code has been selected: PA00142 (Brook House IRC), PA00143 (Campsfield IRC), PA00144 (Colnbrook IRC), PA00145 (Dover IRC), PA00146 (Haslar IRC), PA00147 (Harmondsworth IRC), PA00148 (Tinsley House IRC), PA00149 (Lindholme IRC), PA00150 (Yarl's Wood IRC), PA00177 (Morton Hall IRC), PA00178 (Cedars IRC) and PA00188 (Derwentside IRC) and AP codes AP00186 (fast track) and AP00187 (non-fast track).
       """
 
   Scenario Outline: validate procurement area for IMMIGRATION for null PA/AP where case start date >= 15/11/2010
@@ -123,7 +123,7 @@ Feature: Validate Procurement Area field
       The case start date of this matter is prior to 15-Nov-2010 . A Procurement Area cannot be recorded against this matter. Please amend the outcome details accordingly
       """
 
- Scenario Outline: validate procurement area for ASYLUM  with PA/AP code combination which is disabled
+  Scenario Outline: validate procurement area for ASYLUM  with PA/AP code combination which is disabled
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
       | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery |
       |     532 |              | IALB:IOUT   | IE            |        14/11/10 | PA00178          | AP00187      | No          |
