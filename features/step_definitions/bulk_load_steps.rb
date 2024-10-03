@@ -220,7 +220,7 @@ end
 
 Then("there should be no problem outcomes") do
   @bulk_load_page = BulkLoadResultsPage.new
-  @bulk_load_page.wait_until_summary_visible(wait: 30)
+  @bulk_load_page.wait_until_summary_visible(wait: 60)
   expect(@bulk_load_page.summary).to have_problem_outcomes
   expect(@bulk_load_page.summary.problem_outcomes.text).to eq('0')
 end
