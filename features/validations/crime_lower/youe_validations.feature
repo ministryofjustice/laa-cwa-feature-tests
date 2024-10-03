@@ -1,0 +1,27 @@
+Feature: YOUE code Bulk load validations
+
+
+  Scenario: Bulkoad Crime Lower stage reached code YOUE with case outcome code CP19
+  is invalid for YOUE
+
+    Given a test firm user is logged in CWA
+    And user prepares to submit outcomes for test provider "CRIME LOWER#8"
+    Given the following Matter Types are chosen:
+      | YOUE |
+
+    And the following outcomes are bulkloaded:
+      | # | UFN        | OUTCOME_CODE | WORK_CONCLUDED_DATE | YOUTH_COURT | 
+      | 1 | 011024/001 | CP19         |          03/10/2021 | Y           |
+    Then the following results are expected:
+      | # | ERROR_CODE_OR_MESSAGE            |
+      | 1 | CP19 is not a valid OUTCOME_CODE |
+
+    
+  Scenario: Manually enter YOUE outcomes using the mag court fee scheme 01-JAN-1995 to 02-OCT-2011
+
+    Given user is on their "CRIME LOWER" submission details page
+
+    When user adds outcomes for "Crime Lower" "youth court" with fields like this:
+    | matter_type | rep_order_date | standard_fee_cat | profit_cost | ufn        | work_concluded_date | police_station | outcome_code |
+    | YOUE        |                |                  | 306.25      | 010195/001 | 02-JAN-1995         | C1013          | CP19         |
+    Then the outcome saves successfully

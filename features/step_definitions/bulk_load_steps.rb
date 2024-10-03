@@ -137,6 +137,7 @@ Then('the following results are expected:') do |table|
     table_to_hash_array(table).map do |row|
       row.tap { |r| r[:matter_type] = matter_type }
     end
+    byebug
   end
   expect(page).to have_content('Bulk Load Information', wait: 60)
   page.execute_script "window.scrollTo(0,500)"
