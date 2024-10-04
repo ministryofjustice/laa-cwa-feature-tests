@@ -139,6 +139,28 @@ criminal_proceedings_base: &criminal_proceedings_base
   work_concluded_date:
   youth_court: N
 
+youth_court_base: &youth_court_base
+  <<: *base_defaults
+  disbursements_amount: 0
+  disbursements_vat: 0
+  dscc_number: 
+  # duty_solicitor:
+  # item_id:
+  maat_id: 
+  number_of_police_station: 1
+  number_of_suspects: 1
+  police_station: C1013
+  rep_order_date: 
+  schedule_ref:
+  standard_fee_cat: 
+  profit_cost: 0
+  travel_costs: 0
+  travel_waiting_costs: 0
+  work_concluded_date: 0
+  outcome_code: 
+  ufn:
+  youth_court: N
+
 crime_lower:
   criminal_investigations:
     #INV<x> codes: 7 fee schemes
@@ -279,3 +301,17 @@ crime_lower:
       <<: *associated_civil_work_base
     ASAS:
       <<: *associated_civil_work_base
+
+  youth_court:
+    YOUE:
+      <<: *youth_court_base
+      crime_matter_type: 4-Robbery
+    YOUF:
+      <<: *youth_court_base
+      crime_matter_type: 4-Robbery
+    YOUK:
+      <<: *youth_court_base
+      crime_matter_type: 4-Robbery
+    YOUL:
+      <<: *youth_court_base
+      crime_matter_type: 4-Robbery
