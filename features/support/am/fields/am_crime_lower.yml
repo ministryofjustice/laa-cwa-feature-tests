@@ -139,7 +139,7 @@ criminal_proceedings_base: &criminal_proceedings_base
   work_concluded_date:
   youth_court:
 
-  youth_court_base: &youth_court_base
+youth_court_base: &youth_court_base
   <<: *base
   disbursements_amount:
   disbursements_vat:
