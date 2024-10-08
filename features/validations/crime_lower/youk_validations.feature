@@ -1,4 +1,4 @@
-Feature: YOUK code Bulk load validations
+Feature: YOUK code Manual and Bulk load validations
 
   Scenario: Bulkoad Crime Lower stage reached code YOUK with case outcome code CP19
   is invalid for YOUK

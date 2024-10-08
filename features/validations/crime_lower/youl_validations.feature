@@ -1,4 +1,4 @@
-Feature: YOUL code Bulk load validations
+Feature: YOUL code Manual and Bulk load validations
 
   Scenario: Bulkoad Crime Lower stage reached code YOUL with case outcome code CP19
   is invalid for YOUL

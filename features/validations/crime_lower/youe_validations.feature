@@ -1,4 +1,4 @@
-Feature: YOUE code Bulk load validations
+Feature: YOUE code Manual and Bulk load validations
 
   Scenario: Bulkoad Crime Lower stage reached code YOUE with case outcome code CP19
   is invalid for YOUE

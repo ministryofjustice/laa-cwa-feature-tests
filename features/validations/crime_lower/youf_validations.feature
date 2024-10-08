@@ -1,4 +1,4 @@
-Feature: YOUF code Bulk load validations
+Feature: YOUF code Manual and Bulk load validations
 
   Scenario: Bulkoad Crime Lower stage reached code YOUF with case outcome code CP19
   is invalid for YOUF
