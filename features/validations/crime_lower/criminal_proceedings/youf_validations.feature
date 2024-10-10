@@ -1,5 +1,6 @@
 Feature: YOUF code Manual and Bulk load validations
 
+  @bullkload_submission
   Scenario: Bulkoad Crime Lower stage reached code YOUF with case outcome code CP19
   is invalid for YOUF
 
@@ -14,9 +15,10 @@ Feature: YOUF code Manual and Bulk load validations
       | # | ERROR_CODE_OR_MESSAGE            |
       | 1 | CP19 is not a valid OUTCOME_CODE |
 
+  @manual_submission
   Scenario: Manually enter YOUF outcomes using the mag court fee scheme 01-JAN-1995 to 02-OCT-2011
     Given user is on their "CRIME LOWER" submission details page
-    When user adds outcomes for "Crime Lower" "youth court" with fields like this:
+    When user adds outcomes for "Crime Lower" "criminal proceedings" with fields like this:
       | matter_type | rep_order_date | standard_fee_cat | profit_cost | ufn        | work_concluded_date | police_station | outcome_code |
       | YOUF        |                |                  |           0 | 010924/001 |         01-SEP-2024 | C1013          | CP19         |
     Then the outcome does not save and gives an error containing:
