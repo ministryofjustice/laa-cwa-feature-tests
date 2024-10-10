@@ -197,7 +197,7 @@ crime_lower:
 
     INVM:
 
-  #PRO<x> codes
+  #PRO<x> and YOU<x> codes
   criminal_proceedings:
     PROC:
 
@@ -249,6 +249,23 @@ crime_lower:
 
     PROW:
 
+    YOUE:
+      <<: *criminal_proceedings_base
+      outcome_code:
+      crime_matter_type:
+    YOUF:
+      <<: *criminal_proceedings_base
+      outcome_code:
+      crime_matter_type:
+    YOUK:
+      <<: *criminal_proceedings_base
+      outcome_code:
+      crime_matter_type:
+    YOUL:
+      <<: *criminal_proceedings_base
+      outcome_code:
+      crime_matter_type:
+
   #APPA, APPB, APPC
   appeals_and_reviews:
     APPA:
@@ -279,3 +296,5 @@ crime_lower:
       <<: *associated_civil_work_base
     ASAS:
       <<: *associated_civil_work_base
+
+
