@@ -197,7 +197,7 @@ crime_lower:
 
     INVM:
 
-  #PRO<x> codes
+  #PRO<x> and YOU<x> codes
   criminal_proceedings:
     PROC:
 
@@ -249,6 +249,27 @@ crime_lower:
 
     PROW:
 
+    YOUE:
+      <<: *criminal_proceedings_base
+      outcome_code: CP01
+      crime_matter_type: 4-Robbery
+
+    YOUF:
+      <<: *criminal_proceedings_base
+      outcome_code: CP01
+      crime_matter_type: 4-Robbery
+
+    YOUK:
+      <<: *criminal_proceedings_base
+      outcome_code: CP01
+      crime_matter_type: 4-Robbery
+
+    YOUL:
+      <<: *criminal_proceedings_base
+      outcome_code: CP01
+      crime_matter_type: 4-Robbery
+
+
   #APPA, APPB, APPC
   appeals_and_reviews:
     APPA:
@@ -279,3 +300,5 @@ crime_lower:
       <<: *associated_civil_work_base
     ASAS:
       <<: *associated_civil_work_base
+
+
