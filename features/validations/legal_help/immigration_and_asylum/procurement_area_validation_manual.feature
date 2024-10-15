@@ -99,30 +99,6 @@ Feature: Validate Procurement Area field
       Data is missing or incorrect in the Procurement Area and/or Access Point fields. For Immigration matters which have a start date that is prior to 15-Nov-2010 the Procurement Area, if populated, can only be an Immigration Removal Centre (IRC). If an IRC is recorded in the Procurement Area field a valid Access Point must also be recorded.
       """
 
-  Scenario Outline: validate procurement area for Housing for null PA where case start date >= 15/11/2010
-    When user adds outcomes for "Legal Help" "Housing" with fields like this:
-      | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery |
-      |     529 |              | HHOM:HPRI   | HA            |        15/11/10 |                  |              |             |
-    Then the outcome does not save and gives an error containing:
-      """
-      When reporting an outcome with a case start date that is on or after 15-Nov-2010, the Procurement Area field must be complete. Please populate this field with the appropriate information .
-      """
-
-  Scenario Outline: validate procurement area for Housing for null PA case start date < 15/11/2010
-    When user adds outcomes for "Legal Help" "Housing" with fields like this:
-      | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery |
-      |     530 |              | HHOM:HPRI   | HA            |        14/11/10 |                  |              |             |
-    Then the outcome saves successfully
-
-  Scenario Outline: validate procurement area for Housing case start date prior 15/11/2010 with PA code
-    When user adds outcomes for "Legal Help" "Housing" with fields like this:
-      | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery |
-      |     531 |              | HHOM:HPRI   | HA            |        14/11/10 | PA00010          |              |             |
-    Then the outcome does not save and gives an error containing:
-      """
-      The case start date of this matter is prior to 15-Nov-2010 . A Procurement Area cannot be recorded against this matter. Please amend the outcome details accordingly
-      """
-
   Scenario Outline: validate procurement area for ASYLUM  with PA/AP code combination which is disabled
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
       | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery |
