@@ -6,11 +6,11 @@ Feature: bulk load claims validations for Access point and Procurement area
     Given the following Matter Types are chosen:
       | HHOM:HPRI |
     And the following outcomes are bulkloaded:
-      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | STAGE_REACHED | PROCUREMENT_AREA | ACCESS_POINT |
-      | 1 |     001 | 141110/001 | CM         |        14/11/10 | HA            | PA00006          | AP00006      |
-      | 2 |     002 | 141110/002 | CM         |        14/11/10 | HA            |                  |              |
-      | 3 |     003 | 141110/003 | CM         |        14/11/10 | HA            | PA00142          |              |
-      | 4 |     004 | 141110/004 | CM         |        14/11/10 | HA            | PA00136          | AP00137      |
+      | # | CASE_ID | UFN        | CASE_START_DATE | STAGE_REACHED | PROCUREMENT_AREA | ACCESS_POINT |
+      | 1 |     001 | 141110/001 |        14/11/10 | HA            | PA00006          | AP00006      |
+      | 2 |     002 | 141110/002 |        14/11/10 | HA            |                  |              |
+      | 3 |     003 | 141110/003 |        14/11/10 | HA            | PA00142          |              |
+      | 4 |     004 | 141110/004 |        14/11/10 | HA            | PA00136          | AP00137      |
     Then user should see the outcome results page
     And problem outcomes should equal 3
     And the following errors:
@@ -30,10 +30,10 @@ Feature: bulk load claims validations for Access point and Procurement area
     Given the following Matter Types are chosen:
       | HHOM:HPRI |
     And the following outcomes are bulkloaded:
-      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | STAGE_REACHED | PROCUREMENT_AREA | ACCESS_POINT |
-      | 1 |     001 | 151110/001 | CM         |        15/11/10 | HA            | PA00006          | AP00006      |
-      | 2 |     002 | 151110/002 | CM         |        15/11/10 | HA            |                  |              |
-      | 3 |     003 | 151110/003 | CM         |        15/11/10 | HA            | PA00006          |              |
+      | # | CASE_ID | UFN        | CASE_START_DATE | STAGE_REACHED | PROCUREMENT_AREA | ACCESS_POINT |
+      | 1 |     001 | 151110/001 |        15/11/10 | HA            | PA00006          | AP00006      |
+      | 2 |     002 | 151110/002 |        15/11/10 | HA            |                  |              |
+      | 3 |     003 | 151110/003 |        15/11/10 | HA            | PA00006          |              |
     Then user should see the outcome results page
     And problem outcomes should equal 2
     And the following errors:
