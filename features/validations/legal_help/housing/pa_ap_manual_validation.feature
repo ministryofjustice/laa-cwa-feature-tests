@@ -1,6 +1,6 @@
 Feature: Manual claims validations for Access point and Procurement area
 
-  Background: 
+  Background:
     Given user is on their "LEGAL HELP" submission details page
 
   Scenario Outline: validate procurement area for Housing for null PA where case start date >= 15/11/2010

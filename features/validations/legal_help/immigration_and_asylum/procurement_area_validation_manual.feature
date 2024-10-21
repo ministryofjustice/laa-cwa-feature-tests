@@ -51,6 +51,12 @@ Feature: Validate Procurement Area field
       Completion of the IRC Surgery fields are required only when a relevant PA and AP code has been selected: PA00142 (Brook House IRC), PA00143 (Campsfield IRC), PA00144 (Colnbrook IRC), PA00145 (Dover IRC), PA00146 (Haslar IRC), PA00147 (Harmondsworth IRC), PA00148 (Tinsley House IRC), PA00149 (Lindholme IRC), PA00150 (Yarl's Wood IRC), PA00177 (Morton Hall IRC), PA00178 (Cedars IRC) and PA00188 (Derwentside IRC) and AP codes AP00186 (fast track) and AP00187 (non-fast track).
       """
 
+  Scenario Outline: validate procurement area for IMMIGRATION where case start date >= 15/11/2010 with PA/AP code without IRC
+    When user adds outcomes for "Legal Help" "Immigration" with fields like this:
+      | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery |
+      |     521 |              | IMLB:IOUT   | IE            |        15/11/10 | PA00500          | AP00000      |             |
+    Then the outcome saves successfully
+
   Scenario Outline: validate procurement area for IMMIGRATION for null PA/AP where case start date >= 15/11/2010
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
       | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery |
@@ -81,22 +87,22 @@ Feature: Validate Procurement Area field
       |     526 |              | IALB:IOUT   | IE            |        14/11/10 |                  |              |             |
     Then the outcome saves successfully
 
-  Scenario Outline: validate procurement area for IMMIGRATION  where case start date < 15/11/2010  with PA/AP code
+  Scenario Outline: validate procurement area for IMMIGRATION  where case start date < 15/11/2010  with PA/AP code using IRC PA00188, start date in 2021
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
       | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery |
       |     527 |              | IMLB:IOUT   | IE            |        14/11/10 | PA00188          | AP00187      | No          |
     Then the outcome does not save and gives an error containing:
       """
-      Data is missing or incorrect in the Procurement Area and/or Access Point fields. For Immigration matters which have a start date that is prior to 15-Nov-2010 the Procurement Area, if populated, can only be an Immigration Removal Centre (IRC). If an IRC is recorded in the Procurement Area field a valid Access Point must also be recorded.
+      Data is missing or incorrect in the Procurement Area and/or Access Point fields. For Immigration matters which have a start date that is prior to 15-NOV-2010 the Procurement Area, if populated, can only be an Immigration Removal Centre (IRC). If an IRC is recorded in the Procurement Area field a valid Access Point must also be recorded.
       """
 
-  Scenario Outline: validate procurement area for ASYLUM  where case start date < 15/11/2010  with PA/AP code
+  Scenario Outline: validate procurement area for ASYLUM  where case start date < 15/11/2010  with PA/AP code using IRC PA00188, start date in 2021
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
       | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery |
       |     528 |              | IALB:IOUT   | IE            |        14/11/10 | PA00188          | AP00187      | No          |
     Then the outcome does not save and gives an error containing:
       """
-      Data is missing or incorrect in the Procurement Area and/or Access Point fields. For Immigration matters which have a start date that is prior to 15-Nov-2010 the Procurement Area, if populated, can only be an Immigration Removal Centre (IRC). If an IRC is recorded in the Procurement Area field a valid Access Point must also be recorded.
+      Data is missing or incorrect in the Procurement Area and/or Access Point fields. For Immigration matters which have a start date that is prior to 15-NOV-2010 the Procurement Area, if populated, can only be an Immigration Removal Centre (IRC). If an IRC is recorded in the Procurement Area field a valid Access Point must also be recorded.
       """
 
   Scenario Outline: validate procurement area for ASYLUM  with PA/AP code combination which is disabled
@@ -105,5 +111,5 @@ Feature: Validate Procurement Area field
       |     532 |              | IALB:IOUT   | IE            |        14/11/10 | PA00178          | AP00187      | No          |
     Then the outcome does not save and gives an error containing:
       """
-      The Category of Law, Procurement Area and Access Point combination that has been used is not valid for the date that has been recorded. This may be because the combination was end dated prior to this date or because the combination had not yet become active at this date.
+      Data is missing or incorrect in the Procurement Area and/or Access Point fields. For Immigration matters which have a start date that is prior to 15-NOV-2010 the Procurement Area, if populated, can only be an Immigration Removal Centre (IRC). If an IRC is recorded in the Procurement Area field a valid Access Point must also be recorded.
       """
