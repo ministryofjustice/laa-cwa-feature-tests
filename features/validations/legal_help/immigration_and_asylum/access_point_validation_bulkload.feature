@@ -123,6 +123,7 @@ Feature: bulk load claims validations for Access point
       | 2 |     002 | 141110/002 | SC         |        14/11/10 | IR            |                  |              |
       | 3 |     003 | 141110/003 | SC         |        14/11/10 | IR            | PA00142          |              |
       | 4 |     004 | 141110/004 | SC         |        14/11/10 | IR            | PA00136          | AP00137      |
+    Then user should see the outcome results page
     And problem outcomes should equal 2
     And the following errors:
       | Matter Type / Stage Reached | UFN        | Error Type   | Description                                                                                                                                                                                                                                                                                                                                        |
