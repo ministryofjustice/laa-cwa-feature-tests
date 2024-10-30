@@ -24,7 +24,7 @@ Then('the outcome saves successfully') do
 end
 
 
-  When("user adds outcomes for {string} {string} with fields like this for dulplicate claims:") do |area_of_law, category_of_law, table|
+When("user adds outcomes for {string} {string} with fields like this for dulplicate claims:") do |area_of_law, category_of_law, table|
     outcome_data = table.hashes
     @submissions_saved = outcome_data.size
     outcome_data.each do |outcome|
@@ -64,7 +64,7 @@ When("user adds outcomes for {string} {string} with fields like this:") do |area
       claim_type: outcome['claim_type']
     )
     if !outcome.has_key?("schedule_ref")
-            outcome['schedule_ref'] = CWAProvider.submission.schedule_ref
+      outcome['schedule_ref'] = CWAProvider.submission.schedule_ref
     end
     if !outcome.has_key?("case_start_date") && !(area_of_law == "Crime Lower")
       outcome['case_start_date'] = (Date.today + 1).strftime("%d-%b-%Y") 
@@ -124,6 +124,39 @@ When ("user adds an outcome for {string} {string} with {string}, {string}, {stri
     page.add_outcome
   end
 
+  When("user enters an outcome for {string} {string} with fields like this:") do |area_of_law, category_of_law, table|
+    submission_details_page = SubmissionDetailsPage.new
+    if !submission_details_page.has_text?(/No results found/)
+      STDOUT.print 'Cleaning existing outcomes for test reference...'
+      submission_details_page.select_all
+      submission_details_page.delete_button.click
+      submission_details_page.confirm_delete_button.click
+      STDOUT.puts ' done.'
+    end
+    outcome_data = table.hashes
+    @submissions_saved = outcome_data.size
+    outcome_data.each do |outcome|
+      submission_list_page = SubmissionListPage.new
+      submission_list_page.add_outcome_button.click
+      builder = Helpers::ScreenFieldBuilder.from(
+        category_of_law: category_of_law.downcase.gsub(' ', '_'),
+        area_of_law: area_of_law.downcase.gsub(' ', '_'),
+        matter_type: outcome['matter_type'],
+        claim_type: outcome['claim_type']
+      )
+      if !outcome.has_key?("schedule_ref")
+        outcome['schedule_ref'] = CWAProvider.submission.schedule_ref
+      end
+      if !outcome.has_key?("case_start_date") && !(area_of_law == "Crime Lower")
+        outcome['case_start_date'] = (Date.today + 1).strftime("%d-%b-%Y") 
+      end
+      builder.overrides = outcome
+  
+      page = AddOutcomePage.new(builder)
+      page.add_outcome(click_save_button: false)
+    end
+  end
+
 Then("the outcome does not save and gives an error containing:") do |string|
   page = AddOutcomePage.new
   expect(page).to have_content('Error')
@@ -137,11 +170,24 @@ Then("the outcome does not save and the error message {string} appears") do |err
 end
 
 Then("the outcome does not save and this popup error appears:") do |string|
-  expect(page.driver.browser.switch_to.alert.text).to have_content(string)
-  page.driver.browser.switch_to.alert.dismiss
+  wait = Selenium::WebDriver::Wait.new(timeout: 10) # Wait for up to 10 seconds
+
+  alert = wait.until { page.driver.browser.switch_to.alert }
+  expect(alert.text).to have_content(string)
+  alert.dismiss
+rescue Selenium::WebDriver::Error::TimeoutError
+  raise "Expected alert with message '#{string}' but no alert appeared within the timeout period"
 end
 
 Then('the no. of reported outcomes is {int}') do |no_reported_outcomes|
   expect(page.title).to eq("Submission Review").or eq("Submission Summary")
   expect(@submission_page.summary_section.outcomes).to have_content(no_reported_outcomes)
+end
+
+Then('the drop down list {string} contains the following values:') do |string, table|
+  page = AddOutcomePage.new
+  actual_values = page.dropdown_options(string)
+  #remove nil value entries before testing values
+  filtered_array = actual_values.reject { |item| item.empty? }
+  expect(filtered_array).to match_array(table.raw.flatten)
 end
