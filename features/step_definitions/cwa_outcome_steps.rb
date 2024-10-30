@@ -98,31 +98,31 @@ When("user adds outcomes for {string} {string} with fields like this again:") do
 end
 
 When ("user adds an outcome for {string} {string} with {string}, {string}, {string}, {string}, {string}, {string} and {string}") do |area_of_law, category_of_law, case_id, matter_type, ecs, ecf_ref, case_start_date, pa, ap |
-    sr = CWAProvider.submission.schedule_ref
+  sr = CWAProvider.submission.schedule_ref
 
-    outcome_data = Hash.new
+  outcome_data = Hash.new
 
-    outcome_data["matter_type"] = matter_type
-    outcome_data["excl_case_funding_ref"] = ecf_ref
-    outcome_data["case_start_date"] = case_start_date
-    outcome_data["procurement_area"] = pa
-    outcome_data["access_point"] = ap
-    outcome_data["case_id"] = case_id
-    outcome_data["exemption_criteria_satisfied"] = ecs
+  outcome_data["matter_type"] = matter_type
+  outcome_data["excl_case_funding_ref"] = ecf_ref
+  outcome_data["case_start_date"] = case_start_date
+  outcome_data["procurement_area"] = pa
+  outcome_data["access_point"] = ap
+  outcome_data["case_id"] = case_id
+  outcome_data["exemption_criteria_satisfied"] = ecs
 
-    submission_list_page = SubmissionListPage.new
-    submission_list_page.add_outcome_button.click
-    
-    outcome_data["schedule_ref"] = sr
-    builder = Helpers::ScreenFieldBuilder.from(
-      area_of_law: area_of_law.downcase.gsub(' ', '_'),
-      category_of_law: category_of_law.downcase.gsub(' ', '_')
-    )
+  submission_list_page = SubmissionListPage.new
+  submission_list_page.add_outcome_button.click
+  
+  outcome_data["schedule_ref"] = sr
+  builder = Helpers::ScreenFieldBuilder.from(
+    area_of_law: area_of_law.downcase.gsub(' ', '_'),
+    category_of_law: category_of_law.downcase.gsub(' ', '_')
+  )
 
-    builder.overrides = outcome_data
-    page = AddOutcomePage.new(builder)
-    page.add_outcome
-  end
+  builder.overrides = outcome_data
+  page = AddOutcomePage.new(builder)
+  page.add_outcome
+end
 
   When("user enters an outcome for {string} {string} with fields like this:") do |area_of_law, category_of_law, table|
     submission_details_page = SubmissionDetailsPage.new
