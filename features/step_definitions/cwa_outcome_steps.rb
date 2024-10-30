@@ -124,38 +124,38 @@ When ("user adds an outcome for {string} {string} with {string}, {string}, {stri
   page.add_outcome
 end
 
-  When("user enters an outcome for {string} {string} with fields like this:") do |area_of_law, category_of_law, table|
-    submission_details_page = SubmissionDetailsPage.new
-    if !submission_details_page.has_text?(/No results found/)
-      STDOUT.print 'Cleaning existing outcomes for test reference...'
-      submission_details_page.select_all
-      submission_details_page.delete_button.click
-      submission_details_page.confirm_delete_button.click
-      STDOUT.puts ' done.'
-    end
-    outcome_data = table.hashes
-    @submissions_saved = outcome_data.size
-    outcome_data.each do |outcome|
-      submission_list_page = SubmissionListPage.new
-      submission_list_page.add_outcome_button.click
-      builder = Helpers::ScreenFieldBuilder.from(
-        category_of_law: category_of_law.downcase.gsub(' ', '_'),
-        area_of_law: area_of_law.downcase.gsub(' ', '_'),
-        matter_type: outcome['matter_type'],
-        claim_type: outcome['claim_type']
-      )
-      if !outcome.has_key?("schedule_ref")
-        outcome['schedule_ref'] = CWAProvider.submission.schedule_ref
-      end
-      if !outcome.has_key?("case_start_date") && !(area_of_law == "Crime Lower")
-        outcome['case_start_date'] = (Date.today + 1).strftime("%d-%b-%Y") 
-      end
-      builder.overrides = outcome
-  
-      page = AddOutcomePage.new(builder)
-      page.add_outcome(click_save_button: false)
-    end
+When("user enters an outcome for {string} {string} with fields like this:") do |area_of_law, category_of_law, table|
+  submission_details_page = SubmissionDetailsPage.new
+  if !submission_details_page.has_text?(/No results found/)
+    STDOUT.print 'Cleaning existing outcomes for test reference...'
+    submission_details_page.select_all
+    submission_details_page.delete_button.click
+    submission_details_page.confirm_delete_button.click
+    STDOUT.puts ' done.'
   end
+  outcome_data = table.hashes
+  @submissions_saved = outcome_data.size
+  outcome_data.each do |outcome|
+    submission_list_page = SubmissionListPage.new
+    submission_list_page.add_outcome_button.click
+    builder = Helpers::ScreenFieldBuilder.from(
+      category_of_law: category_of_law.downcase.gsub(' ', '_'),
+      area_of_law: area_of_law.downcase.gsub(' ', '_'),
+      matter_type: outcome['matter_type'],
+      claim_type: outcome['claim_type']
+    )
+    if !outcome.has_key?("schedule_ref")
+      outcome['schedule_ref'] = CWAProvider.submission.schedule_ref
+    end
+    if !outcome.has_key?("case_start_date") && !(area_of_law == "Crime Lower")
+      outcome['case_start_date'] = (Date.today + 1).strftime("%d-%b-%Y") 
+    end
+    builder.overrides = outcome
+
+    page = AddOutcomePage.new(builder)
+    page.add_outcome(click_save_button: false)
+  end
+end
 
 Then("the outcome does not save and gives an error containing:") do |string|
   page = AddOutcomePage.new
