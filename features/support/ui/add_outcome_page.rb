@@ -20,7 +20,7 @@ class AddOutcomePage < SitePrism::Page
   PRIMARY_FIELDS = %i[matter_type crime_matter_type claim_type].freeze
   private_constant :PRIMARY_FIELDS
 
-  def add_outcome(click_save_button: true)
+  def add_outcome(click_save_button = true)
     raise StandardError, "Cannot invoke method without defining 'builder' first" unless builder
 
     values = builder.values

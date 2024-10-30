@@ -153,7 +153,7 @@ When("user enters an outcome for {string} {string} with fields like this:") do |
     builder.overrides = outcome
 
     page = AddOutcomePage.new(builder)
-    page.add_outcome(click_save_button: false)
+    page.add_outcome(false)
   end
 end
 
