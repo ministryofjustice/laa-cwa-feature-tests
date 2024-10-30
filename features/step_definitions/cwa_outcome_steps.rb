@@ -24,7 +24,7 @@ Then('the outcome saves successfully') do
 end
 
 
-When("user adds outcomes for {string} {string} with fields like this for dulplicate claims:") do |area_of_law, category_of_law, table|
+When("user adds outcomes for {string} {string} with fields like this for duplicate claims:") do |area_of_law, category_of_law, table|
   outcome_data = table.hashes
   @submissions_saved = outcome_data.size
   outcome_data.each do |outcome|
