@@ -20,7 +20,7 @@ class AddOutcomePage < SitePrism::Page
   PRIMARY_FIELDS = %i[matter_type crime_matter_type claim_type].freeze
   private_constant :PRIMARY_FIELDS
 
-  def add_outcome
+  def add_outcome(click_save_button = true)
     raise StandardError, "Cannot invoke method without defining 'builder' first" unless builder
 
     values = builder.values
@@ -37,7 +37,12 @@ class AddOutcomePage < SitePrism::Page
     end
 
     page.execute_script "window.scrollBy(0,10000)"
-    save_button.click
+    save_button.click if click_save_button
+  end
+
+  def dropdown_options(dropdown_name)
+    dropdown = send(dropdown_name)
+    dropdown.all('option').map(&:text)
   end
 
   private
@@ -47,8 +52,16 @@ class AddOutcomePage < SitePrism::Page
 
     raise NotImplementedError, "Element '#{field}' is not defined on the page" unless respond_to?(field)
 
-    unless public_send("wait_until_#{field}_visible", wait: 5)
-      raise SitePrism::ElementVisibilityTimeoutError, "Element '#{field}' is not visible"
+    begin
+      unless public_send("wait_until_#{field}_visible", wait: 5)
+        raise SitePrism::ElementVisibilityTimeoutError, "Element '#{field}' is not visible"
+      end
+    rescue NoMethodError => e
+      puts "Caught a NoMethodError: #{e.message}"
+      raise
+    rescue SitePrism::ElementVisibilityTimeoutError => e
+      puts "Caught an ElementVisibilityTimeoutError: Element '#{field}' is not visible"
+      raise
     end
 
     element = public_send(field)
