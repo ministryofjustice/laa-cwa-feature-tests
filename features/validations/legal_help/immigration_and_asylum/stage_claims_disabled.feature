@@ -4,142 +4,132 @@ Feature: Bulk load claims validations stage claims disabled for certain imiigrat
     Given a test firm user is logged in CWA
     And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#22"
     Given the following Matter Types are chosen:
-      | IAAP:IOUT |
+      | IAAP:IOTH |
+      | IACA:IOTH |
+      | IACB:IOTH |
+      | IACC:IOTH |
+      | IACD:IOTH |
+      | IACE:IOTH |
+      | IACF:IOTH |
+      | IAXC:IOTH |
+      | IMAP:IOTH |
+      | IMCA:IOTH |
+      | IMCB:IOTH |
+      | IMCC:IOTH |
+      | IMCD:IOTH |
+      | IMCE:IOTH |
+      | IMCF:IOTH |
+      | IMXC:IOTH |
     And the following outcomes are bulkloaded:
-      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | STAGE_REACHED | PROCUREMENT_AREA | ACCESS_POINT | EXEMPTION_CRITERIA_SATISFIED |
-      | 1 |     001 | 010912/001 | SC         |        01/09/12 |            31/03/13 | IR            | PA00142          | AP00187      | TR001                        |
+      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | PROCUREMENT_AREA | ACCESS_POINT | EXEMPTION_CRITERIA_SATISFIED |
+      | 1 |     001 | 010918/001 | SC         |        01/09/18 | PA00142          | AP00187      | TR001                        |
     Then user should see the outcome results page
-    And problem outcomes should equal 1
+    And problem outcomes should equal 16
     And the following errors:
-      | Matter Type / Stage Reached | UFN        | Error Type                | Description                                                                               |
-      | IAAP:IOUT                   | 010912/001 | Invalid SR-OC Combination | The reporting code combination that has been used is not valid. Please amend accordingly. |
+      | Matter Type / Stage Reached | UFN        | Client Surname | Error Type                        | Description                                                                                                                                                                                                                                                                                                                                            |
+      | IAAP:IOTH                   | 010918/001 | Person 001     | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
+      | IAAP:IOTH                   | 010918/001 | Person 001     | ECF Ref-Scope 2                   | The reporting code combination that has been used is not valid. Please amend accordingly.                                                                                                                                                                                                                                                              |
+      | IACA:IOTH                   | 010918/001 | Person 001     | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
+      | IACA:IOTH                   | 010918/001 | Person 001     | ECF Ref-Scope 2                   | The reporting code combination that has been used is not valid. Please amend accordingly.                                                                                                                                                                                                                                                              |
+      | IACB:IOTH                   | 010918/001 | Person 001     | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
+      | IACC:IOTH                   | 010918/001 | Person 001     | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
+      | IACD:IOTH                   | 010918/001 | Person 001     | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
+      | IACE:IOTH                   | 010918/001 | Person 001     | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
+      | IACE:IOTH                   | 010918/001 | Person 001     | ECF Ref-Scope 2                   | The reporting code combination that has been used is not valid. Please amend accordingly.                                                                                                                                                                                                                                                              |
+      | IACF:IOTH                   | 010918/001 | Person 001     | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
+      | IACF:IOTH                   | 010918/001 | Person 001     | ECF Ref-Scope 2                   | The reporting code combination that has been used is not valid. Please amend accordingly.                                                                                                                                                                                                                                                              |
+      | IAXC:IOTH                   | 010918/001 | Person 001     | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
+      | IMAP:IOTH                   | 010918/001 | Person 001     | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
+      | IMAP:IOTH                   | 010918/001 | Person 001     | ECF Ref-Scope 2                   | The reporting code combination that has been used is not valid. Please amend accordingly.                                                                                                                                                                                                                                                              |
+      | IMCA:IOTH                   | 010918/001 | Person 001     | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
+      | IMCA:IOTH                   | 010918/001 | Person 001     | ECF Ref-Scope 2                   | The reporting code combination that has been used is not valid. Please amend accordingly.                                                                                                                                                                                                                                                              |
+      | IMCB:IOTH                   | 010918/001 | Person 001     | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
+      | IMCC:IOTH                   | 010918/001 | Person 001     | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
+      | IMCD:IOTH                   | 010918/001 | Person 001     | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
+      | IMCE:IOTH                   | 010918/001 | Person 001     | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
+      | IMCE:IOTH                   | 010918/001 | Person 001     | ECF Ref-Scope 2                   | The reporting code combination that has been used is not valid. Please amend accordingly.                                                                                                                                                                                                                                                              |
+      | IMCF:IOTH                   | 010918/001 | Person 001     | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
+      | IMCF:IOTH                   | 010918/001 | Person 001     | ECF Ref-Scope 2                   | The reporting code combination that has been used is not valid. Please amend accordingly.                                                                                                                                                                                                                                                              |
+      | IMXC:IOTH                   | 010918/001 | Person 001     | Invalid-civil2018_UTW Validation2 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
 
-  Scenario: Validate stage claims are disabled for certain Immigration and Asylum MT1 codes
+  Scenario: Validate stage claims are enabled for certain Immigration and Asylum MT1 codes prior to 01/09/2018
     Given a test firm user is logged in CWA
     And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#22"
     Given the following Matter Types are chosen:
-      | IACA:IOUT |
+      | IAAP:IOTH |
+      | IACA:IOTH |
+      | IACB:IOTH |
+      | IACC:IOTH |
+      | IACD:IOTH |
+      | IACE:IOTH |
+      | IACF:IOTH |
+      | IAXC:IOTH |
+      | IMAP:IOTH |
+      | IMCA:IOTH |
+      | IMCB:IOTH |
+      | IMCC:IOTH |
+      | IMCD:IOTH |
+      | IMCE:IOTH |
+      | IMCF:IOTH |
+      | IMXC:IOTH |
     And the following outcomes are bulkloaded:
-      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROCUREMENT_AREA | ACCESS_POINT | EXEMPTION_CRITERIA_SATISFIED |
-      | 1 |     001 | 010413/001 | SC         |        01/04/13 |            31/03/23 | PA00142          | AP00187      | TR001                        |
+      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | PROCUREMENT_AREA | ACCESS_POINT | EXEMPTION_CRITERIA_SATISFIED |
+      | 1 |     001 | 310818/001 | SC         |        31/08/18 | PA00142          | AP00187      | TR001                        |
     Then user should see the outcome results page
-    And problem outcomes should equal 1
+    And successful outcomes should equal 8
+    And problem outcomes should equal 8
     And the following errors:
-      | Matter Type / Stage Reached | UFN        | Error Type      | Description                                                                               |
-      | IACA:IOUT                   | 010413/001 | ECF Ref-Scope 2 | The reporting code combination that has been used is not valid. Please amend accordingly. |
+      | Matter Type / Stage Reached | UFN        | Client Surname | Error Type      | Description                                                                               |
+      | IAAP:IOTH                   | 310818/001 | Person 001     | ECF Ref-Scope 2 | The reporting code combination that has been used is not valid. Please amend accordingly. |
+      | IACA:IOTH                   | 310818/001 | Person 001     | ECF Ref-Scope 2 | The reporting code combination that has been used is not valid. Please amend accordingly. |
+      | IACE:IOTH                   | 310818/001 | Person 001     | ECF Ref-Scope 2 | The reporting code combination that has been used is not valid. Please amend accordingly. |
+      | IACF:IOTH                   | 310818/001 | Person 001     | ECF Ref-Scope 2 | The reporting code combination that has been used is not valid. Please amend accordingly. |
+      | IMAP:IOTH                   | 310818/001 | Person 001     | ECF Ref-Scope 2 | The reporting code combination that has been used is not valid. Please amend accordingly. |
+      | IMCA:IOTH                   | 310818/001 | Person 001     | ECF Ref-Scope 2 | The reporting code combination that has been used is not valid. Please amend accordingly. |
+      | IMCE:IOTH                   | 310818/001 | Person 001     | ECF Ref-Scope 2 | The reporting code combination that has been used is not valid. Please amend accordingly. |
+      | IMCF:IOTH                   | 310818/001 | Person 001     | ECF Ref-Scope 2 | The reporting code combination that has been used is not valid. Please amend accordingly. |
 
-  Scenario: Validate stage claims are disabled for certain Immigration and Asylum MT1 codes
+  Scenario: Validate stage claims are enabled Immigration code combination IMXC:IBAI irrespective of start date 01/09/2018
     Given a test firm user is logged in CWA
     And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#22"
     Given the following Matter Types are chosen:
-      | IACB:IOUT |
-      | IAXC:IOUT |
+      | IMXC:IBAI |
+    And the following outcomes are bulkloaded:
+      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | PROCUREMENT_AREA | ACCESS_POINT | EXEMPTION_CRITERIA_SATISFIED |
+      | 1 |     100 | 010918/100 | SC         |        01/09/18 | PA00142          | AP00187      | TR001                        |
+      | 1 |     101 | 310818/101 | SC         |        31/08/18 | PA00142          | AP00187      | TR001                        |
+    Then user should see the outcome results page
+    And problem outcomes should equal 0
+    Then user confirms the submission
+
+  Scenario: Tests for Stage claims to be accessible for following Matter Type codes for cases opened before 01/09/2018.
+    Given a test firm user is logged in CWA
+    And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#22"
+    Given the following Matter Types are chosen:
+      | IACA:IASY |
+      | IACA:ILEA |
+      | IMCA:IDOM |
+    And the following outcomes are bulkloaded:
+      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | PROCUREMENT_AREA | ACCESS_POINT | EXEMPTION_CRITERIA_SATISFIED |
+      | 1 |     001 | 310818/001 | SC         |        31/08/18 | PA00142          | AP00187      | TR001                        |
+    Then user should see the outcome results page
+    And problem outcomes should equal 0
+    Then user confirms the submission
+
+  Scenario: Tests for Stage claims to be inaccessible for following Matter Type codes for cases opened on or after 01/09/2018.
+    Given a test firm user is logged in CWA
+    And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#22"
+    Given the following Matter Types are chosen:
+      | IACA:IASY |
+      | IACA:ILEA |
+      | IMCA:IDOM |
     And the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | PROCUREMENT_AREA | ACCESS_POINT | EXEMPTION_CRITERIA_SATISFIED |
       | 1 |     001 | 010918/001 | SC         |        01/09/18 | PA00142          | AP00187      | TR001                        |
     Then user should see the outcome results page
     And problem outcomes should equal 3
     And the following errors:
-      | Matter Type / Stage Reached | UFN        | Error Type                        | Description                                                                                                                                                                                                                                                                                                                                            |
-      | IACB:IOUT                   | 010918/001 | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
-      | IAXC:IOUT                   | 010918/001 | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
-
-  Scenario: Validate stage claims are disabled for certain Immigration and Asylum MT1 codes
-    Given a test firm user is logged in CWA
-    And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#22"
-    Given the following Matter Types are chosen:
-      | IACC:IOUT |
-      | IACD:IOUT |
-    And the following outcomes are bulkloaded:
-      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROCUREMENT_AREA | ACCESS_POINT | EXEMPTION_CRITERIA_SATISFIED |
-      | 1 |     001 | 010413/001 | SC         |        01/04/13 |            31/03/23 | PA00142          | AP00187      | TR001                        |
-    Then user should see the outcome results page
-    And problem outcomes should equal 1
-    And the following errors:
-      | Matter Type / Stage Reached | UFN        | Error Type      | Description                                                                               |
-      | IACC:IOUT                   | 010413/001 | ECF Ref-Scope 2 | The reporting code combination that has been used is not valid. Please amend accordingly. |
-      | IACD:IOUT                   | 010413/001 | ECF Ref-Scope 2 | The reporting code combination that has been used is not valid. Please amend accordingly. |
-
-  Scenario: Validate stage claims are disabled for certain Immigration and Asylum MT1 codes
-    Given a test firm user is logged in CWA
-    And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#22"
-    Given the following Matter Types are chosen:
-      | IACE:IOUT |
-      | IACF:IOUT |
-      | IMCE:IOUT |
-      | IMCF:IOUT |
-    And the following outcomes are bulkloaded:
-      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | PROCUREMENT_AREA | ACCESS_POINT | EXEMPTION_CRITERIA_SATISFIED |
-      | 1 |     001 | 010423/001 | SC         |        01/04/23 | PA00142          | AP00187      | TR001                        |
-    Then user should see the outcome results page
-    And problem outcomes should equal 2
-    And the following errors:
-      | Matter Type / Stage Reached | UFN        | Error Type                        | Description                                                                                                                                                                                                                                                                                                                                            |
-      | IACE:IOUT                   | 010423/001 | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
-      | IACF:IOUT                   | 010423/001 | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
-      | IMCE:IOUT                   | 010423/001 | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
-      | IMCF:IOUT                   | 010423/001 | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
-
-  Scenario: Validate stage claims are disabled for certain Immigration and Asylum MT1 codes
-    Given a test firm user is logged in CWA
-    And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#22"
-    Given the following Matter Types are chosen:
-      | IMAP:IOUT |
-    And the following outcomes are bulkloaded:
-      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | STAGE_REACHED | PROCUREMENT_AREA | ACCESS_POINT | EXEMPTION_CRITERIA_SATISFIED |
-      | 1 |     001 | 010912/001 | SC         |        01/09/12 |            31/03/13 | IR            | PA00142          | AP00187      | TR001                        |
-    Then user should see the outcome results page
-    And problem outcomes should equal 3
-    And the following errors:
-      | Matter Type / Stage Reached | UFN        | Error Type                | Description                                                                               |
-      | IMAP:IOUT                   | 010912/001 | Invalid SR-OC Combination | The reporting code combination that has been used is not valid. Please amend accordingly. |
-
-  Scenario: Validate stage claims are disabled for certain Immigration and Asylum MT1 codes
-    Given a test firm user is logged in CWA
-    And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#22"
-    Given the following Matter Types are chosen:
-      | IMCA:IOUT |
-    And the following outcomes are bulkloaded:
-      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | STAGE_REACHED | PROCUREMENT_AREA | ACCESS_POINT | EXEMPTION_CRITERIA_SATISFIED |
-      | 1 |     001 | 010912/001 | SC         |        01/09/12 |            31/03/23 | IR            | PA00142          | AP00187      | TR001                        |
-    Then user should see the outcome results page
-    And problem outcomes should equal 3
-    And the following errors:
-      | Matter Type / Stage Reached | UFN        | Error Type                | Description                                                                               |
-      | IMCA:IOUT                   | 010912/001 | Invalid SR-OC Combination | The reporting code combination that has been used is not valid. Please amend accordingly. |
-
-  Scenario: Validate stage claims are disabled for certain Immigration and Asylum MT1 codes
-    Given a test firm user is logged in CWA
-    And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#22"
-    Given the following Matter Types are chosen:
-      | IMCB:IOUT |
-      | IMCC:IOUT |
-      | IMCD:IOUT |
-    And the following outcomes are bulkloaded:
-      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | STAGE_REACHED | PROCUREMENT_AREA | ACCESS_POINT | EXEMPTION_CRITERIA_SATISFIED |
-      | 1 |     001 | 010912/001 | SC         |        01/09/12 |            31/03/23 | IR            | PA00142          | AP00187      | TR001                        |
-    Then user should see the outcome results page
-    And problem outcomes should equal 3
-    And the following errors:
-      | Matter Type / Stage Reached | UFN        | Error Type                | Description                                                                               |
-      | IMCA:IOUT                   | 010912/001 | Invalid SR-OC Combination | The reporting code combination that has been used is not valid. Please amend accordingly. |
-      | IMCB:IOUT                   | 010912/001 | ECF Ref-Scope 2           | The reporting code combination that has been used is not valid. Please amend accordingly. |
-      | IMCD:IOUT                   | 010912/001 | ECF Ref-Scope 2           | The reporting code combination that has been used is not valid. Please amend accordingly. |
-
-  Scenario: Validate stage claims are disabled for certain Immigration and Asylum MT1 codes
-    Given a test firm user is logged in CWA
-    And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#22"
-    Given the following Matter Types are chosen:
-      | IMCE:IOUT |
-      | IMCF:IOUT |
-      | IMXC:IOUT |
-    And the following outcomes are bulkloaded:
-      | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | PROCUREMENT_AREA | ACCESS_POINT | EXEMPTION_CRITERIA_SATISFIED |
-      | 1 |     001 | 010423/001 | SC         |        01/04/23 | PA00142          | AP00187      | TR001                        |
-    Then user should see the outcome results page
-    And problem outcomes should equal 3
-    And the following errors:
-      | Matter Type / Stage Reached | UFN        | Error Type                        | Description                                                                                                                                                                                                                                                                                                                                            |
-      | IMCE:IOUT                   | 010423/001 | Invalid SR-OC Combination         | The reporting code combination that has been used is not valid. Please amend accordingly.                                                                                                                                                                                                                                                              |
-      | IMCF:IOUT                   | 010423/001 | ECF Ref-Scope 2                   | The reporting code combination that has been used is not valid. Please amend accordingly.                                                                                                                                                                                                                                                              |
-      | IMXC:IOUT                   | 010423/001 | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
+      | Matter Type / Stage Reached | UFN        | Client Surname | Error Type                        | Description                                                                                                                                                                                                                                                                                                                                            |
+      | IACA:IASY                   | 010918/001 | Person 001     | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
+      | IACA:ILEA                   | 010918/001 | Person 001     | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
+      | IMCA:IDOM                   | 010918/001 | Person 001     | Invalid-civil2018_UTW Validation1 | Stage claims are no longer possible where an appeal is proceeding to the Upper Tribunal for cases opened on/after 1st September 2018. Such work is now dealt with under Licensed Work and therefore a completed claim should be made for any Controlled Work undertaken to date. Please check the claim type, matter type and outcome codes used here. |
