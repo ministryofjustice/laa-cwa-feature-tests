@@ -45,7 +45,7 @@ Feature: duplicate claims validations for Illegal migration act
       | IMMA:IMRN |
     And the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 |     001 | 010323/001 | DC         |      01/03/2023 |          01/05/2023 | --           |
+      | 1 |     001 | 010323/001 | DC         |      01/03/2023 |          01/06/2023 | --           |
       | 2 |     001 | 010323/001 | SC         |      01/03/2023 |          01/06/2023 | --           |
     Then there should be no problem outcomes
     Then user confirms the submission
@@ -55,8 +55,8 @@ Feature: duplicate claims validations for Illegal migration act
       | IMMA:IMRN |
     And the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 |     001 | 010323/001 | DC         |      01/03/2023 |          01/05/2023 | --           |
-      | 2 |     001 | 010323/001 | DC         |      01/03/2023 |          01/08/2023 | --           |
+      | 1 |     001 | 010323/001 | DC         |      01/03/2023 |          01/06/2023 | --           |
+      | 2 |     001 | 010323/001 | DC         |      01/03/2023 |          01/09/2023 | --           |
     Then there should be no problem outcomes
     Then user confirms the submission
 
@@ -65,10 +65,10 @@ Feature: duplicate claims validations for Illegal migration act
       | IMMA:IMRN |
     And the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 |     001 | 010323/001 | DC         |      01/03/2023 |          01/04/2023 | --           |
-      | 2 |     001 | 010323/001 | DC         |      01/03/2023 |          01/05/2023 | --           |
-      | 3 |     001 | 010323/001 | DC         |      01/03/2023 |          01/06/2023 | --           |
-      | 4 |     001 | 010323/001 | DC         |      01/03/2023 |          01/07/2023 | --           |
+      | 1 |     001 | 010323/001 | DC         |      01/03/2023 |          01/06/2023 | --           |
+      | 2 |     001 | 010323/001 | DC         |      01/03/2023 |          01/09/2023 | --           |
+      | 3 |     001 | 010323/001 | DC         |      01/03/2023 |          01/12/2023 | --           |
+      | 4 |     001 | 010323/001 | DC         |      01/03/2023 |          01/03/2024 | --           |
     Then there should be no problem outcomes
     Then user confirms the submission
 
@@ -77,7 +77,7 @@ Feature: duplicate claims validations for Illegal migration act
       | IMMA:IMRN |
     And the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE |
-      | 1 |     001 | 010323/001 | DC         |      01/03/2023 |          01/05/2023 | --           |
+      | 1 |     001 | 010323/001 | DC         |      01/03/2023 |          01/06/2023 | --           |
       | 2 |     001 | 010323/001 | CM         |      01/03/2023 |          01/08/2023 | IA           |
     Then there should be no problem outcomes
     Then user confirms the submission

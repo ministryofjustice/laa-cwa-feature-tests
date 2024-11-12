@@ -41,7 +41,7 @@ Feature: claim type validations for Immigration and Asylum
       | IACC:IASY |
     And the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | CLAIM_TYPE | CASE_START_DATE | WORK_CONCLUDED_DATE | OUTCOME_CODE | EXEMPTION_CRITERIA_SATISFIED |
-      | 1 |     001 | 010323/001 | DC         |      01/03/2023 |          01/05/2023 | --           | TR001                        |
+      | 1 |     001 | 010323/001 | DC         |      01/03/2023 |          01/06/2023 | --           | TR001                        |
     Then there should be no problem outcomes
     Then user confirms the submission
 

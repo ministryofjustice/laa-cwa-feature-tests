@@ -29,7 +29,7 @@ Feature: Pricing: IMMA: Illegal Immigration Act
   Scenario: 17 - Claims priced with: hourly rates with detention travel & waiting costs with profit cost > 3001 without prior authority number
     When the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | CLAIM_TYPE | OUTCOME_CODE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT | PRIOR_AUTHORITY_REF |
-      | 1 |     001 | 010523/001 | SC         | --           |      01/05/2023 |          30/05/2023 |        3001 |            0 | N             |            0 |                    0 |                 0 |                     |
+      | 1 |     001 | 010523/001 | SC         | --           |      01/05/2023 |          01/05/2023 |        3001 |            0 | N             |            0 |                    0 |                 0 |                     |
       | 2 |     001 | 010523/001 | DC         | --           |      01/05/2023 |          01/08/2023 |           0 |            0 | N             |            0 |                    0 |                 0 |                     |
     Then user should see the outcome results page
     And the following errors:
@@ -39,7 +39,7 @@ Feature: Pricing: IMMA: Illegal Immigration Act
   Scenario: 18 - Claims priced with: hourly rates with detention travel & waiting costs
     When the following outcomes are bulkloaded:
       | # | CASE_ID | CASE_REF_NUMBER | UFN        | CLAIM_TYPE | OUTCOME_CODE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT | PRIOR_AUTHORITY_REF |
-      | 1 |     001 | SC Claim        | 010523/001 | SC         | --           |      01/05/2023 |          30/05/2023 |        3001 |            0 | N             |            0 |                 1501 |                 0 | A000000             |
+      | 1 |     001 | SC Claim        | 010523/001 | SC         | --           |      01/05/2023 |          01/05/2023 |        3001 |            0 | N             |            0 |                 1501 |                 0 | A000000             |
       | 2 |     001 | DC Cliam        | 010523/001 | DC         | --           |      01/05/2023 |          01/08/2023 |           0 |            0 | N             |            0 |                    0 |                 0 |                     |
     When user confirms the submission
     And user is on the pricing outcome details page
@@ -51,10 +51,10 @@ Feature: Pricing: IMMA: Illegal Immigration Act
   Scenario: Claims priced with: hourly rates with 4 claims without PAN with DB threshold breached
     When the following outcomes are bulkloaded:
       | # | CASE_ID | CASE_REF_NUMBER | UFN        | CLAIM_TYPE | OUTCOME_CODE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT | PRIOR_AUTHORITY_REF |
-      | 1 |     001 | SC Claim        | 010523/001 | SC         | --           |      01/05/2023 |          30/05/2023 |           0 |            0 | N             |            0 |                 1000 |                 0 |                     |
+      | 1 |     001 | SC Claim        | 010523/001 | SC         | --           |      01/05/2023 |          01/05/2023 |           0 |            0 | N             |            0 |                 1000 |                 0 |                     |
       | 2 |     001 | DC Claim 1      | 010523/001 | DC         | --           |      01/05/2023 |          01/08/2023 |           0 |            0 | N             |            0 |                  400 |                 0 |                     |
-      | 3 |     001 | DC Claim 2      | 010523/001 | DC         | --           |      01/05/2023 |          01/09/2023 |           0 |            0 | N             |            0 |                 2999 |                 0 |                     |
-      | 4 |     001 | CM Claim        | 010523/001 | CM         | IA           |      01/05/2023 |          01/09/2023 |           0 |            0 | N             |            0 |                   51 |                 0 |                     |
+      | 3 |     001 | DC Claim 2      | 010523/001 | DC         | --           |      01/05/2023 |          01/11/2023 |           0 |            0 | N             |            0 |                 2999 |                 0 |                     |
+      | 4 |     001 | CM Claim        | 010523/001 | CM         | IA           |      01/05/2023 |          01/02/2024 |           0 |            0 | N             |            0 |                   51 |                 0 |                     |
     Then user should see the outcome results page
     And the following errors:
       | Matter Type / Stage Reached | UFN        | Client Surname | Error Type                              | Description                                                                                                                                                                                                                                                                                    |
@@ -72,10 +72,10 @@ Feature: Pricing: IMMA: Illegal Immigration Act
   Scenario: Claims priced with: hourly rates with 4 claims with PAN and PC and DB thresholds breached
     When the following outcomes are bulkloaded:
       | # | CASE_ID | CASE_REF_NUMBER | UFN        | CLAIM_TYPE | OUTCOME_CODE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT | PRIOR_AUTHORITY_REF |
-      | 1 |     001 | SC Claim        | 010523/001 | SC         | --           |      01/05/2023 |          30/05/2023 |        2001 |            0 | N             |            0 |                 1000 |                 0 | A000000             |
+      | 1 |     001 | SC Claim        | 010523/001 | SC         | --           |      01/05/2023 |          01/05/2023 |        2001 |            0 | N             |            0 |                 1000 |                 0 | A000000             |
       | 2 |     001 | DC Claim 1      | 010523/001 | DC         | --           |      01/05/2023 |          01/08/2023 |           0 |            0 | N             |            0 |                  300 |                 0 | A000000             |
-      | 3 |     001 | DC Claim 2      | 010523/001 | DC         | --           |      01/05/2023 |          01/09/2023 |           0 |            0 | N             |            0 |                  101 |                 0 | A000000             |
-      | 4 |     001 | CM Claim        | 010523/001 | CM         | IA           |      01/05/2023 |          01/09/2023 |        1000 |            0 | N             |            0 |                  100 |                 0 | A000000             |
+      | 3 |     001 | DC Claim 2      | 010523/001 | DC         | --           |      01/05/2023 |          01/11/2023 |           0 |            0 | N             |            0 |                  101 |                 0 | A000000             |
+      | 4 |     001 | CM Claim        | 010523/001 | CM         | IA           |      01/05/2023 |          01/02/2024 |        1000 |            0 | N             |            0 |                  100 |                 0 | A000000             |
     When user confirms the submission
     And user is on the pricing outcome details page
     Then user should see the following outcomes for accummulated claims:
@@ -88,9 +88,9 @@ Feature: Pricing: IMMA: Illegal Immigration Act
   Scenario: Claims priced with: hourly rates with SC, DC ,DC with two claims having PAN
     When the following outcomes are bulkloaded:
       | # | CASE_ID | UFN        | CLAIM_TYPE | OUTCOME_CODE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT | PRIOR_AUTHORITY_REF |
-      | 1 |     001 | 010523/001 | SC         | --           |      01/05/2023 |          30/05/2023 |           0 |            0 | N             |            0 |                 1000 |                 0 | A000000             |
-      | 2 |     001 | 010523/001 | DC         | --           |      01/05/2023 |          05/08/2023 |           0 |            0 | N             |            0 |                  401 |                 0 | A000000             |
-      | 3 |     001 | 010523/001 | DC         | --           |      01/05/2023 |          06/12/2023 |           0 |            0 | N             |            0 |                  100 |                 0 |                     |
+      | 1 |     001 | 010523/001 | SC         | --           |      01/05/2023 |          01/05/2023 |           0 |            0 | N             |            0 |                 1000 |                 0 | A000000             |
+      | 2 |     001 | 010523/001 | DC         | --           |      01/05/2023 |          01/08/2023 |           0 |            0 | N             |            0 |                  401 |                 0 | A000000             |
+      | 3 |     001 | 010523/001 | DC         | --           |      01/05/2023 |          01/11/2023 |           0 |            0 | N             |            0 |                  100 |                 0 |                     |
     Then user should see the outcome results page
     And the following errors:
       | Matter Type / Stage Reached | UFN        | Client Surname | Error Type                              | Description                                                                                                                                                                                                                                                                                    |
@@ -99,7 +99,7 @@ Feature: Pricing: IMMA: Illegal Immigration Act
   Scenario: 11 - Claims priced with: hourly rates with SC , DC claims
     When the following outcomes are bulkloaded:
       | # | CASE_REF_NUMBER | CASE_ID | UFN        | CLAIM_TYPE | OUTCOME_CODE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT | PRIOR_AUTHORITY_REF |
-      | 1 | SC Claim        |     001 | 010523/001 | SC         | --           |      01/05/2023 |          30/05/2023 |           0 |            0 | N             |            0 |                 1000 |                 0 |                     |
+      | 1 | SC Claim        |     001 | 010523/001 | SC         | --           |      01/05/2023 |          01/05/2023 |           0 |            0 | N             |            0 |                 1000 |                 0 |                     |
       | 2 | DC Cliam        |     001 | 010523/001 | DC         | --           |      01/05/2023 |          01/08/2023 |           0 |            0 | N             |            0 |                  501 |                 0 | A000000             |
     When user confirms the submission
     And user is on the pricing outcome details page
@@ -111,7 +111,7 @@ Feature: Pricing: IMMA: Illegal Immigration Act
   Scenario: 13 - Claims priced with: hourly rates with SC , CM claims with PC
     When the following outcomes are bulkloaded:
       | # | CASE_REF_NUMBER | CASE_ID | UFN        | CLAIM_TYPE | OUTCOME_CODE | CASE_START_DATE | WORK_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | TRAVEL_COSTS | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT | PRIOR_AUTHORITY_REF |
-      | 1 | SC Claim        |     001 | 010523/001 | SC         | --           |      01/05/2023 |          30/05/2023 |        1500 |            0 | N             |            0 |                 1000 |                 0 | A000000             |
+      | 1 | SC Claim        |     001 | 010523/001 | SC         | --           |      01/05/2023 |          01/05/2023 |        1500 |            0 | N             |            0 |                 1000 |                 0 | A000000             |
       | 2 | CM Cliam        |     001 | 010523/001 | CM         | IA           |      01/05/2023 |          01/08/2023 |        1501 |            0 | N             |            0 |                  501 |                 0 | A000000             |
     When user confirms the submission
     And user is on the pricing outcome details page
@@ -119,3 +119,5 @@ Feature: Pricing: IMMA: Illegal Immigration Act
       | # | CASE_REF_NUMBER | Value      | Comment                                                                                   |
       | 1 | SC Claim        | £ 2,500.00 | Priced at hourly rates (profit cost(£1500) +  counsel cost(£0)) + disbursement vat(£1000) |
       | 2 | CM Cliam        | £ 2,002.00 | Priced at hourly rates (profit cost(£1501) +  counsel cost(£0)) + disbursement vat(£501)  |
+
+
