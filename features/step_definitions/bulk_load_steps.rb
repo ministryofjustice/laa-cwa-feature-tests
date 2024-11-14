@@ -214,7 +214,35 @@ Then(/problem outcomes should equal (\d*)/) do |num_of_problem_outcomes|
   @bulk_load_page = BulkLoadResultsPage.new
   @bulk_load_page.wait_until_summary_visible(wait: 60)
   expect(@bulk_load_page.summary).to have_problem_outcomes
-  expect(@bulk_load_page.summary.problem_outcomes.text).to eq(num_of_problem_outcomes)
+
+  actual_problem_outcomes = @bulk_load_page.summary.problem_outcomes.text.to_i
+  expected_problem_outcomes = num_of_problem_outcomes.to_i
+
+  if actual_problem_outcomes != expected_problem_outcomes
+    puts "Expected problem outcomes: #{expected_problem_outcomes}, but found: #{actual_problem_outcomes}"
+
+    # Capture and display the actual errors
+    error_table = @bulk_load_page.find('#BulkLoadErrorsVO table.x1h')
+    error_rows = error_table.all('tr')[1..-1] # Skip the header row
+
+    error_messages = error_rows.map do |row|
+      {
+        summary_id: row.find('td:nth-child(1)').text,
+        matter_type: row.find('td:nth-child(2)').text,
+        ufn: row.find('td:nth-child(3)').text,
+        client_surname: row.find('td:nth-child(4)').text,
+        error_type: row.find('td:nth-child(5)').text,
+        description: row.find('td:nth-child(6)').text
+      }
+    end
+
+    puts "Actual error messages displayed:"
+    error_messages.each_with_index do |error, index|
+      puts "#{index + 1}. Summary Id: #{error[:summary_id]}, Matter Type: #{error[:matter_type]}, UFN: #{error[:ufn]}, Client Surname: #{error[:client_surname]}, Error Type: #{error[:error_type]}, Description: #{error[:description]}"
+    end
+  end
+
+  expect(actual_problem_outcomes).to eq(expected_problem_outcomes)
 end
 
 
