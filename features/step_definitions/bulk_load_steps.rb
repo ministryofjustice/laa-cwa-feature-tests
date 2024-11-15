@@ -1,4 +1,5 @@
 require 'timecop'
+require 'csv'
 
 Given( /^user prepares to submit outcomes for test provider "(.*)"(\s+again)?$/) do |ref, again|
   @submission = CWAProvider.submission_by_ref(ref)
@@ -221,24 +222,31 @@ Then(/problem outcomes should equal (\d*)/) do |num_of_problem_outcomes|
   if actual_problem_outcomes != expected_problem_outcomes
     puts "Expected problem outcomes: #{expected_problem_outcomes}, but found: #{actual_problem_outcomes}"
 
-    # Capture and display the actual errors
-    error_table = @bulk_load_page.find('#BulkLoadErrorsVO table.x1h')
-    error_rows = error_table.all('tr')[1..-1] # Skip the header row
+    if ENV['DISPLAY_ERRORS'] == 'true'
+      # Capture the actual errors
+      error_table = @bulk_load_page.find('#BulkLoadErrorsVO table.x1h')
+      error_rows = error_table.all('tr')[1..-1] # Skip the header row
 
-    error_messages = error_rows.map do |row|
-      {
-        summary_id: row.find('td:nth-child(1)').text,
-        matter_type: row.find('td:nth-child(2)').text,
-        ufn: row.find('td:nth-child(3)').text,
-        client_surname: row.find('td:nth-child(4)').text,
-        error_type: row.find('td:nth-child(5)').text,
-        description: row.find('td:nth-child(6)').text
-      }
-    end
+      error_messages = error_rows.map do |row|
+        {
+          summary_id: row.find('td:nth-child(1)').text,
+          matter_type: row.find('td:nth-child(2)').text,
+          ufn: row.find('td:nth-child(3)').text,
+          client_surname: row.find('td:nth-child(4)').text,
+          error_type: row.find('td:nth-child(5)').text,
+          description: row.find('td:nth-child(6)').text
+        }
+      end
 
-    puts "Actual error messages displayed:"
-    error_messages.each_with_index do |error, index|
-      puts "#{index + 1}. Summary Id: #{error[:summary_id]}, Matter Type: #{error[:matter_type]}, UFN: #{error[:ufn]}, Client Surname: #{error[:client_surname]}, Error Type: #{error[:error_type]}, Description: #{error[:description]}"
+      # Write errors to a CSV file
+      CSV.open('error_messages.csv', 'w') do |csv|
+        csv << ['Summary Id', 'Matter Type', 'UFN', 'Client Surname', 'Error Type', 'Description']
+        error_messages.each do |error|
+          csv << [error[:summary_id], error[:matter_type], error[:ufn], error[:client_surname], error[:error_type], error[:description]]
+        end
+      end
+
+      puts "Error messages have been written to error_messages.csv"
     end
   end
 
