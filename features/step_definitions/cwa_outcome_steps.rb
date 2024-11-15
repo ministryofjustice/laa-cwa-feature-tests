@@ -191,3 +191,19 @@ Then('the drop down list {string} contains the following values:') do |string, t
   filtered_array = actual_values.reject { |item| item.empty? }
   expect(filtered_array).to match_array(table.raw.flatten)
 end
+
+Then('the drop down list {string} contains the following values after selecting {string} in the {string} drop down list:') do |second_dropdown, first_dropdown_value, first_dropdown, table|
+  page = AddOutcomePage.new
+
+  # Select the value in the first dropdown list
+  page.select_dropdown_option("OutcomeDetailsRN", first_dropdown, first_dropdown_value)
+
+  # Retrieve the options from the second dropdown list
+  actual_values = page.dropdown_options(second_dropdown)
+
+  # Remove nil value entries before testing values
+  filtered_array = actual_values.reject { |item| item.empty? }
+
+  # Check that the filtered array matches the expected values from the table
+  expect(filtered_array).to match_array(table.raw.flatten)
+end
