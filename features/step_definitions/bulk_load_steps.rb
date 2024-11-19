@@ -223,6 +223,12 @@ Then(/invalid outcomes should equal (\d*)/) do |num_of_invalid_outcomes|
   expect(@bulk_load_page.summary.invalid_outcomes_nms.text).to eq(num_of_invalid_outcomes)
 end
 
+Then(/duplicate outcomes should equal (\d*)/) do |num_of_duplicate_outcomes|
+  @bulk_load_page = BulkLoadResultsPage.new
+  @bulk_load_page.wait_until_summary_visible(wait: 60)
+  expect(@bulk_load_page.summary.duplicate_outcomes.text).to eq(num_of_duplicate_outcomes)
+end
+
 
 Then("there should be no problem outcomes") do
   @bulk_load_page = BulkLoadResultsPage.new

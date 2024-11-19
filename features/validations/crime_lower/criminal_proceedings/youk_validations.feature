@@ -1,7 +1,7 @@
 Feature: YOUK code Manual and Bulk load validations
 
   @bullkload_submission
-  Scenario: Bulkoad Crime Lower stage reached code YOUK with case outcome code CP19
+  Scenario: bulkload Crime Lower stage reached code YOUK with case outcome code CP19
   is invalid for YOUK
 
     Given a test firm user is logged in CWA
@@ -48,11 +48,11 @@ Feature: YOUK code Manual and Bulk load validations
 
 
   @manual_submission
-  Scenario: Manually enter YOUE outcomes and test some drop down lists are correct
+  Scenario: Manually enter YOUK outcomes and test some drop down lists are correct
     Given user is on their "CRIME LOWER" submission details page
     When user enters an outcome for "Crime Lower" "criminal proceedings" with fields like this:
       | matter_type |
-      | YOUL        |
+      | YOUK        |
     Then the drop down list "standard_fee_cat" contains the following values:
       | Category 1A |
       | Category 1B |
@@ -76,3 +76,24 @@ Feature: YOUK code Manual and Bulk load validations
       | 15-Sexual offender orders                                                          |
       | 16-Other prescribed proceedings                                                    |
       | 36-Breach of part 1 Injunctions under the ASBCP Act 2014                           |
+
+@bullkload_submission
+ Scenario: Bulkload Crime Lower stage reached code YOUK VALIDATION4 check for YOUK with wrong profit cost values
+    Given a test firm user is logged in CWA
+    And user prepares to submit outcomes for test provider "CRIME LOWER#24"
+    Given the following Matter Types are chosen:
+      | YOUK |
+    And the following outcomes are bulkloaded:
+       | # | UFN        | REP_ORDER_DATE | STANDARD_FEE_CAT | OUTCOME_CODE | WORK_CONCLUDED_DATE | YOUTH_COURT | POLICE_STATION | NUMBER_OF_POLICE_STATION | PROFIT_COST |
+      | 1 | 010924/001 |      01/9/2024 |               1A | CP18         |           01/9/2024 | Y           | C1013          |                        1 |      884.62 |
+      | 2 | 010924/002 |      01/9/2024 |               1B | CP18         |           01/9/2024 | Y           | C1013          |                        1 |      232.54 |
+      | 3 | 010924/003 |      01/9/2024 |               2A | CP18         |           01/9/2024 | Y           | C1013          |                        1 |      995.74 |
+      | 4 | 010924/004 |      01/9/2024 |               2B | CP18         |           01/9/2024 | Y           | C1013          |                        1 |      397.15 |
+    Then user should see the outcome results page
+    And problem outcomes should equal 4
+    And the following errors:
+      | Matter Type / Stage Reached | Error Type      | Description                                                                                                                          |
+      | YOUK                        | LAR Validation8 | The fee you have entered is not valid for Category 1A / YOUK matters. Please enter a valid fee in the profit costs field. |
+      | YOUK                        | LAR Validation8 | The fee you have entered is not valid for Category 1B / YOUK matters. Please enter a valid fee in the profit costs field. |
+      | YOUK                        | LAR Validation8 | The fee you have entered is not valid for Category 2A / YOUK matters. Please enter a valid fee in the profit costs field. |
+      | YOUK                        | LAR Validation8 | The fee you have entered is not valid for Category 2B / YOUK matters. Please enter a valid fee in the profit costs field. |

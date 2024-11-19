@@ -7,7 +7,7 @@ Feature: INVA code Bulk load validations
       | INVA |
 
   @cn13
-  Scenario: Bulkoad Crime Lower stage reached code INVA with case outcome code CN12, CN13
+  Scenario: bulkload Crime Lower stage reached code INVA with case outcome code CN12, CN13
   Codes CN12 and CN13 are invalid for INVA for any start date
 
     And the following outcomes are bulkloaded:
