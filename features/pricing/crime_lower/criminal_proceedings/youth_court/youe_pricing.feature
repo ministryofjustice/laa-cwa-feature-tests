@@ -16,7 +16,7 @@ Feature: YOUE code Manual and Bulk load pricing
     And user is on the pricing outcome details page
     Then user should see the following outcomes:
       | # | UFN        | Value    | Comment                                   |
-      | 1 | 010924/001 | £ 822.47 | Standard fee for category 1A YOUE £882.47 |
+      | 1 | 010924/001 | £ 822.47 | Standard fee for category 1A YOUE £822.47 |
       | 2 | 010924/002 | £ 182.01 | Standard fee for category 1B YOUE £182.01 |
       | 3 | 010924/003 | £ 919.96 | Standard fee for category 2A YOUE £919.96 |
       | 4 | 010924/004 | £ 321.37 | Standard fee for category 2B YOUE £321.37 |
@@ -37,7 +37,7 @@ Feature: YOUE code Manual and Bulk load pricing
     And user is on the pricing outcome details page
     Then user should see the following outcomes:
       | # | UFN        | Value      | Comment                                             |
-      | 1 | 010924/001 | £ 986.96   | Standard fee for category 1A YOUE £882.47 + vat 20% |
+      | 1 | 010924/001 | £ 986.96   | Standard fee for category 1A YOUE £822.47 + vat 20% |
       | 2 | 010924/002 | £ 218.41   | Standard fee for category 1B YOUE £182.01 + vat 20% |
       | 3 | 010924/003 | £ 1,103.95 | Standard fee for category 2A YOUE £919.96 + vat 20% |
       | 4 | 010924/004 | £ 385.64   | Standard fee for category 2B YOUE £321.37 + vat 20% |
