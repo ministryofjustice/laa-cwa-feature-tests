@@ -27,7 +27,7 @@ Feature: validate case start date
       |     203 |              | IMLB:IOUT   | IE            |      30/09/2007 | PA00188          | AP00187      |
     Then the outcome does not save and gives an error containing:
       """
-      The reporting code combination that has been used is not valid. Please amend accordingly.
+      Case Start Date is before 01-Oct-2007
       """
 
   Scenario Outline: validate case start date for IMMIGRATION
@@ -45,7 +45,7 @@ Feature: validate case start date
       |     205 |              | IMCB:IOUT   | IE            |      30/09/2007 | PA00188          | AP00187      |
     Then the outcome does not save and gives an error containing:
       """
-      The reporting code combination that has been used is not valid. Please amend accordingly.
+      Case Start Date is before 01-Oct-2007
       """
 
   Scenario Outline: validate case start date for IMMIGRATION
@@ -54,7 +54,7 @@ Feature: validate case start date
       |     206 |              | IMXL:IOUT   | IE            |      30/09/2007 | PA00188          | AP00187      |
     Then the outcome does not save and gives an error containing:
       """
-      The reporting code combination that has been used is not valid. Please amend accordingly.
+      Case Start Date is before 01-Oct-2007
       """
 
   Scenario Outline: validate case start date for IMMIGRATION
@@ -63,7 +63,7 @@ Feature: validate case start date
       |     207 |              | IMXC:IOUT   | IE            |      30/09/2007 | PA00188          | AP00187      |
     Then the outcome does not save and gives an error containing:
       """
-      The reporting code combination that has been used is not valid. Please amend accordingly.
+      Case Start Date is before 01-Oct-2007
       """
 
   Scenario Outline: validate case start date for ASYLUM
@@ -78,7 +78,7 @@ Feature: validate case start date
       |     209 |              | IACA:IGOL   | IE            |      31/12/1994 | PA00188          | AP00187      | TR001                        |
     Then the outcome does not save and gives an error containing:
       """
-      The reporting code combination that has been used is not valid. Please amend accordingly.
+      Case Start Date is before 01-Jan-1995
       """
 
   Scenario Outline: validate case start date for IMMIGRATION
@@ -87,7 +87,7 @@ Feature: validate case start date
       |     210 |              | IMLB:IOUT   | IE            |      02/01/1995 | PA00188          | AP00187      |
     Then the outcome does not save and gives an error containing:
       """
-      The reporting code combination that has been used is not valid. Please amend accordingly.
+      Case Start Date is before 01-Oct-2007
       """
 
   Scenario Outline: validate case start date for IMMIGRATION
@@ -96,5 +96,5 @@ Feature: validate case start date
       |     211 |              | IMLB:IOUT   | IE            |      31/12/1994 | PA00188          | AP00187      |
     Then the outcome does not save and gives an error containing:
       """
-      The reporting code combination that has been used is not valid. Please amend accordingly.
+      Case Start Date is before 01-Oct-2007
       """
