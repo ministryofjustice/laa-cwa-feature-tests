@@ -11,6 +11,7 @@ group :test do
   gem 'site_prism', '~> 5.0.3'
   gem "timecop", "~> 0.9.8"
   gem "parallel_tests"
+  gem "csv"
 end
 
 group :docker do
