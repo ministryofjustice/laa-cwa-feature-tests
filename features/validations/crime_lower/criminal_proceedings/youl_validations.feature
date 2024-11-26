@@ -97,3 +97,15 @@ Feature: YOUL code Manual and Bulk load validations
       | YOUL                        | LAR Validation8 | The fee you have entered is not valid for Category 1B / YOUL matters. Please enter a valid fee in the profit costs field. |
       | YOUL                        | LAR Validation8 | The fee you have entered is not valid for Category 2A / YOUL matters. Please enter a valid fee in the profit costs field. |
       | YOUL                        | LAR Validation8 | The fee you have entered is not valid for Category 2B / YOUL matters. Please enter a valid fee in the profit costs field. |
+
+ @manual_submission
+  Scenario: Manually enter YOUL outcomes , check for DSCC format validation
+    Given user is on their "CRIME LOWER" submission details page
+    When user adds outcomes for "Crime Lower" "criminal proceedings" with fields like this:
+      | matter_type | rep_order_date | standard_fee_cat | profit_cost | ufn        | work_concluded_date | police_station | maat_id | dscc_number |
+      | YOUL        |    28-OCT-2024 |       1B         |           0 | 010924/001 |         01-SEP-2024 | C1013          | 1234567 |           1 |
+    Then the outcome does not save and gives an error containing:
+      """
+      The Representation Order Date must be before the case concluded date. Please enter a valid value.
+      The DSCC Number you have reported is invalid. DSCC Numbers must be 10 characters long and in the format yymmnnnnnl. Please enter a valid value in the DSCC Number field.
+      """
