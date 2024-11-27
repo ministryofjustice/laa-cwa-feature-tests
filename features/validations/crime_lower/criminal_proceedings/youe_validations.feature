@@ -91,15 +91,14 @@ Feature: YOUE code Manual and Bulk load validations
       | CP06 -Trial: convicted                                                                |
       | CP07-Discontinued (before any pleas entered)                                          |
       | CP08-Discontinued (after pleas entered)                                               |
-      | CP09-Guilty plea to all charges put  not listed for trial                             |
+      | CP09-Guilty plea to all charges put not listed for trial                              |
       | CP10-Guilty plea to all charges put after case listed for trial                       |
-      | CP11-Guilty plea to substitute charges put  after case listed for trial               |
-      | CP12 -Mix of guilty plea(s) and discontinuance  Not listed for trial                  |
-      | CP13-Mix of guilty plea(s) and discontinuance  listed for trial                       |
+      | CP11-Guilty plea to substitute charges put after case listed for trial                |
+      | CP12 -Mix of guilty plea(s) and discontinuance Not listed for trial                   |
+      | CP13-Mix of guilty plea(s) and discontinuance listed for trial                        |
       | CP16-Committal: discharged                                                            |
       | CP17-Extradition                                                                      |
       | CP18-Case remitted from Crown to magistrates court for sentencing                     |
-      | CP19-Deferred sentence                                                                |
       | CP20-Granted anti-social behaviour order / sexual offences order / other order        |
       | CP21-Part-granted anti-social behaviour order/ sexual offences order / other order    |
       | CP22-Refused anti-social behaviour order/ sexual offences order / other order         |
@@ -116,15 +115,350 @@ Feature: YOUE code Manual and Bulk load validations
       | CP06 -Trial: convicted                                                                |
       | CP07-Discontinued (before any pleas entered)                                          |
       | CP08-Discontinued (after pleas entered)                                               |
-      | CP09-Guilty plea to all charges put  not listed for trial                             |
+      | CP09-Guilty plea to all charges put not listed for trial                              |
       | CP10-Guilty plea to all charges put after case listed for trial                       |
-      | CP11-Guilty plea to substitute charges put  after case listed for trial               |
-      | CP12 -Mix of guilty plea(s) and discontinuance  Not listed for trial                  |
-      | CP13-Mix of guilty plea(s) and discontinuance  listed for trial                       |
+      | CP11-Guilty plea to substitute charges put after case listed for trial                |
+      | CP12 -Mix of guilty plea(s) and discontinuance Not listed for trial                   |
+      | CP13-Mix of guilty plea(s) and discontinuance listed for trial                        |
       | CP16-Committal: discharged                                                            |
       | CP17-Extradition                                                                      |
       | CP18-Case remitted from Crown to magistrates court for sentencing                     |
-      | CP19-Deferred sentence                                                                |
+      | CP20-Granted anti-social behaviour order / sexual offences order / other order        |
+      | CP21-Part-granted anti-social behaviour order/ sexual offences order / other order    |
+      | CP22-Refused anti-social behaviour order/ sexual offences order / other order         |
+      | CP23-Varied anti-social behaviour order/ sexual offences order / other order          |
+      | CP24-Discharged anti-social behaviour order/ sexual offences order / other order      |
+      | CP25-Committal: election (Representation order dated before 6th April 2010)           |
+      | CP26-Committal/transfer: direction (Representation order dated before 6th April 2010) |
+    Then the drop down list "outcome_code" contains the following values after selecting "3-Sexual offences and associated offences against children" in the "crime_matter_type" drop down list:
+      | CP01-Arrest warrant issued/adjourned indefinitely                                     |
+      | CP02-Change of solicitor                                                              |
+      | CP03-Representation order withdrawn                                                   |
+      | CP04-Trial: acquitted                                                                 |
+      | CP05-Trial: mixed verdicts                                                            |
+      | CP06 -Trial: convicted                                                                |
+      | CP07-Discontinued (before any pleas entered)                                          |
+      | CP08-Discontinued (after pleas entered)                                               |
+      | CP09-Guilty plea to all charges put not listed for trial                              |
+      | CP10-Guilty plea to all charges put after case listed for trial                       |
+      | CP11-Guilty plea to substitute charges put after case listed for trial                |
+      | CP12 -Mix of guilty plea(s) and discontinuance Not listed for trial                   |
+      | CP13-Mix of guilty plea(s) and discontinuance listed for trial                        |
+      | CP16-Committal: discharged                                                            |
+      | CP17-Extradition                                                                      |
+      | CP18-Case remitted from Crown to magistrates court for sentencing                     |
+      | CP20-Granted anti-social behaviour order / sexual offences order / other order        |
+      | CP21-Part-granted anti-social behaviour order/ sexual offences order / other order    |
+      | CP22-Refused anti-social behaviour order/ sexual offences order / other order         |
+      | CP23-Varied anti-social behaviour order/ sexual offences order / other order          |
+      | CP24-Discharged anti-social behaviour order/ sexual offences order / other order      |
+      | CP25-Committal: election (Representation order dated before 6th April 2010)           |
+      | CP26-Committal/transfer: direction (Representation order dated before 6th April 2010) |
+    Then the drop down list "outcome_code" contains the following values after selecting "4-Robbery" in the "crime_matter_type" drop down list:
+      | CP01-Arrest warrant issued/adjourned indefinitely                                     |
+      | CP02-Change of solicitor                                                              |
+      | CP03-Representation order withdrawn                                                   |
+      | CP04-Trial: acquitted                                                                 |
+      | CP05-Trial: mixed verdicts                                                            |
+      | CP06 -Trial: convicted                                                                |
+      | CP07-Discontinued (before any pleas entered)                                          |
+      | CP08-Discontinued (after pleas entered)                                               |
+      | CP09-Guilty plea to all charges put not listed for trial                              |
+      | CP10-Guilty plea to all charges put after case listed for trial                       |
+      | CP11-Guilty plea to substitute charges put after case listed for trial                |
+      | CP12 -Mix of guilty plea(s) and discontinuance Not listed for trial                   |
+      | CP13-Mix of guilty plea(s) and discontinuance listed for trial                        |
+      | CP16-Committal: discharged                                                            |
+      | CP17-Extradition                                                                      |
+      | CP18-Case remitted from Crown to magistrates court for sentencing                     |
+      | CP20-Granted anti-social behaviour order / sexual offences order / other order        |
+      | CP21-Part-granted anti-social behaviour order/ sexual offences order / other order    |
+      | CP22-Refused anti-social behaviour order/ sexual offences order / other order         |
+      | CP23-Varied anti-social behaviour order/ sexual offences order / other order          |
+      | CP24-Discharged anti-social behaviour order/ sexual offences order / other order      |
+      | CP25-Committal: election (Representation order dated before 6th April 2010)           |
+      | CP26-Committal/transfer: direction (Representation order dated before 6th April 2010) |
+    Then the drop down list "outcome_code" contains the following values after selecting "5-Burglary" in the "crime_matter_type" drop down list:
+      | CP01-Arrest warrant issued/adjourned indefinitely                                     |
+      | CP02-Change of solicitor                                                              |
+      | CP03-Representation order withdrawn                                                   |
+      | CP04-Trial: acquitted                                                                 |
+      | CP05-Trial: mixed verdicts                                                            |
+      | CP06 -Trial: convicted                                                                |
+      | CP07-Discontinued (before any pleas entered)                                          |
+      | CP08-Discontinued (after pleas entered)                                               |
+      | CP09-Guilty plea to all charges put not listed for trial                              |
+      | CP10-Guilty plea to all charges put after case listed for trial                       |
+      | CP11-Guilty plea to substitute charges put after case listed for trial                |
+      | CP12 -Mix of guilty plea(s) and discontinuance Not listed for trial                   |
+      | CP13-Mix of guilty plea(s) and discontinuance listed for trial                        |
+      | CP16-Committal: discharged                                                            |
+      | CP17-Extradition                                                                      |
+      | CP18-Case remitted from Crown to magistrates court for sentencing                     |
+      | CP20-Granted anti-social behaviour order / sexual offences order / other order        |
+      | CP21-Part-granted anti-social behaviour order/ sexual offences order / other order    |
+      | CP22-Refused anti-social behaviour order/ sexual offences order / other order         |
+      | CP23-Varied anti-social behaviour order/ sexual offences order / other order          |
+      | CP24-Discharged anti-social behaviour order/ sexual offences order / other order      |
+      | CP25-Committal: election (Representation order dated before 6th April 2010)           |
+      | CP26-Committal/transfer: direction (Representation order dated before 6th April 2010) |
+    Then the drop down list "outcome_code" contains the following values after selecting "6-Criminal damage" in the "crime_matter_type" drop down list:
+      | CP01-Arrest warrant issued/adjourned indefinitely                                     |
+      | CP02-Change of solicitor                                                              |
+      | CP03-Representation order withdrawn                                                   |
+      | CP04-Trial: acquitted                                                                 |
+      | CP05-Trial: mixed verdicts                                                            |
+      | CP06 -Trial: convicted                                                                |
+      | CP07-Discontinued (before any pleas entered)                                          |
+      | CP08-Discontinued (after pleas entered)                                               |
+      | CP09-Guilty plea to all charges put not listed for trial                              |
+      | CP10-Guilty plea to all charges put after case listed for trial                       |
+      | CP11-Guilty plea to substitute charges put after case listed for trial                |
+      | CP12 -Mix of guilty plea(s) and discontinuance Not listed for trial                   |
+      | CP13-Mix of guilty plea(s) and discontinuance listed for trial                        |
+      | CP16-Committal: discharged                                                            |
+      | CP17-Extradition                                                                      |
+      | CP18-Case remitted from Crown to magistrates court for sentencing                     |
+      | CP20-Granted anti-social behaviour order / sexual offences order / other order        |
+      | CP21-Part-granted anti-social behaviour order/ sexual offences order / other order    |
+      | CP22-Refused anti-social behaviour order/ sexual offences order / other order         |
+      | CP23-Varied anti-social behaviour order/ sexual offences order / other order          |
+      | CP24-Discharged anti-social behaviour order/ sexual offences order / other order      |
+      | CP25-Committal: election (Representation order dated before 6th April 2010)           |
+      | CP26-Committal/transfer: direction (Representation order dated before 6th April 2010) |
+    Then the drop down list "outcome_code" contains the following values after selecting "7-Theft (including taking vehicle without consent)" in the "crime_matter_type" drop down list:
+      | CP01-Arrest warrant issued/adjourned indefinitely                                     |
+      | CP02-Change of solicitor                                                              |
+      | CP03-Representation order withdrawn                                                   |
+      | CP04-Trial: acquitted                                                                 |
+      | CP05-Trial: mixed verdicts                                                            |
+      | CP06 -Trial: convicted                                                                |
+      | CP07-Discontinued (before any pleas entered)                                          |
+      | CP08-Discontinued (after pleas entered)                                               |
+      | CP09-Guilty plea to all charges put not listed for trial                              |
+      | CP10-Guilty plea to all charges put after case listed for trial                       |
+      | CP11-Guilty plea to substitute charges put after case listed for trial                |
+      | CP12 -Mix of guilty plea(s) and discontinuance Not listed for trial                   |
+      | CP13-Mix of guilty plea(s) and discontinuance listed for trial                        |
+      | CP16-Committal: discharged                                                            |
+      | CP17-Extradition                                                                      |
+      | CP18-Case remitted from Crown to magistrates court for sentencing                     |
+      | CP20-Granted anti-social behaviour order / sexual offences order / other order        |
+      | CP21-Part-granted anti-social behaviour order/ sexual offences order / other order    |
+      | CP22-Refused anti-social behaviour order/ sexual offences order / other order         |
+      | CP23-Varied anti-social behaviour order/ sexual offences order / other order          |
+      | CP24-Discharged anti-social behaviour order/ sexual offences order / other order      |
+      | CP25-Committal: election (Representation order dated before 6th April 2010)           |
+      | CP26-Committal/transfer: direction (Representation order dated before 6th April 2010) |
+    Then the drop down list "outcome_code" contains the following values after selecting "8-Fraud and forgery and other offences of dishonesty not otherwise categorised" in the "crime_matter_type" drop down list:
+      | CP01-Arrest warrant issued/adjourned indefinitely                                     |
+      | CP02-Change of solicitor                                                              |
+      | CP03-Representation order withdrawn                                                   |
+      | CP04-Trial: acquitted                                                                 |
+      | CP05-Trial: mixed verdicts                                                            |
+      | CP06 -Trial: convicted                                                                |
+      | CP07-Discontinued (before any pleas entered)                                          |
+      | CP08-Discontinued (after pleas entered)                                               |
+      | CP09-Guilty plea to all charges put not listed for trial                              |
+      | CP10-Guilty plea to all charges put after case listed for trial                       |
+      | CP11-Guilty plea to substitute charges put after case listed for trial                |
+      | CP12 -Mix of guilty plea(s) and discontinuance Not listed for trial                   |
+      | CP13-Mix of guilty plea(s) and discontinuance listed for trial                        |
+      | CP16-Committal: discharged                                                            |
+      | CP17-Extradition                                                                      |
+      | CP18-Case remitted from Crown to magistrates court for sentencing                     |
+      | CP20-Granted anti-social behaviour order / sexual offences order / other order        |
+      | CP21-Part-granted anti-social behaviour order/ sexual offences order / other order    |
+      | CP22-Refused anti-social behaviour order/ sexual offences order / other order         |
+      | CP23-Varied anti-social behaviour order/ sexual offences order / other order          |
+      | CP24-Discharged anti-social behaviour order/ sexual offences order / other order      |
+      | CP25-Committal: election (Representation order dated before 6th April 2010)           |
+      | CP26-Committal/transfer: direction (Representation order dated before 6th April 2010) |
+    Then the drop down list "outcome_code" contains the following values after selecting "9-Public order offences" in the "crime_matter_type" drop down list:
+      | CP01-Arrest warrant issued/adjourned indefinitely                                     |
+      | CP02-Change of solicitor                                                              |
+      | CP03-Representation order withdrawn                                                   |
+      | CP04-Trial: acquitted                                                                 |
+      | CP05-Trial: mixed verdicts                                                            |
+      | CP06 -Trial: convicted                                                                |
+      | CP07-Discontinued (before any pleas entered)                                          |
+      | CP08-Discontinued (after pleas entered)                                               |
+      | CP09-Guilty plea to all charges put not listed for trial                              |
+      | CP10-Guilty plea to all charges put after case listed for trial                       |
+      | CP11-Guilty plea to substitute charges put after case listed for trial                |
+      | CP12 -Mix of guilty plea(s) and discontinuance Not listed for trial                   |
+      | CP13-Mix of guilty plea(s) and discontinuance listed for trial                        |
+      | CP16-Committal: discharged                                                            |
+      | CP17-Extradition                                                                      |
+      | CP18-Case remitted from Crown to magistrates court for sentencing                     |
+      | CP20-Granted anti-social behaviour order / sexual offences order / other order        |
+      | CP21-Part-granted anti-social behaviour order/ sexual offences order / other order    |
+      | CP22-Refused anti-social behaviour order/ sexual offences order / other order         |
+      | CP23-Varied anti-social behaviour order/ sexual offences order / other order          |
+      | CP24-Discharged anti-social behaviour order/ sexual offences order / other order      |
+      | CP25-Committal: election (Representation order dated before 6th April 2010)           |
+      | CP26-Committal/transfer: direction (Representation order dated before 6th April 2010) |
+    Then the drop down list "outcome_code" contains the following values after selecting "10-Drug offences" in the "crime_matter_type" drop down list:
+      | CP01-Arrest warrant issued/adjourned indefinitely                                     |
+      | CP02-Change of solicitor                                                              |
+      | CP03-Representation order withdrawn                                                   |
+      | CP04-Trial: acquitted                                                                 |
+      | CP05-Trial: mixed verdicts                                                            |
+      | CP06 -Trial: convicted                                                                |
+      | CP07-Discontinued (before any pleas entered)                                          |
+      | CP08-Discontinued (after pleas entered)                                               |
+      | CP09-Guilty plea to all charges put not listed for trial                              |
+      | CP10-Guilty plea to all charges put after case listed for trial                       |
+      | CP11-Guilty plea to substitute charges put after case listed for trial                |
+      | CP12 -Mix of guilty plea(s) and discontinuance Not listed for trial                   |
+      | CP13-Mix of guilty plea(s) and discontinuance listed for trial                        |
+      | CP16-Committal: discharged                                                            |
+      | CP17-Extradition                                                                      |
+      | CP18-Case remitted from Crown to magistrates court for sentencing                     |
+      | CP20-Granted anti-social behaviour order / sexual offences order / other order        |
+      | CP21-Part-granted anti-social behaviour order/ sexual offences order / other order    |
+      | CP22-Refused anti-social behaviour order/ sexual offences order / other order         |
+      | CP23-Varied anti-social behaviour order/ sexual offences order / other order          |
+      | CP24-Discharged anti-social behaviour order/ sexual offences order / other order      |
+      | CP25-Committal: election (Representation order dated before 6th April 2010)           |
+      | CP26-Committal/transfer: direction (Representation order dated before 6th April 2010) |
+    Then the drop down list "outcome_code" contains the following values after selecting "11-Driving and motor vehicle offences (other than those covered by codes 1, 6 & 7)" in the "crime_matter_type" drop down list:
+      | CP01-Arrest warrant issued/adjourned indefinitely                                     |
+      | CP02-Change of solicitor                                                              |
+      | CP03-Representation order withdrawn                                                   |
+      | CP04-Trial: acquitted                                                                 |
+      | CP05-Trial: mixed verdicts                                                            |
+      | CP06 -Trial: convicted                                                                |
+      | CP07-Discontinued (before any pleas entered)                                          |
+      | CP08-Discontinued (after pleas entered)                                               |
+      | CP09-Guilty plea to all charges put not listed for trial                              |
+      | CP10-Guilty plea to all charges put after case listed for trial                       |
+      | CP11-Guilty plea to substitute charges put after case listed for trial                |
+      | CP12 -Mix of guilty plea(s) and discontinuance Not listed for trial                   |
+      | CP13-Mix of guilty plea(s) and discontinuance listed for trial                        |
+      | CP16-Committal: discharged                                                            |
+      | CP17-Extradition                                                                      |
+      | CP18-Case remitted from Crown to magistrates court for sentencing                     |
+      | CP20-Granted anti-social behaviour order / sexual offences order / other order        |
+      | CP21-Part-granted anti-social behaviour order/ sexual offences order / other order    |
+      | CP22-Refused anti-social behaviour order/ sexual offences order / other order         |
+      | CP23-Varied anti-social behaviour order/ sexual offences order / other order          |
+      | CP24-Discharged anti-social behaviour order/ sexual offences order / other order      |
+      | CP25-Committal: election (Representation order dated before 6th April 2010)           |
+      | CP26-Committal/transfer: direction (Representation order dated before 6th April 2010) |
+    Then the drop down list "outcome_code" contains the following values after selecting "12-Other offences" in the "crime_matter_type" drop down list:
+      | CP01-Arrest warrant issued/adjourned indefinitely                                     |
+      | CP02-Change of solicitor                                                              |
+      | CP03-Representation order withdrawn                                                   |
+      | CP04-Trial: acquitted                                                                 |
+      | CP05-Trial: mixed verdicts                                                            |
+      | CP06 -Trial: convicted                                                                |
+      | CP07-Discontinued (before any pleas entered)                                          |
+      | CP08-Discontinued (after pleas entered)                                               |
+      | CP09-Guilty plea to all charges put not listed for trial                              |
+      | CP10-Guilty plea to all charges put after case listed for trial                       |
+      | CP11-Guilty plea to substitute charges put after case listed for trial                |
+      | CP12 -Mix of guilty plea(s) and discontinuance Not listed for trial                   |
+      | CP13-Mix of guilty plea(s) and discontinuance listed for trial                        |
+      | CP16-Committal: discharged                                                            |
+      | CP17-Extradition                                                                      |
+      | CP18-Case remitted from Crown to magistrates court for sentencing                     |
+      | CP20-Granted anti-social behaviour order / sexual offences order / other order        |
+      | CP21-Part-granted anti-social behaviour order/ sexual offences order / other order    |
+      | CP22-Refused anti-social behaviour order/ sexual offences order / other order         |
+      | CP23-Varied anti-social behaviour order/ sexual offences order / other order          |
+      | CP24-Discharged anti-social behaviour order/ sexual offences order / other order      |
+      | CP25-Committal: election (Representation order dated before 6th April 2010)           |
+      | CP26-Committal/transfer: direction (Representation order dated before 6th April 2010) |
+    Then the drop down list "outcome_code" contains the following values after selecting "13-Terrorism" in the "crime_matter_type" drop down list:
+      | CP01-Arrest warrant issued/adjourned indefinitely                                     |
+      | CP02-Change of solicitor                                                              |
+      | CP03-Representation order withdrawn                                                   |
+      | CP04-Trial: acquitted                                                                 |
+      | CP05-Trial: mixed verdicts                                                            |
+      | CP06 -Trial: convicted                                                                |
+      | CP07-Discontinued (before any pleas entered)                                          |
+      | CP08-Discontinued (after pleas entered)                                               |
+      | CP09-Guilty plea to all charges put not listed for trial                              |
+      | CP10-Guilty plea to all charges put after case listed for trial                       |
+      | CP11-Guilty plea to substitute charges put after case listed for trial                |
+      | CP12 -Mix of guilty plea(s) and discontinuance Not listed for trial                   |
+      | CP13-Mix of guilty plea(s) and discontinuance listed for trial                        |
+      | CP16-Committal: discharged                                                            |
+      | CP17-Extradition                                                                      |
+      | CP18-Case remitted from Crown to magistrates court for sentencing                     |
+      | CP20-Granted anti-social behaviour order / sexual offences order / other order        |
+      | CP21-Part-granted anti-social behaviour order/ sexual offences order / other order    |
+      | CP22-Refused anti-social behaviour order/ sexual offences order / other order         |
+      | CP23-Varied anti-social behaviour order/ sexual offences order / other order          |
+      | CP24-Discharged anti-social behaviour order/ sexual offences order / other order      |
+      | CP25-Committal: election (Representation order dated before 6th April 2010)           |
+      | CP26-Committal/transfer: direction (Representation order dated before 6th April 2010) |
+    Then the drop down list "outcome_code" contains the following values after selecting "14-Anti-social behaviour orders" in the "crime_matter_type" drop down list:
+      | CP01-Arrest warrant issued/adjourned indefinitely                                     |
+      | CP02-Change of solicitor                                                              |
+      | CP03-Representation order withdrawn                                                   |
+      | CP04-Trial: acquitted                                                                 |
+      | CP05-Trial: mixed verdicts                                                            |
+      | CP06 -Trial: convicted                                                                |
+      | CP07-Discontinued (before any pleas entered)                                          |
+      | CP08-Discontinued (after pleas entered)                                               |
+      | CP09-Guilty plea to all charges put not listed for trial                              |
+      | CP10-Guilty plea to all charges put after case listed for trial                       |
+      | CP11-Guilty plea to substitute charges put after case listed for trial                |
+      | CP12 -Mix of guilty plea(s) and discontinuance Not listed for trial                   |
+      | CP13-Mix of guilty plea(s) and discontinuance listed for trial                        |
+      | CP16-Committal: discharged                                                            |
+      | CP17-Extradition                                                                      |
+      | CP18-Case remitted from Crown to magistrates court for sentencing                     |
+      | CP20-Granted anti-social behaviour order / sexual offences order / other order        |
+      | CP21-Part-granted anti-social behaviour order/ sexual offences order / other order    |
+      | CP22-Refused anti-social behaviour order/ sexual offences order / other order         |
+      | CP23-Varied anti-social behaviour order/ sexual offences order / other order          |
+      | CP24-Discharged anti-social behaviour order/ sexual offences order / other order      |
+      | CP25-Committal: election (Representation order dated before 6th April 2010)           |
+      | CP26-Committal/transfer: direction (Representation order dated before 6th April 2010) |
+    Then the drop down list "outcome_code" contains the following values after selecting "15-Sexual offender orders" in the "crime_matter_type" drop down list:
+      | CP01-Arrest warrant issued/adjourned indefinitely                                     |
+      | CP02-Change of solicitor                                                              |
+      | CP03-Representation order withdrawn                                                   |
+      | CP04-Trial: acquitted                                                                 |
+      | CP05-Trial: mixed verdicts                                                            |
+      | CP06 -Trial: convicted                                                                |
+      | CP07-Discontinued (before any pleas entered)                                          |
+      | CP08-Discontinued (after pleas entered)                                               |
+      | CP09-Guilty plea to all charges put not listed for trial                              |
+      | CP10-Guilty plea to all charges put after case listed for trial                       |
+      | CP11-Guilty plea to substitute charges put after case listed for trial                |
+      | CP12 -Mix of guilty plea(s) and discontinuance Not listed for trial                   |
+      | CP13-Mix of guilty plea(s) and discontinuance listed for trial                        |
+      | CP16-Committal: discharged                                                            |
+      | CP17-Extradition                                                                      |
+      | CP18-Case remitted from Crown to magistrates court for sentencing                     |
+      | CP20-Granted anti-social behaviour order / sexual offences order / other order        |
+      | CP21-Part-granted anti-social behaviour order/ sexual offences order / other order    |
+      | CP22-Refused anti-social behaviour order/ sexual offences order / other order         |
+      | CP23-Varied anti-social behaviour order/ sexual offences order / other order          |
+      | CP24-Discharged anti-social behaviour order/ sexual offences order / other order      |
+      | CP25-Committal: election (Representation order dated before 6th April 2010)           |
+      | CP26-Committal/transfer: direction (Representation order dated before 6th April 2010) |
+    Then the drop down list "outcome_code" contains the following values after selecting "16-Other prescribed proceedings" in the "crime_matter_type" drop down list:
+      | CP01-Arrest warrant issued/adjourned indefinitely                                     |
+      | CP02-Change of solicitor                                                              |
+      | CP03-Representation order withdrawn                                                   |
+      | CP04-Trial: acquitted                                                                 |
+      | CP05-Trial: mixed verdicts                                                            |
+      | CP06 -Trial: convicted                                                                |
+      | CP07-Discontinued (before any pleas entered)                                          |
+      | CP08-Discontinued (after pleas entered)                                               |
+      | CP09-Guilty plea to all charges put not listed for trial                              |
+      | CP10-Guilty plea to all charges put after case listed for trial                       |
+      | CP11-Guilty plea to substitute charges put after case listed for trial                |
+      | CP12 -Mix of guilty plea(s) and discontinuance Not listed for trial                   |
+      | CP13-Mix of guilty plea(s) and discontinuance listed for trial                        |
+      | CP16-Committal: discharged                                                            |
+      | CP17-Extradition                                                                      |
+      | CP18-Case remitted from Crown to magistrates court for sentencing                     |
       | CP20-Granted anti-social behaviour order / sexual offences order / other order        |
       | CP21-Part-granted anti-social behaviour order/ sexual offences order / other order    |
       | CP22-Refused anti-social behaviour order/ sexual offences order / other order         |
