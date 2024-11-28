@@ -50,9 +50,9 @@ Feature: YOUX code Manual and Bulk load validations
     Given user is on their "CRIME LOWER" submission details page
     When user adds outcomes for "Crime Lower" "criminal proceedings" with fields like this:
       | matter_type | rep_order_date | standard_fee_cat | profit_cost | ufn        | work_concluded_date | police_station | maat_id | dscc_number |
-      | YOUX        |    28-OCT-2024 |              1a - Lower |           0 | 291024/001 |         27-OCT-2024 | C1013          | 1234567 |           1 |
+      | YOUX        |     01-09-2024 |       1a - Lower |           0 | 010924/001 |         30-AUG-2024 | C1013          | 1234567 |  201012345A |
     Then the outcome does not save and gives an error containing:
       """
+      Case Concluded Date is before Case Start Date
       The Representation Order Date must be before the case concluded date. Please enter a valid value.
-      The DSCC Number you have reported is invalid. DSCC Numbers must be 10 characters long and in the format yymmnnnnnl. Please enter a valid value in the DSCC Number field.
       """
