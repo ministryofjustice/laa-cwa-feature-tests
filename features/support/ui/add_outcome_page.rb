@@ -45,6 +45,11 @@ class AddOutcomePage < SitePrism::Page
     dropdown.all('option').map(&:text)
   end
 
+  # Method to select an option from a dropdown list within a specific table
+  def select_dropdown_option(table_id, span_text, option_value)
+    fill_in(span_text, option_value)
+  end
+
   private
 
   def fill_in(field, value)
