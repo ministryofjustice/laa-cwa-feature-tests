@@ -1,7 +1,7 @@
 Feature: YOUE code Manual and Bulk load validations
 
   @bullkload_submission
-  Scenario: Bulkoad Crime Lower stage reached code YOUE with case outcome code CP19
+  Scenario: bulkload Crime Lower stage reached code YOUE with case outcome code CP19
     is invalid for YOUE
 
     Given a test firm user is logged in CWA

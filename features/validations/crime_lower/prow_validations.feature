@@ -27,7 +27,7 @@ Feature: PROW code Bulk load validations
      | 1 | <none>                     |
      | 2 | The Representation Order Date must be on or after 19/10/2020. Please enter a valid value. |
 
-  Scenario: Bulkoad Crime Lower outcomes with REP_ORDER_DATE between the UFN date and the WORK_CONCLUDED_DATE
+  Scenario: bulkload Crime Lower outcomes with REP_ORDER_DATE between the UFN date and the WORK_CONCLUDED_DATE
    And the following outcomes are bulkloaded:
     | # | UFN        | REP_ORDER_DATE | WORK_CONCLUDED_DATE |
     | 1 | 181020/001 | 19/10/2020     | 20/10/2020          |
@@ -39,7 +39,7 @@ Feature: PROW code Bulk load validations
     | 2 | The Representation Order Date must not be before UFN Date. Please enter a valid date. |
     | 3 | The Representation Order Date must be before the case concluded date. Please enter a valid value. |
 
-  Scenario: Bulkoad Crime Lower outcomes with no FEECATEGORY
+  Scenario: bulkload Crime Lower outcomes with no FEECATEGORY
   And the following outcomes are bulkloaded:
    | # | UFN        | REP_ORDER_DATE | WORK_CONCLUDED_DATE | STANDARD_FEE_CAT |
    | 1 | 181020/001 | 19/10/2020     | 20/10/2020          | <blank>          |
@@ -47,7 +47,7 @@ Feature: PROW code Bulk load validations
    | # | ERROR_CODE_OR_MESSAGE                                                                                     |
    | 1 | Standard Fee Category must be entered for cases with a Representation Order Date on or after 03-Oct-2011. |
 
- Scenario: Bulkoad Crime Lower outcomes with REP_ORDER_DATE is NULL
+ Scenario: bulkload Crime Lower outcomes with REP_ORDER_DATE is NULL
  And the following outcomes are bulkloaded:
   | # | UFN        | REP_ORDER_DATE | WORK_CONCLUDED_DATE |
   | 1 | 181020/001 | <blank>        | 20/10/2020          |
@@ -55,7 +55,7 @@ Feature: PROW code Bulk load validations
   | # | ERROR_CODE_OR_MESSAGE      |
   | 1 | REP_ORDER_DATE is missing |
 
-Scenario: Bulkoad Crime Lower outcomes with DSCC NUMBER
+Scenario: bulkload Crime Lower outcomes with DSCC NUMBER
 And the following outcomes are bulkloaded:
  | # | UFN        | REP_ORDER_DATE | WORK_CONCLUDED_DATE | DSCC_NUMBER |
  | 1 | 181020/001 | 19/10/2020        | 20/10/2020       | <blank>     |
@@ -67,7 +67,7 @@ Then the following results are expected:
  | 2 | The DSCC Number you have reported is invalid. DSCC Numbers must be 10 characters long and in the format yymmnnnnnl. Please enter a valid value in the DSCC Number field. |
  | 3 | <none>                     |
 
- Scenario: Bulkoad Crime Lower outcomes with MAAT_ID
+ Scenario: bulkload Crime Lower outcomes with MAAT_ID
  And the following outcomes are bulkloaded:
   | # | UFN        | REP_ORDER_DATE    | WORK_CONCLUDED_DATE | MAAT_ID     |
   | 1 | 181020/001 | 19/10/2020        | 20/10/2020          | <blank>     |

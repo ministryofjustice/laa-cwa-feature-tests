@@ -19,7 +19,7 @@ Feature: INVM code Bulk load validations
      | 2 | The Case Concluded Date entered is not valid - It must be after the Case Start Date/date element of the UFN, not after today and for Civil cases after the clients date of birth |
      | 3 | Stage:330,ORA-01843: not a valid month |
 
-  Scenario: Bulkoad Crime Lower stage reached code INVM with case outcome codes
+  Scenario: bulkload Crime Lower stage reached code INVM with case outcome codes
    And the following outcomes are bulkloaded:
     | # | UFN        | OUTCOME_CODE |
     | 1 | 181020/001 | CN01         |
@@ -53,7 +53,7 @@ Feature: INVM code Bulk load validations
     | 13 | CP27 is not a valid OUTCOME_CODE |
     | 14 | OUTCOME_CODE is missing          |
 
-Scenario: Bulkoad Crime Lower outcomes with DSCC NUMBER
+Scenario: bulkload Crime Lower outcomes with DSCC NUMBER
 And the following outcomes are bulkloaded:
  | # | UFN        | DSCC_NUMBER |
  | 1 | 181020/001 | <blank>     |
@@ -65,7 +65,7 @@ Then the following results are expected:
  | 2 | The DSCC Number you have reported is invalid. DSCC Numbers must be 10 characters long and in the format yymmnnnnnl. Please enter a valid value in the DSCC Number field. |
  | 3 | <none>                     |
 
- Scenario: Bulkoad Crime Lower outcomes with SCHEME_ID
+ Scenario: bulkload Crime Lower outcomes with SCHEME_ID
  And the following outcomes are bulkloaded:
   | # | UFN        | SCHEME_ID |
   | 1 | 181020/001 | <blank>   |

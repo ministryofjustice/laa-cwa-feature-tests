@@ -130,7 +130,6 @@ workflows:
       - Notify_Slack_For_Approval:
           requires:
             - Build_and_Push_Docker_Image
-    when: on_success
 
   deploy_tests:
     jobs:
@@ -146,7 +145,6 @@ workflows:
       - Notify_Slack_For_Success:
           requires:
             - Deploy_tests_on_cloud_platform
-    when: on_success
     triggers:
       - schedule:
           cron: "30 1 * * *"

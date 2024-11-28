@@ -1,4 +1,5 @@
 require 'timecop'
+require 'csv'
 
 Given( /^user prepares to submit outcomes for test provider "(.*)"(\s+again)?$/) do |ref, again|
   @submission = CWAProvider.submission_by_ref(ref)
@@ -214,13 +215,54 @@ Then(/problem outcomes should equal (\d*)/) do |num_of_problem_outcomes|
   @bulk_load_page = BulkLoadResultsPage.new
   @bulk_load_page.wait_until_summary_visible(wait: 60)
   expect(@bulk_load_page.summary).to have_problem_outcomes
-  expect(@bulk_load_page.summary.problem_outcomes.text).to eq(num_of_problem_outcomes)
+
+  actual_problem_outcomes = @bulk_load_page.summary.problem_outcomes.text.to_i
+  expected_problem_outcomes = num_of_problem_outcomes.to_i
+
+  if actual_problem_outcomes != expected_problem_outcomes
+    puts "Expected problem outcomes: #{expected_problem_outcomes}, but found: #{actual_problem_outcomes}"
+
+    if ENV['DISPLAY_ERRORS'] == 'true'
+      # Capture the actual errors
+      error_table = @bulk_load_page.find('#BulkLoadErrorsVO table.x1h')
+      error_rows = error_table.all('tr')[1..-1] # Skip the header row
+
+      error_messages = error_rows.map do |row|
+        {
+          summary_id: row.find('td:nth-child(1)').text,
+          matter_type: row.find('td:nth-child(2)').text,
+          ufn: row.find('td:nth-child(3)').text,
+          client_surname: row.find('td:nth-child(4)').text,
+          error_type: row.find('td:nth-child(5)').text,
+          description: row.find('td:nth-child(6)').text
+        }
+      end
+
+      # Write errors to a CSV file
+      CSV.open('error_messages.csv', 'w') do |csv|
+        csv << ['Summary Id', 'Matter Type', 'UFN', 'Client Surname', 'Error Type', 'Description']
+        error_messages.each do |error|
+          csv << [error[:summary_id], error[:matter_type], error[:ufn], error[:client_surname], error[:error_type], error[:description]]
+        end
+      end
+
+      puts "Error messages have been written to error_messages.csv"
+    end
+  end
+
+  expect(actual_problem_outcomes).to eq(expected_problem_outcomes)
 end
 
 Then(/invalid outcomes should equal (\d*)/) do |num_of_invalid_outcomes|
   @bulk_load_page = BulkLoadResultsPage.new
   @bulk_load_page.wait_until_summary_visible(wait: 60)
   expect(@bulk_load_page.summary.invalid_outcomes_nms.text).to eq(num_of_invalid_outcomes)
+end
+
+Then(/duplicate outcomes should equal (\d*)/) do |num_of_duplicate_outcomes|
+  @bulk_load_page = BulkLoadResultsPage.new
+  @bulk_load_page.wait_until_summary_visible(wait: 60)
+  expect(@bulk_load_page.summary.duplicate_outcomes.text).to eq(num_of_duplicate_outcomes)
 end
 
 

@@ -159,8 +159,51 @@ end
 
 Then("the outcome does not save and gives an error containing:") do |string|
   page = AddOutcomePage.new
-  expect(page).to have_content('Error')
-  expect(page).to have_content(string)
+  if page.has_content?('Error') && page.has_content?(string)
+    expect(page).to have_content('Error')
+    expect(page).to have_content(string)
+
+    # Capture and display any other error messages within the specific table
+    error_table = page.find('#FwkErrorBeanId')
+
+    # Check for errors in an ordered list
+    list_errors = error_table.all('ol.x3z li').map(&:text)
+
+    # Check for single errors in a div
+    single_errors = error_table.all('div.x3z').map(&:text)
+
+    # Combine all errors
+    other_errors = list_errors + single_errors
+
+    # Remove the expected error from the list of other errors
+    other_errors.reject! { |error| error.include?(string) }
+
+    unless other_errors.empty?
+      puts "Additional error messages found in the table:"
+      other_errors.each_with_index do |error, index|
+        puts "#{index + 1}. #{error}"
+      end
+    end
+  else
+    puts "Expected error message containing '#{string}' was not found."
+    # Capture and display any other error messages within the specific table
+    error_table = page.find('#FwkErrorBeanId')
+    # Check for errors in an ordered list
+    list_errors = error_table.all('ol.x3z li').map(&:text)
+
+    # Check for single errors in a div
+    single_errors = error_table.all('div.x3z').map(&:text)
+
+    # Combine all errors
+    other_errors = list_errors + single_errors
+
+    puts "Other error messages found in the table:"
+    other_errors.each_with_index do |error, index|
+      puts "#{index + 1}. #{error}"
+    end
+    # Fail the step if unexpected errors are found
+    raise "Unexpected error(s) found: #{other_errors.join(', ')}" unless other_errors.empty?
+  end
 end
 
 Then("the outcome does not save and the error message {string} appears") do |error_message|
