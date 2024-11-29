@@ -9,8 +9,8 @@ Feature: YOUK code Manual and Bulk load validations
     Given the following Matter Types are chosen:
       | YOUK |
     And the following outcomes are bulkloaded:
-      | # | UFN        | OUTCOME_CODE | WORK_CONCLUDED_DATE | YOUTH_COURT | POLICE_STATION | NUMBER_OF_POLICE_STATION |
-      | 1 | 010924/001 | CP19         |           01/9/2024 | Y           | C1013          |                        1 |
+      | # | UFN        | OUTCOME_CODE | WORK_CONCLUDED_DATE | YOUTH_COURT | POLICE_STATION | NUMBER_OF_POLICE_STATION | REP_ORDER_DATE | PROFIT_COST | STANDARD_FEE_CAT |
+      | 1 | 010924/001 | CP19         |           01/9/2024 | Y           | C1013          |                        1 |    01-SEP-2024 |      884.61 |               1A |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE            |
       | 1 | CP19 is not a valid OUTCOME_CODE |

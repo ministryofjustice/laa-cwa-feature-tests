@@ -42,14 +42,14 @@ Feature: YOUX code Manual and Bulk load validations
       | YOUX |
     And the following outcomes are bulkloaded:
       | # | UFN        | REP_ORDER_DATE | STANDARD_FEE_CAT | WORK_CONCLUDED_DATE | YOUTH_COURT | POLICE_STATION | NUMBER_OF_POLICE_STATION |
-      | 1 | 010924/001 |     31/08/2024 |      1a - Higher |           01/9/2024 | Y           | C1013          |                        1 |
-      | 2 | 310824/002 |     31/08/2024 |      1a - Higher |           01/9/2024 | Y           | C1013          |                        1 |
+      | 1 | 010924/001 |     31/08/2024 |           1A-HSF |           01/9/2024 | Y           | C1013          |                        1 |
+      | 2 | 310824/002 |     31/08/2024 |           1A-HSF |           01/9/2024 | Y           | C1013          |                        1 |
     Then user should see the outcome results page
     And problem outcomes should equal 2
     And the following errors:
       | Matter Type / Stage Reached | Error Type      | Description                                                                                                               |
       | YOUX                        | LAR Validation4 | The Representation Order Date must not be before UFN Date. Please enter a valid date.                                     |
-      | YOUX                        | LAR Validation8 | The fee you have entered is not valid for Category 1A / YOUX matters. Please enter a valid fee in the profit costs field. |
+      | YOUX                        | LAR Validation8 | The fee you have entered is not valid for 1a - Higher / YOUX matters. Please enter a valid fee in the profit costs field. |
 
   Scenario: bulkload Crime Lower stage reached code YOUX validation check for duplicate UFN
     is invalid for YOUX
@@ -60,8 +60,8 @@ Feature: YOUX code Manual and Bulk load validations
       | YOUX |
     And the following outcomes are bulkloaded:
       | # | UFN        | REP_ORDER_DATE | STANDARD_FEE_CAT | WORK_CONCLUDED_DATE | YOUTH_COURT | POLICE_STATION | NUMBER_OF_POLICE_STATION | PROFIT_COST |
-      | 1 | 010924/001 |     01/09/2024 |      1a - Higher |           01/9/2024 | Y           | C1013          |                        1 |      822.47 |
-      | 2 | 010924/001 |     01/09/2024 |      1a - Higher |           01/9/2024 | Y           | C1013          |                        1 |      822.47 |
+      | 1 | 010924/001 |     01/09/2024 |           1A-HSF |           01/9/2024 | Y           | C1013          |                        1 |     1072.74 |
+      | 2 | 010924/001 |     01/09/2024 |           1A-HSF |           01/9/2024 | Y           | C1013          |                        1 |     1072.74 |
     Then user should see the outcome results page
     And duplicate outcomes should equal 1
     And the following errors:
@@ -75,7 +75,7 @@ Feature: YOUX code Manual and Bulk load validations
       | YOUX |
     And the following outcomes are bulkloaded:
       | # | UFN        | REP_ORDER_DATE | STANDARD_FEE_CAT | WORK_CONCLUDED_DATE | YOUTH_COURT | POLICE_STATION | NUMBER_OF_POLICE_STATION | PROFIT_COST |
-      | 1 | 311223/001 |     01/09/2024 |      1a - Higher |           01/9/2024 | Y           | C1013          |                        1 |      822.47 |
+      | 1 | 311223/001 |     01/09/2024 |           1A-HSF |           01/9/2024 | Y           | C1013          |                        1 |     1072.74 |
     Then user should see the outcome results page
     And successful outcomes should equal 1
     And problem outcomes should equal 0
@@ -88,12 +88,12 @@ Feature: YOUX code Manual and Bulk load validations
       | YOUX |
     And the following outcomes are bulkloaded:
       | # | UFN        | REP_ORDER_DATE | STANDARD_FEE_CAT | WORK_CONCLUDED_DATE | YOUTH_COURT | POLICE_STATION | NUMBER_OF_POLICE_STATION | PROFIT_COST |
-      | 1 | 311223/001 |     31/12/2023 |      1a - Higher |           01/9/2024 | Y           | C1013          |                        1 |      822.47 |
+      | 1 | 311223/001 |     31/12/2023 |           1A-HSF |           01/9/2024 | Y           | C1013          |                        1 |     1072.74 |
     Then user should see the outcome results page
     And problem outcomes should equal 1
     And the following errors:
       | Matter Type / Stage Reached | Error Type      | Description                                                                                                               |
-      | YOUX                        | LAR Validation8 | The fee you have entered is not valid for Category 1A / YOUX matters. Please enter a valid fee in the profit costs field. |
+      | YOUX                        | LAR Validation8 | The fee you have entered is not valid for 1a - Higher / YOUX matters. Please enter a valid fee in the profit costs field. |
 
   Scenario: Bulkload Crime Lower stage reached code YOUX validation check if wrong standard fee category is used
     Given a test firm user is logged in CWA
@@ -102,7 +102,7 @@ Feature: YOUX code Manual and Bulk load validations
       | YOUX |
     And the following outcomes are bulkloaded:
       | # | UFN        | REP_ORDER_DATE | STANDARD_FEE_CAT | WORK_CONCLUDED_DATE | YOUTH_COURT | POLICE_STATION | NUMBER_OF_POLICE_STATION | PROFIT_COST |
-      | 1 | 311223/001 |     01/09/2024 |              1EW |           01/9/2024 | Y           | C1013          |                        1 |      822.47 |
+      | 1 | 311223/001 |     01/09/2024 |              1EW |           01/9/2024 | Y           | C1013          |                        1 |     1072.74 |
     Then user should see the outcome results page
     And problem outcomes should equal 1
     And the invalid outcomes should equal 1
@@ -117,19 +117,19 @@ Feature: YOUX code Manual and Bulk load validations
     Given the following Matter Types are chosen:
       | YOUX |
     And the following outcomes are bulkloaded:
-      | # | UFN        | REP_ORDER_DATE | STANDARD_FEE_CAT  WORK_CONCLUDED_DATE | YOUTH_COURT | POLICE_STATION | NUMBER_OF_POLICE_STATION | PROFIT_COST | VAT_INDICATOR | TRAVEL_COSTS | TRAVEL_WAITING_COSTS | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT |
-      | 1 | 010924/001 |      01/9/2024 |       1a - Lower            01/9/2024 | Y           | C1013          |                        1 |      822.48 | Y             |            0 |                    0 |                  100 |                20 |
-      | 2 | 010924/002 |      01/9/2024 |        1b - Lower           01/9/2024 | Y           | C1013          |                        1 |      182.02 | Y             |            0 |                    0 |                  100 |                20 |
-      | 3 | 010924/003 |      01/9/2024 |       1a - Higher           01/9/2024 | Y           | C1013          |                        1 |      919.97 | Y             |            0 |                    0 |                  100 |                20 |
-      | 4 | 010924/004 |      01/9/2024 |      1b - Higher            01/9/2024 | Y           | C1013          |                        1 |      321.38 | Y             |            0 |                    0 |                  100 |                20 |
+      | # | UFN        | REP_ORDER_DATE | STANDARD_FEE_CAT | WORK_CONCLUDED_DATE | YOUTH_COURT | POLICE_STATION | NUMBER_OF_POLICE_STATION | PROFIT_COST | VAT_INDICATOR | TRAVEL_COSTS | TRAVEL_WAITING_COSTS | DISBURSEMENTS_AMOUNT | DISBURSEMENTS_VAT |
+      | 1 | 010924/001 |      01/9/2024 |           1A-LSF |           01/9/2024 | Y           | C1013          |                        1 |      822.48 | Y             |            0 |                    0 |                  100 |                20 |
+      | 2 | 010924/002 |      01/9/2024 |           1B-LSF |           01/9/2024 | Y           | C1013          |                        1 |      182.02 | Y             |            0 |                    0 |                  100 |                20 |
+      | 3 | 010924/003 |      01/9/2024 |           1A-HSF |           01/9/2024 | Y           | C1013          |                        1 |      919.97 | Y             |            0 |                    0 |                  100 |                20 |
+      | 4 | 010924/004 |      01/9/2024 |           1B-HSF |           01/9/2024 | Y           | C1013          |                        1 |      321.38 | Y             |            0 |                    0 |                  100 |                20 |
     Then user should see the outcome results page
     And problem outcomes should equal 4
     And the following errors:
       | Matter Type / Stage Reached | Error Type      | Description                                                                                                               |
-      | YOUX                        | LAR Validation8 | The fee you have entered is not valid for Category 1A / YOUX matters. Please enter a valid fee in the profit costs field. |
-      | YOUX                        | LAR Validation8 | The fee you have entered is not valid for Category 1B / YOUX matters. Please enter a valid fee in the profit costs field. |
-      | YOUX                        | LAR Validation8 | The fee you have entered is not valid for Category 2A / YOUX matters. Please enter a valid fee in the profit costs field. |
-      | YOUX                        | LAR Validation8 | The fee you have entered is not valid for Category 2B / YOUX matters. Please enter a valid fee in the profit costs field. |
+      | YOUX                        | LAR Validation8 | The fee you have entered is not valid for 1a - Lower / YOUX matters. Please enter a valid fee in the profit costs field.  |
+      | YOUX                        | LAR Validation8 | The fee you have entered is not valid for 1b - Lower / YOUX matters. Please enter a valid fee in the profit costs field.  |
+      | YOUX                        | LAR Validation8 | The fee you have entered is not valid for 1a - Higher / YOUX matters. Please enter a valid fee in the profit costs field. |
+      | YOUX                        | LAR Validation8 | The fee you have entered is not valid for 1b - Higher / YOUX matters. Please enter a valid fee in the profit costs field. |
 
   Scenario: Bulkload Crime Lower stage reached code YOUX validation check if DSSC format is validated
     Given a test firm user is logged in CWA
@@ -138,7 +138,7 @@ Feature: YOUX code Manual and Bulk load validations
       | YOUX |
     And the following outcomes are bulkloaded:
       | # | UFN        | REP_ORDER_DATE | STANDARD_FEE_CAT | WORK_CONCLUDED_DATE | YOUTH_COURT | POLICE_STATION | NUMBER_OF_POLICE_STATION | PROFIT_COST | DSCC_NUMBER |
-      | 1 | 311223/001 |     01/09/2024 |      1a - Higher |           01/9/2024 | Y           | C1013          |                        1 |      822.47 |       12345 |
+      | 1 | 311223/001 |     01/09/2024 |           1A-HSF |           01/9/2024 | Y           | C1013          |                        1 |     1072.74 |       12345 |
     Then user should see the outcome results page
     And problem outcomes should equal 1
     And the following errors:
@@ -152,7 +152,7 @@ Feature: YOUX code Manual and Bulk load validations
       | YOUX |
     And the following outcomes are bulkloaded:
       | # | UFN        | REP_ORDER_DATE | STANDARD_FEE_CAT | WORK_CONCLUDED_DATE | YOUTH_COURT | POLICE_STATION | NUMBER_OF_POLICE_STATION | PROFIT_COST | MAAT_ID |
-      | 1 | 311223/001 |     01/09/2024 |      1a - Higher |           01/9/2024 | Y           | C1013          |                        1 |      822.47 | A       |
+      | 1 | 311223/001 |     01/09/2024 |           1A-HSF |           01/9/2024 | Y           | C1013          |                        1 |     1072.74 | A       |
     Then user should see the outcome results page
     And the invalid outcomes should equal 1
     And the following errors:
@@ -168,6 +168,7 @@ Feature: YOUX code Manual and Bulk load validations
     Given the following Matter Types are chosen:
       | YOUX |
     And the following outcomes are bulkloaded:
-      | # | UFN        | WORK_CONCLUDED_DATE | YOUTH_COURT | POLICE_STATION | NUMBER_OF_POLICE_STATION |
-      | 1 | 010924/001 |           01/9/2024 | Y           | C1013          |                        1 |
-    Then the outcome saves successfully
+      | # | UFN        | WORK_CONCLUDED_DATE | REP_ORDER_DATE | YOUTH_COURT | POLICE_STATION | NUMBER_OF_POLICE_STATION | STANDARD_FEE_CAT | PROFIT_COST |
+      | 1 | 010924/001 |           01/9/2024 |      01/9/2024 | Y           | C1013          |                        1 |           1A-HSF |     1072.74 |
+    Then user should see the outcome results page
+    And the successful outcomes should equal 1
