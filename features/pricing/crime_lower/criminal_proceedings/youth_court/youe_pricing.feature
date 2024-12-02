@@ -103,3 +103,19 @@ Feature: YOUE code Manual and Bulk load pricing
       | 2 | 010924/002 | £ 338.41   | Standard fee for category 1B YOUE + travel costs + waiting costs + 20% vat on total + disbursement + disbursement vat = £338.41   |
       | 3 | 010924/003 | £ 1,223.95 | Standard fee for category 2A YOUE + travel costs + waiting costs + 20% vat on total + disbursement + disbursement vat =  £1223.95 |
       | 4 | 010924/004 | £ 505.64   | Standard fee for category 2B YOUE + travel costs + waiting costs + 20% vat on total + disbursement + disbursement vat =  £505.64  |
+
+  @delete_outcome_after @manual_submission
+  Scenario Outline: Pricing tests manual entry for YOUE
+    Given user is on their "Crime Lower" submission details page
+    When user adds outcomes for "Crime Lower" "Criminal Proceedings" with fields like this:
+      | matter_type | rep_order_date | standard_fee_cat | profit_cost | ufn        | work_concluded_date | police_station | maat_id |
+      | YOUE        |      01/9/2024 |               1A |      822.47 | 010924/001 |         01-SEP-2024 | C1013          |       1 |
+      | YOUE        |      01/9/2024 |               1B |      182.01 | 010924/002 |         01-SEP-2024 | C1013          |       1 |
+      | YOUE        |      01/9/2024 |               2A |      919.96 | 010924/003 |         01-SEP-2024 | C1013          |       1 |
+      | YOUE        |      01/9/2024 |               2B |      321.37 | 010924/004 |         01-SEP-2024 | C1013          |       1 |
+    Then user should see the following outcomes:
+      | # | UFN        | Value    | Comment                                 |
+      | 1 | 010924/001 | £ 822.47 | Priced at Fixed fee for YOUE at £822.47 |
+      | 1 | 010924/002 | £ 182.01 | Priced at Fixed fee for YOUE at £182.01 |
+      | 1 | 010924/003 | £ 919.96 | Priced at Fixed fee for YOUE at £919.96 |
+      | 1 | 010924/004 | £ 321.37 | Priced at Fixed fee for YOUE at £321.37 |

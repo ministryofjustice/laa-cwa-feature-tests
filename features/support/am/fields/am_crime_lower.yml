@@ -265,6 +265,10 @@ crime_lower:
       <<: *criminal_proceedings_base
       outcome_code:
       crime_matter_type:
+    YOUX:
+      <<: *criminal_proceedings_base
+    YOUY:
+      <<: *criminal_proceedings_base
 
   #APPA, APPB, APPC
   appeals_and_reviews:

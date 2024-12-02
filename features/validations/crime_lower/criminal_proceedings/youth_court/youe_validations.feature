@@ -5,12 +5,12 @@ Feature: YOUE code Manual and Bulk load validations
     is invalid for YOUE
 
     Given a test firm user is logged in CWA
-    And user prepares to submit outcomes for test provider "CRIME LOWER#8"
+    And user prepares to submit outcomes for test provider "CRIME LOWER#24"
     Given the following Matter Types are chosen:
       | YOUE |
     And the following outcomes are bulkloaded:
-      | # | UFN        | OUTCOME_CODE | WORK_CONCLUDED_DATE | YOUTH_COURT | POLICE_STATION | NUMBER_OF_POLICE_STATION |
-      | 1 | 010924/001 | CP19         |           01/9/2024 | Y           | C1013          |                        1 |
+      | # | UFN        | OUTCOME_CODE | WORK_CONCLUDED_DATE | YOUTH_COURT | POLICE_STATION | NUMBER_OF_POLICE_STATION | REP_ORDER_DATE | PROFIT_COST | STANDARD_FEE_CAT |
+      | 1 | 010924/001 | CP19         |           01/9/2024 | Y           | C1013          |                        1 |    01-SEP-2024 |      822.47 |               1A |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE            |
       | 1 | CP19 is not a valid OUTCOME_CODE |
@@ -25,13 +25,6 @@ Feature: YOUE code Manual and Bulk load validations
       """
       Outcome Code - ID CP19 for the flexfield segment Outcome Code does not exist in the value set XXLSC_CASE_OUTCOME_CODE_CL.
       """
-  #YOU<a> court codes have a new screen to capture fields.  It is pretty much a close copy of the PRO<a>
-  #screen with some fields now being mandatory.  The following tests check that these fields are now being
-  #implemented as mandatory fields on the new screen.  They are as follows:-
-  # Representation Order Date
-  # MAAT ID
-  # Standard Fee Category
-  # On the manual screen a popup will warn the user if the fields are not completed.
 
   @manual_submission
   Scenario: Manually enter YOUE outcomes without certain mandatory fields completed
@@ -77,6 +70,29 @@ Feature: YOUE code Manual and Bulk load validations
       |                           36-Breach of part 1 Injunctions under the ASBCP Act 2014 |
 
   @manual_submission
+  Scenario: Manually enter YOUE outcomes , check for DSCC format validation
+    Given user is on their "CRIME LOWER" submission details page
+    When user adds outcomes for "Crime Lower" "criminal proceedings" with fields like this:
+      | matter_type | rep_order_date | standard_fee_cat | profit_cost | ufn        | work_concluded_date | police_station | maat_id | dscc_number |
+      | YOUE        |    28-OCT-2024 |               1A |           0 | 010924/001 |         01-SEP-2024 | C1013          | 1234567 |           1 |
+    Then the outcome does not save and gives an error containing:
+      """
+      The Representation Order Date must be before the case concluded date. Please enter a valid value.
+      The DSCC Number you have reported is invalid. DSCC Numbers must be 10 characters long and in the format yymmnnnnnl. Please enter a valid value in the DSCC Number field.
+      """
+
+  @manual_submission
+  Scenario: Manually enter YOUE outcomes , check for case concluded date earlier to start date
+    Given user is on their "CRIME LOWER" submission details page
+    When user adds outcomes for "Crime Lower" "criminal proceedings" with fields like this:
+      | matter_type | rep_order_date | standard_fee_cat | profit_cost | ufn        | work_concluded_date | police_station | maat_id | dscc_number |
+      | YOUE        |     01-09-2024 |               1A |           0 | 010924/001 |         30-AUG-2024 | C1013          | 1234567 |  201012345A |
+    Then the outcome does not save and gives an error containing:
+      """
+      Case Concluded Date is before Case Start Date
+      The Representation Order Date must be before the case concluded date. Please enter a valid value.
+      """
+ @manual_submission
   Scenario: Manually enter YOUE outcomes and test some drop down lists are correct
     Given user is on their "CRIME LOWER" submission details page
     When user enters an outcome for "Crime Lower" "criminal proceedings" with fields like this:

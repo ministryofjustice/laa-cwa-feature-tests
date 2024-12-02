@@ -269,6 +269,13 @@ crime_lower:
       outcome_code: CP01
       crime_matter_type: 4-Robbery
 
+    YOUX:
+      <<: *criminal_proceedings_base
+
+    YOUY:
+      <<: *criminal_proceedings_base
+
+
 
   #APPA, APPB, APPC
   appeals_and_reviews:
