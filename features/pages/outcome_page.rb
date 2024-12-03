@@ -13,7 +13,7 @@ module OutcomePage
     )
     page = SubmissionDetailsPage.new
     return if page.has_no_select_all_link?(wait: 0)
-    page.select_all
+    page.select_all_link.click
     page.delete_button.click
     page.confirm_delete_button.click
   end
