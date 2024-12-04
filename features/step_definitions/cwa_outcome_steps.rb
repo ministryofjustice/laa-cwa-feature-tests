@@ -157,37 +157,36 @@ When("user enters an outcome for {string} {string} with fields like this:") do |
   end
 end
 
-Then("the outcome does not save and gives an error containing:") do |string|
+Then("the outcome does not save and gives an error containing:") do |expected_message|
   page = AddOutcomePage.new
 
-  # Locate the error table once
-  error_table = page.find('#FwkErrorBeanId', wait: 10) # Add wait time if the element is dynamic
-  
-  # Collect all errors in the table
+  # Locate the error table
+  error_table = page.find('#FwkErrorBeanId', wait: 10)
+
+  # Collect all errors from the table
   all_errors = error_table.all('ol.x3z li, div.x3z').map(&:text)
 
-  # Check if the expected error exists
-  if all_errors.any? { |error| error.include?(string) }
-    expect(all_errors).to include(string)
+  # Split the expected error into individual lines for comparison
+  expected_errors = expected_message.strip.split("\n").map(&:strip)
 
-    # Remove the expected error from the list of other errors
-    other_errors = all_errors.reject { |error| error.include?(string) }
+  # Check if all expected errors are present in the actual errors
+  missing_errors = expected_errors.reject { |error| all_errors.any? { |actual| actual.include?(error) } }
 
-    unless other_errors.empty?
-      puts "Additional error messages found in the table:"
-      other_errors.each_with_index do |error, index|
-        puts "#{index + 1}. #{error}"
-      end
-    end
+  if missing_errors.empty?
+    puts "All expected error messages were found."
   else
-    puts "Expected error message containing '#{string}' was not found."
+    puts "The following expected error messages were not found:"
+    missing_errors.each { |error| puts "- #{error}" }
+
     puts "Other error messages found in the table:"
     all_errors.each_with_index do |error, index|
       puts "#{index + 1}. #{error}"
     end
-    raise "Expected error message '#{string}' was not found. Other errors: #{all_errors.join(', ')}"
+
+    raise "Expected error messages were not found: #{missing_errors.join(', ')}"
   end
 end
+
 
 
 Then("the outcome does not save and the error message {string} appears") do |error_message|
