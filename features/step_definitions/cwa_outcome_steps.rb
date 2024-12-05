@@ -166,11 +166,14 @@ Then("the outcome does not save and gives an error containing:") do |expected_me
   # Collect all errors from the table
   all_errors = error_table.all('ol.x3z li, div.x3z').map(&:text)
 
+  # Convert all_errors to a set for faster lookup
+  all_errors_set = all_errors.to_set
+
   # Split the expected error into individual lines for comparison
   expected_errors = expected_message.strip.split("\n").map(&:strip)
 
   # Check if all expected errors are present in the actual errors
-  missing_errors = expected_errors.reject { |error| all_errors.any? { |actual| actual.include?(error) } }
+  missing_errors = expected_errors.reject { |error| all_errors_set.any? { |actual| actual.include?(error) } }
 
   if missing_errors.empty?
     puts "All expected error messages were found."
