@@ -47,7 +47,7 @@ When("user adds outcomes for {string} {string} with fields like this:") do |area
   submission_details_page = SubmissionDetailsPage.new
   if !submission_details_page.has_text?(/No results found/)
     STDOUT.print 'Cleaning existing outcomes for test reference...'
-    submission_details_page.select_all
+    submission_details_page.select_all_link.click
     submission_details_page.delete_button.click
     submission_details_page.confirm_delete_button.click
     STDOUT.puts ' done.'
@@ -128,7 +128,7 @@ When("user enters an outcome for {string} {string} with fields like this:") do |
   submission_details_page = SubmissionDetailsPage.new
   if !submission_details_page.has_text?(/No results found/)
     STDOUT.print 'Cleaning existing outcomes for test reference...'
-    submission_details_page.select_all
+    submission_details_page.select_all_link.click
     submission_details_page.delete_button.click
     submission_details_page.confirm_delete_button.click
     STDOUT.puts ' done.'
@@ -157,54 +157,40 @@ When("user enters an outcome for {string} {string} with fields like this:") do |
   end
 end
 
-Then("the outcome does not save and gives an error containing:") do |string|
+Then("the outcome does not save and gives an error containing:") do |expected_message|
   page = AddOutcomePage.new
-  if page.has_content?('Error') && page.has_content?(string)
-    expect(page).to have_content('Error')
-    expect(page).to have_content(string)
 
-    # Capture and display any other error messages within the specific table
-    error_table = page.find('#FwkErrorBeanId')
+  # Locate the error table
+  error_table = page.find('#FwkErrorBeanId', wait: 10)
 
-    # Check for errors in an ordered list
-    list_errors = error_table.all('ol.x3z li').map(&:text)
+  # Collect all errors from the table
+  all_errors = error_table.all('ol.x3z li, div.x3z').map(&:text)
 
-    # Check for single errors in a div
-    single_errors = error_table.all('div.x3z').map(&:text)
+  # Convert all_errors to a set for faster lookup
+  all_errors_set = all_errors.to_set
 
-    # Combine all errors
-    other_errors = list_errors + single_errors
+  # Split the expected error into individual lines for comparison
+  expected_errors = expected_message.strip.split("\n").map(&:strip)
 
-    # Remove the expected error from the list of other errors
-    other_errors.reject! { |error| error.include?(string) }
+  # Check if all expected errors are present in the actual errors
+  missing_errors = expected_errors.reject { |error| all_errors_set.any? { |actual| actual.include?(error) } }
 
-    unless other_errors.empty?
-      puts "Additional error messages found in the table:"
-      other_errors.each_with_index do |error, index|
-        puts "#{index + 1}. #{error}"
-      end
-    end
+  if missing_errors.empty?
+    puts "All expected error messages were found."
   else
-    puts "Expected error message containing '#{string}' was not found."
-    # Capture and display any other error messages within the specific table
-    error_table = page.find('#FwkErrorBeanId')
-    # Check for errors in an ordered list
-    list_errors = error_table.all('ol.x3z li').map(&:text)
-
-    # Check for single errors in a div
-    single_errors = error_table.all('div.x3z').map(&:text)
-
-    # Combine all errors
-    other_errors = list_errors + single_errors
+    puts "The following expected error messages were not found:"
+    missing_errors.each { |error| puts "- #{error}" }
 
     puts "Other error messages found in the table:"
-    other_errors.each_with_index do |error, index|
+    all_errors.each_with_index do |error, index|
       puts "#{index + 1}. #{error}"
     end
-    # Fail the step if unexpected errors are found
-    raise "Unexpected error(s) found: #{other_errors.join(', ')}" unless other_errors.empty?
+
+    raise "Expected error messages were not found: #{missing_errors.join(', ')}"
   end
 end
+
+
 
 Then("the outcome does not save and the error message {string} appears") do |error_message|
   page = AddOutcomePage.new

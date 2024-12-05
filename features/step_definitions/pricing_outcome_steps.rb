@@ -36,7 +36,7 @@ Given('user deleted any existing {string} outcomes for the test firm') do |categ
   if !@submission_details_page.has_text?(/No results found/)
     STDOUT.print 'Cleaning existing outcomes for test reference...'
 
-    @submission_details_page.select_all.click
+    @submission_details_page.select_all_link.click
     @submission_details_page.delete_button.click
     @submission_details_page.confirm_delete_button.click
 

@@ -56,10 +56,9 @@ Feature: Validation for Prior authority number
       | 1 |     001 | 010523/001 | CM         | IA           |      01/05/2023 |          30/05/2023 |           0 |            0 | N             |            0 |                 1000 |                 0 | a000000             |
     Then user should see the outcome results page
     And problem outcomes should equal 1
-    Then the outcome does not save and gives an error containing:
-      """
-      The Prior Authority Reference number entered is incorrect. Please check again and enter the correct reference number.
-      """
+    Then the following results are expected:
+      | # | ERROR_CODE_OR_MESSAGE                                                                                                 |
+      | 1 | The Prior Authority Reference number entered is incorrect. Please check again and enter the correct reference number. |
 
   @delete_outcome_after @manual_submission
   Scenario Outline: Manual submission PAN validation
@@ -83,10 +82,10 @@ Feature: Validation for Prior authority number
       The Prior Authority Reference number entered is incorrect. Please check again and enter the correct reference number.
       """
 
-   @delete_outcome_after @manual_submission
-   Scenario Outline: Manual submission PAN validation
+  @delete_outcome_after @manual_submission
+  Scenario Outline: Manual submission PAN validation
     Given user is on their "LEGAL HELP" submission details page
     When user adds outcomes for "Legal Help" "Immigration And Asylum" with fields like this:
       | case_id | matter_type | case_start_date | outcome_code | procurement_area | access_point | exemption_criteria_satisfied | work_concluded_date | prior_authority_ref |
-      |     001 | IAXL:IDIF   |        25/04/22 | --           | PA00137          | AP00153      | TR001                        |            26/04/22 | A000000              |
+      |     001 | IAXL:IDIF   |        25/04/22 | --           | PA00137          | AP00153      | TR001                        |            26/04/22 | A000000             |
     Then user should see the outcome results page
