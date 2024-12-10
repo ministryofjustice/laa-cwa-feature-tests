@@ -5,7 +5,7 @@ Feature: YOUY code Manual and Bulk load validations
     Given user is on their "CRIME LOWER" submission details page
     When user adds outcomes for "Crime Lower" "criminal proceedings" with fields like this:
       | matter_type | rep_order_date | standard_fee_cat | profit_cost | ufn        | work_concluded_date | police_station | maat_id |
-      | YOUY        |    01-SEP-2024 |           1A-LSF |      884.61 | 010924/001 |         01-SEP-2024 | C1013          | 1234567 |
+      | YOUY        |    06-DEC-2024 |           1A-LSF |      884.61 | 061224/001 |         06-DEC-2024 | C1013          | 1234567 |
     Then the outcome saves successfully
 
   @manual_submission
@@ -13,7 +13,7 @@ Feature: YOUY code Manual and Bulk load validations
     Given user is on their "CRIME LOWER" submission details page
     When user adds outcomes for "Crime Lower" "criminal proceedings" with fields like this:
       | matter_type | rep_order_date | standard_fee_cat | profit_cost | ufn        | work_concluded_date | police_station | maat_id |
-      | YOUY        |                |                  |         100 | 010924/001 |         01-SEP-2024 | C1013          |         |
+      | YOUY        |                |                  |         100 | 061224/001 |         06-DEC-2024 | C1013          |         |
     Then the outcome does not save and this popup error appears:
       """
       A value must be entered for "Representation Order Date".
@@ -38,7 +38,7 @@ Feature: YOUY code Manual and Bulk load validations
     Given user is on their "CRIME LOWER" submission details page
     When user adds outcomes for "Crime Lower" "criminal proceedings" with fields like this:
       | matter_type | rep_order_date | standard_fee_cat | profit_cost | ufn        | work_concluded_date | police_station | maat_id | dscc_number |
-      | YOUY        |    01-SEP-2024 |           1A-LSF |      884.61 | 010924/001 |         01-SEP-2024 | C1013          | 1234567 |           1 |
+      | YOUY        |    06-DEC-2024 |           1A-LSF |      884.61 | 061224/001 |         06-DEC-2024 | C1013          | 1234567 |           1 |
     Then the outcome does not save and gives an error containing:
       """
       The DSCC Number you have reported is invalid. DSCC Numbers must be 10 characters long and in the format yymmnnnnnl. Please enter a valid value in the DSCC Number field.
@@ -49,7 +49,7 @@ Feature: YOUY code Manual and Bulk load validations
     Given user is on their "CRIME LOWER" submission details page
     When user adds outcomes for "Crime Lower" "criminal proceedings" with fields like this:
       | matter_type | rep_order_date | standard_fee_cat | profit_cost | ufn        | work_concluded_date | police_station | maat_id | dscc_number |
-      | YOUY        |     01-09-2024 |           1A-LSF |           0 | 010924/001 |         30-AUG-2024 | C1013          | 1234567 |  201012345A |
+      | YOUY        |     06-12-2024 |           1A-LSF |           0 | 061224/001 |         05-DEC-2024 | C1013          | 1234567 |  201012345A |
     Then the outcome does not save and gives an error containing:
       """
       Case Concluded Date is before Case Start Date
