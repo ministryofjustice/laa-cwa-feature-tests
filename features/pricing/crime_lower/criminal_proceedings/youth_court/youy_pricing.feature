@@ -50,18 +50,18 @@ Feature: YOUY code Bulk load pricing
       | YOUY |
     And the following outcomes are bulkloaded:
       | # | UFN        | REP_ORDER_DATE | STANDARD_FEE_CAT | WORK_CONCLUDED_DATE | YOUTH_COURT | POLICE_STATION | NUMBER_OF_POLICE_STATION | PROFIT_COST | VAT_INDICATOR | TRAVEL_COSTS | TRAVEL_WAITING_COSTS |
-      | 1 | 051224/001 |     05/12/2024 |           1A-HSF |           06/12/2024 | Y           | C1013          |                        1 |     1141.17 | Y             |          100 |                  100 |
-      | 2 | 051224/002 |     05/12/2024 |           1A-LSF |           06/12/2024 | Y           | C1013          |                        1 |      884.61 | Y             |          100 |                  100 |
-      | 3 | 051224/003 |     05/12/2024 |           1B-HSF |           06/12/2024 | Y           | C1013          |                        1 |      500.99 | Y             |          100 |                  100 |
-      | 4 | 051224/004 |     05/12/2024 |           1B-LSF |           06/12/2024 | Y           | C1013          |                        1 |      232.53 | Y             |          100 |                  100 |
+      | 1 | 061224/001 |     06/12/2024 |           1A-HSF |           06/12/2024 | Y           | C1013          |                        1 |     1141.17 | Y             |          100 |                  100 |
+      | 2 | 061224/002 |     06/12/2024 |           1A-LSF |           06/12/2024 | Y           | C1013          |                        1 |      884.61 | Y             |          100 |                  100 |
+      | 3 | 061224/003 |     06/12/2024 |           1B-HSF |           06/12/2024 | Y           | C1013          |                        1 |      500.99 | Y             |          100 |                  100 |
+      | 4 | 061224/004 |     06/12/2024 |           1B-LSF |           06/12/2024 | Y           | C1013          |                        1 |      232.53 | Y             |          100 |                  100 |
     When user confirms the submission
     And user is on the pricing outcome details page
     Then user should see the following outcomes:
       | # | UFN        | Value      | Comment                                                                                                               |
-      | 1 | 051224/001 | £ 1,369.40 | Standard fee for category 1A-HSF YOUY £1141.17 + ignore(travel costs + waiting costs) + 20% vat on total =  £1,369.40 |
-      | 2 | 051224/002 | £ 1,061.53 | Standard fee for category 1A-LSF YOUY £884.61 + ignore(travel costs + waiting costs) + 20% vat on total = £ 1,061.53  |
-      | 3 | 051224/003 | £ 601.19   | Standard fee for category 1B-HSF YOUY £500.99 + ignore(travel costs + waiting costs) + 20% vat on total =  £601.19    |
-      | 4 | 051224/004 | £ 279.04   | Standard fee for category 1B-LSF YOUY £232.53 + ignore(travel costs + waiting costs) + 20% vat on total =  £279.04    |
+      | 1 | 061224/001 | £ 1,369.40 | Standard fee for category 1A-HSF YOUY £1141.17 + ignore(travel costs + waiting costs) + 20% vat on total =  £1,369.40 |
+      | 2 | 061224/002 | £ 1,061.53 | Standard fee for category 1A-LSF YOUY £884.61 + ignore(travel costs + waiting costs) + 20% vat on total = £ 1,061.53  |
+      | 3 | 061224/003 | £ 601.19   | Standard fee for category 1B-HSF YOUY £500.99 + ignore(travel costs + waiting costs) + 20% vat on total =  £601.19    |
+      | 4 | 061224/004 | £ 279.04   | Standard fee for category 1B-LSF YOUY £232.53 + ignore(travel costs + waiting costs) + 20% vat on total =  £279.04    |
 
   @bullkload_submission
   Scenario: bulkload Crime Lower stage reached code YOUY pricing check for YOUY with vat and travel and waiting costs with disbursement and disbursement vat

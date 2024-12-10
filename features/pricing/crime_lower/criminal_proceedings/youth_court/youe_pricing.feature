@@ -50,10 +50,10 @@ Feature: YOUE code Manual and Bulk load pricing
       | YOUE |
     And the following outcomes are bulkloaded:
       | # | UFN        | REP_ORDER_DATE | STANDARD_FEE_CAT | OUTCOME_CODE | WORK_CONCLUDED_DATE | YOUTH_COURT | POLICE_STATION | NUMBER_OF_POLICE_STATION | PROFIT_COST | VAT_INDICATOR | TRAVEL_COSTS | TRAVEL_WAITING_COSTS |
-      | 1 | 051224/001 |     05/12/2024 |               1A | CP18         |           06/12/2024 | Y           | C1013          |                        1 |      822.47 | Y             |          100 |                  100 |
-      | 2 | 051224/002 |     05/12/2024 |               1B | CP18         |           06/12/2024 | Y           | C1013          |                        1 |      182.01 | Y             |          100 |                  100 |
-      | 3 | 051224/003 |     05/12/2024 |               2A | CP18         |           06/12/2024 | Y           | C1013          |                        1 |      919.96 | Y             |          100 |                  100 |
-      | 4 | 051224/004 |     05/12/2024 |               2B | CP18         |           06/12/2024 | Y           | C1013          |                        1 |      321.37 | Y             |          100 |                  100 |
+      | 1 | 051224/001 |     06/12/2024 |               1A | CP18         |           06/12/2024 | Y           | C1013          |                        1 |      822.47 | Y             |          100 |                  100 |
+      | 2 | 051224/002 |     06/12/2024 |               1B | CP18         |           06/12/2024 | Y           | C1013          |                        1 |      182.01 | Y             |          100 |                  100 |
+      | 3 | 051224/003 |     06/12/2024 |               2A | CP18         |           06/12/2024 | Y           | C1013          |                        1 |      919.96 | Y             |          100 |                  100 |
+      | 4 | 051224/004 |     06/12/2024 |               2B | CP18         |           06/12/2024 | Y           | C1013          |                        1 |      321.37 | Y             |          100 |                  100 |
     When user confirms the submission
     And user is on the pricing outcome details page
     Then user should see the following outcomes:
