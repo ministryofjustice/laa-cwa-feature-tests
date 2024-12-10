@@ -10,7 +10,7 @@ Feature: YOUF code Manual and Bulk load validations
       | YOUF |
     And the following outcomes are bulkloaded:
       | # | UFN        | OUTCOME_CODE | WORK_CONCLUDED_DATE | YOUTH_COURT | POLICE_STATION | NUMBER_OF_POLICE_STATION | REP_ORDER_DATE | PROFIT_COST | STANDARD_FEE_CAT |
-      | 1 | 010924/001 | CP19         |           01/9/2024 | Y           | C1013          |                        1 |    01-SEP-2024 |     1072.74 |               1A |
+      | 1 | 061224/001 | CP19         |          06/12/2024 | Y           | C1013          |                        1 |    06-DEC-2024 |     1072.74 |               1A |
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE            |
       | 1 | CP19 is not a valid OUTCOME_CODE |
@@ -20,7 +20,7 @@ Feature: YOUF code Manual and Bulk load validations
     Given user is on their "CRIME LOWER" submission details page
     When user adds outcomes for "Crime Lower" "criminal proceedings" with fields like this:
       | matter_type | rep_order_date | standard_fee_cat | profit_cost | ufn        | work_concluded_date | police_station | outcome_code | maat_id |
-      | YOUF        |    28-OCT-2024 |               1B |           0 | 010924/001 |         01-SEP-2024 | C1013          | CP19         | 1234567 |
+      | YOUF        |    06-DEC-2024 |               1B |           0 | 061224/001 |         06-DEC-2024 | C1013          | CP19         | 1234567 |
     Then the outcome does not save and gives an error containing:
       """
       Outcome Code - ID CP19 for the flexfield segment Outcome Code does not exist in the value set XXLSC_CASE_OUTCOME_CODE_CL.
@@ -31,7 +31,7 @@ Feature: YOUF code Manual and Bulk load validations
     Given user is on their "CRIME LOWER" submission details page
     When user adds outcomes for "Crime Lower" "criminal proceedings" with fields like this:
       | matter_type | rep_order_date | standard_fee_cat | profit_cost | ufn        | work_concluded_date | police_station | outcome_code | maat_id |
-      | YOUF        |                |                  |         100 | 010924/001 |         01-SEP-2024 | C1013          | CP18         |         |
+      | YOUF        |                |                  |         100 | 061224/001 |         06-DEC-2024 | C1013          | CP18         |         |
     Then the outcome does not save and this popup error appears:
       """
       A value must be entered for "Representation Order Date".
@@ -77,10 +77,10 @@ Feature: YOUF code Manual and Bulk load validations
       | YOUF |
     And the following outcomes are bulkloaded:
       | # | UFN        | REP_ORDER_DATE | STANDARD_FEE_CAT | OUTCOME_CODE | WORK_CONCLUDED_DATE | YOUTH_COURT | POLICE_STATION | NUMBER_OF_POLICE_STATION | PROFIT_COST |
-      | 1 | 010924/001 |      01/9/2024 |               1A | CP18         |           01/9/2024 | Y           | C1013          |                        1 |     1072.75 |
-      | 2 | 010924/002 |      01/9/2024 |               1B | CP18         |           01/9/2024 | Y           | C1013          |                        1 |      437.82 |
-      | 3 | 010924/003 |      01/9/2024 |               2A | CP18         |           01/9/2024 | Y           | C1013          |                        1 |     1335.68 |
-      | 4 | 010924/004 |      01/9/2024 |               2B | CP18         |           01/9/2024 | Y           | C1013          |                        1 |      737.09 |
+      | 1 | 061224/001 |     06/12/2024 |               1A | CP18         |          06/12/2024 | Y           | C1013          |                        1 |     1072.75 |
+      | 2 | 061224/002 |     06/12/2024 |               1B | CP18         |          06/12/2024 | Y           | C1013          |                        1 |      437.82 |
+      | 3 | 061224/003 |     06/12/2024 |               2A | CP18         |          06/12/2024 | Y           | C1013          |                        1 |     1335.68 |
+      | 4 | 061224/004 |     06/12/2024 |               2B | CP18         |          06/12/2024 | Y           | C1013          |                        1 |      737.09 |
     Then user should see the outcome results page
     And problem outcomes should equal 4
     And the following errors:
@@ -95,13 +95,14 @@ Feature: YOUF code Manual and Bulk load validations
     Given user is on their "CRIME LOWER" submission details page
     When user adds outcomes for "Crime Lower" "criminal proceedings" with fields like this:
       | matter_type | rep_order_date | standard_fee_cat | profit_cost | ufn        | work_concluded_date | police_station | maat_id | dscc_number |
-      | YOUF        |    28-OCT-2024 |               1A |           0 | 010924/001 |         01-SEP-2024 | C1013          | 1234567 |           1 |
+      | YOUF        |    06-DEC-2024 |               1A |           0 | 061224/001 |         05-DEC-2024 | C1013          | 1234567 |           1 |
     Then the outcome does not save and gives an error containing:
       """
       The Representation Order Date must be before the case concluded date. Please enter a valid value.
       The DSCC Number you have reported is invalid. DSCC Numbers must be 10 characters long and in the format yymmnnnnnl. Please enter a valid value in the DSCC Number field.
       """
-@manual_submission
+
+  @manual_submission
   Scenario: Manually enter YOUF outcomes and test some drop down lists are correct
     Given user is on their "CRIME LOWER" submission details page
     When user enters an outcome for "Crime Lower" "criminal proceedings" with fields like this:
