@@ -199,10 +199,8 @@ Then("the outcome does not save and the error message {string} appears") do |err
 end
 
 Then("the outcome does not save and this popup error appears:") do |string|
-  wait = Selenium::WebDriver::Wait.new(timeout: 10) # Wait for up to 10 seconds
-
-  alert = wait.until { page.driver.browser.switch_to.alert }
-  expect(alert.text).to have_content(string)
+  alert = page.driver.browser.switch_to.alert
+  expect(alert.text).to have_content(string, wait: 10)
   alert.dismiss
 rescue Selenium::WebDriver::Error::TimeoutError
   raise "Expected alert with message '#{string}' but no alert appeared within the timeout period"
