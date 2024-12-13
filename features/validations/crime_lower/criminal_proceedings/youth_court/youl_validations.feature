@@ -67,7 +67,6 @@ Feature: YOUL code Manual and Bulk load validations
       |                                                    14-Anti-social behaviour orders |
       |                                                          15-Sexual offender orders |
       |                                                    16-Other prescribed proceedings |
-      |                           36-Breach of part 1 Injunctions under the ASBCP Act 2014 |
 
   @bullkload_submission
   Scenario: Bulkload Crime Lower stage reached code YOUL VALIDATION4 check for YOUL with wrong profit cost values
