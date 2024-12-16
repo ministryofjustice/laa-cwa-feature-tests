@@ -5,6 +5,14 @@ require 'awesome_print'
 require 'selenium-webdriver'
 require 'site_prism'
 require 'builder'
+require_relative 'portal_env'
+require_relative 'cwa_provider'
+
+# Additional setup code
+CWAProvider.set_environment(ENV['TEST_ENV'] || 'dev')
+CWAProvider.set_use_api(ENV['USE_API'] == 'true')
+CWAProvider.set_logging(ENV['CWA_PROVIDER_LOGGING'] == 'true')
+CWAProvider.api_url = ENV['API_URL']
 
 Capybara.register_driver :firefox do |app|
   options = Selenium::WebDriver::Options.firefox(
@@ -23,101 +31,5 @@ end
 Capybara.default_driver = :firefox
 Capybara.default_max_wait_time = 5
 Capybara.current_window.resize_to(1920,1080)
-
-# Set portal environment specific variables
-module PortalEnv
-  path = File.join(File.dirname(__FILE__), 'portal_env.yml')
-  environment = YAML.safe_load(File.read(path))
-  @config = environment.fetch(ENV.fetch('TEST_ENV').downcase)
-
-  def self.url
-    @config['url']
-  end
-
-  def self.cwa_provider_user
-    @config['cwa_provider_user']
-  end
-
-  def self.cwa_provider_user_password
-    @config['cwa_provider_user_password']
-  end
-end
-
-module CWAProvider
-  path = File.join(File.dirname(__FILE__), 'cwa_env.yml')
-  environment = YAML.safe_load(File.read(path))
-  @config = environment.fetch(ENV.fetch('TEST_ENV').downcase)
-  @shared = environment.fetch('shared')
-  @area_of_law = []
-
-  def self.url
-    @config['url']
-  end
-
-  def self.area_of_law=(aol)
-    @area_of_law = aol
-  end
-
-  def self.area_of_law
-    @area_of_law
-  end
-
-  def self.submissions
-    JSON.parse(@config['submissions'].to_json, object_class: OpenStruct).tap do |submissions|
-      submissions.each do |submission|
-        fields = @shared['valuesets'].find do |valueset|
-          valueset['name'] == submission.valueset
-        end&.fetch('fields', [])
-        submission.lines = fields.map do |field|
-          OpenStruct.new(field)
-        end
-      end
-    end
-  end
-
-  def self.submission
-    if area_of_law.eql? 'CRIME LOWER'
-      crime_lower_submission
-    elsif area_of_law.eql? 'LEGAL HELP'
-      legal_help_submission
-    elsif area_of_law.eql? 'MEDIATION'
-      mediation_submission
-    else
-      raise("Invalid Area of Law #{area_of_law}")
-    end
-  end
-
-  def self.submission_by_ref(ref) # TODO: change references
-    if ref
-      id, _ = ref.split('#').last
-      submissions.find do |submission|
-        submission.id.to_s == id
-      end || raise("Missing #{ref} test submission")
-    end
-  end
-
-  def self.legal_help_submission
-    @legal_help_submission ||= OpenStruct.new(submission_for(:legal_help))
-  end
-
-  def self.mediation_submission
-    @mediation_submission ||= OpenStruct.new(submission_for(:mediation))
-  end
-
-   def self.crime_lower_submission
-     @crime_lower_submission ||= OpenStruct.new(submission_for(:crime_lower))
-   end
-
-  def self.submission_for(area_of_law)
-    submissions.find do |submission|
-      submission['area_of_law'] == area_of_law.to_s.upcase.tr('_', ' ')
-    end
-  end
-
-  def self.errors
-    JSON.parse(@shared['errors'].to_json, object_class: OpenStruct)
-  end
-
-end
 
 World(PortalEnv, CWAProvider)

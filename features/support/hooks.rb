@@ -1,56 +1,110 @@
+# features/support/hooks.rb
+
 require_relative '../pages/outcome_page.rb'
 include OutcomePage
 
-Before do
-  # This workaround seems to fool Firefox into thinking that it's not
-  # a big deal if the certificate signature is a bit off as it seems in UAT.
-  # It's not clear why it works, but by visiting the URL below *before*
-  # anything else, will trigger a redirection to the portal login page.
-  if ENV['TEST_ENV'] == 'uat' && !defined?($acknowledged_cert)
-    visit('https://cwa.uat.legalservices.gov.uk/oa_servlets/AppsLogin')
-    $acknowledged_cert ||= true
-  end
-end
+# Before hooks
+#Before('@start_timer') do
+#  @feature_start_time = Time.now
+#end
 
 Before do
-  # Logout from CWA _and_ Portal before each scenario is run
-  visit("#{CWAProvider.url}/OA_HTML/OALogout.jsp?")
-  visit("#{PortalEnv.url}/oam/server/logout?")
+  @start_time = Time.now
+  acknowledge_certificate if ENV['TEST_ENV'] == 'uat' && !defined?($acknowledged_cert)
+  logout_from_cwa_and_portal
 end
 
-Before('@crime_lower') do |scenario|
+Before do |scenario|
+  log_scenario_details(scenario)
+end
+
+Before('@crime_lower') do
   CWAProvider.area_of_law = 'CRIME LOWER'
 end
 
-Before('@legal_help') do |scenario|
-  CWAProvider.area_of_law = 'CRIME LOWER'
+Before('@legal_help') do
+  CWAProvider.area_of_law = 'LEGAL HELP'
 end
 
-Before('@mediation') do |scenario|
+Before('@mediation') do
   CWAProvider.area_of_law = 'MEDIATION'
 end
 
-Before('@delete_outcome_before') do |scenario|
-  visit("#{CWAProvider.url}/OA_HTML/OALogout.jsp?")
-  visit("#{PortalEnv.url}/oam/server/logout?")
+Before('@delete_outcome_before') do
+  logout_from_cwa_and_portal
   delete_all_outcomes
-  visit("#{CWAProvider.url}/OA_HTML/OALogout.jsp?")
-  visit("#{PortalEnv.url}/oam/server/logout?")
+  logout_from_cwa_and_portal
 end
+
+# After hooks
+#After('@start_timer') do
+#  duration = Time.now - @feature_start_time
+#  puts "The feature took #{duration.round(2)} seconds to run."
+#end
 
 After('@delete_outcome_after') do |scenario|
   if scenario.passed?
-    visit("#{CWAProvider.url}/OA_HTML/OALogout.jsp?")
-    visit("#{PortalEnv.url}/oam/server/logout?")
+    logout_from_cwa_and_portal
     delete_all_outcomes
   end
 end
 
 After do |scenario|
   byebug if scenario.failed? && ENV['DEBUG_FAILURES'] == 'true'
+  puts "CWAProvider.submission: #{CWAProvider.submission}" if scenario.failed?
 end
 
+After do |scenario|
+  #only unlock if scenario passed otherwise leave locked
+  if scenario.passed? && CWAProvider.use_api && CWAProvider.submission['locked'] == 'Y'
+    CWAProvider.unlock_by_id(CWAProvider.submission['id'])
+  end
+end
+
+After do |scenario|
+  duration = Time.now - @start_time
+  puts "The scenario '#{scenario.name}' took #{duration.round(2)} seconds to run."
+end
+
+# At exit hook
 at_exit do
+  clean_up_temp_files
+end
+
+# Helper methods
+def acknowledge_certificate
+  visit('https://cwa.uat.legalservices.gov.uk/oa_servlets/AppsLogin')
+  $acknowledged_cert ||= true
+end
+
+def log_scenario_details(scenario)
+  location = scenario.location.to_s
+  feature_file, line_number = location.split(':')
+  feature_name = extract_feature_name(feature_file)
+  specific_part = extract_specific_part(feature_file)
+
+  puts "Running feature: #{feature_name}"
+  puts "Feature file location: #{feature_file}"
+  puts "Line number: #{line_number}"
+  puts "Extracted category_of_law: #{specific_part}"
+  CWAProvider.feature_col = specific_part
+  CWAProvider.feature_file = feature_file
+end
+
+def extract_feature_name(feature_file)
+  File.basename(feature_file, '.feature').split('_').map(&:capitalize).join(' ')
+end
+
+def extract_specific_part(feature_file)
+  feature_file.split('/')[3]
+end
+
+def logout_from_cwa_and_portal
+  visit("#{CWAProvider.url}/OA_HTML/OALogout.jsp?")
+  visit("#{PortalEnv.url}/oam/server/logout?")
+end
+
+def clean_up_temp_files
   tmp_path = File.expand_path(Helpers::Bulkload::TMP_DIR)
   tmp_files = Dir.glob("#{tmp_path}/*")
   FileUtils.rm_f(tmp_files)
