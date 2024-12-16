@@ -67,7 +67,6 @@ Feature: YOUE code Manual and Bulk load validations
       |                                                    14-Anti-social behaviour orders |
       |                                                          15-Sexual offender orders |
       |                                                    16-Other prescribed proceedings |
-      |                           36-Breach of part 1 Injunctions under the ASBCP Act 2014 |
 
   @manual_submission
   Scenario: Manually enter YOUE outcomes , check for DSCC format validation
