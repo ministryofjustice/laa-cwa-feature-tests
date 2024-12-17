@@ -20,6 +20,7 @@ Then('Submission Search Page displayed') do
   submission_list_page.wait_until_submissions_visible(wait: 10)
   submission_list_page.account_number.set(CWAProvider.submission.account_number)
   submission_list_page.area_of_law_search.select(CWAProvider.submission.area_of_law)
+  submission_list_page.submission_period.set(CWAProvider.submission.period)
 
   submission_list_page.search_button.click
   expect(submission_list_page).to have_content('Submission Search')
@@ -41,6 +42,7 @@ When('user searches for their submission') do
   submission_list_page = SubmissionListPage.new
   submission_list_page.account_number.set(CWAProvider.submission.account_number)
   submission_list_page.area_of_law_search.set(CWAProvider.area_of_law)
+  submission_list_page.submission_period.set(CWAProvider.submission.period)
   submission_list_page.search_button.click
 
   submission_list_page.wait_until_submissions_visible(wait: 10)
