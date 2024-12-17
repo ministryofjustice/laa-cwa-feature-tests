@@ -276,7 +276,7 @@ module CWAProvider
     end
 
     def merge_submissions(base_submission, api_overrides)
-      fields_to_override = %w[locked account_number area_of_law period schedule_number schedule_ref id]
+      fields_to_override = %w[account_number area_of_law period schedule_number schedule_ref id]
 
       api_overrides_hash = api_overrides.to_h
 
@@ -287,12 +287,14 @@ module CWAProvider
         end
       else
         api_overrides_hash.each do |key, value|
-          if fields_to_override.include?(key.to_s) && base_submission[key.to_s] != value
+          if fields_to_override.include?(key.to_s) && base_submission[key.to_s] != value && base_submission.respond_to?(key)
             puts "Overriding #{key}: #{base_submission[key.to_s]} -> #{value}" if logging
             base_submission[key.to_s] = value
           end
         end
       end
+
+      base_submission['locked'] = 'Y'
 
       base_submission
     end
