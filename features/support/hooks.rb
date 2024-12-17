@@ -51,13 +51,13 @@ end
 
 After do |scenario|
   byebug if scenario.failed? && ENV['DEBUG_FAILURES'] == 'true'
-  puts "CWAProvider.submission: #{CWAProvider.submission}" if scenario.failed?
+  puts "The scenario '#{scenario.name}' failed." if scenario.failed?
 end
 
 After do |scenario|
   #only unlock if scenario passed otherwise leave locked
-  if scenario.passed? && CWAProvider.use_api && CWAProvider.submission['locked'] == 'Y'
-    CWAProvider.unlock_by_id(CWAProvider.submission['id'])
+  if scenario.passed? && CWAProvider.use_api
+    CWAProvider.unlock_by_id
   end
 end
 
@@ -81,13 +81,17 @@ def log_scenario_details(scenario)
   location = scenario.location.to_s
   feature_file, line_number = location.split(':')
   feature_name = extract_feature_name(feature_file)
-  specific_part = extract_specific_part(feature_file)
 
   puts "Running feature: #{feature_name}"
   puts "Feature file location: #{feature_file}"
-  puts "Line number: #{line_number}"
-  puts "Extracted category_of_law: #{specific_part}"
-  CWAProvider.feature_col = specific_part
+
+  # Extract category_of_law if LEGAL HELP
+  area_of_law = extract_specific_part(feature_file, 2)
+  if area_of_law == 'legal_help'
+    category_of_law = extract_specific_part(feature_file, 3)
+    puts "Extracted LH category_of_law: #{category_of_law}"
+    CWAProvider.feature_col = category_of_law
+  end
   CWAProvider.feature_file = feature_file
 end
 
@@ -95,8 +99,8 @@ def extract_feature_name(feature_file)
   File.basename(feature_file, '.feature').split('_').map(&:capitalize).join(' ')
 end
 
-def extract_specific_part(feature_file)
-  feature_file.split('/')[3]
+def extract_specific_part(feature_file, position)
+  feature_file.split('/')[position]
 end
 
 def logout_from_cwa_and_portal

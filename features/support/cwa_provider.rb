@@ -42,7 +42,8 @@ module CWAProvider
       :logging,
       :category_of_law,
       :feature_col,
-      :api_url
+      :api_url,
+      :locked_id
     ]
   
     attr_accessor *ATTRIBUTES
@@ -72,8 +73,12 @@ module CWAProvider
     end
 
     def submission_by_ref(ref)
-      id, self.area_of_law = ref.split('#').last, ref.split('.').first
-      criteria = { id: id, area_of_law: area_of_law }
+      id = ref.split('#').last
+      match = ref.match(/^[A-Z ]+/)
+      match ? match[0].strip : nil
+      self.area_of_law = match.to_s
+      criteria = { id: id, area_of_law: self.area_of_law }
+      puts "criteria: #{criteria}" if logging
       fetch_submissions(criteria) || raise("Missing #{ref} test submission")
     end
 
@@ -124,8 +129,13 @@ module CWAProvider
       @logging = logging
     end
 
-    def unlock_by_id(id)
-      url = URI("#{self.api_url}/unlockById/#{id}")
+    def unlock_by_id
+      unless self.locked_id 
+        puts "No locked_id, nothing to unlock, returning."
+        return
+      end
+
+      url = URI("#{self.api_url}/unlockById/#{self.locked_id}")
 
       # Output the curl command for debug
       curl_command = "curl -X PUT '#{url}'"
@@ -140,9 +150,9 @@ module CWAProvider
     
       # Check if the request was successful
       if response.is_a?(Net::HTTPSuccess)
-        puts "Successfully unlocked ID: #{id}" if logging
+        puts "Successfully unlocked ID: #{self.locked_id}" if logging
       else
-        puts "Failed to unlock ID: #{id}"
+        puts "Failed to unlock ID: #{self.locked_id}"
         puts "Error: #{response.code} #{response.message}"
       end
 
@@ -153,7 +163,6 @@ module CWAProvider
     private
 
     DENY_LIST = [
-    'features/validations/legal_help/housing/case_start_date_validation.feature',
     'features/validations/legal_help/immigration_and_asylum/access_point_validation_manual.feature',
     'path/to/denied_feature_2.feature'
     # Add more feature files as needed
@@ -179,11 +188,14 @@ module CWAProvider
     def fetch_submissions(criteria = {})
       base_submission = parse_submissions_from_yaml(criteria)
 
-      if base_submission.to_h.empty?
-        raise "Unable to locate provider in the yaml file using #{criteria} for env #{environment}."
-      end
+      # if base_submission.to_h.empty?
+      #   raise "Unable to locate provider in the yaml file using #{criteria} for env #{environment}."
+      # end
       
       unless should_use_api?
+        if base_submission.to_h.empty?
+          raise "Unable to locate provider in the yaml file using #{criteria} for env #{environment}."
+        end
         if !@use_api
           puts "API usage is disabled (use_api is false), returning base submission." if logging
         elsif DENY_LIST.include?(self.feature_file)
@@ -202,6 +214,8 @@ module CWAProvider
       puts "#{api_overrides.inspect}" if logging
       merged_submission = merge_submissions(base_submission, api_overrides.first)
       puts "merged_submission: #{merged_submission.inspect}" if logging
+
+      self.locked_id = merged_submission['id']
 
       merged_submission
     end
@@ -248,7 +262,6 @@ module CWAProvider
           submission_value.to_s == value.to_s
         end
       end
-      puts "matching_submission: #{matching_submission}" if logging
 
       if matching_submission
         valuesets = shared['valuesets'] || []
@@ -256,6 +269,9 @@ module CWAProvider
         matching_submission.lines = fields.map { |field| OpenStruct.new(field) }
       end
     
+      puts "matching_submission: #{matching_submission}" if logging && matching_submission
+      puts "No matching submission found in yaml file using #{criteria} on #{self.environment}." if logging && matching_submission.nil?
+
       matching_submission || OpenStruct.new
     end
 
