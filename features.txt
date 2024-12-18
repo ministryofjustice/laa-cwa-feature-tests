@@ -1,2 +1,8 @@
-features/validations/legal_help/education/ecf_validations.feature:15 
-features/validations/legal_help/education/ecf_validations.feature:43
+features/validations/legal_help/clinical_negligence/clinical_negligence_validation_manual.feature:7 
+features/validations/legal_help/clinical_negligence/clinical_negligence_validation_manual.feature:15 
+features/validations/legal_help/clinical_negligence/clinical_negligence_validation_manual.feature:25 
+features/validations/legal_help/clinical_negligence/clinical_negligence_validation_manual.feature:36 
+features/validations/legal_help/clinical_negligence/clinical_negligence_validation_manual.feature:47 
+features/validations/legal_help/clinical_negligence/clinical_negligence_validation_manual.feature:58 
+features/validations/legal_help/clinical_negligence/clinical_negligence_validation_manual.feature:69 
+
