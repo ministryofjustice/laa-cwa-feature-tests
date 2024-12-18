@@ -23,4 +23,5 @@ spec:
       limits:
         cpu: 4000m
         memory: 8192Mi
-    command: ["/bin/sh", "-ec", "bundle exec cucumber"]
+    #command: ["/bin/sh", "-ec", "bundle exec cucumber"]
+    command: ["/bin/sh", "-ec", "bundle exec cucumber features/validations/mediation/mediation_manual.feature"]
