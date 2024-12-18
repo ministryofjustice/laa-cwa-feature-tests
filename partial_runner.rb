@@ -1,5 +1,8 @@
 # partial_runner.rb
 
+# ensures that the output to the standard output (STDOUT) is flushed immediately
+STDOUT.sync = true
+
 require 'open3'
 
 # Read the list of feature files from features.txt
