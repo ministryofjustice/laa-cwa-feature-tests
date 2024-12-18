@@ -24,4 +24,4 @@ spec:
         cpu: 4000m
         memory: 8192Mi
     #command: ["/bin/sh", "-ec", "bundle exec cucumber"]
-    command : ["/bin/sh", "-ec", "bundle exec cucumber features/validations/legal_help/education/ecf_validations.feature:15"]
+    command: ["/bin/sh", "-ec", "ruby partial_runner.rb"]
