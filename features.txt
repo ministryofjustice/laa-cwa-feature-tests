@@ -4,5 +4,4 @@ features/validations/legal_help/clinical_negligence/clinical_negligence_validati
 features/validations/legal_help/clinical_negligence/clinical_negligence_validation_manual.feature:36 
 features/validations/legal_help/clinical_negligence/clinical_negligence_validation_manual.feature:47 
 features/validations/legal_help/clinical_negligence/clinical_negligence_validation_manual.feature:58 
-features/validations/legal_help/clinical_negligence/clinical_negligence_validation_manual.feature:69 
-
+features/validations/legal_help/clinical_negligence/clinical_negligence_validation_manual.feature:69
