@@ -45,9 +45,11 @@ jobs:
           name: Deploy helm chart
           command: |
             export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
+            export LOWERCASE_SHA1=$(echo "${CIRCLE_SHA1,,}")
+            export SANITISED_BRANCH_WITH_SHA="${SANITISED_BRANCH}-${LOWERCASE_SHA1}"
             helm install --generate-name ./charts/cwa-tests \
             -f charts/cwa-tests/Values.yaml \
-            --set ecr.image.tag=${SANITISED_BRANCH} \
+            --set ecr.image.tag=${SANITISED_BRANCH_WITH_SHA} \
             --wait --timeout 300s
             export POD_NAME=$(helm list -q | tail -1)
             kubectl logs -f ${POD_NAME}
