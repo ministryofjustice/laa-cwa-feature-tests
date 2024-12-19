@@ -25,20 +25,22 @@ def output_results(feature_file, results)
   puts "-" * 40
 end
 
-# Method to parse the scenario, passed, and failed values from the output
+# Method to parse the scenario, passed, failed, and steps values from the output
 def parse_scenarios(output)
   scenarios = output.scan(/(\d+) scenario/).flatten.map(&:to_i).sum
-  passed = output.scan(/(\d+) passed/).flatten.map(&:to_i).sum
+  passed_scenarios = output.scan(/(\d+) scenario \(\d+ passed\)/).flatten.map(&:to_i).sum
   failed = output.scan(/The scenario '.*' failed/).size
-  { scenarios: scenarios, passed: passed, failed: failed }
+  steps = output.scan(/(\d+) steps/).flatten.map(&:to_i).sum
+  { scenarios: scenarios, passed_scenarios: passed_scenarios, failed: failed, steps: steps }
 end
 
 # Main method to execute the script
 def main
   feature_files = read_feature_files('features.txt')
   total_scenarios = 0
-  total_passed = 0
+  total_passed_scenarios = 0
   total_failed = 0
+  total_steps = 0
 
   feature_files.each do |feature_file|
     results = run_cucumber(feature_file)
@@ -46,13 +48,15 @@ def main
     
     parsed_results = parse_scenarios(results[:stdout])
     total_scenarios += parsed_results[:scenarios]
-    total_passed += parsed_results[:passed]
+    total_passed_scenarios += parsed_results[:passed_scenarios]
     total_failed += parsed_results[:failed]
+    total_steps += parsed_results[:steps]
   end
 
   puts "Total Scenarios: #{total_scenarios}"
-  puts "Total Passed: #{total_passed}"
+  puts "Total Passed Scenarios: #{total_passed_scenarios}"
   puts "Total Failed: #{total_failed}"
+  puts "Total Steps: #{total_steps}"
 end
 
 # Execute the main method
