@@ -41,6 +41,7 @@ def main
   total_passed_scenarios = 0
   total_failed = 0
   total_steps = 0
+  failed_files = []
 
   feature_files.each do |feature_file|
     results = run_cucumber(feature_file)
@@ -51,12 +52,21 @@ def main
     total_passed_scenarios += parsed_results[:passed_scenarios]
     total_failed += parsed_results[:failed]
     total_steps += parsed_results[:steps]
+
+    # Add to failed_files if there are any failures
+    failed_files << feature_file if parsed_results[:failed] > 0
   end
 
   puts "Total Scenarios: #{total_scenarios}"
   puts "Total Passed Scenarios: #{total_passed_scenarios}"
   puts "Total Failed: #{total_failed}"
   puts "Total Steps: #{total_steps}"
+
+  # Output the names of the failed feature files
+  unless failed_files.empty?
+    puts "Failed Feature Files:"
+    failed_files.each { |file| puts file }
+  end
 end
 
 # Execute the main method
