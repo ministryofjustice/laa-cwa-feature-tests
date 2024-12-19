@@ -94,7 +94,7 @@ jobs:
       - run:
           name: Set sanitised branch name
           command: |
-            echo 'export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}-${CIRCLE_SHA1}" | sed -r 's/[/_]+/-/g')' >> "$BASH_ENV"
+            echo 'export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}-$(echo ${CIRCLE_SHA1} | cut -c1-7)" | sed -r 's/[/_]+/-/g')' >> "$BASH_ENV"
             source "$BASH_ENV"
       - run:
           name: Debug Docker Tags
