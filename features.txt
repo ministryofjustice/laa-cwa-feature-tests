@@ -1,5 +1,3 @@
-features/validations/legal_help/immigration_and_asylum/duplicate_claims_test/other_codes_except_IMA.feature:8 
-features/validations/legal_help/early_legal_advice/NMS_validation.feature:4
-features/validations/legal_help/early_legal_advice/ela_manual_entry.feature:7 
-features/validations/legal_help/early_legal_advice/ela_manual_entry.feature:15 
-features/validations/legal_help/early_legal_advice/ela_manual_entry.feature:24
+features/pricing/legal_help/education/EDDA.feature:40 
+features/pricing/legal_help/immigration/Illegal_migration_act/IMMA.feature:99 
+features/pricing/legal_help/immigration/additional_payments/additional_payments.feature:19 
