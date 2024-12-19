@@ -31,7 +31,8 @@ def parse_scenarios(output)
   passed_scenarios = output.scan(/(\d+) scenario \(\d+ passed\)/).flatten.map(&:to_i).sum
   failed = output.scan(/The scenario '.*' failed/).size
   steps = output.scan(/(\d+) steps/).flatten.map(&:to_i).sum
-  { scenarios: scenarios, passed_scenarios: passed_scenarios, failed: failed, steps: steps }
+  times = output.scan(/took (\d+\.\d+) seconds to run/).flatten.map(&:to_f)
+  { scenarios: scenarios, passed_scenarios: passed_scenarios, failed: failed, steps: steps, times: times }
 end
 
 # Main method to execute the script
@@ -41,6 +42,9 @@ def main
   total_passed_scenarios = 0
   total_failed = 0
   total_steps = 0
+  total_time = 0.0
+  longest_time = 0.0
+  longest_feature = ""
   failed_files = []
 
   feature_files.each do |feature_file|
@@ -52,6 +56,13 @@ def main
     total_passed_scenarios += parsed_results[:passed_scenarios]
     total_failed += parsed_results[:failed]
     total_steps += parsed_results[:steps]
+    total_time += parsed_results[:times].sum
+
+    # Check for the longest time
+    if parsed_results[:times].max.to_f > longest_time
+      longest_time = parsed_results[:times].max.to_f
+      longest_feature = feature_file
+    end
 
     # Add to failed_files if there are any failures
     failed_files << feature_file if parsed_results[:failed] > 0
@@ -61,6 +72,8 @@ def main
   puts "Total Passed Scenarios: #{total_passed_scenarios}"
   puts "Total Failed: #{total_failed}"
   puts "Total Steps: #{total_steps}"
+  puts "Total Time: #{(total_time / 60).round(2)} minutes"
+  puts "Longest Running Feature: #{longest_feature} took #{longest_time} seconds"
 
   # Output the names of the failed feature files
   unless failed_files.empty?
