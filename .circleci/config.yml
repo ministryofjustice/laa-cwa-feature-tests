@@ -102,6 +102,10 @@ jobs:
             echo "SANITISED_BRANCH_WITH_SHA=${SANITISED_BRANCH_WITH_SHA}"
             echo 'export SANITISED_BRANCH_WITH_SHA' >> "$BASH_ENV"
             source "$BASH_ENV"
+      - run:
+          name: Debug Docker Tags
+          command: |
+            echo "SANITISED_BRANCH_WITH_SHA=${SANITISED_BRANCH_WITH_SHA}"
       - aws-ecr/build-and-push-image:
           push-image: true
           tag: ${SANITISED_BRANCH_WITH_SHA}
