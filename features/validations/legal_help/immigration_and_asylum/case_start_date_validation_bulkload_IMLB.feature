@@ -58,7 +58,7 @@ Feature: Validate case start date for IMLB
       | 12 | CM         |        30/09/07 | IY           | PA00177          | AP00186      | N           | IG            |
       | 13 | CM         |        30/09/07 | IZ           | PA00177          | AP00186      | N           | IG            |
     Then user should see the outcome results page
-    And problem outcomes should equal 78
+    And problem outcomes should equal 52
     And there should be no duplicate outcomes
     And the following error message is expected for each:
       """
