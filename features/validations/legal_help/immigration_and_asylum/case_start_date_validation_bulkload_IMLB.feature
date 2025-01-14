@@ -4,12 +4,12 @@ Feature: Validate case start date for IMLB
     Given a test firm user is logged in CWA
     And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#18"
     Given the following Matter Types are chosen:
-      | IMCB:IEUL |
-      | IMCB:IGOL |
-      | IMCB:IRVL |
-      | IMCB:IFME |
-      | IMCB:IIRC |
-      | IMCB:IFVI |
+      | IMLB:IEUL |
+      | IMLB:IGOL |
+      | IMLB:IRVL |
+      | IMLB:IFME |
+      | IMLB:IIRC |
+      | IMLB:IFVI |
     And the following outcomes are bulkloaded:
       | #  | CLAIM_TYPE | CASE_START_DATE | OUTCOME_CODE | PROCUREMENT_AREA | ACCESS_POINT | IRC_SURGERY | STAGE_REACHED |
       |  1 | CM         |        30/09/07 | IA           | PA00177          | AP00186      | N           | IG            |
@@ -37,11 +37,11 @@ Feature: Validate case start date for IMLB
     Given a test firm user is logged in CWA
     And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#18"
     Given the following Matter Types are chosen:
-      | IMCB:IOTH |
-      | IMCB:IOUT |
-      | IMCB:IILL |
-      | IMCB:IEMP |
-      | IMCB:ICZN |
+      | IMLB:IOTH |
+      | IMLB:IOUT |
+      | IMLB:IILL |
+      | IMLB:IEMP |
+      | IMLB:ICZN |
     And the following outcomes are bulkloaded:
       | #  | CLAIM_TYPE | CASE_START_DATE | OUTCOME_CODE | PROCUREMENT_AREA | ACCESS_POINT | IRC_SURGERY | STAGE_REACHED |
       |  1 | CM         |        30/09/07 | IA           | PA00177          | AP00186      | N           | IG            |
@@ -58,7 +58,7 @@ Feature: Validate case start date for IMLB
       | 12 | CM         |        30/09/07 | IY           | PA00177          | AP00186      | N           | IG            |
       | 13 | CM         |        30/09/07 | IZ           | PA00177          | AP00186      | N           | IG            |
     Then user should see the outcome results page
-    And problem outcomes should equal 52
+    And problem outcomes should equal 65
     And there should be no duplicate outcomes
     And the following error message is expected for each:
       """
