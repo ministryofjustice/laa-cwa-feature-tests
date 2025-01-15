@@ -212,7 +212,7 @@ module CWAProvider
       api_overrides = fetch_submissions_from_api
 
       puts "#{api_overrides.inspect}" if logging
-      merged_submission = merge_submissions(base_submission, api_overrides.first)
+      merged_submission = merge_submissions(base_submission, api_overrides.first.data)
       puts "merged_submission: #{merged_submission.inspect}" if logging
 
       self.locked_id = merged_submission['id']
