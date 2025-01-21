@@ -11,7 +11,9 @@ require_relative 'cwa_provider'
 # Additional setup code
 CWAProvider.set_environment(ENV['TEST_ENV'] || 'dev')
 CWAProvider.set_use_api(ENV['USE_API'] == 'true')
-CWAProvider.set_logging(ENV['CWA_PROVIDER_LOGGING'] == 'true')
+#CWAProvider.set_logging(ENV['CWA_PROVIDER_LOGGING'] == 'true')
+#force logging temporarily
+CWAProvider.set_logging(true)
 CWAProvider.api_url = ENV['API_URL']
 
 Capybara.register_driver :firefox do |app|
