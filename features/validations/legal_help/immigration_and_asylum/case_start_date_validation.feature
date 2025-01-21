@@ -23,11 +23,11 @@ Feature: validate case start date
 
   Scenario Outline: validate case start date for IMMIGRATION
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
-      | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point |
-      |     203 |              | IMLB:IOUT   | IE            |      30/09/2007 | PA00188          | AP00187      |
+      | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery |
+      |     203 |              | IMLB:IOUT   | IE            |      30/09/2007 | PA00177          | AP00186      |          No |
     Then the outcome does not save and gives an error containing:
       """
-      Case Start Date is before 01-Oct-2007
+      The reporting code combination that has been used is not valid. Please amend accordingly.
       """
 
   Scenario Outline: validate case start date for IMMIGRATION
@@ -83,18 +83,18 @@ Feature: validate case start date
 
   Scenario Outline: validate case start date for IMMIGRATION
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
-      | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point |
-      |     210 |              | IMLB:IOUT   | IE            |      02/01/1995 | PA00188          | AP00187      |
+      | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery |
+      |     210 |              | IMLB:IOUT   | IE            |      02/01/1995 | PA00177          | AP00186      |          No |
     Then the outcome does not save and gives an error containing:
       """
-      Case Start Date is before 01-Oct-2007
+      The reporting code combination that has been used is not valid. Please amend accordingly.
       """
 
   Scenario Outline: validate case start date for IMMIGRATION
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
-      | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point |
-      |     211 |              | IMLB:IOUT   | IE            |      31/12/1994 | PA00188          | AP00187      |
+      | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery |
+      |     211 |              | IMLB:IOUT   | IE            |      31/12/1994 | PA00188          | AP00187      |          No |
     Then the outcome does not save and gives an error containing:
       """
-      Case Start Date is before 01-Oct-2007
+      The reporting code combination that has been used is not valid. Please amend accordingly.
       """
