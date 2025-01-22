@@ -17,12 +17,40 @@ end
 
 Then('Submission Search Page displayed') do
   submission_list_page = SubmissionListPage.new
+  puts "Waiting for submissions to be visible"
   submission_list_page.wait_until_submissions_visible(wait: 10)
+  puts "Setting account number: #{CWAProvider.submission.account_number}"
   submission_list_page.account_number.set(CWAProvider.submission.account_number)
+  
+  puts "Waiting for area of law search to be visible"
+  submission_list_page.wait_until_area_of_law_search_visible(wait: 10)
+
+  # Debugging ambiguous match by listing all matching elements
+  puts "Finding all select elements with id 'AreaOfLawSearch'"
+  elements = submission_list_page.all(:xpath, "//select[@id='AreaOfLawSearch']")
+
+  puts "Number of select elements found: #{elements.size}"
+  elements.each_with_index do |element, index|
+    puts "Element #{index}: id=#{element[:id]}, class=#{element[:class]}, name=#{element[:name]}"
+  end
+
+  if elements.size == 1
+    puts "Selecting area of law"
+    elements.first.select(CWAProvider.submission.area_of_law)
+  else
+    puts "Ambiguous match: Multiple elements found"
+    filename = save_page
+    puts "Page saved to #{filename}"
+    save_and_open_page
+  end
+
   submission_list_page.area_of_law_search.select(CWAProvider.submission.area_of_law)
+  puts "Setting submission period: #{CWAProvider.submission.period}"
   submission_list_page.submission_period.set(CWAProvider.submission.period)
 
+  puts "Clicking search button"
   submission_list_page.search_button.click
+  puts "Checking for 'Submission Search' content"
   expect(submission_list_page).to have_content('Submission Search')
 end
 
