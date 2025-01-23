@@ -13,6 +13,8 @@ Given( /^user prepares to submit outcomes for test provider "(.*)"(\s+again)?$/)
 
     submission_list_page = SubmissionListPage.new
     submission_list_page.account_number.set(@submission.account_number)
+    submission_list_page.area_of_law_search.select(@submission.area_of_law)
+    submission_list_page.submission_period.set(@submission.period)
     submission_list_page.search_button.click
 
     submission_list_page.wait_until_submissions_visible(wait: 10)
