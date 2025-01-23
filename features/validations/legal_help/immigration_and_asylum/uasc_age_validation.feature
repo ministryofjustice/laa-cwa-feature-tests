@@ -52,8 +52,8 @@ Feature: Validate age is below 18 for UASC claim field
   Scenario Outline: validate manual IAXC:UASC ASYLUM case where client is under 18 at CSD
   Given user is on their "LEGAL HELP" submission details page
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
-      | case_id | schedule_ref   | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery |  client_date_of_birth |             ucn |
-      |     105 | 0E403L/2013/15 | IAXC:IUAS   |               |        15/11/13 | PA00136          | AP00137      |             |            16/11/1995 | 16111995/T/PERS |
+      | case_id | schedule_ref   | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery |  client_date_of_birth |             ucn |   period |
+      |     105 | 0E403L/2013/15 | IAXC:IUAS   |               |        15/11/13 | PA00136          | AP00137      |             |            16/11/1995 | 16111995/T/PERS | OCT-2020 |
     Then the outcome saves successfully
 
 
@@ -84,7 +84,7 @@ Feature: Validate age is below 18 for UASC claim field
   @bulkload_submission
   Scenario Outline: validate IAXL:UASC ASYLUM case where case start date is = 18 years after client DOB
     Given a test firm user is logged in CWA
-    And user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#26"
+    And user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#13"
     Given the following Matter Types are chosen:
       | IAXL:IUAS |
     And the following outcomes are bulkloaded:
@@ -116,7 +116,7 @@ Feature: Validate age is below 18 for UASC claim field
   @bulkload_submission
   Scenario Outline: validate IAXL:UASC ASYLUM case where case start date is > 18 years after client DOB
     Given a test firm user is logged in CWA
-    And user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#26"
+    And user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#13"
     Given the following Matter Types are chosen:
       | IAXL:IUAS |
     And the following outcomes are bulkloaded:
