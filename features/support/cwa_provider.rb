@@ -98,34 +98,55 @@ module CWAProvider
     # end
 
     def legal_help_submission
-      if @legal_help_submission
+      if @legal_help_submission && !@legal_help_submission.to_h.empty?
         puts "Returning memoized legal_help_submission: #{@legal_help_submission.inspect}" if logging
       else
         puts "Calling submission_for(:legal_help)" if logging
-        @legal_help_submission = OpenStruct.new(submission_for(:legal_help))
-        puts "New legal_help_submission: #{@legal_help_submission.inspect}" if logging
+        result = submission_for(:legal_help)
+        if result.nil?
+          puts "submission_for(:legal_help) returned nil, not creating OpenStruct" if logging
+          @legal_help_submission = nil
+        else
+          puts "submission_for(:legal_help) returned: #{result.inspect}" if logging
+          @legal_help_submission = OpenStruct.new(result)
+          puts "New legal_help_submission: #{@legal_help_submission.inspect}" if logging
+        end
       end
       @legal_help_submission
     end
 
     def mediation_submission
-      if @mediation_submission
+      if @mediation_submission && !@mediation_submission.to_h.empty?
         puts "Returning memoized mediation_submission: #{@mediation_submission.inspect}" if logging
       else
         puts "Calling submission_for(:mediation)" if logging
-        @mediation_submission = OpenStruct.new(submission_for(:mediation))
-        puts "New mediation_submission: #{@mediation_submission.inspect}" if logging
+        result = submission_for(:mediation)
+        if result.nil?
+          puts "submission_for(:mediation) returned nil, not creating OpenStruct" if logging
+          @mediation_submission = nil
+        else
+          puts "submission_for(:mediation) returned: #{result.inspect}" if logging
+          @mediation_submission = OpenStruct.new(result)
+          puts "New mediation_submission: #{@mediation_submission.inspect}" if logging
+        end
       end
       @mediation_submission
     end
     
     def crime_lower_submission
-      if @crime_lower_submission
+      if @crime_lower_submission && !@crime_lower_submission.to_h.empty?
         puts "Returning memoized crime_lower_submission: #{@crime_lower_submission.inspect}" if logging
       else
         puts "Calling submission_for(:crime_lower)" if logging
-        @crime_lower_submission = OpenStruct.new(submission_for(:crime_lower))
-        puts "New crime_lower_submission: #{@crime_lower_submission.inspect}" if logging
+        result = submission_for(:crime_lower)
+        if result.nil?
+          puts "submission_for(:crime_lower) returned nil, not creating OpenStruct" if logging
+          @crime_lower_submission = nil
+        else
+          puts "submission_for(:crime_lower) returned: #{result.inspect}" if logging
+          @crime_lower_submission = OpenStruct.new(result)
+          puts "New crime_lower_submission: #{@crime_lower_submission.inspect}" if logging
+        end
       end
       @crime_lower_submission
     end
