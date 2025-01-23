@@ -85,19 +85,53 @@ module CWAProvider
       fetch_submissions(criteria) || raise("Missing #{ref} test submission")
     end
 
+    # def legal_help_submission
+    #   @legal_help_submission ||= OpenStruct.new(submission_for(:legal_help))
+    # end
+
+    # def mediation_submission
+    #   @mediation_submission ||= OpenStruct.new(submission_for(:mediation))
+    # end
+
+    # def crime_lower_submission
+    #   @crime_lower_submission ||= OpenStruct.new(submission_for(:crime_lower))
+    # end
+
     def legal_help_submission
-      @legal_help_submission ||= OpenStruct.new(submission_for(:legal_help))
+      if @legal_help_submission
+        puts "Returning memoized legal_help_submission: #{@legal_help_submission.inspect}" if logging
+      else
+        puts "Calling submission_for(:legal_help)" if logging
+        @legal_help_submission = OpenStruct.new(submission_for(:legal_help))
+        puts "New legal_help_submission: #{@legal_help_submission.inspect}" if logging
+      end
+      @legal_help_submission
     end
 
     def mediation_submission
-      @mediation_submission ||= OpenStruct.new(submission_for(:mediation))
+      if @mediation_submission
+        puts "Returning memoized mediation_submission: #{@mediation_submission.inspect}" if logging
+      else
+        puts "Calling submission_for(:mediation)" if logging
+        @mediation_submission = OpenStruct.new(submission_for(:mediation))
+        puts "New mediation_submission: #{@mediation_submission.inspect}" if logging
+      end
+      @mediation_submission
     end
-
+    
     def crime_lower_submission
-      @crime_lower_submission ||= OpenStruct.new(submission_for(:crime_lower))
+      if @crime_lower_submission
+        puts "Returning memoized crime_lower_submission: #{@crime_lower_submission.inspect}" if logging
+      else
+        puts "Calling submission_for(:crime_lower)" if logging
+        @crime_lower_submission = OpenStruct.new(submission_for(:crime_lower))
+        puts "New crime_lower_submission: #{@crime_lower_submission.inspect}" if logging
+      end
+      @crime_lower_submission
     end
 
     def submission_for(area_of_law)
+      puts "Inside submission_for method with area_of_law: #{area_of_law}" if logging
       # Ensure submissions are initialized
       submissions
     
