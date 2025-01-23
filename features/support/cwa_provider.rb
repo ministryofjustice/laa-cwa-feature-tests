@@ -53,7 +53,10 @@ module CWAProvider
     end
 
     def submissions
+      puts "Fetching submissions for area_of_law: #{area_of_law}" if logging
       @submissions ||= fetch_submissions(area_of_law: area_of_law)
+      puts "Submissions fetched: #{@submissions.inspect}" if logging
+      @submissions
     end
 
     def submission
@@ -99,7 +102,7 @@ module CWAProvider
       submissions
     
       if submissions.nil? || submissions.empty?
-        puts "No submissions available"
+        puts "No submissions available" if logging
         return nil
       end
     
@@ -188,11 +191,9 @@ module CWAProvider
     end
 
     def fetch_submissions(criteria = {})
+      puts "Fetching submissions with criteria: #{criteria}" if logging
       base_submission = parse_submissions_from_yaml(criteria)
-
-      # if base_submission.to_h.empty?
-      #   raise "Unable to locate provider in the yaml file using #{criteria} for env #{environment}."
-      # end
+      puts "Base submission: #{base_submission.inspect}" if logging
       
       unless should_use_api?
         if base_submission.to_h.empty?
