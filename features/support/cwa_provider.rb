@@ -104,6 +104,8 @@ module CWAProvider
       end
     
       s = submissions
+      puts "Submissions state: #{s.inspect}" if logging
+      puts "Comparing submission area_of_law: #{s['area_of_law'].strip} with #{area_of_law.to_s.upcase.tr('_', ' ').strip}" if logging
       if s['area_of_law'].strip == area_of_law.to_s.upcase.tr('_', ' ').strip
         s
       else
