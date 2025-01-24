@@ -48,6 +48,13 @@ module CWAProvider
   
     attr_accessor *ATTRIBUTES
 
+    def area_of_law=(new_area_of_law)
+      if @area_of_law != new_area_of_law
+        @area_of_law = new_area_of_law
+        @submissions = nil # Clear cached submissions
+      end
+    end
+
     def url
       config['url']
     end
@@ -60,7 +67,6 @@ module CWAProvider
     end
 
     def submission
-      
       case area_of_law
       when CRIME_LOWER
         puts "Fetching crime_lower_submission" if logging
