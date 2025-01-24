@@ -50,8 +50,10 @@ module CWAProvider
 
     def area_of_law=(new_area_of_law)
       if @area_of_law != new_area_of_law
+        puts "Changing area_of_law from #{@area_of_law} to #{new_area_of_law}" if logging
         @area_of_law = new_area_of_law
         @submissions = nil # Clear cached submissions
+        puts "Cleared cached submissions" if logging
       end
     end
 
@@ -91,18 +93,6 @@ module CWAProvider
       puts "criteria: #{criteria}" if logging
       fetch_submissions(criteria) || raise("Missing #{ref} test submission")
     end
-
-    # def legal_help_submission
-    #   @legal_help_submission ||= OpenStruct.new(submission_for(:legal_help))
-    # end
-
-    # def mediation_submission
-    #   @mediation_submission ||= OpenStruct.new(submission_for(:mediation))
-    # end
-
-    # def crime_lower_submission
-    #   @crime_lower_submission ||= OpenStruct.new(submission_for(:crime_lower))
-    # end
 
     def legal_help_submission
       if @legal_help_submission && !@legal_help_submission.to_h.empty?
