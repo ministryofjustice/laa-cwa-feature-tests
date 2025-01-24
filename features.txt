@@ -1,3 +1,3 @@
-features/pricing/legal_help/education/EDDA.feature:40 
-features/pricing/legal_help/immigration/Illegal_migration_act/IMMA.feature:99 
-features/pricing/legal_help/immigration/additional_payments/additional_payments.feature:19 
+features/pricing/legal_help/early_legal_advice/early_legal_advice.feature:3
+features/pricing/legal_help/discrimination/QEQP.feature:63
+features/pricing/legal_help/early_legal_advice/early_legal_advice.feature:3
