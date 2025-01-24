@@ -18,7 +18,7 @@ spec:
       value: {{ .Values.global.test_env }}
     resources:
       requests:
-        cpu: 1000m
+        cpu: 1500m
         memory: 8192Mi
       limits:
         cpu: 4000m

@@ -53,7 +53,10 @@ module CWAProvider
     end
 
     def submissions
+      puts "Fetching submissions for area_of_law: #{area_of_law}" if logging
       @submissions ||= fetch_submissions(area_of_law: area_of_law)
+      puts "Submissions fetched: #{@submissions.inspect}" if logging
+      @submissions
     end
 
     def submission
@@ -82,28 +85,85 @@ module CWAProvider
       fetch_submissions(criteria) || raise("Missing #{ref} test submission")
     end
 
+    # def legal_help_submission
+    #   @legal_help_submission ||= OpenStruct.new(submission_for(:legal_help))
+    # end
+
+    # def mediation_submission
+    #   @mediation_submission ||= OpenStruct.new(submission_for(:mediation))
+    # end
+
+    # def crime_lower_submission
+    #   @crime_lower_submission ||= OpenStruct.new(submission_for(:crime_lower))
+    # end
+
     def legal_help_submission
-      @legal_help_submission ||= OpenStruct.new(submission_for(:legal_help))
+      if @legal_help_submission && !@legal_help_submission.to_h.empty?
+        puts "Returning memoized legal_help_submission: #{@legal_help_submission.inspect}" if logging
+      else
+        puts "Calling submission_for(:legal_help)" if logging
+        result = submission_for(:legal_help)
+        if result.nil?
+          puts "submission_for(:legal_help) returned nil, not creating OpenStruct" if logging
+          @legal_help_submission = nil
+        else
+          puts "submission_for(:legal_help) returned: #{result.inspect}" if logging
+          @legal_help_submission = OpenStruct.new(result)
+          puts "New legal_help_submission: #{@legal_help_submission.inspect}" if logging
+        end
+      end
+      @legal_help_submission
     end
 
     def mediation_submission
-      @mediation_submission ||= OpenStruct.new(submission_for(:mediation))
+      if @mediation_submission && !@mediation_submission.to_h.empty?
+        puts "Returning memoized mediation_submission: #{@mediation_submission.inspect}" if logging
+      else
+        puts "Calling submission_for(:mediation)" if logging
+        result = submission_for(:mediation)
+        if result.nil?
+          puts "submission_for(:mediation) returned nil, not creating OpenStruct" if logging
+          @mediation_submission = nil
+        else
+          puts "submission_for(:mediation) returned: #{result.inspect}" if logging
+          @mediation_submission = OpenStruct.new(result)
+          puts "New mediation_submission: #{@mediation_submission.inspect}" if logging
+        end
+      end
+      @mediation_submission
     end
-
+    
     def crime_lower_submission
-      @crime_lower_submission ||= OpenStruct.new(submission_for(:crime_lower))
+      if @crime_lower_submission && !@crime_lower_submission.to_h.empty?
+        puts "Returning memoized crime_lower_submission: #{@crime_lower_submission.inspect}" if logging
+      else
+        puts "Calling submission_for(:crime_lower)" if logging
+        result = submission_for(:crime_lower)
+        if result.nil?
+          puts "submission_for(:crime_lower) returned nil, not creating OpenStruct" if logging
+          @crime_lower_submission = nil
+        else
+          puts "submission_for(:crime_lower) returned: #{result.inspect}" if logging
+          @crime_lower_submission = OpenStruct.new(result)
+          puts "New crime_lower_submission: #{@crime_lower_submission.inspect}" if logging
+        end
+      end
+      @crime_lower_submission
     end
 
     def submission_for(area_of_law)
+      puts "Inside submission_for method with area_of_law: #{area_of_law}" if logging
       # Ensure submissions are initialized
       submissions
     
       if submissions.nil? || submissions.empty?
-        puts "No submissions available"
+        puts "No submissions available" if logging
         return nil
       end
     
       s = submissions
+      puts "Submissions state: #{s.inspect}" if logging
+      puts "Comparing submission area_of_law: #{s['area_of_law'].strip} with #{area_of_law.to_s.upcase.tr('_', ' ').strip}" if logging
       if s['area_of_law'].strip == area_of_law.to_s.upcase.tr('_', ' ').strip
         s
       else
@@ -186,11 +246,9 @@ module CWAProvider
     end
 
     def fetch_submissions(criteria = {})
+      puts "Fetching submissions with criteria: #{criteria}" if logging
       base_submission = parse_submissions_from_yaml(criteria)
-
-      # if base_submission.to_h.empty?
-      #   raise "Unable to locate provider in the yaml file using #{criteria} for env #{environment}."
-      # end
+      puts "Base submission: #{base_submission.inspect}" if logging
       
       unless should_use_api?
         if base_submission.to_h.empty?
@@ -212,7 +270,7 @@ module CWAProvider
       api_overrides = fetch_submissions_from_api
 
       puts "#{api_overrides.inspect}" if logging
-      merged_submission = merge_submissions(base_submission, api_overrides.first)
+      merged_submission = merge_submissions(base_submission, api_overrides.first.data)
       puts "merged_submission: #{merged_submission.inspect}" if logging
 
       self.locked_id = merged_submission['id']
