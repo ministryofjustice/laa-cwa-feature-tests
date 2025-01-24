@@ -53,6 +53,7 @@ module CWAProvider
     end
 
     def submissions
+      
       puts "Fetching submissions for area_of_law: #{area_of_law}" if logging
       @submissions ||= fetch_submissions(area_of_law: area_of_law)
       puts "Submissions fetched: #{@submissions.inspect}" if logging
