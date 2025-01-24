@@ -60,6 +60,7 @@ module CWAProvider
     end
 
     def submission
+      
       case area_of_law
       when CRIME_LOWER
         puts "Fetching crime_lower_submission" if logging
