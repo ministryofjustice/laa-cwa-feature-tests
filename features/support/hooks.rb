@@ -3,11 +3,6 @@
 require_relative '../pages/outcome_page.rb'
 include OutcomePage
 
-# Before hooks
-#Before('@start_timer') do
-#  @feature_start_time = Time.now
-#end
-
 Before do
   @start_time = Time.now
   acknowledge_certificate if ENV['TEST_ENV'] == 'uat' && !defined?($acknowledged_cert)
@@ -35,12 +30,6 @@ Before('@delete_outcome_before') do
   delete_all_outcomes
   logout_from_cwa_and_portal
 end
-
-# After hooks
-#After('@start_timer') do
-#  duration = Time.now - @feature_start_time
-#  puts "The feature took #{duration.round(2)} seconds to run."
-#end
 
 After('@delete_outcome_after') do |scenario|
   if scenario.passed?
