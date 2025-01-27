@@ -20,6 +20,6 @@ Feature: validate case start date
 
   Scenario Outline: validate case start date for HOUSING
     When user adds outcomes for "Legal Help" "Housing" with fields like this:
-      | case_id | schedule_ref   | matter_type | stage_reached | case_start_date | procurement_area | access_point |
-      |     214 | 0J180R/2013/18 | HANT:HHAC   | HA            |      25/02/2024 | PA00007          | AP00000      |
+      | case_id | matter_type | stage_reached | case_start_date | procurement_area | access_point |
+      |     214 | HANT:HHAC   | HA            |      25/02/2024 | PA00007          | AP00000      |
     Then the outcome saves successfully

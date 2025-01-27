@@ -4,3 +4,4 @@ Brewfile.lock.json
 features_report.html
 cucumber_web_report.html
 error_messages.csv
+reports/cucumber_report.html
