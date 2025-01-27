@@ -21,18 +21,18 @@ Then('Submission Search Page displayed') do
   submission_list_page.wait_until_submissions_visible(wait: 10)
   #puts "Setting account number: #{CWAProvider.submission.account_number}"
   submission_list_page.account_number.set(CWAProvider.submission.account_number)
-  
+
   #puts "Waiting for area of law search to be visible"
   submission_list_page.wait_until_area_of_law_search_visible(wait: 10)
 
   # Debugging ambiguous match by listing all matching elements
   #puts "Finding all select elements with id 'AreaOfLawSearch'"
-  #elements = submission_list_page.all(:xpath, "//select[@id='AreaOfLawSearch']")
+  elements = submission_list_page.all(:xpath, "//select[@id='AreaOfLawSearch']")
 
   #puts "Number of select elements found: #{elements.size}"
-  #elements.each_with_index do |element, index|
+  elements.each_with_index do |element, index|
   #  puts "Element #{index}: id=#{element[:id]}, class=#{element[:class]}, name=#{element[:name]}"
-  #end
+  end
 
   if elements.size == 1
     #puts "Selecting area of law"
