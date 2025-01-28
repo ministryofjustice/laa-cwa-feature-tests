@@ -78,6 +78,7 @@ jobs:
             helm install --generate-name ./charts/cwa-tests \
             -f charts/cwa-tests/Values.yaml \
             --set ecr.image.tag=${SANITISED_BRANCH_WITH_SHA} \
+            --set redisSetup.image.tag=redis-setup-${SANITISED_BRANCH_WITH_SHA} \
             --wait --timeout 300s
             export POD_NAME=$(helm list -q | tail -1)
             kubectl logs -f ${POD_NAME}

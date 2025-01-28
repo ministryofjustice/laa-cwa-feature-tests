@@ -12,7 +12,7 @@ spec:
   serviceAccountName: {{ .Values.global.serviceAccount }}
   initContainers:
     - name: setup
-      image: {{ .Values.ecr.image.registryAddress }}/{{ .Values.ecr.image.regPath }}:{{ .Values.ecr.image.tag }}
+      image: {{ .Values.ecr.image.registryAddress }}/{{ .Values.ecr.image.regPath }}:{{ .Values.redisSetup.image.tag }}
       env:
       - name: COMMIT_SHA
         value: "{{ .Values.global.commit_sha }}"

@@ -3,7 +3,7 @@ global:
   costcentre: LAA
   namespace: "laa-cwa-test"
   serviceAccount: "sa-laa-cwa-test"
-  commit_sha: "your-commit-sha"
+  commit_sha: ${SHORT_SHA1}
   browser: chrome
   test_env: tst
 
@@ -13,3 +13,7 @@ ecr:
     regPath: laa-pcuam/laa-cwa-test-ecr
     tag: batches-latest
     pullPolicy: Always
+
+redisSetup:
+  image:
+    tag: redis-setup-${SANITISED_BRANCH}
