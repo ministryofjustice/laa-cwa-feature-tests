@@ -42,7 +42,6 @@ jobs:
               echo 'export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}-$(echo ${CIRCLE_SHA1} | cut -c1-7)" | sed -r 's/[/_]+/-/g')' >> "$BASH_ENV"
               source "$BASH_ENV"
         - aws-ecr/build-and-push-image:
-            name: Tag And Push Image
             push-image: true
             tag: ${SANITISED_BRANCH}
             region: ${ECR_REGION}
