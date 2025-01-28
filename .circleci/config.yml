@@ -51,6 +51,9 @@ jobs:
               echo "export SKIP_BUILD=false" >> "$BASH_ENV"
             fi
             source "$BASH_ENV"
+      - run:
+          name: Save environment variables
+          command: cp $BASH_ENV bash.env
       - persist_to_workspace:
           root: .
           paths:
@@ -61,6 +64,9 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - run:
+          name: Load environment variables
+          command: source bash.env
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
