@@ -11,7 +11,7 @@ USER appuser
 WORKDIR /app
 
 # Copy the script into the container
-COPY scripts/setup.rb /app/setup.rb
+COPY docker/scripts/setup.rb /app/setup.rb
 
 # Set the entrypoint to run the script
 ENTRYPOINT ["ruby", "/app/setup.rb"]
