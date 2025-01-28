@@ -159,8 +159,7 @@ jobs:
   Build_and_Push_Docker_Image:
     executor: build-executor
     steps:
-      - attach_workspace:
-          at: .
+      - checkout
       - run:
           name: Install git-crypt
           command: |
