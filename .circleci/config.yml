@@ -43,7 +43,7 @@ jobs:
               source "$BASH_ENV"
         - aws-ecr/build-and-push-image:
             push-image: true
-            tag: ${SANITISED_BRANCH}
+            tag: redis-setup-${SANITISED_BRANCH}
             region: ${ECR_REGION}
             repo: ${ECR_REPOSITORY}
 
