@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis-setup
+  labels:
+    app: redis-setup
+    app.kubernetes.io/managed-by: Helm
+    meta.helm.sh/release-name: {{ .Chart.Name }}
+    meta.helm.sh/release-namespace: {{ .Values.global.namespace }}
+spec:
+  initContainers:
+    - name: setup
+      image: {{ .Values.ecr.image.registryAddress }}/{{ .Values.ecr.image.regPath }}:{{ .Values.ecr.image.tag }}
+      env:
+        - name: COMMIT_SHA
+          value: "{{ .Values.global.commit_sha }}"
+  containers:
+    - name: wait-for-redis
+      image: busybox
+      command: ["sh", "-c", "while true; do sleep 3600; done"]

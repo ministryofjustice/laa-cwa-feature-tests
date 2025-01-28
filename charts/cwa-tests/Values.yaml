@@ -3,6 +3,7 @@ global:
   costcentre: LAA
   namespace: "laa-cwa-test"
   serviceAccount: "sa-laa-cwa-test"
+  commit_sha: "your-commit-sha"
   browser: chrome
   test_env: tst
 
