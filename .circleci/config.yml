@@ -1,5 +1,10 @@
 version: 2.1
 
+parameters:
+  skip_build:
+    type: boolean
+    default: false
+
 orbs:
   aws-cli: circleci/aws-cli@4.0.0
   aws-ecr: circleci/aws-ecr@8.2.1
@@ -19,12 +24,10 @@ executors:
       - image: ministryofjustice/cloud-platform-tools
 
 jobs:
-  Build_and_Push_Redis_Setup_Docker_Image:
+  Check_Redis_Setup_Docker_Image:
     executor: build-executor
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
       - run:
           name: Calculate checksums
           command: |
@@ -42,38 +45,38 @@ jobs:
             IMAGE_EXISTS=$(aws ecr describe-images --repository-name ${ECR_REPOSITORY} --image-ids imageTag=${IMAGE_TAG} --region ${ECR_REGION} 2>&1 || true)
             if echo "$IMAGE_EXISTS" | grep -q 'imageTag'; then
               echo "Image ${IMAGE_TAG} already exists in ECR. Skipping build."
-              echo "export SKIP_BUILD=true" >> "$BASH_ENV"
+              exit 1  # Fail the job intentionally if the image exists
             else
               echo "Image ${IMAGE_TAG} does not exist in ECR. Proceeding with build."
             fi
-          environment:
-            SKIP_BUILD: false
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  Build_and_Push_Redis_Setup_Docker_Image:
+    executor: build-executor
+    steps:
+      - attach_workspace:
+          at: .
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
           name: Build Docker image
           command: |
-            if [ "$SKIP_BUILD" != "true" ]; then
-              docker build -t redis-setup:latest -f docker/Dockerfile .
-            else
-              echo "Skipping build"
-            fi
+            docker build -t redis-setup:latest -f docker/Dockerfile .
       - run:
           name: Tag Docker image
           command: |
-            if [ "$SKIP_BUILD" != "true" ]; then
-              docker tag redis-setup:latest ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_TAG}
-            else
-              echo "Skipping tag"
-            fi
+            docker tag redis-setup:latest ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_TAG}
       - run:
           name: Login to ECR
           command: |
             aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
-      - aws-ecr/build-and-push-image:
-          push-image: true
-          tag: ${IMAGE_TAG}
-          region: ${ECR_REGION}
-          repo: ${ECR_REPOSITORY}
-          when: not << pipeline.parameters.SKIP_BUILD >>
+      - run:
+          name: Push Docker image
+          command: |
+            docker push ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_TAG}
 
   Deploy_tests_on_cloud_platform:
     executor: deploy-executor
@@ -185,7 +188,10 @@ workflows:
   version: 2
   build_and_push:
     jobs:
-      - Build_and_Push_Redis_Setup_Docker_Image
+      - Check_Redis_Setup_Docker_Image
+      - Build_and_Push_Redis_Setup_Docker_Image:
+          requires:
+            - Check_Redis_Setup_Docker_Image
       - Build_and_Push_Docker_Image
       - Notify_Slack_For_Approval:
           requires:
