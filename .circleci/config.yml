@@ -50,6 +50,7 @@ jobs:
               echo "Image ${IMAGE_TAG} does not exist in ECR. Proceeding with build."
               echo "export SKIP_BUILD=false" >> "$BASH_ENV"
             fi
+            source "$BASH_ENV"
       - persist_to_workspace:
           root: .
           paths:
