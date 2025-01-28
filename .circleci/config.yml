@@ -35,7 +35,6 @@ jobs:
             SETUP_SCRIPT_CHECKSUM=$(sha1sum docker/scripts/setup.rb | awk '{ print $1 }')
             IMAGE_TAG="redis-setup-${DOCKERFILE_CHECKSUM}-${SETUP_SCRIPT_CHECKSUM}"
             echo "export IMAGE_TAG=${IMAGE_TAG}" >> "$BASH_ENV"
-            source "$BASH_ENV"
       - aws-cli/setup:
           role_arn: $ECR_ROLE_TO_ASSUME
           region: $ECR_REGION
@@ -50,7 +49,6 @@ jobs:
               echo "Image ${IMAGE_TAG} does not exist in ECR. Proceeding with build."
               echo "export SKIP_BUILD=false" >> "$BASH_ENV"
             fi
-            source "$BASH_ENV"
       - run:
           name: Save environment variables
           command: cp $BASH_ENV bash.env
@@ -66,7 +64,11 @@ jobs:
           at: .
       - run:
           name: Load environment variables
-          command: source bash.env
+          command: |
+            cat bash.env >> $BASH_ENV
+      - run: |
+          # verify; this should print 'true' or 'false'
+          printenv SKIP_BUILD
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
