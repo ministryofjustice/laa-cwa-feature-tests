@@ -52,8 +52,8 @@ Feature: Validate age is below 18 for UASC claim field
   Scenario Outline: validate manual IAXC:UASC ASYLUM case where client is under 18 at CSD
   Given user is on their "LEGAL HELP" submission details page
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
-      | case_id | schedule_ref   | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery |  client_date_of_birth |             ucn |   period |
-      |     105 | 0E403L/2013/15 | IAXC:IUAS   |               |        15/11/13 | PA00136          | AP00137      |             |            16/11/1995 | 16111995/T/PERS | OCT-2020 |
+      | case_id | matter_type | case_start_date | procurement_area | access_point | irc_surgery |  client_date_of_birth |             ucn |
+      |     105 | IAXC:IUAS   |        15/11/13 | PA00136          | AP00137      |             |            16/11/1995 | 16111995/T/PERS |
     Then the outcome saves successfully
 
 
@@ -61,8 +61,8 @@ Feature: Validate age is below 18 for UASC claim field
   Scenario Outline: validate manual IAXL:UASC ASYLUM case where client is under 18 at CSD
   Given user is on their "LEGAL HELP" submission details page
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
-      | case_id | schedule_ref   | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery |  client_date_of_birth |             ucn |
-      |     106 | 0E403L/2013/15 | IAXL:IUAS   |               |        15/11/13 | PA00136          | AP00137      |             |            16/11/1995 | 16111995/T/PERS |
+      | case_id | matter_type | case_start_date | procurement_area | access_point | irc_surgery |  client_date_of_birth |             ucn |
+      |     106 | IAXL:IUAS   |        15/11/13 | PA00136          | AP00137      |             |            16/11/1995 | 16111995/T/PERS |
     Then the outcome saves successfully
 
 
