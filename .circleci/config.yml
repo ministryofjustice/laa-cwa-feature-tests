@@ -20,32 +20,49 @@ executors:
 
 jobs:
   Build_and_Push_Redis_Setup_Docker_Image:
-      executor: build-executor
-      steps:
-        - checkout
-        - setup_remote_docker:
-            docker_layer_caching: true
-        - run:
-            name: Build Docker image
-            command: |
-              docker build -t redis-setup:latest -f docker/Dockerfile .
-        - aws-cli/setup:
-            role_arn: $ECR_ROLE_TO_ASSUME
-            region: $ECR_REGION
-        - run:
-            name: Login to ECR
-            command: |
-              aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
-        - run:
-            name: Set sanitised branch name
-            command: |
-              echo 'export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}-$(echo ${CIRCLE_SHA1} | cut -c1-7)" | sed -r 's/[/_]+/-/g')' >> "$BASH_ENV"
-              source "$BASH_ENV"
-        - aws-ecr/build-and-push-image:
-            push-image: true
-            tag: redis-setup-${SANITISED_BRANCH}
-            region: ${ECR_REGION}
-            repo: ${ECR_REPOSITORY}
+    executor: build-executor
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Calculate checksums
+          command: |
+            DOCKERFILE_CHECKSUM=$(sha1sum docker/Dockerfile | awk '{ print $1 }')
+            SETUP_SCRIPT_CHECKSUM=$(sha1sum scripts/setup.rb | awk '{ print $1 }')
+            IMAGE_TAG="redis-setup-${DOCKERFILE_CHECKSUM}-${SETUP_SCRIPT_CHECKSUM}"
+            echo "export IMAGE_TAG=${IMAGE_TAG}" >> "$BASH_ENV"
+            source "$BASH_ENV"
+      - aws-cli/setup:
+          role_arn: $ECR_ROLE_TO_ASSUME
+          region: $ECR_REGION
+      - run:
+          name: Check if Docker image exists in ECR
+          command: |
+            IMAGE_EXISTS=$(aws ecr describe-images --repository-name ${ECR_REPOSITORY} --image-ids imageTag=${IMAGE_TAG} --region ${ECR_REGION} 2>&1 || true)
+            if echo "$IMAGE_EXISTS" | grep -q 'imageTag'; then
+              echo "Image ${IMAGE_TAG} already exists in ECR. Skipping build."
+              exit 0
+            else
+              echo "Image ${IMAGE_TAG} does not exist in ECR. Proceeding with build."
+            fi
+      - run:
+          name: Build Docker image
+          command: |
+            docker build -t redis-setup:latest -f docker/Dockerfile .
+      - run:
+          name: Tag Docker image
+          command: |
+            docker tag redis-setup:latest ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_TAG}
+      - run:
+          name: Login to ECR
+          command: |
+            aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+      - aws-ecr/build-and-push-image:
+          push-image: true
+          tag: ${IMAGE_TAG}
+          region: ${ECR_REGION}
+          repo: ${ECR_REPOSITORY}
 
   Deploy_tests_on_cloud_platform:
     executor: deploy-executor
