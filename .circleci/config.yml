@@ -17,8 +17,34 @@ executors:
     resource_class: small
     docker:
       - image: ministryofjustice/cloud-platform-tools
+  docker-executor:
+    docker:
+      - image: circleci/python:3.8
 
 jobs:
+  Build_and_Push_Redis_Setup_Docker_Image:
+      executor: docker-executor
+      steps:
+        - checkout
+        - setup_remote_docker:
+            version: 20.10.7
+        - run:
+            name: Build Docker image
+            command: |
+              docker build -t redis-setup:latest -f docker/Dockerfile .
+        - run:
+            name: Login to ECR
+            command: |
+              aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+        - run:
+            name: Tag Docker image
+            command: |
+              docker tag redis-setup:latest ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/redis-setup:latest
+        - run:
+            name: Push Docker image to ECR
+            command: |
+              docker push ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/redis-setup:latest
+              
   Deploy_tests_on_cloud_platform:
     executor: deploy-executor
     parameters:
@@ -128,6 +154,7 @@ workflows:
   version: 2
   build_and_push:
     jobs:
+      - Build_and_Push_Redis_Setup_Docker_Image
       - Build_and_Push_Docker_Image
       - Notify_Slack_For_Approval:
           requires:
