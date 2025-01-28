@@ -29,7 +29,7 @@ jobs:
           name: Calculate checksums
           command: |
             DOCKERFILE_CHECKSUM=$(sha1sum docker/Dockerfile | awk '{ print $1 }')
-            SETUP_SCRIPT_CHECKSUM=$(sha1sum scripts/setup.rb | awk '{ print $1 }')
+            SETUP_SCRIPT_CHECKSUM=$(sha1sum docker/scripts/setup.rb | awk '{ print $1 }')
             IMAGE_TAG="redis-setup-${DOCKERFILE_CHECKSUM}-${SETUP_SCRIPT_CHECKSUM}"
             echo "export IMAGE_TAG=${IMAGE_TAG}" >> "$BASH_ENV"
             source "$BASH_ENV"
