@@ -13,5 +13,11 @@ WORKDIR /app
 # Copy the script into the container
 COPY docker/scripts/setup.rb /app/setup.rb
 
+# Define build argument
+ARG COMMIT_SHA
+
+# Set environment variable
+ENV COMMIT_SHA=${COMMIT_SHA}
+
 # Set the entrypoint to run the script
 ENTRYPOINT ["ruby", "/app/setup.rb"]

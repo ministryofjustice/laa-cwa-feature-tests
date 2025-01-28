@@ -28,7 +28,7 @@ jobs:
         - run:
             name: Build Docker image
             command: |
-              docker build -t redis-setup:latest -f docker/Dockerfile .
+              docker build --build-arg COMMIT_SHA=${CIRCLE_SHA1} -t redis-setup:latest -f docker/Dockerfile .
         - aws-cli/setup:
             role_arn: $ECR_ROLE_TO_ASSUME
             region: $ECR_REGION
@@ -37,14 +37,17 @@ jobs:
             command: |
               aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
         - run:
-            name: Tag Docker image
+            name: Set sanitised branch name
             command: |
-              docker tag redis-setup:latest ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/redis-setup:latest
-        - run:
-            name: Push Docker image to ECR
-            command: |
-              docker push ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/redis-setup:latest
-              
+              echo 'export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}-$(echo ${CIRCLE_SHA1} | cut -c1-7)" | sed -r 's/[/_]+/-/g')' >> "$BASH_ENV"
+              source "$BASH_ENV"
+        - aws-ecr/build-and-push-image:
+            name: Tag And Push Image
+            push-image: true
+            tag: ${SANITISED_BRANCH}
+            region: ${ECR_REGION}
+            repo: ${ECR_REPOSITORY}
+
   Deploy_tests_on_cloud_platform:
     executor: deploy-executor
     parameters:
