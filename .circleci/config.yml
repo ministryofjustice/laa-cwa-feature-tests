@@ -17,20 +17,21 @@ executors:
     resource_class: small
     docker:
       - image: ministryofjustice/cloud-platform-tools
-  docker-executor:
-    docker:
-      - image: circleci/python:3.8
 
 jobs:
   Build_and_Push_Redis_Setup_Docker_Image:
-      executor: docker-executor
+      executor: build-executor
       steps:
         - checkout
-        - setup_remote_docker
+        - setup_remote_docker:
+            docker_layer_caching: true
         - run:
             name: Build Docker image
             command: |
               docker build -t redis-setup:latest -f docker/Dockerfile .
+        - aws-cli/setup:
+            role_arn: $ECR_ROLE_TO_ASSUME
+            region: $ECR_REGION
         - run:
             name: Login to ECR
             command: |
