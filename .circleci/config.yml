@@ -45,9 +45,10 @@ jobs:
             IMAGE_EXISTS=$(aws ecr describe-images --repository-name ${ECR_REPOSITORY} --image-ids imageTag=${IMAGE_TAG} --region ${ECR_REGION} 2>&1 || true)
             if echo "$IMAGE_EXISTS" | grep -q 'imageTag'; then
               echo "Image ${IMAGE_TAG} already exists in ECR. Skipping build."
-              exit 1  # Fail the job intentionally if the image exists
+              echo "export SKIP_BUILD=true" >> "$BASH_ENV"
             else
               echo "Image ${IMAGE_TAG} does not exist in ECR. Proceeding with build."
+              echo "export SKIP_BUILD=false" >> "$BASH_ENV"
             fi
       - persist_to_workspace:
           root: .
@@ -64,19 +65,35 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            docker build -t redis-setup:latest -f docker/Dockerfile .
+            if [ "$SKIP_BUILD" != "true" ]; then
+              docker build -t redis-setup:latest -f docker/Dockerfile .
+            else
+              echo "Skipping build"
+            fi
       - run:
           name: Tag Docker image
           command: |
-            docker tag redis-setup:latest ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_TAG}
+            if [ "$SKIP_BUILD" != "true" ]; then
+              docker tag redis-setup:latest ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_TAG}
+            else
+              echo "Skipping tag"
+            fi
       - run:
           name: Login to ECR
           command: |
-            aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+            if [ "$SKIP_BUILD" != "true" ]; then
+              aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+            else
+              echo "Skipping ECR login"
+            fi
       - run:
           name: Push Docker image
           command: |
-            docker push ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_TAG}
+            if [ "$SKIP_BUILD" != "true" ]; then
+              docker push ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_TAG}
+            else
+              echo "Skipping push"
+            fi
 
   Deploy_tests_on_cloud_platform:
     executor: deploy-executor
@@ -175,6 +192,7 @@ jobs:
           event: always
           mentions: '@pcuam-devs'
           template: basic_on_hold_1
+  
   Notify_Slack_For_Success:
     executor: deploy-executor
     steps:
