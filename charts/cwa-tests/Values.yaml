@@ -17,3 +17,13 @@ ecr:
 redisSetup:
   image:
     tag: redis-setup-${SANITISED_BRANCH}
+
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+  capabilities:
+    drop:
+      - "ALL"
+  seccompProfile:
+    type: RuntimeDefault

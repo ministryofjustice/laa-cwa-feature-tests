@@ -18,9 +18,9 @@ spec:
         app: redis
     spec:
       securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
+        runAsUser: {{ .Values.securityContext.runAsUser }}
+        runAsGroup: {{ .Values.securityContext.runAsGroup }}
+        fsGroup: {{ .Values.securityContext.fsGroup }}
       serviceAccountName: {{ .Values.global.serviceAccount }}
       containers:
         - name: redis
@@ -30,6 +30,10 @@ spec:
           securityContext:
             runAsNonRoot: true
             allowPrivilegeEscalation: false
+            capabilities:
+              drop: {{ toYaml .Values.securityContext.capabilities.drop | nindent 10 }}
+            seccompProfile:
+              type: {{ .Values.securityContext.seccompProfile.type }}
           resources:
             requests:
               cpu: 500m
