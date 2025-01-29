@@ -16,7 +16,7 @@ spec:
   fsGroup: {{ .Values.securityContext.fsGroup }}
   initContainers:
     - name: setup
-      image: {{ .Values.ecr.image.registryAddress }}/{{ .Values.ecr.image.regPath }}:{{ .Values.redisSetup.image.tag }}
+      image: {{ .Values.global.registryAddress }}/{{ .Values.global.regPath }}:{{ .Values.redisSetup.image.tag }}
       securityContext:
         runAsNonRoot: true
         allowPrivilegeEscalation: false
@@ -26,7 +26,7 @@ spec:
           type: {{ .Values.securityContext.seccompProfile.type }}
       env:
       - name: COMMIT_SHA
-        value: "{{ .Values.global.commit_sha }}"
+        value: "{{ .Values.global.circle_sha1 }}"
   containers:
     - name: wait-for-redis
       image: busybox

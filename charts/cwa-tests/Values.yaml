@@ -3,9 +3,11 @@ global:
   costcentre: LAA
   namespace: "laa-cwa-test"
   serviceAccount: "sa-laa-cwa-test"
-  commit_sha: ${SHORT_SHA1}
+  circle_sha1: ${CIRCLE_SHA1}
   browser: chrome
   test_env: tst
+  registryAddress: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.eu-west-2.amazonaws.com
+  regPath: laa-pcuam/laa-cwa-test-ecr
 
 ecr:
   image:
@@ -16,7 +18,7 @@ ecr:
 
 redisSetup:
   image:
-    tag: redis-setup-${SANITISED_BRANCH}
+    tag: ${REDIS_SETUP_IMAGE_TAG}
 
 securityContext:
   runAsUser: 1000

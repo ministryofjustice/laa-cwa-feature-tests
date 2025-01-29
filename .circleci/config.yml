@@ -33,20 +33,20 @@ jobs:
           command: |
             DOCKERFILE_CHECKSUM=$(sha1sum docker/Dockerfile | awk '{ print $1 }')
             SETUP_SCRIPT_CHECKSUM=$(sha1sum docker/scripts/setup.rb | awk '{ print $1 }')
-            IMAGE_TAG="redis-setup-${DOCKERFILE_CHECKSUM}-${SETUP_SCRIPT_CHECKSUM}"
-            echo "export IMAGE_TAG=${IMAGE_TAG}" >> "$BASH_ENV"
+            REDIS_SETUP_IMAGE_TAG="redis-setup-${DOCKERFILE_CHECKSUM}-${SETUP_SCRIPT_CHECKSUM}"
+            echo "export REDIS_SETUP_IMAGE_TAG=${REDIS_SETUP_IMAGE_TAG}" >> "$BASH_ENV"
       - aws-cli/setup:
           role_arn: $ECR_ROLE_TO_ASSUME
           region: $ECR_REGION
       - run:
           name: Check if Docker image exists in ECR
           command: |
-            IMAGE_EXISTS=$(aws ecr describe-images --repository-name ${ECR_REPOSITORY} --image-ids imageTag=${IMAGE_TAG} --region ${ECR_REGION} 2>&1 || true)
+            IMAGE_EXISTS=$(aws ecr describe-images --repository-name ${ECR_REPOSITORY} --image-ids imageTag=${REDIS_SETUP_IMAGE_TAG} --region ${ECR_REGION} 2>&1 || true)
             if echo "$IMAGE_EXISTS" | grep -q 'imageTag'; then
-              echo "Image ${IMAGE_TAG} already exists in ECR. Skipping build."
+              echo "Image ${REDIS_SETUP_IMAGE_TAG} already exists in ECR. Skipping build."
               echo "export SKIP_BUILD=true" >> "$BASH_ENV"
             else
-              echo "Image ${IMAGE_TAG} does not exist in ECR. Proceeding with build."
+              echo "Image ${REDIS_SETUP_IMAGE_TAG} does not exist in ECR. Proceeding with build."
               echo "export SKIP_BUILD=false" >> "$BASH_ENV"
             fi
       - run:
@@ -83,7 +83,7 @@ jobs:
           name: Tag Docker image
           command: |
             if [ "$SKIP_BUILD" != "true" ]; then
-              docker tag redis-setup:latest ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_TAG}
+              docker tag redis-setup:latest ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}:${REDIS_SETUP_IMAGE_TAG}
             else
               echo "Skipping tag"
             fi
@@ -99,7 +99,7 @@ jobs:
           name: Push Docker image
           command: |
             if [ "$SKIP_BUILD" != "true" ]; then
-              docker push ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_TAG}
+              docker push ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}:${REDIS_SETUP_IMAGE_TAG}
             else
               echo "Skipping push"
             fi
@@ -135,7 +135,9 @@ jobs:
             helm install --generate-name ./charts/cwa-tests \
             -f charts/cwa-tests/Values.yaml \
             --set ecr.image.tag=${SANITISED_BRANCH_WITH_SHA} \
-            --set redisSetup.image.tag=redis-setup-${SANITISED_BRANCH_WITH_SHA} \
+            --set redisSetup.image.tag=${REDIS_SETUP_IMAGE_TAG} \
+            --set global.registryAddress=${AWS_ECR_REGISTRY_ID} \
+            --set global.circle_sha1=${CIRCLE_SHA1} \
             --wait --timeout 300s
             export POD_NAME=$(helm list -q | tail -1)
             kubectl logs -f ${POD_NAME}

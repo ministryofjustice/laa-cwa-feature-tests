@@ -8,6 +8,7 @@ REDIS_PORT = 6379
 REDIS_LIST_NAME = "features_list"
 
 def get_github_file(commit_sha, file_path)
+  # Ensure commit_sha is the full 40-character SHA
   url = URI("https://raw.githubusercontent.com/#{GITHUB_REPO}/#{commit_sha}/#{file_path}")
   response = Net::HTTP.get_response(url)
   return response.body if response.is_a?(Net::HTTPSuccess)
