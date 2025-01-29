@@ -133,7 +133,8 @@ jobs:
             --set ecr.image.tag=${SANITISED_BRANCH_WITH_SHA} \
             --set redisSetup.image.tag=${REDIS_SETUP_IMAGE_TAG} \
             --set global.registryAddress=${AWS_ECR_REGISTRY_ID}.dkr.ecr.eu-west-2.amazonaws.com \
-            --set global.circle_sha1=${CIRCLE_SHA1}
+            --set global.circle_sha1=${CIRCLE_SHA1} \
+            --debug
       - run:
           name: Deploy helm chart
           command: |
@@ -146,7 +147,8 @@ jobs:
             --set redisSetup.image.tag=${REDIS_SETUP_IMAGE_TAG} \
             --set global.registryAddress=${AWS_ECR_REGISTRY_ID} \
             --set global.circle_sha1=${CIRCLE_SHA1} \
-            --wait --timeout 300s
+            --wait --timeout 300s \
+            --debug
             export POD_NAME=$(helm list -q | tail -1)
             kubectl logs -f ${POD_NAME}
       - run:
