@@ -21,7 +21,9 @@ spec:
         - name: redis
           image: redis/redis-stack-server
           securityContext:
-            runAsNonRoot: true
+            runAsNonRoot: true 
+            runAsUser: 1000  # Specify a non-root user ID
+            runAsGroup: 1000  # Specify a non-root group ID
             allowPrivilegeEscalation: false
             capabilities:
               drop:
