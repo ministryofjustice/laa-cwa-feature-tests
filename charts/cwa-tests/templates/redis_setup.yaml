@@ -11,9 +11,9 @@ spec:
   restartPolicy: Never
   serviceAccountName: {{ .Values.global.serviceAccount }}
   securityContext:
-  runAsUser: {{ .Values.securityContext.runAsUser }}
-  runAsGroup: {{ .Values.securityContext.runAsGroup }}
-  fsGroup: {{ .Values.securityContext.fsGroup }}
+    runAsUser: {{ .Values.securityContext.runAsUser }}
+    runAsGroup: {{ .Values.securityContext.runAsGroup }}
+    fsGroup: {{ .Values.securityContext.fsGroup }}
   initContainers:
     - name: setup
       image: {{ .Values.global.registryAddress }}/{{ .Values.global.regPath }}:{{ .Values.redisSetup.image.tag }}
@@ -22,12 +22,12 @@ spec:
         allowPrivilegeEscalation: false
         capabilities:
           drop:
-            - "ALL"
+            - ALL
         seccompProfile:
           type: {{ .Values.securityContext.seccompProfile.type }}
       env:
-      - name: COMMIT_SHA
-        value: "{{ .Values.global.circle_sha1 }}"
+        - name: COMMIT_SHA
+          value: "{{ .Values.global.circle_sha1 }}"
   containers:
     - name: wait-for-redis
       image: busybox
