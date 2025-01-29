@@ -1,10 +1,5 @@
 version: 2.1
 
-parameters:
-  build_redis_setup:
-    type: boolean
-    default: false
-
 orbs:
   aws-cli: circleci/aws-cli@4.0.0
   aws-ecr: circleci/aws-ecr@8.2.1
@@ -75,6 +70,9 @@ jobs:
           printenv SKIP_BUILD
       - setup_remote_docker:
           docker_layer_caching: true
+      - aws-cli/setup:
+          role_arn: $ECR_ROLE_TO_ASSUME
+          region: $ECR_REGION
       - run:
           name: Build Docker image
           command: |
