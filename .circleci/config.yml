@@ -127,6 +127,9 @@ jobs:
             fi
       - checkout
       - run:
+          name: Debug REDIS_SETUP_IMAGE_TAG
+          command: echo "REDIS_SETUP_IMAGE_TAG=${REDIS_SETUP_IMAGE_TAG}"
+      - run:
           name: Authenticate with cluster
           command: |
             echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
