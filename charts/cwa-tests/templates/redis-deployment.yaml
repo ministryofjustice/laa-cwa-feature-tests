@@ -8,6 +8,7 @@ metadata:
     meta.helm.sh/release-name: {{ .Chart.Name }}
     meta.helm.sh/release-namespace: {{ .Values.global.namespace }}
 spec:
+  serviceAccountName: {{ .Values.global.serviceAccount }}
   replicas: 1
   selector:
     matchLabels:
@@ -17,28 +18,15 @@ spec:
       labels:
         app: redis
     spec:
-      securityContext:
-        runAsUser: {{ .Values.securityContext.runAsUser }}
-        runAsGroup: {{ .Values.securityContext.runAsGroup }}
-        fsGroup: {{ .Values.securityContext.fsGroup }}
-      serviceAccountName: {{ .Values.global.serviceAccount }}
       containers:
         - name: redis
-          image: {{ .Values.ecr.image.registryAddress }}/{{ .Values.ecr.image.regPath }}:{{ .Values.ecr.image.tag }}
+          image: redis/redis-stack-server
           ports:
             - containerPort: 6379
-          securityContext:
-            runAsNonRoot: true
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - "ALL"
-            seccompProfile:
-              type: {{ .Values.securityContext.seccompProfile.type }}
           resources:
             requests:
-              cpu: 500m
-              memory: 512Mi
+              memory: "64Mi"
+              cpu: "250m"
             limits:
-              cpu: 1000m
-              memory: 1024Mi
+              memory: "128Mi"
+              cpu: "500m"
