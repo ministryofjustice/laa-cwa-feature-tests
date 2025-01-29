@@ -12,7 +12,7 @@ spec:
   serviceAccountName: {{ .Values.global.serviceAccount }}
   containers:
   - name: laa-pcuam-cwa-tests
-    image: {{ .Values.global.registryAddress }}/{{ .Values.global.regPath }}:{{ .Values.ecr.image.tag }}
+    image: "{{ .Values.global.registryAddress }}/{{ .Values.global.regPath }}:{{ .Values.ecr.image.tag }}"
     env:
     - name: TEST_ENV
       value: {{ .Values.global.test_env }}
