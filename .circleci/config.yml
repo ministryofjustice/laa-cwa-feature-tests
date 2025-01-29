@@ -116,6 +116,15 @@ jobs:
         type: string
         default: ${CIRCLE_CI_TOKEN}
     steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Load environment variables
+          command: |
+            if [ -f bash.env ]; then
+              cat bash.env >> $BASH_ENV
+              source $BASH_ENV
+            fi
       - checkout
       - run:
           name: Authenticate with cluster
