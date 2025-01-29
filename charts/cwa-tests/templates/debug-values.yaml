@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: debug-values
+data:
+  redisSetupImageTag: "{{ .Values.redisSetup.image.tag }}"
+  circleSha1: "{{ .Values.global.circle_sha1 }}"
