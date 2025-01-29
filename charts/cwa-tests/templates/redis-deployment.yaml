@@ -20,6 +20,14 @@ spec:
       containers:
         - name: redis
           image: redis/redis-stack-server
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            seccompProfile:
+              type: "{{ .Values.securityContext.seccompProfile.type }}"
           ports:
             - containerPort: 6379
           resources:
