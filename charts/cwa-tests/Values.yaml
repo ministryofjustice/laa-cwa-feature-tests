@@ -3,22 +3,20 @@ global:
   costcentre: LAA
   namespace: "laa-cwa-test"
   serviceAccount: "sa-laa-cwa-test"
-  circle_sha1: ${CIRCLE_SHA1}
+  circle_sha1: ""
   browser: chrome
   test_env: tst
-  registryAddress: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.eu-west-2.amazonaws.com
+  registryAddress: ""
   regPath: laa-pcuam/laa-cwa-test-ecr
 
 ecr:
   image:
-    registryAddress: 754256621582.dkr.ecr.eu-west-2.amazonaws.com
-    regPath: laa-pcuam/laa-cwa-test-ecr
     tag: batches-latest
     pullPolicy: Always
 
 redisSetup:
   image:
-    tag: ${REDIS_SETUP_IMAGE_TAG}
+    tag: ""
 
 securityContext:
   runAsUser: 1000
