@@ -228,7 +228,7 @@ jobs:
 
 workflows:
   version: 2
-  build_and_push:
+  build_and_deploy:
     jobs:
       - Check_Redis_Setup_Docker_Image
       - Build_and_Push_Redis_Setup_Docker_Image:
@@ -238,15 +238,14 @@ workflows:
       - Notify_Slack_For_Approval:
           requires:
             - Build_and_Push_Docker_Image
-
-  deploy_tests:
-    jobs:
+            - Build_and_Push_Redis_Setup_Docker_Image
       - hold_test_deployment:
           type: approval
+          requires:
+            - Notify_Slack_For_Approval
       - Deploy_tests_on_cloud_platform:
           requires:
             - hold_test_deployment
-            - Build_and_Push_Redis_Setup_Docker_Image
 
   scheduled_ui_test_run:
     jobs:
