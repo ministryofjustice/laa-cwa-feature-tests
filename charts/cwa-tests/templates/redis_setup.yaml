@@ -21,7 +21,8 @@ spec:
         runAsNonRoot: true
         allowPrivilegeEscalation: false
         capabilities:
-          drop: {{ toYaml .Values.securityContext.capabilities.drop | nindent 10 }}
+          drop:
+            - "ALL"
         seccompProfile:
           type: {{ .Values.securityContext.seccompProfile.type }}
       env:
