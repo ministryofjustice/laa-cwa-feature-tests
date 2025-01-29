@@ -246,6 +246,7 @@ workflows:
       - Deploy_tests_on_cloud_platform:
           requires:
             - hold_test_deployment
+            - Build_and_Push_Redis_Setup_Docker_Image
 
   scheduled_ui_test_run:
     jobs:
