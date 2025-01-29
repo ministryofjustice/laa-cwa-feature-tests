@@ -1,7 +1,7 @@
 version: 2.1
 
 parameters:
-  skip_build:
+  build_redis_setup:
     type: boolean
     default: false
 
@@ -35,6 +35,7 @@ jobs:
             SETUP_SCRIPT_CHECKSUM=$(sha1sum docker/scripts/setup.rb | awk '{ print $1 }')
             REDIS_SETUP_IMAGE_TAG="redis-setup-${DOCKERFILE_CHECKSUM}-${SETUP_SCRIPT_CHECKSUM}"
             echo "export REDIS_SETUP_IMAGE_TAG=${REDIS_SETUP_IMAGE_TAG}" >> "$BASH_ENV"
+            echo "Image Tag: ${REDIS_SETUP_IMAGE_TAG}"
       - aws-cli/setup:
           role_arn: $ECR_ROLE_TO_ASSUME
           region: $ECR_REGION
@@ -42,6 +43,7 @@ jobs:
           name: Check if Docker image exists in ECR
           command: |
             IMAGE_EXISTS=$(aws ecr describe-images --repository-name ${ECR_REPOSITORY} --image-ids imageTag=${REDIS_SETUP_IMAGE_TAG} --region ${ECR_REGION} 2>&1 || true)
+            echo "IMAGE_EXISTS: $IMAGE_EXISTS"
             if echo "$IMAGE_EXISTS" | grep -q 'imageTag'; then
               echo "Image ${REDIS_SETUP_IMAGE_TAG} already exists in ECR. Skipping build."
               echo "export SKIP_BUILD=true" >> "$BASH_ENV"
