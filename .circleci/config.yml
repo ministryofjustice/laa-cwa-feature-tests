@@ -42,14 +42,16 @@ jobs:
       - run:
           name: Check if Docker image exists in ECR
           command: |
+            echo "Checking if image exists in ECR..."
+            echo "Image Tag: ${REDIS_SETUP_IMAGE_TAG}"
             IMAGE_EXISTS=$(aws ecr describe-images --repository-name ${ECR_REPOSITORY} --image-ids imageTag=${REDIS_SETUP_IMAGE_TAG} --region ${ECR_REGION} 2>&1 || true)
             echo "IMAGE_EXISTS: $IMAGE_EXISTS"
-            if echo "$IMAGE_EXISTS" | grep -q 'imageTag'; then
-              echo "Image ${REDIS_SETUP_IMAGE_TAG} already exists in ECR. Skipping build."
-              echo "export SKIP_BUILD=true" >> "$BASH_ENV"
-            else
+            if echo "$IMAGE_EXISTS" | grep -q 'ImageNotFoundException'; then
               echo "Image ${REDIS_SETUP_IMAGE_TAG} does not exist in ECR. Proceeding with build."
               echo "export SKIP_BUILD=false" >> "$BASH_ENV"
+            else
+              echo "Image ${REDIS_SETUP_IMAGE_TAG} already exists in ECR. Skipping build."
+              echo "export SKIP_BUILD=true" >> "$BASH_ENV"
             fi
       - run:
           name: Save environment variables
