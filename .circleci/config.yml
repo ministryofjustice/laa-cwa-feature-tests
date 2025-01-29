@@ -127,15 +127,6 @@ jobs:
             kubectl config use-context ${K8S_CLUSTER_NAME}
             kubectl get pods
       - run:
-          name: Render and check template 
-          command: |
-            helm template ./charts/cwa-tests -f charts/cwa-tests/Values.yaml \
-            --set ecr.image.tag=${SANITISED_BRANCH_WITH_SHA} \
-            --set redisSetup.image.tag=${REDIS_SETUP_IMAGE_TAG} \
-            --set global.registryAddress=${AWS_ECR_REGISTRY_ID}.dkr.ecr.eu-west-2.amazonaws.com \
-            --set global.circle_sha1=${CIRCLE_SHA1} \
-            --debug
-      - run:
           name: Deploy helm chart
           command: |
             export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
