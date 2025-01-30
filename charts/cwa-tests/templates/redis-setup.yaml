@@ -42,3 +42,10 @@ spec:
           value: "{{ .Values.global.circle_sha1 }}"
         - name: REDIS_HOST
           value: "{{ .Release.Name }}-redis-service"
+      volumeMounts:
+        - name: artifact-volume
+          mountPath: /artifacts
+  volumes:
+    - name: artifact-volume
+      persistentVolumeClaim:
+        claimName: my-pvc

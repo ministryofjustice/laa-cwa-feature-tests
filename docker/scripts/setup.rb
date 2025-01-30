@@ -1,3 +1,4 @@
+# setup.rb
 require 'net/http'
 require 'redis'
 require 'json'
@@ -26,16 +27,6 @@ def get_github_directory(commit_sha, dir_path)
   []
 end
 
-def verify_redis_list(expected_count)
-  redis = Redis.new(host: REDIS_HOST, port: REDIS_PORT)
-  actual_count = redis.llen(REDIS_LIST_NAME)
-  if actual_count == expected_count
-    puts "Verification successful: Redis list contains #{actual_count} items."
-  else
-    puts "Verification failed: Expected #{expected_count} items, but found #{actual_count} items in Redis list."
-  end
-end
-
 def find_feature_files(commit_sha, dir_path)
   files = get_github_directory(commit_sha, dir_path)
   feature_files = []
@@ -51,6 +42,23 @@ def find_feature_files(commit_sha, dir_path)
   feature_files
 end
 
+def verify_redis_list(expected_count)
+  redis = Redis.new(host: REDIS_HOST, port: REDIS_PORT)
+  actual_count = redis.llen(REDIS_LIST_NAME)
+  if actual_count == expected_count
+    puts "Verification successful: Redis list contains #{actual_count} items."
+  else
+    puts "Verification failed: Expected #{expected_count} items, but found #{actual_count} items in Redis list."
+  end
+  actual_count
+end
+
+def write_count_to_file(count)
+  File.open("/artifacts/feature_file_count.txt", "w") do |file|
+    file.puts "Number of .feature files in Redis list: #{count}"
+  end
+end
+
 def main(commit_sha)
   raise "COMMIT_SHA environment variable is not set" if commit_sha.nil? || commit_sha.empty?
 
@@ -60,7 +68,8 @@ def main(commit_sha)
     unless features_list.empty?
       push_to_redis(features_list)
       puts "Data from features.txt pushed to Redis."
-      verify_redis_list(features_list.size)
+      count = verify_redis_list(features_list.size)
+      write_count_to_file(count)
       return
     end
   end
@@ -69,7 +78,8 @@ def main(commit_sha)
   unless feature_files.empty?
     push_to_redis(feature_files)
     puts "Data from *.feature files pushed to Redis. Number of files: #{feature_files.size}"
-    verify_redis_list(feature_files.size)
+    count = verify_redis_list(feature_files.size)
+    write_count_to_file(count)
     return
   end
 
