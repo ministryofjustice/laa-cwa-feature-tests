@@ -5,7 +5,7 @@ metadata:
   labels:
     app: redis
     app.kubernetes.io/managed-by: Helm
-    meta.helm.sh/release-name: {{ .Chart.Name }}
+    meta.helm.sh/release-name: {{ .Release.Name }}
     meta.helm.sh/release-namespace: {{ .Values.global.namespace }}
 spec:
   replicas: 1
