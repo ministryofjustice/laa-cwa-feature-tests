@@ -7,6 +7,12 @@ RUN addgroup --gid 1000 appgroup && \
 # Set the user to the non-root user
 USER appuser
 
+# Copy the Gemfile and Gemfile.lock into the image
+COPY docker/scripts/Gemfile docker/scripts/Gemfile.lock ./
+
+# Install dependencies
+RUN bundle install
+
 # Create a directory for the script
 WORKDIR /app
 
