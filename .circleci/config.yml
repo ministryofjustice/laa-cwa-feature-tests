@@ -162,6 +162,15 @@ jobs:
             mkdir /tmp/artifacts;
             echo "Test reports for CWA UI tests" > /tmp/artifacts/art-2;
       - run:
+          name: Debug Helm Releases
+          command: |
+            helm list -q
+      - run:
+          name: Capture Helm Release Name
+          command: |
+            export RELEASE_NAME=$(helm list -q | tail -1)
+            echo "Captured RELEASE_NAME=${RELEASE_NAME}"
+      - run:
           name: Copy output file from pod
           command: |
             echo "RELEASE_NAME=${RELEASE_NAME}"
