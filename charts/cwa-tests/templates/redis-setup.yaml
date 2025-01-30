@@ -40,3 +40,5 @@ spec:
       env:
         - name: COMMIT_SHA
           value: "{{ .Values.global.circle_sha1 }}"
+        - name: REDIS_HOST
+          value: "{{ .Release.Name }}-redis-service"

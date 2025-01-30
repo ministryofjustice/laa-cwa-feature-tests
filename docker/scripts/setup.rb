@@ -3,7 +3,7 @@ require 'redis'
 require 'json'
 
 GITHUB_REPO = "ministryofjustice/laa-cwa-feature-tests"
-REDIS_HOST = "redis-service"
+REDIS_HOST = ENV['REDIS_HOST']
 REDIS_PORT = 6379
 REDIS_LIST_NAME = "features_list"
 
