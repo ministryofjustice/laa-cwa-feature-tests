@@ -164,6 +164,8 @@ jobs:
       - run:
           name: Copy output file from pod
           command: |
+            echo "RELEASE_NAME=${RELEASE_NAME}"
+            kubectl get pods
             kubectl cp ${RELEASE_NAME}-redis-setup:/artifacts/feature_file_count.txt /tmp/feature_file_count.txt
       - store_artifacts:
           path: /tmp/feature_file_count.txt
