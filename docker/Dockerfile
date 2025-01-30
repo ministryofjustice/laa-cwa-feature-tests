@@ -4,19 +4,22 @@ FROM ruby:3.4.1
 RUN addgroup --gid 1000 appgroup && \
     adduser --uid 1000 --gid 1000 --disabled-password --gecos "" appuser
 
-# Set the user to the non-root user
-USER appuser
+# Set the working directory
+WORKDIR /app
 
 # Copy the Gemfile and Gemfile.lock into the image
 COPY docker/scripts/Gemfile docker/scripts/Gemfile.lock ./
 
+# Change the ownership of the files to the non-root user
+RUN chown -R appuser:appgroup /app
+
+# Set the user to the non-root user
+USER appuser
+
 # Install dependencies
 RUN bundle install
 
-# Create a directory for the script
-WORKDIR /app
-
-# Copy the script into the container
+# Copy the rest of your application code
 COPY docker/scripts/setup.rb /app/setup.rb
 
 # Set the entrypoint to run the script
