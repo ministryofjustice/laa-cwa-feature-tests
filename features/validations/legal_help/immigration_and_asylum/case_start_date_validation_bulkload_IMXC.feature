@@ -1,6 +1,6 @@
 Feature: Validate case start date for IMXC
 
-  Scenario Outline: validate case start date for IMMIGRATION
+  Scenario Outline: IMXC outcomes are not valid with a CSD < 01-OCT-2007
     Given a test firm user is logged in CWA
     And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#18"
     Given the following Matter Types are chosen:
@@ -32,7 +32,7 @@ Feature: Validate case start date for IMXC
       The reporting code combination that has been used is not valid. Please amend accordingly.
       """
 
-  Scenario Outline: validate case start date for IMMIGRATION
+  Scenario Outline: IMXC outcomes are not valid with a CSD < 01-OCT-2007
     Given a test firm user is logged in CWA
     And user prepares to submit outcomes for test provider "LEGAL HELP.IMMAS#18"
     Given the following Matter Types are chosen:
