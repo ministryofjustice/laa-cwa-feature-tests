@@ -26,6 +26,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install Gem
+          command: gem install petnames
+      - run:
           name: Run Ruby Script
           command: |
             ruby docker/scripts/generate_release_name.rb > release_name.txt
