@@ -50,3 +50,4 @@ spec:
     - name: artifact-volume
       persistentVolumeClaim:
         claimName: "{{ .Release.Name }}-pvc"
+{{- end -}}
