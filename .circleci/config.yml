@@ -80,6 +80,7 @@ jobs:
   build_and_push_redis_setup_docker_image:
     executor: build-executor
     steps:
+      - checkout
       - attach_workspace:
           at: .
       - run:
