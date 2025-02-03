@@ -14,10 +14,6 @@ ecr:
     tag: batches-latest
     pullPolicy: Always
 
-redisSetup:
-  image:
-    tag: ""
-
 securityContext:
   runAsUser: 1000
   runAsGroup: 1000

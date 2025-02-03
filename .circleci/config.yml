@@ -40,93 +40,47 @@ jobs:
           paths:
             - release_name.txt
 
-  check_redis_setup_docker_image:
-    executor: build-executor
-    steps:
-      - checkout
-      - run:
-          name: Calculate checksums
-          command: |
-            DOCKERFILE_CHECKSUM=$(sha1sum docker/Dockerfile | awk '{ print $1 }')
-            SETUP_SCRIPT_CHECKSUM=$(sha1sum docker/scripts/setup.rb | awk '{ print $1 }')
-            REDIS_SETUP_IMAGE_TAG="redis-setup-${DOCKERFILE_CHECKSUM}-${SETUP_SCRIPT_CHECKSUM}"
-            echo "export REDIS_SETUP_IMAGE_TAG=${REDIS_SETUP_IMAGE_TAG}" >> "$BASH_ENV"
-            echo "Image Tag: ${REDIS_SETUP_IMAGE_TAG}"
-      - aws-cli/setup:
-          role_arn: $ECR_ROLE_TO_ASSUME
-          region: $ECR_REGION
-      - run:
-          name: Check if Docker image exists in ECR
-          command: |
-            echo "Checking if image exists in ECR..."
-            echo "Image Tag: ${REDIS_SETUP_IMAGE_TAG}"
-            IMAGE_EXISTS=$(aws ecr describe-images --repository-name ${ECR_REPOSITORY} --image-ids imageTag=${REDIS_SETUP_IMAGE_TAG} --region ${ECR_REGION} 2>&1 || true)
-            echo "IMAGE_EXISTS: $IMAGE_EXISTS"
-            if echo "$IMAGE_EXISTS" | grep -q 'ImageNotFoundException'; then
-              echo "Image ${REDIS_SETUP_IMAGE_TAG} does not exist in ECR. Proceeding with build."
-              echo "export SKIP_BUILD=false" >> "$BASH_ENV"
-            else
-              echo "Image ${REDIS_SETUP_IMAGE_TAG} already exists in ECR. Skipping build."
-              echo "export SKIP_BUILD=true" >> "$BASH_ENV"
-            fi
-      - run:
-          name: Save environment variables
-          command: cp $BASH_ENV bash.env
-      - persist_to_workspace:
-          root: .
-          paths:
-            - bash.env
-
-  build_and_push_redis_setup_docker_image:
-    executor: build-executor
+  push_to_redis:
+    docker:
+      - image: cimg/ruby:3.3.4
     steps:
       - checkout
       - attach_workspace:
           at: .
       - run:
-          name: Load environment variables
+          name: Install dependencies
           command: |
-            cat bash.env >> $BASH_ENV
-      - run: |
-          # verify; this should print 'true' or 'false'
-          printenv SKIP_BUILD
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - aws-cli/setup:
-          role_arn: $ECR_ROLE_TO_ASSUME
-          region: $ECR_REGION
+            gem install redis
+            sudo apt-get update && sudo apt-get install -y netcat
       - run:
-          name: Build Docker image
+          name: Wait for Redis to be ready
           command: |
-            if [ "$SKIP_BUILD" != "true" ]; then
-              docker build -t redis-setup:latest -f docker/Dockerfile .
-            else
-              echo "Skipping build"
-            fi
+            RELEASE_NAME=$(cat release_name.txt)
+            REDIS_SERVICE="${RELEASE_NAME}-redis-service"
+            until nc -z "${REDIS_SERVICE}" 6379; do
+              echo "Waiting for Redis..."
+              sleep 2
+            done
+            echo "Redis is up and running!"
+
       - run:
-          name: Tag Docker image
+          name: Check for features.txt and push to Redis
           command: |
-            if [ "$SKIP_BUILD" != "true" ]; then
-              docker tag redis-setup:latest ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}:${REDIS_SETUP_IMAGE_TAG}
+            RELEASE_NAME=$(cat release_name.txt)
+            REDIS_SERVICE="${RELEASE_NAME}-redis-service"
+            require 'redis'
+            redis = Redis.new(host: "${REDIS_SERVICE}", port: 6379)
+
+            if File.exist?('features.txt') && !File.zero?('features.txt')
+              File.readlines('features.txt').each do |line|
+                redis.lpush('mylist', line.strip)
+              end
             else
-              echo "Skipping tag"
-            fi
-      - run:
-          name: Login to ECR
-          command: |
-            if [ "$SKIP_BUILD" != "true" ]; then
-              aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
-            else
-              echo "Skipping ECR login"
-            fi
-      - run:
-          name: Push Docker image
-          command: |
-            if [ "$SKIP_BUILD" != "true" ]; then
-              docker push ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}:${REDIS_SETUP_IMAGE_TAG}
-            else
-              echo "Skipping push"
-            fi
+              feature_files = `find . -type f -name "*.feature"`.split("\n")
+              feature_files.each do |file|
+                redis.lpush('mylist', file)
+              end
+            end
 
   deploy_test_setup:
     executor: deploy-executor
@@ -151,9 +105,6 @@ jobs:
               source $BASH_ENV
             fi
       - run:
-          name: Debug REDIS_SETUP_IMAGE_TAG
-          command: echo "REDIS_SETUP_IMAGE_TAG=${REDIS_SETUP_IMAGE_TAG}"
-      - run:
           name: Authenticate with cluster
           command: |
             echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
@@ -169,10 +120,8 @@ jobs:
             helm install "${RELEASE_NAME}" ./charts/cwa-tests \
             -f charts/cwa-tests/Values.yaml \
             --set setup=true \
-            --set redisSetup.image.tag="${REDIS_SETUP_IMAGE_TAG}" \
             --set global.registryAddress="${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com" \
-            --set global.circle_sha1=${CIRCLE_SHA1} \
-            --wait --timeout 300s \
+            --wait --timeout 300s
 
   deploy_tests_on_cloud_platform:
     executor: deploy-executor
@@ -313,18 +262,16 @@ workflows:
   build_and_deploy:
     jobs:
       - generate_release_name
-      - check_redis_setup_docker_image
-      - build_and_push_redis_setup_docker_image:
-          requires:
-            - check_redis_setup_docker_image
       - deploy_test_setup:
           requires:
             - generate_release_name
-            - build_and_push_redis_setup_docker_image
+      - push_to_redis:
+          requires:
+            - deploy_test_setup
       - hold_test_setup:
           type: approval
           requires:
-            - deploy_test_setup
+            - push_to_redis
       - build_and_push_docker_image:
           requires:
             - hold_test_setup
