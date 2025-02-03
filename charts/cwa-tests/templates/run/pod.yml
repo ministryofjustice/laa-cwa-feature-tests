@@ -1,3 +1,4 @@
+{{- define "cwa-tests.run.pod" -}}
 apiVersion: v1
 kind: Pod
 metadata:

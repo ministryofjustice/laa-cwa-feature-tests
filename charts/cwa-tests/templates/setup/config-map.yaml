@@ -1,3 +1,4 @@
+{{- define "cwa-tests.setup.config-map" -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:

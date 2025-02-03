@@ -1,3 +1,4 @@
+{{- define "cwa-tests.setup.redis-setup" -}}
 apiVersion: v1
 kind: Pod
 metadata:

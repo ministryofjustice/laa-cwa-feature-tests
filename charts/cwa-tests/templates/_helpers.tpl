@@ -1,11 +1,11 @@
 {{- define "cwa-tests.setup" -}}
-{{- include "templates/setup/config-map.yaml" . }}
-{{- include "templates/setup/pvc.yaml" . }}
-{{- include "templates/setup/redis-deployment.yaml" . }}
-{{- include "templates/setup/redis-service.yaml" . }}
-{{- include "templates/setup/redis-setup.yaml" . }}
+{{- include "cwa-tests.setup.config-map" . }}
+{{- include "cwa-tests.setup.pvc" . }}
+{{- include "cwa-tests.setup.redis-deployment" . }}
+{{- include "cwa-tests.setup.redis-service" . }}
+{{- include "cwa-tests.setup.redis-setup" . }}
 {{- end -}}
 
 {{- define "cwa-tests.run" -}}
-{{- include "templates/run/pod.yaml" . }}
+{{- include "cwa-tests.run.pod" . }}
 {{- end -}}
