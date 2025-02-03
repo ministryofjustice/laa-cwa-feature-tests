@@ -162,6 +162,11 @@ jobs:
             kubectl config use-context ${K8S_CLUSTER_NAME}
             kubectl get pods
       - run:
+          name: Use Release Name
+          command: |
+            RELEASE_NAME=$(cat /workspace/release_name.txt)
+            echo "Using release name: ${RELEASE_NAME}"
+      - run:
           name: Deploy helm chart
           command: |
             helm install "${RELEASE_NAME}" ./charts/cwa-tests \
