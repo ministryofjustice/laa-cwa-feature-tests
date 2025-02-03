@@ -11,4 +11,4 @@ current_time = Time.now
 formatted_time = current_time.strftime("%Y%m%d-%H%M")
 
 # Output the formatted time
-puts 'cwa-tests-' + formatted_time + '-' + name + '-' + 'redis-setup'
+puts 'cwa-tests-' + formatted_time + '-' + name
