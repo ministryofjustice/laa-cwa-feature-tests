@@ -27,3 +27,9 @@ securityContext:
       - "ALL"
   seccompProfile:
     type: RuntimeDefault
+
+# Default values for cwa-tests.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+setup: false
+run: false
