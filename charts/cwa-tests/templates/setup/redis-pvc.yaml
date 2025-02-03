@@ -1,0 +1,16 @@
+{{- define "cwa-tests.setup.redis-pvc" -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-redis-pvc
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    meta.helm.sh/release-name: {{ .Release.Name }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+{{- end -}}

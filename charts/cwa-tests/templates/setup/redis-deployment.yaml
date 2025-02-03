@@ -21,6 +21,9 @@ spec:
       containers:
         - name: redis
           image: redis/redis-stack-server
+          volumeMounts:
+          - mountPath: /data
+            name: redis-data
           securityContext:
             runAsNonRoot: true 
             runAsUser: 1000  # Specify a non-root user ID
@@ -40,5 +43,9 @@ spec:
             limits:
               memory: "128Mi"
               cpu: "500m"
+      volumes:
+        - name: redis-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-redis-pvc
 ---
 {{- end -}}
