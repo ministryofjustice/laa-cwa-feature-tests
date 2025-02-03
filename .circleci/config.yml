@@ -22,12 +22,12 @@ executors:
 jobs:
   generate_release_name:
     docker:
-      - image: circleci/ruby:latest
+      - image: cimg/ruby:3.3.4
     steps:
       - checkout
       - run:
           name: Install Gem
-          command: gem install petnames
+          command: gem install petname
       - run:
           name: Run Ruby Script
           command: |
