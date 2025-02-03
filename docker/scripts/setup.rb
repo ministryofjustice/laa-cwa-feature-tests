@@ -90,4 +90,6 @@ def main(commit_sha)
 end
 
 commit_sha = ENV['COMMIT_SHA']
+puts commit_sha
+puts REDIS_HOST
 main(commit_sha)
