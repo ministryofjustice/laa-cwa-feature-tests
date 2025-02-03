@@ -77,6 +77,9 @@ def main(commit_sha)
   feature_files = find_feature_files(commit_sha, "features")
   unless feature_files.empty?
     push_to_redis(feature_files)
+    feature_files.each do |f|
+      puts f
+    end
     puts "Data from *.feature files pushed to Redis. Number of files: #{feature_files.size}"
     count = verify_redis_list(feature_files.size)
     write_count_to_file(count)
