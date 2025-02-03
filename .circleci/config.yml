@@ -164,7 +164,7 @@ jobs:
       - run:
           name: Deploy helm chart
           command: |
-            RELEASE_NAME=$(cat release_name.txt) \  
+            RELEASE_NAME=$(cat release_name.txt) 
             helm install "${RELEASE_NAME}" ./charts/cwa-tests \
             -f charts/cwa-tests/Values.yaml \
             --set setup=true \
@@ -172,7 +172,7 @@ jobs:
             --set global.registryAddress="${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com" \
             --set global.circle_sha1=${CIRCLE_SHA1} \
             --wait --timeout 300s \
-  
+
   deploy_tests_on_cloud_platform:
     executor: deploy-executor
     parameters:
