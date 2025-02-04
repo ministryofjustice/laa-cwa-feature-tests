@@ -172,7 +172,7 @@ jobs:
             --set redisSetup.image.tag="${REDIS_SETUP_IMAGE_TAG}" \
             --set global.registryAddress="${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com" \
             --set global.circle_sha1=${CIRCLE_SHA1} \
-            --wait --timeout 300s \
+            --wait --timeout 300s
 
   deploy_tests_on_cloud_platform:
     executor: deploy-executor
