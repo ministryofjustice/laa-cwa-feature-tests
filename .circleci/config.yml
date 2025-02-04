@@ -220,30 +220,18 @@ jobs:
             --wait --timeout 300s
             kubectl logs -f "${RELEASE_NAME}-laa-pcuam-cwa-tests" &
       - run:
-          name: Creating Artifacts folder
-          command: |
-            mkdir /tmp/artifacts;
-            echo "Test reports for CWA UI tests" > /tmp/artifacts/art-2;
-      - run:
-          name: Copy output file from pod
-          command: |
-            RELEASE_NAME=$(cat release_name.txt) 
-            kubectl cp "${RELEASE_NAME}-laa-pcuam-cwa-tests:/artifacts/feature_file_count.txt" /tmp/feature_file_count.txt
-      - store_artifacts:
-          path: /tmp/feature_file_count.txt
-          destination: feature_file_count.txt
-      - run:
           name: Wait for specific pod to complete
           command: |
             RELEASE_NAME=$(cat release_name.txt) 
-            export POD_NAME=$(kubectl get pods -l meta.helm.sh/release-name=${RELEASE_NAME} -o jsonpath='{.items[?(@.metadata.name=="'${RELEASE_NAME}'-laa-pcuam-cwa-tests")].metadata.name}')
+            export POD_NAME=$(kubectl get pods -o jsonpath='{.items[?(@.metadata.name=="'${RELEASE_NAME}'-laa-pcuam-cwa-tests")].metadata.name}')
             kubectl wait --for=condition=complete pod/${POD_NAME} --timeout=18000s
-      - store_artifacts:
-          path: reports
-          destination: test-reports
       - run:
           name: Clean namespace
-          command:  helm ls -n << parameters.environment >> --short | xargs -L1 -I {} helm uninstall {} -n << parameters.environment >>
+          command: |
+            RELEASE_NAME=$(cat release_name.txt)
+            helm ls -n << parameters.environment >> --short | \
+            grep "${RELEASE_NAME}" | \
+            xargs -L1 -I {} helm uninstall {} -n << parameters.environment >>
       - slack/notify:
           channel: laa-cwa-testing
           event: pass
