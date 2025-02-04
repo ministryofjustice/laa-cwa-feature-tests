@@ -11,13 +11,38 @@ REDIS_LIST_NAME = "features_list"
 def get_github_file(commit_sha, file_path)
   url = URI("https://raw.githubusercontent.com/#{GITHUB_REPO}/#{commit_sha}/#{file_path}")
   response = Net::HTTP.get_response(url)
-  return response.body if response.is_a?(Net::HTTPSuccess)
-  nil
+  if response.is_a?(Net::HTTPSuccess)
+    response.body
+  else
+    puts "Failed to fetch file from GitHub: #{response.message}"
+    nil
+  end
+end
+
+def test_redis_connection
+  redis = Redis.new(host: REDIS_HOST, port: REDIS_PORT)
+  begin
+    redis.ping
+    puts "Connected to Redis successfully."
+  rescue => e
+    puts "Failed to connect to Redis: #{e.message}"
+  end
 end
 
 def push_to_redis(data)
+  test_redis_connection()
   redis = Redis.new(host: REDIS_HOST, port: REDIS_PORT)
-  data.each { |item| redis.rpush(REDIS_LIST_NAME, item) }
+  data.each do |item|
+    puts "Pushing item to Redis: #{item}"
+    redis.rpush(REDIS_LIST_NAME, item)
+  end
+  print_redis_list()
+end
+
+def print_redis_list
+  redis = Redis.new(host: REDIS_HOST, port: REDIS_PORT)
+  list_content = redis.lrange(REDIS_LIST_NAME, 0, -1)
+  puts "Current Redis list content: #{list_content}"
 end
 
 def get_github_directory(commit_sha, dir_path)
@@ -77,9 +102,6 @@ def main(commit_sha)
   feature_files = find_feature_files(commit_sha, "features")
   unless feature_files.empty?
     push_to_redis(feature_files)
-    feature_files.each do |f|
-      puts f
-    end
     puts "Data from *.feature files pushed to Redis. Number of files: #{feature_files.size}"
     count = verify_redis_list(feature_files.size)
     write_count_to_file(count)
@@ -90,6 +112,6 @@ def main(commit_sha)
 end
 
 commit_sha = ENV['COMMIT_SHA']
-puts commit_sha
-puts REDIS_HOST
+puts "REDIS_HOST: #{REDIS_HOST}"
+puts "COMMIT_SHA: #{commit_sha}"
 main(commit_sha)
