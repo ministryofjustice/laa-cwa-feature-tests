@@ -50,6 +50,7 @@ end
 def get_github_directory(commit_sha, dir_path)
   url = URI("https://api.github.com/repos/#{GITHUB_REPO}/contents/#{dir_path}?ref=#{commit_sha}")
   response = Net::HTTP.get_response(url)
+  puts response
   return JSON.parse(response.body) if response.is_a?(Net::HTTPSuccess)
   []
 end
