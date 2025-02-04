@@ -186,6 +186,7 @@ jobs:
         type: string
         default: ${CIRCLE_CI_TOKEN}
     steps:
+      - checkout
       - attach_workspace:
           at: .
       - run:
@@ -195,7 +196,6 @@ jobs:
               cat bash.env >> $BASH_ENV
               source $BASH_ENV
             fi
-      - checkout
       - run:
           name: Authenticate with cluster
           command: |
@@ -211,6 +211,7 @@ jobs:
             export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
             export SHORT_SHA1=$(echo "${CIRCLE_SHA1,,}" | cut -c1-7)
             export SANITISED_BRANCH_WITH_SHA="${SANITISED_BRANCH}-${SHORT_SHA1}"
+            RELEASE_NAME=$(cat release_name.txt) 
             helm install "${RELEASE_NAME}" ./charts/cwa-tests \
             -f charts/cwa-tests/Values.yaml \
             --set run=true \
@@ -226,6 +227,7 @@ jobs:
       - run:
           name: Copy output file from pod
           command: |
+            RELEASE_NAME=$(cat release_name.txt) 
             kubectl cp "${RELEASE_NAME}-laa-pcuam-cwa-tests:/artifacts/feature_file_count.txt" /tmp/feature_file_count.txt
       - store_artifacts:
           path: /tmp/feature_file_count.txt
@@ -233,6 +235,7 @@ jobs:
       - run:
           name: Wait for specific pod to complete
           command: |
+            RELEASE_NAME=$(cat release_name.txt) 
             export POD_NAME=$(kubectl get pods -l meta.helm.sh/release-name=${RELEASE_NAME} -o jsonpath='{.items[?(@.metadata.name=="'${RELEASE_NAME}'-laa-pcuam-cwa-tests")].metadata.name}')
             kubectl wait --for=condition=complete pod/${POD_NAME} --timeout=18000s
       - store_artifacts:
