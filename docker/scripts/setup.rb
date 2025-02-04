@@ -31,6 +31,7 @@ end
 
 def push_to_redis(data)
   test_redis_connection()
+  print_redis_list()
   redis = Redis.new(host: REDIS_HOST, port: REDIS_PORT)
   data.each do |item|
     puts "Pushing item to Redis: #{item}"
@@ -42,6 +43,7 @@ end
 def print_redis_list
   redis = Redis.new(host: REDIS_HOST, port: REDIS_PORT)
   list_content = redis.lrange(REDIS_LIST_NAME, 0, -1)
+  puts "Examining Redis list state, REDIS_LIST_NAME: #{REDIS_LIST_NAME}"
   puts "Current Redis list content: #{list_content}"
 end
 
