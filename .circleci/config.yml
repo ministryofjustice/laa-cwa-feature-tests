@@ -217,7 +217,8 @@ jobs:
             --set run=true \
             --set ecr.image.tag="${SANITISED_BRANCH_WITH_SHA}" \
             --set global.registryAddress="${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com" \
-            --wait --timeout 300s
+            --wait --timeout 300s \
+            --replace
             kubectl logs -f "${RELEASE_NAME}-laa-pcuam-cwa-tests" &
       - run:
           name: Creating Artifacts folder
