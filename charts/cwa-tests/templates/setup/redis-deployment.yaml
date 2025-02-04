@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: {{ .Release.Name }}-redis
   labels:
-    app: redis
+    app: {{ .Release.Name }}-redis
     app.kubernetes.io/managed-by: Helm
     meta.helm.sh/release-name: {{ .Release.Name }}
     meta.helm.sh/release-namespace: {{ .Values.global.namespace }}
@@ -12,7 +12,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: redis
+      app: {{ .Release.Name }}-redis
   template:
     metadata:
       labels:
