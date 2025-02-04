@@ -166,7 +166,7 @@ jobs:
           name: Deploy helm chart
           command: |
             RELEASE_NAME=$(cat release_name.txt) 
-            helm install "${RELEASE_NAME}" ./charts/cwa-tests \
+            helm upgrade --install "${RELEASE_NAME}" ./charts/cwa-tests \
             -f charts/cwa-tests/Values.yaml \
             --set setup=true \
             --set redisSetup.image.tag="${REDIS_SETUP_IMAGE_TAG}" \
@@ -212,13 +212,12 @@ jobs:
             export SHORT_SHA1=$(echo "${CIRCLE_SHA1,,}" | cut -c1-7)
             export SANITISED_BRANCH_WITH_SHA="${SANITISED_BRANCH}-${SHORT_SHA1}"
             RELEASE_NAME=$(cat release_name.txt) 
-            helm install "${RELEASE_NAME}" ./charts/cwa-tests \
+            helm upgrade --install "${RELEASE_NAME}" ./charts/cwa-tests \
             -f charts/cwa-tests/Values.yaml \
             --set run=true \
             --set ecr.image.tag="${SANITISED_BRANCH_WITH_SHA}" \
             --set global.registryAddress="${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com" \
-            --wait --timeout 300s \
-            --replace
+            --wait --timeout 300s
             kubectl logs -f "${RELEASE_NAME}-laa-pcuam-cwa-tests" &
       - run:
           name: Creating Artifacts folder
