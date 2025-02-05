@@ -51,8 +51,8 @@ jobs:
             -f charts/cwa-tests/Values.yaml \
             --set ecr.image.tag=${SANITISED_BRANCH_WITH_SHA} \
             --wait --timeout 300s
-            export POD_NAME=$(helm list -q | tail -1)
-            kubectl logs -f ${POD_NAME}
+            export POD_NAME=$(kubectl get pods -n laa-cwa-test --no-headers | awk '{print $1}' | grep '^cwa-tests-[0-9]\{10\}$' | sort | tail -1)
+            kubectl logs -f -n laa-cwa-test $POD_NAME
       - run:
           name: Creating Artifacts folder
           command: |
