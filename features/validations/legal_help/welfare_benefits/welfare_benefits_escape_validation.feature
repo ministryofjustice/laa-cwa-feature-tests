@@ -1,12 +1,12 @@
 Feature: bulk load claims validations for Access point
 
-    @manual_submission
-    Scenario Outline: validate manual WTAX:WBHC LEGAL HELP claim to ensure price does not have escape threshold for CSD = 1/4/24
+  @manual_submission
+  Scenario Outline: validate manual WTAX:WBHC LEGAL HELP claim to ensure price does not have escape threshold for CSD = 1/4/24
     Given user is on their "LEGAL HELP" submission details page
-      When user adds outcomes for "Legal Help" "Immigration" with fields like this:
-        | case_id | matter_type | case_start_date | procurement_area | access_point |  client_date_of_birth |             ucn |
-        |     101 | WTAX:WLGO   |        15/11/10 | PA00179          | AP00201      |            14/11/1992 | 14111992/T/PERS |
-      Then the outcome saves successfully
+    When user adds outcomes for "Legal Help" "welfare_benefits" with fields like this:
+      | case_id | matter_type | case_start_date | procurement_area | access_point |
+      |     101 | WTAX:WBHC   |      15/11/2020 | PA00179          | AP00201      |
+    Then the outcome saves successfully
 
   @bulkload_submission @escape_fee_flag
   Scenario: Claims priced with: NO Escape Fee Flag (profit cost + counsel cost < the escape threshold)
@@ -21,4 +21,3 @@ Feature: bulk load claims validations for Access point
     Then the outcomes are NOT flagged as escape fee cases
       | Comment                                                                                                                |
       | escape threhold 3 * standard fee (£227) = £681, Profit_Cost(£228) + Counsel_Cost(£452) - Additioanal_payments(0)= £680 |
-
