@@ -1,0 +1,5 @@
+{{- if .Values.setup }}
+{{- include "cwa-tests.setup" . }}
+{{- else if .Values.run }}
+{{- include "cwa-tests.run" . }}
+{{- end }}

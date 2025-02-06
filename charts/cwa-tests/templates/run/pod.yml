@@ -1,10 +1,11 @@
+{{- define "cwa-tests.run.pod" -}}
 apiVersion: v1
 kind: Pod
 metadata:
-  name: {{ .Release.Name }}
+  name: {{ .Release.Name }}-laa-pcuam-cwa-tests
   labels:
     app.kubernetes.io/managed-by: Helm
-    meta.helm.sh/release-name: {{ .Chart.Name }}
+    meta.helm.sh/release-name: {{ .Release.Name }}
     meta.helm.sh/release-namespace: {{ .Values.global.namespace }}
 
 spec:
@@ -12,7 +13,7 @@ spec:
   serviceAccountName: {{ .Values.global.serviceAccount }}
   containers:
   - name: laa-pcuam-cwa-tests
-    image: {{ .Values.ecr.image.registryAddress }}/{{ .Values.ecr.image.regPath }}:{{ .Values.ecr.image.tag }}
+    image: "{{ .Values.global.registryAddress }}/{{ .Values.global.regPath }}:{{ .Values.ecr.image.tag }}"
     env:
     - name: TEST_ENV
       value: {{ .Values.global.test_env }}
@@ -24,3 +25,4 @@ spec:
         cpu: 4000m
         memory: 8192Mi
     command: ["/bin/sh", "-ec", "bundle exec cucumber"]
+{{- end -}}
