@@ -6,7 +6,7 @@ include OutcomePage
 Before do
   @start_time = Time.now
   acknowledge_certificate if ENV['TEST_ENV'] == 'uat' && !defined?($acknowledged_cert)
-  logout_from_cwa_and_portal
+  # logout_from_cwa_and_portal
 end
 
 Before do |scenario|
@@ -93,8 +93,8 @@ def extract_specific_part(feature_file, position)
 end
 
 def logout_from_cwa_and_portal
-  visit("#{CWAProvider.url}/OA_HTML/OALogout.jsp?")
-  visit("#{PortalEnv.url}/oam/server/logout?")
+  visit("#{CWAProvider.url}/OA_HTML/AppsLocalLogin.jsp?")
+  # visit("#{PortalEnv.url}/oam/server/logout?")
 end
 
 def clean_up_temp_files

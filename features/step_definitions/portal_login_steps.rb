@@ -11,14 +11,15 @@ Given('a test firm user is on the portal login page') do
 end
 
 When('user Logs in') do
-  expect(page).to have_title("LAA Online Portal", wait:20)
-  fill_in 'username', with: PortalEnv.cwa_provider_user
-  fill_in 'password', with: PortalEnv.cwa_provider_user_password
-  click_button 'Log in'
+  expect(page).to have_title("Login", wait:20)
+  fill_in 'M__Id', with: PortalEnv.cwa_provider_user
+  fill_in 'M__Ida', with: PortalEnv.cwa_provider_user_password
+  # click_button 'Login'
+  find('img[title="Login"]').click
 end
 
 Then('Portal application page is displayed') do
-  expect(page).to have_content('Welcome to the Online Portal.')
+  expect(page).to have_content('Navigator')
 end
 
 Given('user is on the portal home page') do

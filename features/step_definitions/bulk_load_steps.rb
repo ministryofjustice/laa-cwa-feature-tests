@@ -3,7 +3,7 @@ require 'csv'
 
 Given( /^user prepares to submit outcomes for test provider "(.*)"(\s+again)?$/) do |ref, again|
   @submission = CWAProvider.submission_by_ref(ref)
-
+  expect(page).to have_content("CWA Activity Reporter Manager (Internal) role", wait: 5)
   navigator = NavigatorPage.new
   navigator.load
   navigator.roles.cwa_activity_report_manager_internal_role.click
