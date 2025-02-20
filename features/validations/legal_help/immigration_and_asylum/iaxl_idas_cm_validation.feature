@@ -46,7 +46,10 @@ Scenario: Add invalid outcomes with matter type IAXL:IDAS and claim type CM and 
       | 13 |    013 | 151223/013 | CM         |      15/12/2023 |          15/12/2023 | IY           |            1 |         100 | TR001                        |
       | 14 |    014 | 151223/014 | CM         |      15/12/2023 |          15/12/2023 | IZ           |            1 |         100 | TR001                        |
 
-    Then the following results are expected:
-      | # | ERROR_CODE_OR_MESSAGE |
-      | 1 | The reporting code combination that has been used is not valid. Please amend accordingly. |
-      
+   Then user should see the outcome results page
+     And problem outcomes should equal 14
+     And there should be no duplicate outcomes
+     And the following error message is expected for each:
+      """
+      The reporting code combination that has been used is not valid. Please amend accordingly.
+      """
