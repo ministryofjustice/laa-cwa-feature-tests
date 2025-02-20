@@ -49,17 +49,4 @@ Scenario: Add invalid outcomes with matter type IAXL:IDAS and claim type CM and 
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE |
       | 1 | The reporting code combination that has been used is not valid. Please amend accordingly. |
-      | 2 | The reporting code combination that has been used is not valid. Please amend accordingly. |
-      | 3 | The reporting code combination that has been used is not valid. Please amend accordingly. |
-      | 4 | The reporting code combination that has been used is not valid. Please amend accordingly. |
-      | 5 | The reporting code combination that has been used is not valid. Please amend accordingly. |
-      | 6 | The reporting code combination that has been used is not valid. Please amend accordingly. |
-      | 7 | The reporting code combination that has been used is not valid. Please amend accordingly. |
-      | 8 | The reporting code combination that has been used is not valid. Please amend accordingly. |
-      | 9 | The reporting code combination that has been used is not valid. Please amend accordingly. |
-      | 10 | The reporting code combination that has been used is not valid. Please amend accordingly. |
-      | 11 | The reporting code combination that has been used is not valid. Please amend accordingly. |
-      | 12 | The reporting code combination that has been used is not valid. Please amend accordingly. |
-      | 13 | The reporting code combination that has been used is not valid. Please amend accordingly. |
-      | 14 | The reporting code combination that has been used is not valid. Please amend accordingly. |
       
