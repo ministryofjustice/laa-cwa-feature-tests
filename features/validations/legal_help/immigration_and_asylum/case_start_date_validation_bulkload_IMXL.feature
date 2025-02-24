@@ -20,7 +20,7 @@ Feature: Validate case start date for IMXL
       |  9 | CM         |        30/09/07 | IV           | PA00142          | AP00187      | N           | IG            |
       | 10 | CM         |        30/09/07 | IW           | PA00142          | AP00187      | N           | IH            |
       | 11 | CM         |        30/09/07 | IX           | PA00142          | AP00187      | N           | IO            |
-      | 12 | CM         |        30/09/07 | IY           | PA00142          | AP00187      | N           | IM            |
+      | 12 | SC         |        30/09/07 | --           | PA00142          | AP00187      | N           | IM            |
       | 13 | CM         |        30/09/07 | IZ           | PA00142          | AP00187      | N           | IK            |
     Then user should see the outcome results page
     And problem outcomes should equal 39
@@ -52,7 +52,7 @@ Feature: Validate case start date for IMXL
       | 10 | CM         |        30/09/07 | IW           | PA00177          | AP00186      | N           | IH            |
       | 11 | CM         |        30/09/07 | IX           | PA00177          | AP00186      | N           | IG            |
       | 12 | CM         |        30/09/07 | IY           | PA00177          | AP00186      | N           | IM            |
-      | 13 | CM         |        30/09/07 | IZ           | PA00177          | AP00186      | N           | IK            |
+      | 13 | SC         |        30/09/07 | --           | PA00177          | AP00186      | N           | IK            |
     Then user should see the outcome results page
     And problem outcomes should equal 52
     And there should be no duplicate outcomes
