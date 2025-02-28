@@ -1,0 +1,16 @@
+{{- define "cwa-tests.setup.pvc" -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-pvc
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    meta.helm.sh/release-name: {{ .Release.Name }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+---
+{{- end -}}

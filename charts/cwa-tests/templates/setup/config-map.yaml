@@ -1,0 +1,12 @@
+{{- define "cwa-tests.setup.config-map" -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config-map
+  labels:
+    meta.helm.sh/release-name: {{ .Release.Name }}
+data:
+  redisSetupImageTag: "{{ .Values.redisSetup.image.tag }}"
+  circleSha1: "{{ .Values.global.circle_sha1 }}"
+---
+{{- end -}}
