@@ -165,6 +165,42 @@ Feature: Welfare benefits manual and bulkload tests
       | escape threhold 3 * standard fee (£208) = £624, Profit_Cost(£999) + Counsel_Cost(£0)= £999 |
 
   @bulkload_submission @escape_fee_flag
+  Scenario: WTAX:WBHC claim post 1/2/25 no escape when below threshold
+    Given a test firm user is logged in CWA
+    And user prepares to submit outcomes for test provider "LEGAL HELP.WB#26"
+    Given the following Matter Types are chosen:
+      | WTAX:WBHC |
+    When the following outcomes are bulkloaded:
+      | # | UFN        | CASE_START_DATE | CASE_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | PROCUREMENT_AREA | ACCESS_POINT |
+      | 1 | 020225/007 |      02/02/2025 |          03/02/2025 |         623 |            0 | N             | PA00179          | AP00201      |
+    When user confirms the submission
+    And user is on the pricing outcome details page
+    Then user should see the following outcomes:
+      | # | UFN        | Value    | Comment                                   |
+      | 1 | 020225/007 | £ 208.00 | Standard fee for welfare_benefits is £208 |
+    Then the outcomes are NOT flagged as escape fee cases
+      | Comment                                                                                    |
+      | escape threhold 3 * standard fee (£208) = £624, Profit_Cost(£623) + Counsel_Cost(£0)= £623 |
+
+  @bulkload_submission @escape_fee_flag
+  Scenario: WTAX:WBHC claim post 1/2/25 escapes when == threshold
+    Given a test firm user is logged in CWA
+    And user prepares to submit outcomes for test provider "LEGAL HELP.WB#26"
+    Given the following Matter Types are chosen:
+      | WTAX:WBHC |
+    When the following outcomes are bulkloaded:
+      | # | UFN        | CASE_START_DATE | CASE_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | PROCUREMENT_AREA | ACCESS_POINT |
+      | 1 | 020225/007 |      02/02/2025 |          03/02/2025 |         624 |            0 | N             | PA00179          | AP00201      |
+    When user confirms the submission
+    And user is on the pricing outcome details page
+    Then user should see the following outcomes:
+      | # | UFN        | Value    | Comment                                   |
+      | 1 | 020225/007 | £ 208.00 | Standard fee for welfare_benefits is £208 |
+    Then the outcomes are flagged as escape fee cases
+      | Comment                                                                                    |
+      | escape threhold 3 * standard fee (£208) = £624, Profit_Cost(£624) + Counsel_Cost(£0)= £624 |
+
+  @bulkload_submission @escape_fee_flag
   Scenario: WTAX:WLGO claim post 1/5/25 escapes
     Given a test firm user is logged in CWA
     And user prepares to submit outcomes for test provider "LEGAL HELP.WB#26"
@@ -182,3 +218,19 @@ Feature: Welfare benefits manual and bulkload tests
       | Comment                                                                                    |
       | escape threhold 3 * standard fee (£208) = £624, Profit_Cost(£624) + Counsel_Cost(£0)= £624 |
 
+  @bulkload_submission @escape_fee_flag
+  Scenario: Claims fails without ECF when PA20000 and AP20000 and mandatory MT2 code
+    Given a test firm user is logged in CWA
+    And user prepares to submit outcomes for test provider "LEGAL HELP.WB#26"
+    Given the following Matter Types are chosen:
+      | WTAX:WLGO |
+    When the following outcomes are bulkloaded:
+      | # | CASE_START_DATE | CASE_CONCLUDED_DATE | PROFIT_COST | COUNSEL_COST | VAT_INDICATOR | PROCUREMENT_AREA | ACCESS_POINT |
+      | 1 |      02/04/2023 |          04/04/2023 |         451 |            0 | N             | PA20000          | AP20000      |
+    Then user should see the outcome results page
+    And problem outcomes should equal 1
+    And there should be no duplicate outcomes
+    And the following error message is expected for each:
+    """
+    The combination of reporting codes can only be used for cases started on or after 01-APR-2013 if it is reported with an Exceptional Case Funding reference.
+    """
