@@ -30,7 +30,7 @@ Feature: Validate Procurement Area field
   Scenario Outline: validate DTW with ASYLUM codes and DTW valid
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
       | case_id | schedule_ref | matter_type | stage_reached | case_start_date | procurement_area | access_point | irc_surgery | detention_travel_waiting_costs |
-      |     403 |              | IAAP:IGOL   | IE            |      01/01/1996 | PA00142          | AP00187      | No          |                             10 |
+      |     403 |              | IALH:IOUT   | IE            |      01/01/1996 | PA00142          | AP00187      | No          |                             10 |
     Then the outcome does not save and gives an error containing:
       """
       Values greater than 0.00 cannot be entered in the Detention Travel and Waiting Costs Excluding VAT field for this claim. For hourly rate cases any Detention Travel and Wait related costs should be claimed as part of your profit costs and entered in the profit costs field.
@@ -102,7 +102,7 @@ Feature: Validate Procurement Area field
     Scenario Outline: validate DTW with IMMIGRATION codes and DTW valid
     When user adds outcomes for "Legal Help" "Immigration" with fields like this:
       | case_id | matter_type | case_start_date | procurement_area | access_point | irc_surgery | detention_travel_waiting_costs | exemption_criteria_satisfied |
-      |     411 | IMCD:ICZN   |        01/04/23 | PA00142          | AP00187      | No          |                             10 | TR001                        |
+      |     411 | IMCD:ICZN   |        31/03/23 | PA00142          | AP00187      | No          |                             10 | TR001                        |
     Then the outcome does not save and gives an error containing:
       """
       Values greater than 0.00 cannot be entered in the Detention Travel and Waiting Costs Excluding VAT field for this claim. For hourly rate cases any Detention Travel and Wait related costs should be claimed as part of your profit costs and entered in the profit costs field.
