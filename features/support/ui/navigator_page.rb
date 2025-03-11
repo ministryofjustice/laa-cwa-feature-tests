@@ -8,7 +8,12 @@ class NavigatorContent < SitePrism::Section
 end
 
 class NavigatorPage < SitePrism::Page
-  set_url "#{CWAProvider.url}/OA_HTML/OA.jsp?OAFunc=OAHOMEPAGE"
+
+  if ENV['TEST_ENV'] == "devmp" || ENV['TEST_ENV'] == "stg" then
+    set_url  "#{CWAProvider.url[0..-28]}/OA_HTML/OA.jsp?OAFunc=OAHOMEPAGE"
+  elsif ENV['TEST_ENV'] == "tst" || ENV['TEST_ENV'] == "dev" || ENV['TEST_ENV'] == "uat" then
+    set_url "#{CWAProvider.url}/OA_HTML/OA.jsp?OAFunc=OAHOMEPAGE"
+  end
 
   section :roles, RolesSection, :xpath, '//*[@id="responsibilityRN"]/table/tbody/tr/td[1]/table/tbody'
   section :content, NavigatorContent, :xpath, '//*[@id="responsibilityRN"]/table/tbody/tr/td[2]/table/tbody'

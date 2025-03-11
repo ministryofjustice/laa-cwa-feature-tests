@@ -1,9 +1,10 @@
 Given('a test firm user is logged in CWA') do
   steps %(
-    Given a test firm user is on the portal login page
-    When user Logs in
-    Then Portal application page is displayed
-    When user clicks on CWA link
+    # Given a test firm user is on the portal login page
+    # When user Logs in
+    # Then Portal application page is displayed
+    # When user clicks on CWA link
+    Given user is logged into cwa
     Then CWA application page is displayed
   )
 end
@@ -17,9 +18,11 @@ end
 
 Then('Submission Search Page displayed') do
   submission_list_page = SubmissionListPage.new
-  #puts "Waiting for submissions to be visible"
+  # puts "Waiting for submissions to be visible"
+  # puts "url is: #{page.current_url}"
+  
   submission_list_page.wait_until_submissions_visible(wait: 10)
-  #puts "Setting account number: #{CWAProvider.submission.account_number}"
+  # puts "Setting account number: #{CWAProvider.submission.account_number}"
   submission_list_page.account_number.set(CWAProvider.submission.account_number)
 
   #puts "Waiting for area of law search to be visible"
@@ -56,10 +59,11 @@ end
 
 Given('user is on the submission search page') do
   steps %(
-    Given a test firm user is on the portal login page
-    When user Logs in
-    Then Portal application page is displayed
-    When user clicks on CWA link
+    #  Given a test firm user is on the portal login page
+    #  When user Logs in
+    #  Then Portal application page is displayed
+    #  When user clicks on CWA link
+    Given user is logged into cwa
     Then CWA application page is displayed
     When user navigates to Submissions page
     Then Submission Search Page displayed

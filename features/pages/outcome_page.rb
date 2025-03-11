@@ -1,10 +1,11 @@
 module OutcomePage
   def delete_all_outcomes
     steps %(
-      Given a test firm user is on the portal login page
-      When user Logs in
-      Then Portal application page is displayed
-      When user clicks on CWA link
+      # Given a test firm user is on the portal login page
+      # When user Logs in
+      # Then Portal application page is displayed
+      # When user clicks on CWA link
+      Given user is logged into cwa
       Then CWA application page is displayed
       When user navigates to Submissions page
       Then Submission Search Page displayed

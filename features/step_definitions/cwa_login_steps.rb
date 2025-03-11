@@ -11,3 +11,11 @@ Then('CWA application page is displayed') do
     expect(page).to have_content('Navigator')
   end
 end
+
+Given('user is logged into cwa') do
+    if ENV['TEST_ENV'] == "devmp" || ENV['TEST_ENV'] == "stg" then
+        direct_login
+    elsif ENV['TEST_ENV'] == "tst" || ENV['TEST_ENV'] == "dev" || ENV['TEST_ENV'] == "uat" then
+        portal_login
+    end
+end
