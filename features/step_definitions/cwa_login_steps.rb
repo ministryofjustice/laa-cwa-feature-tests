@@ -13,9 +13,10 @@ Then('CWA application page is displayed') do
 end
 
 Given('user is logged into cwa') do
-    if ENV['TEST_ENV'] == "devmp" || ENV['TEST_ENV'] == "stg" then
-        direct_login
-    elsif ENV['TEST_ENV'] == "tst" || ENV['TEST_ENV'] == "dev" || ENV['TEST_ENV'] == "uat" then
-        portal_login
+    case ENV['TEST_ENV']
+    when "devmp", "stg"
+      direct_login
+    when "tst", "dev", "uat"
+      portal_login
     end
 end

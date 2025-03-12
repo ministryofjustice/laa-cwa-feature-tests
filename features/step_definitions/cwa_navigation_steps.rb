@@ -1,9 +1,5 @@
 Given('a test firm user is logged in CWA') do
   steps %(
-    # Given a test firm user is on the portal login page
-    # When user Logs in
-    # Then Portal application page is displayed
-    # When user clicks on CWA link
     Given user is logged into cwa
     Then CWA application page is displayed
   )
@@ -18,21 +14,16 @@ end
 
 Then('Submission Search Page displayed') do
   submission_list_page = SubmissionListPage.new
-  # puts "Waiting for submissions to be visible"
-  # puts "url is: #{page.current_url}"
+
   
   submission_list_page.wait_until_submissions_visible(wait: 10)
-  # puts "Setting account number: #{CWAProvider.submission.account_number}"
   submission_list_page.account_number.set(CWAProvider.submission.account_number)
 
-  #puts "Waiting for area of law search to be visible"
   submission_list_page.wait_until_area_of_law_search_visible(wait: 10)
 
-  # Debugging ambiguous match by listing all matching elements
-  #puts "Finding all select elements with id 'AreaOfLawSearch'"
   elements = submission_list_page.all(:xpath, "//select[@id='AreaOfLawSearch']")
 
-  #puts "Number of select elements found: #{elements.size}"
+
   elements.each_with_index do |element, index|
   #  puts "Element #{index}: id=#{element[:id]}, class=#{element[:class]}, name=#{element[:name]}"
   end
@@ -48,7 +39,6 @@ Then('Submission Search Page displayed') do
   end
 
   submission_list_page.area_of_law_search.select(CWAProvider.submission.area_of_law)
-  #puts "Setting submission period: #{CWAProvider.submission.period}"
   submission_list_page.submission_period.set(CWAProvider.submission.period)
 
   #puts "Clicking search button"
@@ -59,10 +49,6 @@ end
 
 Given('user is on the submission search page') do
   steps %(
-    #  Given a test firm user is on the portal login page
-    #  When user Logs in
-    #  Then Portal application page is displayed
-    #  When user clicks on CWA link
     Given user is logged into cwa
     Then CWA application page is displayed
     When user navigates to Submissions page
