@@ -1,5 +1,5 @@
-# Use the ruby:2.7-slim base image
-FROM --platform=linux/amd64 ruby:3.0-slim
+# Use the ruby:3.1-slim base image
+FROM --platform=linux/amd64 ruby:3.1-slim
 
 # Set environment variables for Oracle Instant Client
 ENV ORACLE_HOME /opt/oracle/instantclient
@@ -43,6 +43,7 @@ ENV TEST_ENV=tst
 ENV HEADLESS=true
 
 # Install all ruby gems from gemfile
+RUN gem install bundler:2.5.17
 RUN bundle config set --local with docker
 RUN bundle install
 
