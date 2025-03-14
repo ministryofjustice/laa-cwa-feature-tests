@@ -8,4 +8,6 @@ jobs:
       contents: read  # This is required for actions/checkout
     uses: ./.github/workflows/_reusable-build-and-push.yml
     with:
-      deployment_environment: dev
+      #deployment_environment: dev
+      ecr_role: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+      ecr_region: ${{ secrets.ECR_REGION }}
