@@ -1,0 +1,16 @@
+
+on:
+  workflow_call:
+    inputs:
+      k8s_cluster_name:
+        required: true
+        type: string
+      k8s_namespace:
+        required: true
+        type: string
+
+jobs:
+  - name: Configure kubecontext
+    runs: |
+      kubectl config set-context ${{ inputs.k8s_cluster_name }} --cluster=${{ inputs.k8s_cluster_name }} --user=cd-serviceaccount --namespace=${{ inputs.k8s_namespace }}
+      kubectl config use-context ${{ inputs.k8s_cluster_name }}
