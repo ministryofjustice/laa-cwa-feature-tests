@@ -2,9 +2,11 @@ on:
   push:
 
 jobs:
-  build_and_push_dev:
+  dev_build_and_push:
     runs-on: ubuntu-latest
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read  # This is required for actions/checkout
-    uses: ./.github/workflows/build-and-push.yml
+    uses: ./.github/workflows/_reusable-build-and-push.yml
+    with:
+      deployment_environment: dev
