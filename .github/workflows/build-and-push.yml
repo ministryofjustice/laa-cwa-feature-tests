@@ -1,0 +1,22 @@
+on:
+  push:
+
+jobs:
+  ecr:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
+    steps:
+      # Checkout GitHub repository
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #--v4.2.2
+
+      # Assume role in Cloud Platform
+      - uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #--4.1.0
+        with:
+          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ vars.ECR_REGION }}
+
+      # Login to container repository
+      - uses: aws-actions/amazon-ecr-login@062b18b96a7aff071d4dc91bc00c4c1a7945b076 #--2.0.1
+        id: login-ecr
