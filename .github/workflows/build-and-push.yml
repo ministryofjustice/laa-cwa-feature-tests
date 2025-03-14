@@ -22,8 +22,8 @@ jobs:
         with:
           ecr_region: ${{ vars.ecr_region }}
           ecr_role: ${{ secrets.ECR_ROLE_TO_ASSUME }}
-          k8s_cluster_name: ${{  }}
-          kube_token: ${{ vars.KUBE_TOKEN }} #--to be populated with value from current CIRCLE_CI_TOKEN
+          #k8s_cluster_name: ${{ vars.K8S_CLUSTER_NAME }}
+          #kube_token: ${{ vars.KUBE_TOKEN }} #--to be populated with value from current CIRCLE_CI_TOKEN
 
       - name: ECR Login (second test)
         uses: aws-actions/amazon-ecr-login@062b18b96a7aff071d4dc91bc00c4c1a7945b076 #--2.0.1
