@@ -7,14 +7,4 @@ jobs:
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read  # This is required for actions/checkout
-
-    steps:
-      - name: Git Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #--v4.2.2
-
-      - name: Build and Push to Dev
-        uses: ./.github/workflows/reusable/build-and-push.yml
-        with:
-          deployment_environment: dev
-          ecr_region: ${{ vars.ecr_region }}
-          ecr_role: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+    uses: ./.github/workflows/reusable/build-and-push.yml
