@@ -13,7 +13,7 @@ jobs:
 
       #--Auth
       - name: Platform Authentication
-        uses: ./.github/workflows/reusable/auth.yml
+        uses: ./.github/workflows/composite-auth/action.yml
         with:
           ecr_region: ${{ vars.ecr_region }}
           ecr_role: ${{ secrets.ECR_ROLE_TO_ASSUME }}

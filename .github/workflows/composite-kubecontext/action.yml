@@ -1,0 +1,19 @@
+name: Configure kubecontext
+description: Configure kubecontext for environment specific deployment
+
+inputs:
+  k8s_cluster_name:
+    required: true
+    description: "Kubernetes Cluster Name"
+  k8s_namespace:
+    required: true
+    description: "Kubernetes Namespace"
+
+runs:
+  using: "composite"
+  steps:
+  - name: Configure kubecontext
+    run: |
+      kubectl config set-context ${{ inputs.k8s_cluster_name }} --cluster=${{ inputs.k8s_cluster_name }} --user=cd-serviceaccount --namespace=${{ inputs.k8s_namespace }}
+      kubectl config use-context ${{ inputs.k8s_cluster_name }}
+    shell: bash
