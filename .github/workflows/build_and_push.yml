@@ -8,5 +8,5 @@ jobs:
       id-token: write # This is required for requesting the JWT
       contents: read  # This is required for actions/checkout
     uses: ./.github/workflows/_reusable-build-and-push.yml
-    with:
-      deployment_environment: dev
+      with:
+        deployment_environment: dev
