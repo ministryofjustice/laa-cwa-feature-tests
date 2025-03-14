@@ -17,6 +17,7 @@ on:
 
 jobs:
   build_and_push:
+    runs-on: ubuntu-latest
     environment: ${{ inputs.deployment_environment }}
     steps:
       - name: Git Checkout
