@@ -1,10 +1,7 @@
 Given('user is on their {string} submission details page') do |area_of_law|
   CWAProvider.area_of_law = area_of_law.upcase
   steps %(
-    Given a test firm user is on the portal login page
-    When user Logs in
-    And Portal application page is displayed
-    And user clicks on CWA link
+    Given user is logged into cwa
     And CWA application page is displayed
     And user navigates to Submissions page
     And Submission Search Page displayed
