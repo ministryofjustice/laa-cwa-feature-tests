@@ -12,7 +12,7 @@ jobs:
 
       #--Auth
       - name: ECR Authentication
-        uses: ./.github/workflows/composite-auth
+        uses: ./.github/workflows/composite-auth-ecr
         with:
           ecr_region: ${{ vars.ECR_REGION }}
           ecr_role: ${{ secrets.ECR_ROLE_TO_ASSUME }}
