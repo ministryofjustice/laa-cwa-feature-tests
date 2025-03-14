@@ -7,28 +7,14 @@ jobs:
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read  # This is required for actions/checkout
+
     steps:
       - name: Git Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #--v4.2.2
 
-      #--Auth
-      - name: Platform Authentication
-        uses: ./.github/workflows/composite-auth
+      - name: Build and Push to Dev
+        uses: ./.github/workflows/reusable/build-and-push.yml
         with:
+          deployment_environment: dev
           ecr_region: ${{ vars.ecr_region }}
           ecr_role: ${{ secrets.ECR_ROLE_TO_ASSUME }}
-          #k8s_cluster_name: ${{ vars.K8S_CLUSTER_NAME }}
-          #kube_token: ${{ vars.KUBE_TOKEN }} #--to be populated with value from current CIRCLE_CI_TOKEN
-
-      - name: ECR Login (second test)
-        uses: aws-actions/amazon-ecr-login@062b18b96a7aff071d4dc91bc00c4c1a7945b076 #--2.0.1
-        id: login-ecr
-
-      # Build and Push Image
-      # - run: |
-      #     docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-      #     docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-      #   env:
-      #     REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      #     REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-      #     IMAGE_TAG: ${{ github.sha }}

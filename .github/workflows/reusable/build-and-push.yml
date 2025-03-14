@@ -1,0 +1,39 @@
+name: Build and Push Image
+
+on:
+  workflow_call:
+    inputs:
+      deployment_environment:
+        required: true
+        type: string
+      ecr_region:
+        required: true
+        type: string
+        default: ${{ vars.ECR_REGION }}
+      ecr_role:
+        required: true
+        type: string
+        default: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+
+jobs:
+  build_and_push:
+    environment: ${{ inputs.deployment_environment }}
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #--v4.2.2
+
+      #--Auth
+      - name: ECR Authentication
+        uses: ./.github/workflows/composite-auth
+        with:
+          ecr_region: ${{ inputs.ecr_region }}
+          ecr_role: ${{ inputs.ecr_role }}
+
+      # Build and Push Image
+      # - run: |
+      #     docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+      #     docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+      #   env:
+      #     REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      #     REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+      #     IMAGE_TAG: ${{ github.sha }}

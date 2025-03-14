@@ -8,15 +8,10 @@ inputs:
   ecr_role:
     required: true
     description: "IAM Role to Assume for ECR"
-  k8s_cluster_name:
-    required: true
-    description: "Kubernetes Cluster Name"
-  kube_token:
-    required: true
-    description: "Kubernetes API Token"
 
 runs:
   using: "composite"
+
   steps:
   - name: AWS Auth
     uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #--4.1.0
@@ -26,11 +21,3 @@ runs:
   - name: ECR Login
     uses: aws-actions/amazon-ecr-login@062b18b96a7aff071d4dc91bc00c4c1a7945b076 #--2.0.1
     id: login-ecr
-#  - name: Kubernetes Auth
-    #--TO DO
-    #--KUBE_TOKEN to be populated with value from current CIRCLE_CI_TOKEN
-#    run: |
-#      echo "${{ inputs.cert }}" > ca.crt
-#      kubectl config set-cluster ${{ inputs.k8s_cluster_name }} --certificate-authority=./ca.crt --server="https://${{ ${{ inputs.k8s_cluster_name }}"
-#      kubectl config set-credentials cd-serviceaccount --token=${{ inputs.kube_token }}
-#    shell: bash
