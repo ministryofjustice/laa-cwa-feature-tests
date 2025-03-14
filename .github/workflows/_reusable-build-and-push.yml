@@ -2,16 +2,6 @@ name: Build and Push Image
 
 on:
   workflow_call:
-    inputs:
-      ecr_region:
-        required: true
-        type: string
-      ecr_repository:
-        required: true
-        type: string
-    secrets:
-      ecr_role:
-        required: true
 
 jobs:
   build_and_push:
@@ -24,8 +14,8 @@ jobs:
       - name: ECR Authentication
         uses: ./.github/workflows/composite-auth
         with:
-          ecr_region: ${{ inputs.ecr_region }}
-          ecr_role: ${{ secrets.ecr_role }}
+          ecr_region: ${{ vars.ECR_REGION }}
+          ecr_role: ${{ secrets.ECR_ROLE_TO_ASSUME }}
 
       # Build and Push Image
       # - run: |
