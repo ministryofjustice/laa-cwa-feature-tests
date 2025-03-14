@@ -25,7 +25,7 @@ jobs:
       environment:
         description: Destination environment
         type: string
-        default: laa-cwa-test
+        default: laa-cwa-feature-tests-dev
       token:
         description: CircleCI Service account token
         type: string
@@ -51,8 +51,8 @@ jobs:
             -f charts/cwa-tests/Values.yaml \
             --set ecr.image.tag=${SANITISED_BRANCH_WITH_SHA} \
             --wait --timeout 300s
-            export POD_NAME=$(kubectl get pods -n laa-cwa-test --no-headers | awk '{print $1}' | grep '^cwa-tests-[0-9]\{10\}$' | sort | tail -1)
-            kubectl logs -f -n laa-cwa-test $POD_NAME
+            export POD_NAME=$(kubectl get pods -n laa-cwa-feature-tests-dev --no-headers | awk '{print $1}' | grep '^cwa-tests-[0-9]\{10\}$' | sort | tail -1)
+            kubectl logs -f -n laa-cwa-feature-tests-dev $POD_NAME
       - run:
           name: Creating Artifacts folder
           command: |
