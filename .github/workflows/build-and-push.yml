@@ -11,11 +11,6 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #--v4.2.2
 
-      - name: Configure kubecontext
-        run: |
-          kubectl config set-context ${{ vars.K8S_CLUSTER_NAME }} --cluster=${{ vars.K8S_CLUSTER_NAME }} --user=cd-serviceaccount --namespace=${{ vars.NAMESPACE_NAME }}
-          kubectl config use-context ${{ vars.K8S_CLUSTER_NAME }}
-
       #--Auth
       - name: Platform Authentication
         uses: ./.github/workflows/reusable/auth.yml
