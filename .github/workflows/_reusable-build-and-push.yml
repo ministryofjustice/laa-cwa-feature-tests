@@ -3,15 +3,15 @@ name: Build and Push Image
 on:
   workflow_call:
     inputs:
-      deployment_environment:
-        required: true
-        type: string
+      #deployment_environment:
+      #  required: true
+      #  type: string
       ecr_region:
         required: true
         type: string
+    secrets:
       ecr_role:
         required: true
-        type: string
 
 jobs:
   build_and_push:
