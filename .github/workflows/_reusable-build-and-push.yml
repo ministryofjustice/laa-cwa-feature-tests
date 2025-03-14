@@ -3,10 +3,10 @@ name: Build and Push Image
 on:
   workflow_call:
     inputs:
-      #deployment_environment:
-      #  required: true
-      #  type: string
       ecr_region:
+        required: true
+        type: string
+      ecr_repository:
         required: true
         type: string
     secrets:
@@ -16,7 +16,6 @@ on:
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
-    #environment: ${{ inputs.deployment_environment }}
     steps:
       - name: Git Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #--v4.2.2
@@ -26,7 +25,7 @@ jobs:
         uses: ./.github/workflows/composite-auth
         with:
           ecr_region: ${{ inputs.ecr_region }}
-          ecr_role: ${{ inputs.ecr_role }}
+          ecr_role: ${{ secrets.ecr_role }}
 
       # Build and Push Image
       # - run: |
