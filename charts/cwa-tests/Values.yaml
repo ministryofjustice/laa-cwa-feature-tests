@@ -9,6 +9,6 @@ global:
 ecr:
   image:
     registryAddress: 754256621582.dkr.ecr.eu-west-2.amazonaws.com
-    regPath: laa-pcuam/laa-cwa-test-ecr
+    regPath: laa-pcuam/laa-cwa-feature-tests-dev
     tag: batches-latest
     pullPolicy: Always
