@@ -8,3 +8,18 @@ jobs:
       contents: read  # This is required for actions/checkout
     uses: ./.github/workflows/_reusable-build-and-push.yml
     secrets: inherit
+
+  # helm_deploy:
+  #   permissions:
+  #     id-token: write
+  #     contents: read
+  #   uses: ./.github/workflows/_reusable-helm-deploy.yml
+  #   with:
+  #     k8s_namespace: laa-cwa-feature-tests-dev
+  #     helm_release_name: laa-cwa-feature-tests
+  #     helm_chart: ./charts/cwa-tests
+  #     helm_values_path: charts/cwa-tests/Values.yaml
+  #     image_registry: ${{ outputs.build_and_push.image_registry }}
+  #     image_repo: ${{ outputs.build_and_push.image_repo }}
+  #     image_tag: ${{ outputs.build_and_push.image_tag }}
+  #   secrets: inherit

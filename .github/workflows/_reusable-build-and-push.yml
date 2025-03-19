@@ -17,11 +17,16 @@ jobs:
           ecr_region: ${{ vars.ECR_REGION }}
           ecr_role: ${{ secrets.ECR_ROLE_TO_ASSUME }}
 
-      # Build and Push Image
-      # - run: |
-      #     docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-      #     docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-      #   env:
-      #     REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      #     REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-      #     IMAGE_TAG: ${{ github.sha }}
+    #   #--Build and Push Image
+    #   - run: |
+    #       docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+    #       docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+    #     env:
+    #       REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+    #       REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+    #       IMAGE_TAG: ${{ github.sha }}
+
+    # outputs:
+    #   image_registry: ${{ env.REGISTRY }}
+    #   image_repo: ${{ env.REPOSITORY }}
+    #   image_tag: ${{ env.IMAGE_TAG }}

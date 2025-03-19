@@ -5,14 +5,12 @@ inputs:
   k8s_cluster_name:
     required: true
     description: "Kubernetes Cluster Name"
-    default: ${{ vars.K8S_CLUSTER_NAME }}
   k8s_namespace:
     required: true
     description: "Kubernetes Namespace"
   kube_token:
     required: true
     description: "Kubernetes API Token"
-    default: "${{ vars.K8S_TOKEN }}"
 
 runs:
   using: "composite"
