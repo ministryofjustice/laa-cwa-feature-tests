@@ -14,6 +14,9 @@ inputs:
   k8s_token:
     required: true
     description: "Kubernetes API Token"
+  k8s_service_account:
+    required: true
+    description: "Kubernetes Service Account"
 
 runs:
   using: "composite"
