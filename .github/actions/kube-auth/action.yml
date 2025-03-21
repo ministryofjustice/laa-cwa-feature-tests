@@ -11,7 +11,7 @@ inputs:
   k8s_namespace:
     required: true
     description: "Kubernetes Namespace"
-  kube_token:
+  k8s_token:
     required: true
     description: "Kubernetes API Token"
 
@@ -21,13 +21,12 @@ runs:
   steps:
   - name: Kubernetes Auth
     run: |
-      
       kubectl config set-cluster ${{ inputs.k8s_cluster_name }} --server="https://${{ inputs.k8s_cluster_name }}"
-      kubectl config set-credentials cd-serviceaccount --token=${{ inputs.kube_token }}
+      kubectl config set-credentials ${{ k8s_service_account }} --token=${{ inputs.k8s_token }}
     shell: bash
 
   - name: Configure kubecontext
     run: |  
-      kubectl config set-context ${{ inputs.k8s_cluster_name }} --cluster=${{ inputs.k8s_cluster_name }} --user=cd-serviceaccount --namespace=${{ inputs.k8s_namespace }}
+      kubectl config set-context ${{ inputs.k8s_cluster_name }} --cluster=${{ inputs.k8s_cluster_name }} --user=${{ k8s_service_account }} --namespace=${{ inputs.k8s_namespace }}
       kubectl config use-context ${{ inputs.k8s_cluster_name }}
     shell: bash

@@ -45,8 +45,9 @@ jobs:
         uses: ./.github/actions/kube-auth
         with:
           k8s_cluster_name: ${{ secrets.KUBE_CLUSTER }}
-          k8s_namespace: ${{ vars.KUBE_NAMESPACE }}
-          kube_token: "${{ secrets.KUBE_TOKEN }}"
+          k8s_namespace: ${{ secrets.KUBE_NAMESPACE }}
+          k8s_service_account: "cd-serviceaccount"
+          k8s_token: "${{ secrets.KUBE_TOKEN }}"
 
       # - name: Helm Deploy
       #   id: task
