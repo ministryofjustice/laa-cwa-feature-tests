@@ -45,6 +45,7 @@ jobs:
         uses: ./.github/actions/kube-auth
         with:
           k8s_cluster_name: ${{ secrets.KUBE_CLUSTER }}
+          k8s_cert: ${{ vars.KUBE_CERT }}
           k8s_namespace: ${{ vars.K8S_NAMESPACE }}
           kube_token: "${{ secrets.KUBE_TOKEN }}"
 
