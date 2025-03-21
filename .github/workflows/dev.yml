@@ -46,7 +46,7 @@ jobs:
         with:
           k8s_cluster_name: ${{ secrets.KUBE_CLUSTER }}
           k8s_namespace: ${{ secrets.KUBE_NAMESPACE }}
-          k8s_service_account: "cd-serviceaccount"
+          k8s_service_account: cd-serviceaccount
           k8s_token: "${{ secrets.KUBE_TOKEN }}"
 
       # - name: Helm Deploy

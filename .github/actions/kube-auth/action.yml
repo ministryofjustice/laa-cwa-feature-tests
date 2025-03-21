@@ -25,11 +25,11 @@ runs:
   - name: Kubernetes Auth
     run: |
       kubectl config set-cluster ${{ inputs.k8s_cluster_name }} --server="https://${{ inputs.k8s_cluster_name }}"
-      kubectl config set-credentials ${{ k8s_service_account }} --token=${{ inputs.k8s_token }}
+      kubectl config set-credentials ${{ inputs.k8s_service_account }} --token=${{ inputs.k8s_token }}
     shell: bash
 
   - name: Configure kubecontext
     run: |  
-      kubectl config set-context ${{ inputs.k8s_cluster_name }} --cluster=${{ inputs.k8s_cluster_name }} --user=${{ k8s_service_account }} --namespace=${{ inputs.k8s_namespace }}
+      kubectl config set-context ${{ inputs.k8s_cluster_name }} --cluster=${{ inputs.k8s_cluster_name }} --user=${{ inputs.k8s_service_account }} --namespace=${{ inputs.k8s_namespace }}
       kubectl config use-context ${{ inputs.k8s_cluster_name }}
     shell: bash
