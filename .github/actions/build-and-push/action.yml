@@ -1,0 +1,32 @@
+name: Build and Push Image
+description: Build Image and Push to Container Registry
+
+inputs:
+  image_repository:
+    required: true
+    description: "Image Repository URL"
+
+outputs:
+  image_registry:
+    description: "Image Registry URL"
+    value: ${{ env.REGISTRY }}
+  image_repo:
+    description: "Image Repo Path"
+    value: ${{ env.REPOSITORY }}
+  image_tag:
+    description: "Image Tag"
+    value: ${{ env.IMAGE_TAG }}
+
+runs:
+  using: "composite"
+
+  steps:
+  - name: Docker Build
+    run: |
+        docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+        docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+    shell: bash
+    env:
+      REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      REPOSITORY: ${{ input.image_repository }}
+      IMAGE_TAG: ${{ github.sha }}

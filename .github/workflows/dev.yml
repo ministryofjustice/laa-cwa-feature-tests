@@ -3,23 +3,48 @@ on:
 
 jobs:
   build_and_push:
-    permissions:
-      id-token: write # This is required for requesting the JWT
-      contents: read  # This is required for actions/checkout
-    uses: ./.github/actions/build-and-push.yml
-    secrets: inherit
+    runs-on: ubuntu-latest
+    steps:
+      - name: ECR Auth
+        id: auth
+        uses: ./.github/actions/ecr-auth
+        with:
+          ecr_region: ${{ vars.ECR_REGION }}
+          ecr_role: ${{ secrets.ECR_ROLE_TO_ASSUME }}
 
-  # helm_deploy:
-  #   permissions:
-  #     id-token: write
-  #     contents: read
-  #   uses: ./.github/actions/helm-deploy.yml
-  #   with:
-  #     k8s_namespace: laa-cwa-feature-tests-dev
-  #     helm_release_name: laa-cwa-feature-tests
-  #     helm_chart: ./charts/cwa-tests
-  #     helm_values_path: charts/cwa-tests/Values.yaml
-  #     image_registry: ${{ outputs.build_and_push.image_registry }}
-  #     image_repo: ${{ outputs.build_and_push.image_repo }}
-  #     image_tag: ${{ outputs.build_and_push.image_tag }}
-  #   secrets: inherit
+    #   - name: Build and Push
+    #     id: task
+    #     uses: ./.github/actions/build-and-push
+    #     with:
+    #       image_repository: ${{ var.ECR_REPOSITORY }}
+
+    # outputs:
+    #   image_registry: ${{ build_and_push.task.outputs.image_registry }}
+    #   image_repo: ${{ build_and_push.task.outputs.image_repo }}
+    #   image_tag: ${{ build_and_push.task.outputs.image_tag }}
+
+  helm_deploy:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - name: Kube Authentication
+        id: auth
+        uses: ./.github/actions/kube-auth
+        with:
+          k8s_cluster_name: ${{ secrets.KUBE_CLUSTER }}
+          k8s_namespace: ${{ vars.K8S_NAMESPACE }}
+          kube_token: "${{ secrets.KUBE_TOKEN }}"
+
+      # - name: Helm Deploy
+      #   id: task
+      #   uses: ./.github/actions/helm-deploy
+      #   with:
+      #     k8s_cluster_name: ${{ secrets.KUBE_CLUSTER }}
+      #     k8s_namespace: ${{ vars.K8S_NAMESPACE }}
+      #     kube_token: "${{ secrets.KUBE_TOKEN }}"
+      #     helm_release_name: laa-cwa-feature-tests
+      #     helm_chart: ./charts/cwa-tests
+      #     helm_values_path: charts/cwa-tests/Values.yaml
+      #     image_registry: ${{needs.build_and_push.outputs.image_registry}}
+      #     image_repo: ${{needs.build_and_push.outputs.image_repo}}
+      #     image_tag: ${{needs.build_and_push.outputs.image_tag}}
