@@ -21,8 +21,8 @@ runs:
   steps:
   - name: Kubernetes Auth
     run: |
-      echo "${{ inputs.k8s_cert }}" > ca.crt
-      kubectl config set-cluster ${{ inputs.k8s_cluster_name }} --certificate-authority=./ca.crt --server="https://${{ inputs.k8s_cluster_name }}"
+      
+      kubectl config set-cluster ${{ inputs.k8s_cluster_name }} --server="https://${{ inputs.k8s_cluster_name }}"
       kubectl config set-credentials cd-serviceaccount --token=${{ inputs.kube_token }}
     shell: bash
 
