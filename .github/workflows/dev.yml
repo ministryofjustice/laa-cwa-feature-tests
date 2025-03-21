@@ -6,14 +6,14 @@ jobs:
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read  # This is required for actions/checkout
-    uses: ./.github/workflows/_reusable-build-and-push.yml
+    uses: ./.github/actions/build-and-push.yml
     secrets: inherit
 
   # helm_deploy:
   #   permissions:
   #     id-token: write
   #     contents: read
-  #   uses: ./.github/workflows/_reusable-helm-deploy.yml
+  #   uses: ./.github/actions/helm-deploy.yml
   #   with:
   #     k8s_namespace: laa-cwa-feature-tests-dev
   #     helm_release_name: laa-cwa-feature-tests
