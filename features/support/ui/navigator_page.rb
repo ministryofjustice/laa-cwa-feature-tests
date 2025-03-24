@@ -8,7 +8,13 @@ class NavigatorContent < SitePrism::Section
 end
 
 class NavigatorPage < SitePrism::Page
-  set_url "#{CWAProvider.url}/OA_HTML/OA.jsp?OAFunc=OAHOMEPAGE"
+
+  case ENV['TEST_ENV']
+    when "devmp", "stg"
+      set_url "#{CWAProvider.url[0..-28]}/OA_HTML/OA.jsp?OAFunc=OAHOMEPAGE"   # 0..-28 removes the last 28 characters from the string
+    when "tst", "dev", "uat"
+      set_url "#{CWAProvider.url}/OA_HTML/OA.jsp?OAFunc=OAHOMEPAGE"
+  end
 
   section :roles, RolesSection, :xpath, '//*[@id="responsibilityRN"]/table/tbody/tr/td[1]/table/tbody'
   section :content, NavigatorContent, :xpath, '//*[@id="responsibilityRN"]/table/tbody/tr/td[2]/table/tbody'
