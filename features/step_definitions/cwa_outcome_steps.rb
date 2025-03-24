@@ -18,6 +18,7 @@ Then('the outcome saves successfully') do
     STDOUT.puts page.errors.text
     raise RSpec::Expectations::ExpectationNotMetError
   end
+  byebug
 end
 
 
