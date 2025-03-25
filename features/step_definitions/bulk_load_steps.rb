@@ -297,6 +297,7 @@ end
 Then('user should see the outcome results page') do
   @bulk_load_results_page = BulkLoadResultsPage.new
   expect(@bulk_load_results_page).to be_loaded
+  byebug
 end
 
 Then('user should see the bulk load results page') do

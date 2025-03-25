@@ -77,6 +77,7 @@ Given('user is on the pricing outcome details page') do
       raise PricingUnavailableError
     end
   end
+  byebug
 end
 
 When('user is looking at outcome {string}') do |ufn|
@@ -107,6 +108,23 @@ Then('user should see the following outcomes for accummulated claims:') do |tabl
     end
     expect(current_outcome.value.text).to eq(row['Value'])
   end
+end
+
+Then('user should see the following outcomes for delinked claims:') do |table|
+  submission_details_page = SubmissionDetailsPage.new
+  outcome_data = table.hashes
+  outcome_data.each do |row|
+    STDOUT.puts("Checking #{row['CASE_REF_NUMBER']}")
+    current_outcome = submission_details_page.outcomes.find do |outcome|
+      outcome.case_reference.text == row['CASE_REF_NUMBER']
+    end
+    expect(current_outcome.value.text).to eq(row['Value'])
+    expected_flag = row['EscFlag'].to_s.downcase == 'true'
+    found_flag = current_outcome.has_escape_fee_img?(wait: 0)
+    STDOUT.puts "    Checking escape fee flag for #{current_outcome.ufn.text}: #{(found_flag ? 'FOUND' : 'NOT FOUND')} (expected: #{expected_flag})"
+    expect(found_flag).to eq(expected_flag)
+  end
+  byebug
 end
 
 Then("user should see the outcome with one of these stage reached codes:") do |table|
