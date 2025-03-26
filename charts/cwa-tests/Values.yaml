@@ -1,13 +1,13 @@
 global:
   branch: main
   costcentre: LAA
-  namespace: "laa-cwa-test"
-  serviceAccount: "sa-laa-cwa-test"
+  namespace: "laa-cwa-feature-tests-dev"
+  serviceAccount: "irsa-s3-laa-cwa-feature-tests-dev"
   circle_sha1: ""
   browser: chrome
   test_env: tst
   registryAddress: ""
-  regPath: laa-pcuam/laa-cwa-test-ecr
+  regPath: laa-pcuam/laa-cwa-feature-tests-dev
 
 ecr:
   image:
