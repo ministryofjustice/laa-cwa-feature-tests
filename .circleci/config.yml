@@ -218,7 +218,8 @@ jobs:
             --set ecr.image.tag="${SANITISED_BRANCH_WITH_SHA}" \
             --set global.registryAddress="${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com" \
             --wait --timeout 300s
-            kubectl logs -f "${RELEASE_NAME}-run-laa-pcuam-cwa-tests"
+            export POD_NAME=$(kubectl get pods -n laa-cwa-feature-tests-dev --no-headers | awk '{print $1}' | grep '^cwa-tests-[0-9]\{10\}$' | sort | tail -1)
+            kubectl logs -f -n laa-cwa-feature-tests-dev $POD_NAME
       - run:
           name: Wait for specific pod to complete
           command: |

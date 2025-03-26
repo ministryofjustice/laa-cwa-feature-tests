@@ -6,11 +6,11 @@ global:
   circle_sha1: ""
   browser: chrome
   test_env: tst
-  registryAddress: ""
-  regPath: laa-pcuam/laa-cwa-feature-tests-dev
 
 ecr:
   image:
+    registryAddress: 754256621582.dkr.ecr.eu-west-2.amazonaws.com
+    regPath: laa-pcuam/laa-cwa-feature-tests-dev
     tag: batches-latest
     pullPolicy: Always
 

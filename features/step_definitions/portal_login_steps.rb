@@ -28,3 +28,12 @@ Given('user is on the portal home page') do
     Then Portal application page is displayed
   )
 end
+
+def portal_login
+  steps %(
+      Given a test firm user is on the portal login page
+      When user Logs in
+      Then Portal application page is displayed
+      When user clicks on CWA link
+      )
+end

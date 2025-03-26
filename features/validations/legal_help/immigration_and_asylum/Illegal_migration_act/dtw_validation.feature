@@ -112,7 +112,7 @@ Feature: claims validations for DTW(detention travel and waiting cost) for follo
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE |
       | 1 | <none>                |
-      | 2 | <none>                |
+      | 2 | The reporting code combination that has been used is not valid. Please amend accordingly. |
 
   Scenario: Add stage claim and completed matter with counsel cost zero and non zero values
     Given a test firm user is logged in CWA
@@ -126,4 +126,4 @@ Feature: claims validations for DTW(detention travel and waiting cost) for follo
     Then the following results are expected:
       | # | ERROR_CODE_OR_MESSAGE |
       | 1 | <none>                |
-      | 2 | <none>                |
+      | 2 | The reporting code combination that has been used is not valid. Please amend accordingly.  |
