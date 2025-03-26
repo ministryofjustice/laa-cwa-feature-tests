@@ -134,7 +134,7 @@ jobs:
       environment:
         description: Destination environment
         type: string
-        default: laa-cwa-test
+        default: laa-cwa-feature-tests-dev
       token:
         description: CircleCI Service account token
         type: string
@@ -180,7 +180,7 @@ jobs:
       environment:
         description: Destination environment
         type: string
-        default: laa-cwa-test
+        default: laa-cwa-feature-tests-dev
       token:
         description: CircleCI Service account token
         type: string
