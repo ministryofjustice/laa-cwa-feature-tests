@@ -1,8 +1,9 @@
 global:
   branch: main
   costcentre: LAA
-  namespace: "laa-cwa-test"
+  namespace: "laa-cwa-feature-tests-dev"
   serviceAccount: "irsa-s3-laa-cwa-feature-tests-dev"
+  circle_sha1: ""
   browser: chrome
   test_env: tst
 
@@ -12,3 +13,23 @@ ecr:
     regPath: laa-pcuam/laa-cwa-feature-tests-dev
     tag: batches-latest
     pullPolicy: Always
+
+redisSetup:
+  image:
+    tag: ""
+
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+  capabilities:
+    drop:
+      - "ALL"
+  seccompProfile:
+    type: RuntimeDefault
+
+# Default values for cwa-tests.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+setup: false
+run: false
