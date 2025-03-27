@@ -1,156 +1,156 @@
-version: 2.1
+# version: 2.1
 
-orbs:
-  aws-cli: circleci/aws-cli@4.0.0
-  aws-ecr: circleci/aws-ecr@8.2.1
-  helm: circleci/helm@2.0.1
-  slack: circleci/slack@4.12.5
+# orbs:
+#   aws-cli: circleci/aws-cli@4.0.0
+#   aws-ecr: circleci/aws-ecr@8.2.1
+#   helm: circleci/helm@2.0.1
+#   slack: circleci/slack@4.12.5
 
-# ------------------
-# EXECUTORS
-# ------------------
-executors:
-  build-executor:
-    docker:
-      - image: cimg/base:2023.03
-  deploy-executor:
-    resource_class: small
-    docker:
-      - image: ministryofjustice/cloud-platform-tools
+# # ------------------
+# # EXECUTORS
+# # ------------------
+# executors:
+#   build-executor:
+#     docker:
+#       - image: cimg/base:2023.03
+#   deploy-executor:
+#     resource_class: small
+#     docker:
+#       - image: ministryofjustice/cloud-platform-tools
 
-jobs:
-  Deploy_tests_on_cloud_platform:
-    executor: deploy-executor
-    parameters:
-      environment:
-        description: Destination environment
-        type: string
-        default: laa-cwa-feature-tests-dev
-      token:
-        description: CircleCI Service account token
-        type: string
-        default: ${CIRCLE_CI_TOKEN}
-    steps:
-      - checkout
-      - run:
-          name: Authenticate with cluster
-          command: |
-            echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
-            kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=https://${K8S_CLUSTER_NAME}
-            kubectl config set-credentials circleci --token=<< parameters.token >>
-            kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=<< parameters.environment >>
-            kubectl config use-context ${K8S_CLUSTER_NAME}
-            kubectl get pods
-      - run:
-          name: Deploy helm chart
-          command: |
-            export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
-            export SHORT_SHA1=$(echo "${CIRCLE_SHA1,,}" | cut -c1-7)
-            export SANITISED_BRANCH_WITH_SHA="${SANITISED_BRANCH}-${SHORT_SHA1}"
-            helm install --generate-name ./charts/cwa-tests \
-            -f charts/cwa-tests/Values.yaml \
-            --set ecr.image.tag=${SANITISED_BRANCH_WITH_SHA} \
-            --wait --timeout 300s
-            export POD_NAME=$(kubectl get pods -n laa-cwa-feature-tests-dev --no-headers | awk '{print $1}' | grep '^cwa-tests-[0-9]\{10\}$' | sort | tail -1)
-            kubectl logs -f -n laa-cwa-feature-tests-dev $POD_NAME
-      - run:
-          name: Creating Artifacts folder
-          command: |
-            mkdir /tmp/artifacts;
-            echo "Test reports for CWA UI tests" > /tmp/artifacts/art-2;
-      - store_artifacts:
-          path: reports
-          destination: test-reports
-      - run:
-          name: Clean namespace
-          command:  helm ls -n << parameters.environment >> --short | xargs -L1 -I {} helm uninstall {} -n << parameters.environment >>
-      - slack/notify:
-          channel: laa-cwa-testing
-          event: pass
-          mentions: '@pcuam-devs'
-          template: basic_success_1
+# jobs:
+#   Deploy_tests_on_cloud_platform:
+#     executor: deploy-executor
+#     parameters:
+#       environment:
+#         description: Destination environment
+#         type: string
+#         default: laa-cwa-feature-tests-dev
+#       token:
+#         description: CircleCI Service account token
+#         type: string
+#         default: ${CIRCLE_CI_TOKEN}
+#     steps:
+#       - checkout
+#       - run:
+#           name: Authenticate with cluster
+#           command: |
+#             echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
+#             kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=https://${K8S_CLUSTER_NAME}
+#             kubectl config set-credentials circleci --token=<< parameters.token >>
+#             kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=<< parameters.environment >>
+#             kubectl config use-context ${K8S_CLUSTER_NAME}
+#             kubectl get pods
+#       - run:
+#           name: Deploy helm chart
+#           command: |
+#             export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
+#             export SHORT_SHA1=$(echo "${CIRCLE_SHA1,,}" | cut -c1-7)
+#             export SANITISED_BRANCH_WITH_SHA="${SANITISED_BRANCH}-${SHORT_SHA1}"
+#             helm install --generate-name ./charts/cwa-tests \
+#             -f charts/cwa-tests/Values.yaml \
+#             --set ecr.image.tag=${SANITISED_BRANCH_WITH_SHA} \
+#             --wait --timeout 300s
+#             export POD_NAME=$(kubectl get pods -n laa-cwa-feature-tests-dev --no-headers | awk '{print $1}' | grep '^cwa-tests-[0-9]\{10\}$' | sort | tail -1)
+#             kubectl logs -f -n laa-cwa-feature-tests-dev $POD_NAME
+#       - run:
+#           name: Creating Artifacts folder
+#           command: |
+#             mkdir /tmp/artifacts;
+#             echo "Test reports for CWA UI tests" > /tmp/artifacts/art-2;
+#       - store_artifacts:
+#           path: reports
+#           destination: test-reports
+#       - run:
+#           name: Clean namespace
+#           command:  helm ls -n << parameters.environment >> --short | xargs -L1 -I {} helm uninstall {} -n << parameters.environment >>
+#       - slack/notify:
+#           channel: laa-cwa-testing
+#           event: pass
+#           mentions: '@pcuam-devs'
+#           template: basic_success_1
 
-  Build_and_Push_Docker_Image:
-    executor: build-executor
-    steps:
-      - checkout
-      - run:
-          name: Install git-crypt
-          command: |
-            sudo apt-get update
-            sudo apt-get install git-crypt
-      - run:
-          name: Decrypt secrets
-          command: |
-            echo "${GIT_CRYPT_KEY}" | base64 -d > git-crypt.key
-            git-crypt unlock git-crypt.key
-      - aws-cli/setup:
-          role_arn: $ECR_ROLE_TO_ASSUME
-          region: $ECR_REGION
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - run: |
-          aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
-      - run:
-          name: Set sanitised branch name
-          command: |
-            echo 'export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}-$(echo ${CIRCLE_SHA1} | cut -c1-7)" | sed -r 's/[/_]+/-/g')' >> "$BASH_ENV"
-            source "$BASH_ENV"
-      - aws-ecr/build-and-push-image:
-          push-image: true
-          tag: ${SANITISED_BRANCH}
-          region: ${ECR_REGION}
-          repo: ${ECR_REPOSITORY}
-      - slack/notify:
-          channel: laa-cwa-testing
-          event: fail
-          mentions: '@pcuam-devs'
-          template: basic_fail_1
+#   Build_and_Push_Docker_Image:
+#     executor: build-executor
+#     steps:
+#       - checkout
+#       - run:
+#           name: Install git-crypt
+#           command: |
+#             sudo apt-get update
+#             sudo apt-get install git-crypt
+#       - run:
+#           name: Decrypt secrets
+#           command: |
+#             echo "${GIT_CRYPT_KEY}" | base64 -d > git-crypt.key
+#             git-crypt unlock git-crypt.key
+#       - aws-cli/setup:
+#           role_arn: $ECR_ROLE_TO_ASSUME
+#           region: $ECR_REGION
+#       - setup_remote_docker:
+#           docker_layer_caching: true
+#       - run: |
+#           aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+#       - run:
+#           name: Set sanitised branch name
+#           command: |
+#             echo 'export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}-$(echo ${CIRCLE_SHA1} | cut -c1-7)" | sed -r 's/[/_]+/-/g')' >> "$BASH_ENV"
+#             source "$BASH_ENV"
+#       - aws-ecr/build-and-push-image:
+#           push-image: true
+#           tag: ${SANITISED_BRANCH}
+#           region: ${ECR_REGION}
+#           repo: ${ECR_REPOSITORY}
+#       - slack/notify:
+#           channel: laa-cwa-testing
+#           event: fail
+#           mentions: '@pcuam-devs'
+#           template: basic_fail_1
 
-  Notify_Slack_For_Approval:
-    executor: deploy-executor
-    steps:
-      - slack/notify:
-          channel: laa-cwa-testing
-          event: always
-          mentions: '@pcuam-devs'
-          template: basic_on_hold_1
-  Notify_Slack_For_Success:
-    executor: deploy-executor
-    steps:
-      - slack/notify:
-          channel: laa-cwa-testing
-          event: always
-          mentions: '@pcuam-devs'
-          template: basic_success_1
+#   Notify_Slack_For_Approval:
+#     executor: deploy-executor
+#     steps:
+#       - slack/notify:
+#           channel: laa-cwa-testing
+#           event: always
+#           mentions: '@pcuam-devs'
+#           template: basic_on_hold_1
+#   Notify_Slack_For_Success:
+#     executor: deploy-executor
+#     steps:
+#       - slack/notify:
+#           channel: laa-cwa-testing
+#           event: always
+#           mentions: '@pcuam-devs'
+#           template: basic_success_1
 
-workflows:
-  version: 2
-  build_and_push:
-    jobs:
-      - Build_and_Push_Docker_Image
-      - Notify_Slack_For_Approval:
-          requires:
-            - Build_and_Push_Docker_Image
+# workflows:
+#   version: 2
+#   build_and_push:
+#     jobs:
+#       - Build_and_Push_Docker_Image
+#       - Notify_Slack_For_Approval:
+#           requires:
+#             - Build_and_Push_Docker_Image
 
-  deploy_tests:
-    jobs:
-      - hold_test_deployment:
-          type: approval
-      - Deploy_tests_on_cloud_platform:
-          requires:
-            - hold_test_deployment
+#   deploy_tests:
+#     jobs:
+#       - hold_test_deployment:
+#           type: approval
+#       - Deploy_tests_on_cloud_platform:
+#           requires:
+#             - hold_test_deployment
 
-  scheduled_ui_test_run:
-    jobs:
-      - Deploy_tests_on_cloud_platform
-      - Notify_Slack_For_Success:
-          requires:
-            - Deploy_tests_on_cloud_platform
-    triggers:
-      - schedule:
-          cron: "30 1 * * *"
-          filters:
-           branches:
-            only:
-            - main
+#   scheduled_ui_test_run:
+#     jobs:
+#       - Deploy_tests_on_cloud_platform
+#       - Notify_Slack_For_Success:
+#           requires:
+#             - Deploy_tests_on_cloud_platform
+#     triggers:
+#       - schedule:
+#           cron: "30 1 * * *"
+#           filters:
+#            branches:
+#             only:
+#             - main
