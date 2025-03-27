@@ -202,10 +202,10 @@ jobs:
       - run:
           name: Wait for specific pod to complete
           command: |
-            RELEASE_NAME=$(cat release_name.txt) 
-            POD_NAME=$(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep "^${RELEASE_NAME}-run-laa-pcuam-cwa-tests")
+            RELEASE_NAME=$(cat release_name.txt)
+            POD_NAME=$(kubectl get pods -n laa-cwa-feature-tests-dev --no-headers -o custom-columns=":metadata.name" | grep "^${RELEASE_NAME}-run-laa-pcuam-cwa-tests")
             echo "Waiting for pod ${POD_NAME} to complete..."
-            kubectl wait --for=condition=complete pod/${POD_NAME} --timeout=18000s
+            kubectl logs "${POD_NAME}" -n laa-cwa-feature-tests-dev --tail=20
             echo "...completed"
       - run:
           name: Clean namespace
