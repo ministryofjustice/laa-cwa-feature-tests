@@ -308,7 +308,10 @@ workflows:
 
   scheduled_ui_test_run:
     jobs:
-      - deploy_tests_on_cloud_platform
+      - generate_release_name
+      - deploy_tests_on_cloud_platform:
+          requires:
+            - generate_release_name
       - notify_slack_for_success:
           requires:
             - deploy_tests_on_cloud_platform
