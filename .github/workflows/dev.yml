@@ -22,12 +22,12 @@ jobs:
         id: task
         uses: ./.github/actions/build-and-push
         with:
-          image_repository: ${{ var.ECR_REPOSITORY }}
+          image_repository: ${{ vars.ECR_REPOSITORY }}
 
-    # outputs:
-    #   image_registry: ${{ build_and_push.task.outputs.image_registry }}
-    #   image_repo: ${{ build_and_push.task.outputs.image_repo }}
-    #   image_tag: ${{ build_and_push.task.outputs.image_tag }}
+    outputs:
+      image_registry: ${{ build_and_push.task.outputs.image_registry }}
+      image_repo: ${{ build_and_push.task.outputs.image_repo }}
+      image_tag: ${{ build_and_push.task.outputs.image_tag }}
 
   helm_deploy:
     permissions:
@@ -62,3 +62,14 @@ jobs:
       #     image_registry: ${{needs.build_and_push.outputs.image_registry}}
       #     image_repo: ${{needs.build_and_push.outputs.image_repo}}
       #     image_tag: ${{needs.build_and_push.outputs.image_tag}}
+
+      # - name: Show Test Logs
+      #   id: logs
+      #   run: |
+      #     export POD_NAME=$(kubectl get pods -n ${{ secrets.KUBE_NAMESPACE }} --no-headers | awk '{print $1}' | grep '^cwa-tests-[0-9]\{10\}$' | sort | tail -1)
+      #     kubectl logs -f -n ${{ secrets.KUBE_NAMESPACE }} $POD_NAME
+
+      # - name: Purge Deployments
+      #   id: logs
+      #   run: |
+      #     helm ls -n ${{ secrets.KUBE_NAMESPACE }} --short | xargs -L1 -I {} helm uninstall {} -n ${{ secrets.KUBE_NAMESPACE }}
