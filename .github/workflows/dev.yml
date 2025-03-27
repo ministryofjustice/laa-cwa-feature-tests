@@ -25,9 +25,9 @@ jobs:
           image_repository: ${{ vars.ECR_REPOSITORY }}
 
     outputs:
-      image_registry: ${{ build_and_push.task.outputs.image_registry }}
-      image_repo: ${{ build_and_push.task.outputs.image_repo }}
-      image_tag: ${{ build_and_push.task.outputs.image_tag }}
+      image_registry: ${{ steps.task.outputs.image_registry }}
+      image_repo: ${{ steps.task.outputs.image_repo }}
+      image_tag: ${{ steps.task.outputs.image_tag }}
 
   helm_deploy:
     permissions:
