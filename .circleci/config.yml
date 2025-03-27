@@ -203,7 +203,7 @@ jobs:
           name: Wait for specific pod to complete
           command: |
             RELEASE_NAME=$(cat release_name.txt) 
-            export POD_NAME=$(kubectl get pods -o jsonpath='{.items[?(@.metadata.name=="${RELEASE_NAME}-run-laa-pcuam-cwa-tests")].metadata.name}')
+            POD_NAME=$(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep "^${RELEASE_NAME}-run-laa-pcuam-cwa-tests")
             echo "Waiting for pod ${POD_NAME} to complete..."
             kubectl wait --for=condition=complete pod/${POD_NAME} --timeout=18000s
             echo "...completed"
