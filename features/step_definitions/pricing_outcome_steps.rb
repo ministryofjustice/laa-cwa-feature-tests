@@ -1,3 +1,6 @@
+require 'net/http'
+require 'json'
+
 Given('user bulk loads monthly statement with {string} - {string} outcomes') do |category_of_law, outcome_type|
   file = bulkload_file(category_of_law, outcome_type)
   step 'a test firm user is logged in CWA'
@@ -124,4 +127,69 @@ end
 
 Then('the Escape Fee flag is {string}') do |flag|
   expect(@current_outcome.has_escape_fee_img?(wait: 0)).to eq(flag == 'Y' && true || false)
+end
+
+def call_assessment_value_api(ufn, ucn, account_number, period)
+  base_url = ENV['AV_API_URL'] || 'http://localhost:5000/'
+  uri = URI("#{base_url}get_assessment_value")
+  params = { ucn: ucn, ufn: ufn, account_number: account_number, submission_period: period }
+  uri.query = URI.encode_www_form(params)
+
+  # Debug statement to print the full URI
+  puts "API URI: #{uri}"
+
+  response = Net::HTTP.get(uri)
+
+  puts response 
+
+  JSON.parse(response)
+end
+
+Then('the assessment value should be returned for the following outcomes:') do |table|
+  # get Account Number and Submission Period from CWAProvider module
+  account_number = CWAProvider.submission.account_number
+  period = CWAProvider.submission.period
+
+  # create an instance of SubmissionDetailsPage
+  submission_details_page = SubmissionDetailsPage.new
+
+  # iterate through each row in the DataTable
+  table.hashes.each do |row|
+    case_id = row['case_id']
+    expected_assessment_value = row['assessment_value']
+    expected_linked_lines = row['linked_lines']
+    expected_escape_flag = row['escape_flag']
+
+    result = submission_details_page.find_ufn_and_ucn_by_case_id(case_id)
+    if result
+      puts "call AV API with #{result[:ufn]}, #{result[:ucn]}, #{account_number}, #{period}"
+      
+      # Call the API with the UFN, UCN, account_number, and period
+      api_response = call_assessment_value_api(result[:ufn], result[:ucn], account_number, period)
+
+      # Extract the values from the API response
+      actual_assessment_value = api_response['assessment_value']
+      actual_linked_lines = api_response['linked_lines']
+      actual_escape_flag = api_response['escape_flag']
+
+      # Format the values to 2 decimal places
+      formatted_expected_assessment_value = sprintf('%.2f', expected_assessment_value.to_f)
+      formatted_actual_assessment_value = sprintf('%.2f', actual_assessment_value.to_f)
+
+      # Compare the values with custom failure messages
+      expect(formatted_actual_assessment_value).to eq(formatted_expected_assessment_value), 
+      "Expected assessment value for case_id #{case_id} to be #{formatted_expected_assessment_value}, " \
+      "but got #{formatted_actual_assessment_value}"
+      expect(actual_linked_lines.to_s).to eq(expected_linked_lines), 
+      "Expected linked lines for case_id #{case_id} to be #{expected_linked_lines}, " \
+      "but got #{actual_linked_lines}"
+      expect(actual_escape_flag).to eq(expected_escape_flag), 
+      "Expected escape flag for case_id #{case_id} to be #{expected_escape_flag}, " \
+      "but got #{actual_escape_flag}"
+
+      puts "Values match for case_id #{case_id}"
+    else
+      puts "No match found for case_id #{case_id}"
+    end
+  end
 end
