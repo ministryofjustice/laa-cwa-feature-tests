@@ -2,6 +2,9 @@ name: Build and Push Image
 description: Build Image and Push to Container Registry
 
 inputs:
+  image_registry:
+    required: true
+    description: "Image Registry URL"
   image_repository:
     required: true
     description: "Image Repository URL"
@@ -27,6 +30,6 @@ runs:
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
     shell: bash
     env:
-      REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      REGISTRY: ${{ inputs.image_registry }}
       REPOSITORY: ${{ inputs.image_repository }}
       IMAGE_TAG: ${{ github.sha }}
