@@ -42,8 +42,8 @@ jobs:
 
       - name: PRINT VARIABLE
         run: |
-          echo ${{ var.TEST_VAR }}
-          echo ${{ var.ECR_REGION }}
+          echo ${{ vars.TEST_VAR }}
+          echo ${{ vars.ECR_REGION }}
 
       - name: Kube Authentication
         id: auth
