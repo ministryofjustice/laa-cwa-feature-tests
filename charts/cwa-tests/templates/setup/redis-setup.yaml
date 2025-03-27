@@ -29,7 +29,7 @@ spec:
           type: "{{ .Values.securityContext.seccompProfile.type }}"
   containers:
     - name: setup
-      image: "{{ .Values.ecr.image.registryAddress }}/{{ .Values.ecr.image.regPath }}:{{ .Values.redisSetup.image.tag }}"
+      image: "{{ .Values.ecr.image.registryAddress }}/{{ .Values.ecr.image.regPath }}:{{ default .Values.ecr.image.tag .Values.redisSetup.image.tag }}"
       securityContext:
         runAsNonRoot: true
         allowPrivilegeEscalation: false
