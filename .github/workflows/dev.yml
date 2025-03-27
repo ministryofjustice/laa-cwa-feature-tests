@@ -40,6 +40,11 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #--v4.2.2
 
+      - name: PRINT VARIABLE
+        run: |
+          echo ${{ var.TEST_VAR }}
+          echo ${{ var.ECR_REGION }}
+
       - name: Kube Authentication
         id: auth
         uses: ./.github/actions/kube-auth
