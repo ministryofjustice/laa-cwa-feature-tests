@@ -28,5 +28,5 @@ runs:
     shell: bash
     env:
       REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      REPOSITORY: ${{ input.image_repository }}
+      REPOSITORY: ${{ inputs.image_repository }}
       IMAGE_TAG: ${{ github.sha }}
