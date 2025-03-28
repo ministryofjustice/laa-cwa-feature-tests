@@ -95,6 +95,7 @@ legal_help:
       #welfare benefits specific fields
       type_of_advice:
       delivery_location:
+      tolerance_indicator:
 
     education:
       <<: *base_cm

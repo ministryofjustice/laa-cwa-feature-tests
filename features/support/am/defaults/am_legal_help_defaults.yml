@@ -53,11 +53,13 @@ immigration_base_cm: &immigration_base_cm_defaults
 legal_help:
   completed_matter:
     welfare_benefits:
-      <<: *base_defaults
+      <<: *base_defaults_cm
       procurement_area: PA00125
-      stage_reached: DA
-      outcome_code: DA
-      type_of_advice: REMOTE
+      stage_reached: 
+      outcome_code: WA
+      type_of_advice: Remote
+      tolerance_indicator: N
+      delivery_location: DL00001
 
 
     education:
