@@ -8,6 +8,10 @@ inputs:
   image_repository:
     required: true
     description: "Image Repository URL"
+  build_path:
+    required: true
+    description: "Docker Build Path"
+    default: "."
 
 outputs:
   image_registry:
@@ -26,7 +30,7 @@ runs:
   steps:
   - name: Docker Build
     run: |
-        docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+        docker build -t ${{ inputs.build_path }} $REGISTRY/$REPOSITORY:$IMAGE_TAG .
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
     shell: bash
     env:
