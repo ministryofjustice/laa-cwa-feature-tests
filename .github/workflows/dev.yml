@@ -71,6 +71,6 @@ jobs:
           kubectl logs -f -n ${{ secrets.KUBE_NAMESPACE }} $POD_NAME
 
       - name: Purge Deployments
-        id: logs
+        id: purge
         run: |
           helm ls -n ${{ secrets.KUBE_NAMESPACE }} --short | xargs -L1 -I {} helm uninstall {} -n ${{ secrets.KUBE_NAMESPACE }}
