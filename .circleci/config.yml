@@ -1,156 +1,324 @@
-# version: 2.1
+version: 2.1
 
-# orbs:
-#   aws-cli: circleci/aws-cli@4.0.0
-#   aws-ecr: circleci/aws-ecr@8.2.1
-#   helm: circleci/helm@2.0.1
-#   slack: circleci/slack@4.12.5
+orbs:
+  aws-cli: circleci/aws-cli@4.0.0
+  aws-ecr: circleci/aws-ecr@8.2.1
+  helm: circleci/helm@2.0.1
+  slack: circleci/slack@4.12.5
+  python: circleci/python@3.0.0
 
-# # ------------------
-# # EXECUTORS
-# # ------------------
-# executors:
-#   build-executor:
-#     docker:
-#       - image: cimg/base:2023.03
-#   deploy-executor:
-#     resource_class: small
-#     docker:
-#       - image: ministryofjustice/cloud-platform-tools
+# ------------------
+# EXECUTORS
+# ------------------
+executors:
+  build-executor:
+    docker:
+      - image: cimg/base:2023.03
+  deploy-executor:
+    resource_class: small
+    docker:
+      - image: ministryofjustice/cloud-platform-tools
 
-# jobs:
-#   Deploy_tests_on_cloud_platform:
-#     executor: deploy-executor
-#     parameters:
-#       environment:
-#         description: Destination environment
-#         type: string
-#         default: laa-cwa-feature-tests-dev
-#       token:
-#         description: CircleCI Service account token
-#         type: string
-#         default: ${CIRCLE_CI_TOKEN}
-#     steps:
-#       - checkout
-#       - run:
-#           name: Authenticate with cluster
-#           command: |
-#             echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
-#             kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=https://${K8S_CLUSTER_NAME}
-#             kubectl config set-credentials circleci --token=<< parameters.token >>
-#             kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=<< parameters.environment >>
-#             kubectl config use-context ${K8S_CLUSTER_NAME}
-#             kubectl get pods
-#       - run:
-#           name: Deploy helm chart
-#           command: |
-#             export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
-#             export SHORT_SHA1=$(echo "${CIRCLE_SHA1,,}" | cut -c1-7)
-#             export SANITISED_BRANCH_WITH_SHA="${SANITISED_BRANCH}-${SHORT_SHA1}"
-#             helm install --generate-name ./charts/cwa-tests \
-#             -f charts/cwa-tests/Values.yaml \
-#             --set ecr.image.tag=${SANITISED_BRANCH_WITH_SHA} \
-#             --wait --timeout 300s
-#             export POD_NAME=$(kubectl get pods -n laa-cwa-feature-tests-dev --no-headers | awk '{print $1}' | grep '^cwa-tests-[0-9]\{10\}$' | sort | tail -1)
-#             kubectl logs -f -n laa-cwa-feature-tests-dev $POD_NAME
-#       - run:
-#           name: Creating Artifacts folder
-#           command: |
-#             mkdir /tmp/artifacts;
-#             echo "Test reports for CWA UI tests" > /tmp/artifacts/art-2;
-#       - store_artifacts:
-#           path: reports
-#           destination: test-reports
-#       - run:
-#           name: Clean namespace
-#           command:  helm ls -n << parameters.environment >> --short | xargs -L1 -I {} helm uninstall {} -n << parameters.environment >>
-#       - slack/notify:
-#           channel: laa-cwa-testing
-#           event: pass
-#           mentions: '@pcuam-devs'
-#           template: basic_success_1
+jobs:
+  generate_release_name:
+    docker:
+      - image: cimg/ruby:3.3.4
+    steps:
+      - checkout
+      - run:
+          name: Install Gem
+          command: gem install petname
+      - run:
+          name: Run Ruby Script
+          command: |
+            ruby docker/scripts/generate_release_name.rb > release_name.txt
+      - store_artifacts:
+          path: release_name.txt
+          destination: release_name.txt
+      - persist_to_workspace:
+          root: .
+          paths:
+            - release_name.txt
 
-#   Build_and_Push_Docker_Image:
-#     executor: build-executor
-#     steps:
-#       - checkout
-#       - run:
-#           name: Install git-crypt
-#           command: |
-#             sudo apt-get update
-#             sudo apt-get install git-crypt
-#       - run:
-#           name: Decrypt secrets
-#           command: |
-#             echo "${GIT_CRYPT_KEY}" | base64 -d > git-crypt.key
-#             git-crypt unlock git-crypt.key
-#       - aws-cli/setup:
-#           role_arn: $ECR_ROLE_TO_ASSUME
-#           region: $ECR_REGION
-#       - setup_remote_docker:
-#           docker_layer_caching: true
-#       - run: |
-#           aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
-#       - run:
-#           name: Set sanitised branch name
-#           command: |
-#             echo 'export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}-$(echo ${CIRCLE_SHA1} | cut -c1-7)" | sed -r 's/[/_]+/-/g')' >> "$BASH_ENV"
-#             source "$BASH_ENV"
-#       - aws-ecr/build-and-push-image:
-#           push-image: true
-#           tag: ${SANITISED_BRANCH}
-#           region: ${ECR_REGION}
-#           repo: ${ECR_REPOSITORY}
-#       - slack/notify:
-#           channel: laa-cwa-testing
-#           event: fail
-#           mentions: '@pcuam-devs'
-#           template: basic_fail_1
+  check_redis_setup_docker_image:
+    executor: build-executor
+    steps:
+      - checkout
+      - run:
+          name: Calculate checksums
+          command: |
+            DOCKERFILE_CHECKSUM=$(sha1sum docker/Dockerfile | awk '{ print $1 }')
+            SETUP_SCRIPT_CHECKSUM=$(sha1sum docker/scripts/setup.rb | awk '{ print $1 }')
+            REDIS_SETUP_IMAGE_TAG="redis-setup-${DOCKERFILE_CHECKSUM}-${SETUP_SCRIPT_CHECKSUM}"
+            echo "export REDIS_SETUP_IMAGE_TAG=${REDIS_SETUP_IMAGE_TAG}" >> "$BASH_ENV"
+            echo "Image Tag: ${REDIS_SETUP_IMAGE_TAG}"
+      - aws-cli/setup:
+          role_arn: $ECR_ROLE_TO_ASSUME
+          region: $ECR_REGION
+      - run:
+          name: Check if Docker image exists in ECR
+          command: |
+            echo "Checking if image exists in ECR..."
+            echo "Image Tag: ${REDIS_SETUP_IMAGE_TAG}"
+            IMAGE_EXISTS=$(aws ecr describe-images --repository-name ${ECR_REPOSITORY} --image-ids imageTag=${REDIS_SETUP_IMAGE_TAG} --region ${ECR_REGION} 2>&1 || true)
+            echo "IMAGE_EXISTS: $IMAGE_EXISTS"
+            if echo "$IMAGE_EXISTS" | grep -q 'ImageNotFoundException'; then
+              echo "Image ${REDIS_SETUP_IMAGE_TAG} does not exist in ECR. Proceeding with build."
+              echo "export SKIP_BUILD=false" >> "$BASH_ENV"
+            else
+              echo "Image ${REDIS_SETUP_IMAGE_TAG} already exists in ECR. Skipping build."
+              echo "export SKIP_BUILD=true" >> "$BASH_ENV"
+            fi
+      - run:
+          name: Save environment variables
+          command: cp $BASH_ENV bash.env
+      - persist_to_workspace:
+          root: .
+          paths:
+            - bash.env
 
-#   Notify_Slack_For_Approval:
-#     executor: deploy-executor
-#     steps:
-#       - slack/notify:
-#           channel: laa-cwa-testing
-#           event: always
-#           mentions: '@pcuam-devs'
-#           template: basic_on_hold_1
-#   Notify_Slack_For_Success:
-#     executor: deploy-executor
-#     steps:
-#       - slack/notify:
-#           channel: laa-cwa-testing
-#           event: always
-#           mentions: '@pcuam-devs'
-#           template: basic_success_1
+  build_and_push_redis_setup_docker_image:
+    executor: build-executor
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Load environment variables
+          command: |
+            cat bash.env >> $BASH_ENV
+      - run: |
+          # verify; this should print 'true' or 'false'
+          printenv SKIP_BUILD
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - aws-cli/setup:
+          role_arn: $ECR_ROLE_TO_ASSUME
+          region: $ECR_REGION
+      - run:
+          name: Build Docker image
+          command: |
+            if [ "$SKIP_BUILD" != "true" ]; then
+              docker build -t redis-setup:latest -f docker/Dockerfile .
+            else
+              echo "Skipping build"
+            fi
+      - run:
+          name: Tag Docker image
+          command: |
+            if [ "$SKIP_BUILD" != "true" ]; then
+              docker tag redis-setup:latest ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}:${REDIS_SETUP_IMAGE_TAG}
+            else
+              echo "Skipping tag"
+            fi
+      - run:
+          name: Login to ECR
+          command: |
+            if [ "$SKIP_BUILD" != "true" ]; then
+              aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+            else
+              echo "Skipping ECR login"
+            fi
+      - run:
+          name: Push Docker image
+          command: |
+            if [ "$SKIP_BUILD" != "true" ]; then
+              docker push ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY}:${REDIS_SETUP_IMAGE_TAG}
+            else
+              echo "Skipping push"
+            fi
 
-# workflows:
-#   version: 2
-#   build_and_push:
-#     jobs:
-#       - Build_and_Push_Docker_Image
-#       - Notify_Slack_For_Approval:
-#           requires:
-#             - Build_and_Push_Docker_Image
+  deploy_test_setup:
+    executor: deploy-executor
+    parameters:
+      environment:
+        description: Destination environment
+        type: string
+        default: laa-cwa-feature-tests-dev
+      token:
+        description: CircleCI Service account token
+        type: string
+        default: ${CIRCLE_CI_TOKEN} 
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Load environment variables
+          command: |
+            if [ -f bash.env ]; then
+              cat bash.env >> $BASH_ENV
+              source $BASH_ENV
+            fi
+      - run:
+          name: Debug REDIS_SETUP_IMAGE_TAG
+          command: echo "REDIS_SETUP_IMAGE_TAG=${REDIS_SETUP_IMAGE_TAG}"
 
-#   deploy_tests:
-#     jobs:
-#       - hold_test_deployment:
-#           type: approval
-#       - Deploy_tests_on_cloud_platform:
-#           requires:
-#             - hold_test_deployment
+  deploy_tests_on_cloud_platform:
+    executor: deploy-executor
+    parameters:
+      environment:
+        description: Destination environment
+        type: string
+        default: laa-cwa-feature-tests-dev
+      token:
+        description: CircleCI Service account token
+        type: string
+        default: ${CIRCLE_CI_TOKEN}
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Load environment variables
+          command: |
+            if [ -f bash.env ]; then
+              cat bash.env >> $BASH_ENV
+              source $BASH_ENV
+            fi
+      - run:
+          name: Authenticate with cluster
+          command: |
+            echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
+            kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=https://${K8S_CLUSTER_NAME}
+            kubectl config set-credentials circleci --token=<< parameters.token >>
+            kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=<< parameters.environment >>
+            kubectl config use-context ${K8S_CLUSTER_NAME}
+            kubectl get pods
+      - run:
+          name: Deploy helm chart
+          command: |
+            export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
+            export SHORT_SHA1=$(echo "${CIRCLE_SHA1,,}" | cut -c1-7)
+            export SANITISED_BRANCH_WITH_SHA="${SANITISED_BRANCH}-${SHORT_SHA1}"
+            RELEASE_NAME=$(cat release_name.txt) 
+            helm install "${RELEASE_NAME}-run" ./charts/cwa-tests \
+            -f charts/cwa-tests/Values.yaml \
+            --set run=true \
+            --set ecr.image.tag="${SANITISED_BRANCH_WITH_SHA}" \
+            --set global.registryAddress="${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com" \
+            --wait --timeout 300s
+            kubectl logs -f "${RELEASE_NAME}-run-laa-pcuam-cwa-tests"
+      - run:
+          name: Wait for specific pod to complete
+          command: |
+            RELEASE_NAME=$(cat release_name.txt)
+            POD_NAME=$(kubectl get pods -n laa-cwa-feature-tests-dev --no-headers -o custom-columns=":metadata.name" | grep "^${RELEASE_NAME}-run-laa-pcuam-cwa-tests")
+            echo "Waiting for pod ${POD_NAME} to complete..."
+            kubectl logs "${POD_NAME}" -n laa-cwa-feature-tests-dev --tail=20
+            echo "...completed"
+      - run:
+          name: Clean namespace
+          command: |
+            RELEASE_NAME=$(cat release_name.txt)
+            helm ls -n << parameters.environment >> --short | \
+            grep "${RELEASE_NAME}" | \
+            xargs -L1 -I {} helm uninstall {} -n << parameters.environment >>
+      - slack/notify:
+          channel: laa-cwa-testing
+          event: pass
+          mentions: '@pcuam-devs'
+          template: basic_success_1
 
-#   scheduled_ui_test_run:
-#     jobs:
-#       - Deploy_tests_on_cloud_platform
-#       - Notify_Slack_For_Success:
-#           requires:
-#             - Deploy_tests_on_cloud_platform
-#     triggers:
-#       - schedule:
-#           cron: "30 1 * * *"
-#           filters:
-#            branches:
-#             only:
-#             - main
+  build_and_push_docker_image:
+    executor: build-executor
+    steps:
+      - checkout
+      - run:
+          name: Install git-crypt
+          command: |
+            sudo apt-get update
+            sudo apt-get install git-crypt
+      - run:
+          name: Decrypt secrets
+          command: |
+            echo "${GIT_CRYPT_KEY}" | base64 -d > git-crypt.key
+            git-crypt unlock git-crypt.key
+      - aws-cli/setup:
+          role_arn: $ECR_ROLE_TO_ASSUME
+          region: $ECR_REGION
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run: |
+          aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com
+      - run:
+          name: Set sanitised branch name
+          command: |
+            echo 'export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}-$(echo ${CIRCLE_SHA1} | cut -c1-7)" | sed -r 's/[/_]+/-/g')' >> "$BASH_ENV"
+            source "$BASH_ENV"
+      - aws-ecr/build-and-push-image:
+          push-image: true
+          tag: ${SANITISED_BRANCH}
+          region: ${ECR_REGION}
+          repo: ${ECR_REPOSITORY}
+      - slack/notify:
+          channel: laa-cwa-testing
+          event: fail
+          mentions: '@pcuam-devs'
+          template: basic_fail_1
+
+  notify_slack_for_approval:
+    executor: deploy-executor
+    steps:
+      - slack/notify:
+          channel: laa-cwa-testing
+          event: always
+          mentions: '@pcuam-devs'
+          template: basic_on_hold_1
+  
+  notify_slack_for_success:
+    executor: deploy-executor
+    steps:
+      - slack/notify:
+          channel: laa-cwa-testing
+          event: always
+          mentions: '@pcuam-devs'
+          template: basic_success_1
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - generate_release_name
+      - check_redis_setup_docker_image
+      - build_and_push_redis_setup_docker_image:
+          requires:
+            - check_redis_setup_docker_image
+      - deploy_test_setup:
+          requires:
+            - generate_release_name
+            - build_and_push_redis_setup_docker_image
+      - hold_test_setup:
+          type: approval
+          requires:
+            - deploy_test_setup
+      - build_and_push_docker_image:
+          requires:
+            - hold_test_setup
+      - notify_slack_for_approval:
+          requires:
+            - build_and_push_docker_image
+      - hold_test_deployment:
+          type: approval
+          requires:
+            - notify_slack_for_approval
+      - deploy_tests_on_cloud_platform:
+          requires:
+            - hold_test_deployment
+
+  scheduled_ui_test_run:
+    jobs:
+      - generate_release_name
+      - deploy_tests_on_cloud_platform:
+          requires:
+            - generate_release_name
+      - notify_slack_for_success:
+          requires:
+            - deploy_tests_on_cloud_platform
+    triggers:
+      - schedule:
+          cron: "30 1 * * *"
+          filters:
+           branches:
+            only:
+            - main
