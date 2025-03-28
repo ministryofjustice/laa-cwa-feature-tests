@@ -29,7 +29,7 @@ runs:
     shell: bash
 
   - name: Configure kubecontext
-    run: |  
+    run: |
       kubectl config set-context ${{ inputs.k8s_cluster_name }} --cluster=${{ inputs.k8s_cluster_name }} --user=${{ inputs.k8s_service_account }} --namespace=${{ inputs.k8s_namespace }}
       kubectl config use-context ${{ inputs.k8s_cluster_name }}
     shell: bash
