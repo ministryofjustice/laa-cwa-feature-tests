@@ -60,27 +60,27 @@ jobs:
           k8s_service_account: cd-serviceaccount
           k8s_token: "${{ secrets.KUBE_TOKEN }}"
 
-      # - name: Helm Deploy
-      #   id: task
-      #   uses: ./.github/actions/helm-deploy
-      #   with:
-      #     k8s_cluster_name: ${{ secrets.KUBE_CLUSTER }}
-      #     k8s_namespace: ${{ vars.K8S_NAMESPACE }}
-      #     kube_token: "${{ secrets.KUBE_TOKEN }}"
-      #     helm_release_name: laa-cwa-feature-tests
-      #     helm_chart: ./charts/cwa-tests
-      #     helm_values_path: charts/cwa-tests/Values.yaml
-      #     image_registry: ${{needs.build_and_push.outputs.image_registry}}
-      #     image_repo: ${{needs.build_and_push.outputs.image_repo}}
-      #     image_tag: ${{needs.build_and_push.outputs.image_tag_tests}}
+      - name: Helm Deploy
+        id: task
+        uses: ./.github/actions/helm-deploy
+        with:
+          k8s_cluster_name: ${{ secrets.KUBE_CLUSTER }}
+          k8s_namespace: ${{ vars.K8S_NAMESPACE }}
+          kube_token: "${{ secrets.KUBE_TOKEN }}"
+          helm_release_name: laa-cwa-feature-tests
+          helm_chart: ./charts/cwa-tests
+          helm_values_path: charts/cwa-tests/Values.yaml
+          image_registry: ${{needs.build_and_push.outputs.image_registry}}
+          image_repo: ${{needs.build_and_push.outputs.image_repo}}
+          image_tag: ${{needs.build_and_push.outputs.image_tag_tests}}
 
-      # - name: Show Test Logs
-      #   id: logs
-      #   run: |
-      #     export POD_NAME=$(kubectl get pods -n ${{ secrets.KUBE_NAMESPACE }} --no-headers | awk '{print $1}' | grep '^cwa-tests-[0-9]\{10\}$' | sort | tail -1)
-      #     kubectl logs -f -n ${{ secrets.KUBE_NAMESPACE }} $POD_NAME
+      - name: Show Test Logs
+        id: logs
+        run: |
+          export POD_NAME=$(kubectl get pods -n ${{ secrets.KUBE_NAMESPACE }} --no-headers | awk '{print $1}' | grep '^cwa-tests-[0-9]\{10\}$' | sort | tail -1)
+          kubectl logs -f -n ${{ secrets.KUBE_NAMESPACE }} $POD_NAME
 
-      # - name: Purge Deployments
-      #   id: purge
-      #   run: |
-      #     helm ls -n ${{ secrets.KUBE_NAMESPACE }} --short | xargs -L1 -I {} helm uninstall {} -n ${{ secrets.KUBE_NAMESPACE }}
+      - name: Purge Deployments
+        id: purge
+        run: |
+          helm ls -n ${{ secrets.KUBE_NAMESPACE }} --short | xargs -L1 -I {} helm uninstall {} -n ${{ secrets.KUBE_NAMESPACE }}
