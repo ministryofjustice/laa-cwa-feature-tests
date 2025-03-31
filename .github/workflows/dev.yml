@@ -24,7 +24,7 @@ jobs:
         with:
           image_registry: ${{ steps.auth.outputs.image_registry }}
           image_repository: ${{ vars.ECR_REPOSITORY }}
-          dockerfile_path: .docker/Dockerfile
+          dockerfile_path: ./docker/Dockerfile
           image_tag: "redis-${{ github.sha }}"
 
       - name: Build and Push Tests
