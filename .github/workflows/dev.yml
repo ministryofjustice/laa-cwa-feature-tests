@@ -19,7 +19,7 @@ jobs:
           ecr_role: ${{ secrets.ECR_ROLE_TO_ASSUME }}
 
       - name: Build and Push Redis
-        id: task
+        id: build_redis
         uses: ./.github/actions/build-and-push
         with:
           image_registry: ${{ steps.auth.outputs.image_registry }}
@@ -28,16 +28,17 @@ jobs:
           image_tag: "redis-${{ github.sha }}"
 
       - name: Build and Push Tests
-        id: task
+        id: build_tests
         uses: ./.github/actions/build-and-push
         with:
           image_registry: ${{ steps.auth.outputs.image_registry }}
           image_repository: ${{ vars.ECR_REPOSITORY }}
 
     outputs:
-      image_registry: ${{ steps.task.outputs.image_registry }}
-      image_repo: ${{ steps.task.outputs.image_repo }}
-      image_tag: ${{ steps.task.outputs.image_tag }}
+      image_registry: ${{ steps.build_tests.outputs.image_registry }}
+      image_repo: ${{ steps.build_tests.outputs.image_repo }}
+      image_tag_redis: ${{ steps.build_redis.outputs.image_tag }}
+      image_tag_tests: ${{ steps.build_tests.outputs.image_tag }}
 
   helm_deploy:
     permissions:
@@ -71,7 +72,7 @@ jobs:
       #     helm_values_path: charts/cwa-tests/Values.yaml
       #     image_registry: ${{needs.build_and_push.outputs.image_registry}}
       #     image_repo: ${{needs.build_and_push.outputs.image_repo}}
-      #     image_tag: ${{needs.build_and_push.outputs.image_tag}}
+      #     image_tag: ${{needs.build_and_push.outputs.image_tag_tests}}
 
       # - name: Show Test Logs
       #   id: logs
