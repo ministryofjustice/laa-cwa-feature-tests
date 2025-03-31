@@ -73,6 +73,7 @@ jobs:
           image_registry: ${{needs.build_and_push.outputs.image_registry}}
           image_repo: ${{needs.build_and_push.outputs.image_repo}}
           image_tag: ${{needs.build_and_push.outputs.image_tag_tests}}
+          helm_additional_args: --set run=true
 
       - name: Show Test Logs
         id: logs
