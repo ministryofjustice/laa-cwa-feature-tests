@@ -65,7 +65,6 @@ jobs:
         id: task
         uses: ./.github/actions/helm-deploy
         with:
-          k8s_cluster_name: ${{ secrets.KUBE_CLUSTER }}
           k8s_namespace: ${{ secrets.KUBE_NAMESPACE }}
           helm_release_name: laa-cwa-feature-tests-${GITHUB_SHA::7}
           helm_chart: ./charts/cwa-tests

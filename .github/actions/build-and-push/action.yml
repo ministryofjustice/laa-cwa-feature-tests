@@ -35,8 +35,13 @@ runs:
     run: |
         docker build . -t $REGISTRY/$REPOSITORY:$IMAGE_TAG -f ${{ inputs.dockerfile_path }}
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+        echo image_registry=$REGISTRY >> "$GITHUB_OUTPUT"
+        echo image_repo=$REPOSITORY >> "$GITHUB_OUTPUT"
+        echo image_tag=$IMAGE_TAG >> "$GITHUB_OUTPUT"
     shell: bash
     env:
+      #--These vars might seem to be making things more complicated, but can be useful
+      #--when working in container systems as they are usually respected over anything else
       REGISTRY: ${{ inputs.image_registry }}
       REPOSITORY: ${{ inputs.image_repository }}
       IMAGE_TAG: ${{ inputs.image_tag }}
