@@ -31,8 +31,8 @@ runs:
   steps:
   - name: Helm Deploy
     run: |
-      helm install ${{ helm_release_name }} ${{ helm_chart }} \
-        -f ${{ helm_values_path }} \
+      helm install ${{ inputs.helm_release_name }} ${{ inputs.helm_chart }} \
+        -f ${{ inputs.helm_values_path }} \
         ${{ helm_additional_options }}
         --set ecr.image.registryAddress=${{ inputs.image_registry }} \
         --set ecr.image.regPath=${{ inputs.image_repo }} \
