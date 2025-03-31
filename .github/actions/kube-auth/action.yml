@@ -22,9 +22,14 @@ runs:
   using: "composite"
 
   steps:
+  - name: Configure TLS
+    run: |
+      echo -n ${{ inputs.k8s_cert }} | base64 -d > ./ca.crt
+    shell: bash
+
   - name: Kubernetes Auth
     run: |
-      kubectl config set-cluster ${{ inputs.k8s_cluster_name }} --server="https://${{ inputs.k8s_cluster_name }}"
+      kubectl config set-cluster ${{ inputs.k8s_cluster_name }} --certificate-authority=./ca.crt --server="https://${{ inputs.k8s_cluster_name }}"
       kubectl config set-credentials ${{ inputs.k8s_service_account }} --token=${{ inputs.k8s_token }}
     shell: bash
 
