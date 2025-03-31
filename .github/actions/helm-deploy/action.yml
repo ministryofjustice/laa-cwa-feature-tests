@@ -40,6 +40,5 @@ runs:
         --set ecr.image.registryAddress=${{ inputs.image_registry }} \
         --set ecr.image.regPath=${{ inputs.image_repo }} \
         --set ecr.image.tag=${{ inputs.image_tag }} \
-        --wait --timeout 300s \
-        --atomic
+        --wait --timeout 300s
     shell: bash
