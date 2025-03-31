@@ -2,16 +2,6 @@ on:
   push:
 
 jobs:
-  debug:
-    permissions:
-      id-token: write
-      contents: read
-    runs-on: ubuntu-latest
-    environment: dev
-    steps:
-      - name: debug
-        run: echo ${{ secrets.KUBE_CERT }}
-
   build_and_push:
     permissions:
       id-token: write
@@ -76,7 +66,7 @@ jobs:
         uses: ./.github/actions/helm-deploy
         with:
           k8s_cluster_name: ${{ secrets.KUBE_CLUSTER }}
-          k8s_namespace: ${{ vars.K8S_NAMESPACE }}
+          k8s_namespace: ${{ secrets.KUBE_NAMESPACE }}
           helm_release_name: laa-cwa-feature-tests-${GITHUB_SHA::7}
           helm_chart: ./charts/cwa-tests
           helm_values_path: charts/cwa-tests/Values.yaml

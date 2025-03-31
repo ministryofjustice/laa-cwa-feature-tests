@@ -24,7 +24,7 @@ runs:
   steps:
   - name: Configure TLS
     run: |
-      echo ${{ inputs.k8s_cert }} > ca.crt
+      echo "${{ inputs.k8s_cert }}" > ca.crt
     shell: bash
 
   - name: Kubernetes Auth
