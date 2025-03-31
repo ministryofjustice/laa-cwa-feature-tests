@@ -12,6 +12,9 @@ inputs:
     required: true
     description: "Dockerfile Path"
     default: "Dockerfile"
+  image_tag:
+    description: "Image Tag"
+    default: ${{ github.sha }}
 
 outputs:
   image_registry:
@@ -36,4 +39,4 @@ runs:
     env:
       REGISTRY: ${{ inputs.image_registry }}
       REPOSITORY: ${{ inputs.image_repository }}
-      IMAGE_TAG: ${{ github.sha }}
+      IMAGE_TAG: ${{ inputs.image_tag }}

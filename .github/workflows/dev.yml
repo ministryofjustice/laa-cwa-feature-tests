@@ -18,6 +18,15 @@ jobs:
           ecr_region: ${{ vars.ECR_REGION }}
           ecr_role: ${{ secrets.ECR_ROLE_TO_ASSUME }}
 
+      - name: Build and Push Redis
+        id: task
+        uses: ./.github/actions/build-and-push
+        with:
+          image_registry: ${{ steps.auth.outputs.image_registry }}
+          image_repository: ${{ vars.ECR_REPOSITORY }}
+          dockerfile_path: .docker/Dockerfile
+          image_tag: "redis-${{ github.sha }}"
+
       - name: Build and Push Tests
         id: task
         uses: ./.github/actions/build-and-push
