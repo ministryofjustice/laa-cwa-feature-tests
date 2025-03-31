@@ -17,6 +17,10 @@ inputs:
   helm_additional_args:
     required: false
     description: "Any Additional Helm input params"
+  helm_timeout:
+    required: true
+    description: "Helm Timeout"
+    default: 300s
   #--Combine the 3 values below for a full image URI if needed
   image_registry:
     required: true
@@ -40,5 +44,5 @@ runs:
         --set ecr.image.registryAddress=${{ inputs.image_registry }} \
         --set ecr.image.regPath=${{ inputs.image_repo }} \
         --set ecr.image.tag=${{ inputs.image_tag }} \
-        --wait --timeout 300s
+        --wait --timeout ${{ inputs.helm_timeout }}
     shell: bash
