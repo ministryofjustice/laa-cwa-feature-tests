@@ -14,6 +14,9 @@ inputs:
   helm_values_path:
     required: true
     description: "Path To Helm Values"
+  helm_additional_args:
+    required: false
+    description: "Any Additional Helm input params"
   #--Combine the 3 values below for a full image URI if needed
   image_registry:
     required: true
@@ -33,7 +36,7 @@ runs:
     run: |
       helm install ${{ inputs.helm_release_name }} ${{ inputs.helm_chart }} \
         -f ${{ inputs.helm_values_path }} \
-        ${{ helm_additional_options }}
+        ${{ inputs.helm_additional_args }}
         --set ecr.image.registryAddress=${{ inputs.image_registry }} \
         --set ecr.image.regPath=${{ inputs.image_repo }} \
         --set ecr.image.tag=${{ inputs.image_tag }} \
