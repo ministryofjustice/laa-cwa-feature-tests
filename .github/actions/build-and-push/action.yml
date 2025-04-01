@@ -5,7 +5,7 @@ inputs:
   image_registry:
     required: true
     description: "Image Registry URL"
-  image_repository:
+  image_repo:
     required: true
     description: "Image Repository URL"
   dockerfile_path:
@@ -13,35 +13,40 @@ inputs:
     description: "Dockerfile Path"
     default: "Dockerfile"
   image_tag:
+    required: true
     description: "Image Tag"
     default: ${{ github.sha }}
 
 outputs:
   image_registry:
     description: "Image Registry URL"
-    value: ${{ env.REGISTRY }}
+    value: ${{ steps.output.outputs.image_registry }}
   image_repo:
     description: "Image Repo Path"
-    value: ${{ env.REPOSITORY }}
+    value: ${{ steps.output.outputs.image_repo }}
   image_tag:
     description: "Image Tag"
-    value: ${{ env.IMAGE_TAG }}
+    value: ${{ steps.output.outputs.image_tag }}
+  image_uri:
+    description: "Image URI"
+    value: ${{ steps.output.outputs.image_uri }}
 
 runs:
   using: "composite"
 
   steps:
   - name: Docker Build
+    id: build_and_push
     run: |
-        docker build . -t $REGISTRY/$REPOSITORY:$IMAGE_TAG -f ${{ inputs.dockerfile_path }}
-        docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-        echo image_registry=$REGISTRY >> "$GITHUB_OUTPUT"
-        echo image_repo=$REPOSITORY >> "$GITHUB_OUTPUT"
-        echo image_tag=$IMAGE_TAG >> "$GITHUB_OUTPUT"
+        docker build . -t ${{ inputs.image_registry }}/${{ inputs.image_repo }}:${{ inputs.image_tag }} -f ${{ inputs.dockerfile_path }}
+        docker push ${{ inputs.image_registry }}/${{ inputs.image_repo }}:${{ inputs.image_tag }}
     shell: bash
-    env:
-      #--These vars might seem to be making things more complicated, but can be useful
-      #--when working in container systems as they are usually respected over anything else
-      REGISTRY: ${{ inputs.image_registry }}
-      REPOSITORY: ${{ inputs.image_repository }}
-      IMAGE_TAG: ${{ inputs.image_tag }}
+
+  - name: Output
+    id: output
+    run: |
+        echo image_registry=${{ inputs.image_registry }} >> "$GITHUB_OUTPUT"
+        echo image_repo=${{ inputs.image_repo }} >> "$GITHUB_OUTPUT"
+        echo image_tag=${{ inputs.image_tag }} >> "$GITHUB_OUTPUT"
+        echo image_uri="${{ inputs.image_registry }}/${{ inputs.image_repo }}:${{ inputs.image_tag }}"
+    shell: bash

@@ -23,7 +23,7 @@ jobs:
         uses: ./.github/actions/build-and-push
         with:
           image_registry: ${{ steps.auth.outputs.image_registry }}
-          image_repository: ${{ vars.ECR_REPOSITORY }}
+          image_repo: ${{ vars.ECR_REPOSITORY }}
           dockerfile_path: ./docker/Dockerfile
           image_tag: "redis-${{ github.sha }}"
 
@@ -32,13 +32,21 @@ jobs:
         uses: ./.github/actions/build-and-push
         with:
           image_registry: ${{ steps.auth.outputs.image_registry }}
-          image_repository: ${{ vars.ECR_REPOSITORY }}
+          image_repo: ${{ vars.ECR_REPOSITORY }}
+
+      - name: Output
+        id: output
+        run: |
+            echo image_registry=${{ steps.build_tests.outputs.image_registry }} >> "$GITHUB_OUTPUT"
+            echo image_repo=${{ steps.build_tests.outputs.image_repo }} >> "$GITHUB_OUTPUT"
+            echo image_tag_tests=${{ steps.build_tests.outputs.image_tag }} >> "$GITHUB_OUTPUT"
+            echo image_uri="${{ steps.build_tests.outputs.image_registry }}/${{ steps.build_tests.outputs.image_repo }}:${{ steps.build_tests.outputs.image_tag }}" >> "$GITHUB_OUTPUT"
 
     outputs:
-      image_registry: ${{ steps.build_tests.outputs.image_registry }}
-      image_repo: ${{ steps.build_tests.outputs.image_repo }}
-      image_tag_redis: ${{ steps.build_redis.outputs.image_tag }}
-      image_tag_tests: ${{ steps.build_tests.outputs.image_tag }}
+      image_registry: ${{ steps.output.outputs.image_registry }}
+      image_repo: ${{ steps.output.outputs.image_repo }}
+      image_tag_redis: ${{ steps.output.outputs.image_tag }}
+      image_tag_tests: ${{ steps.output.outputs.image_tag }}
 
   helm_deploy:
     permissions:
