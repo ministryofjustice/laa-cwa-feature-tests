@@ -3,7 +3,7 @@ on:
 
 jobs:
   cp_build_and_deploy:
-    uses: ministryofjustice/laa-reusable-github-actions/.github/workflows/cp-build-and-deploy.yml@feat/add-cp-functions
+    uses: ministryofjustice/laa-reusable-github-actions/.github/workflows/cp-build-and-deploy.yml@add-cp-functions
     with:
       environment: dev
       helm_release_name: laa-cwa-feature-tests-${GITHUB_SHA::7}
@@ -25,7 +25,7 @@ jobs:
 
       - name: Kube Auth
         id: auth
-        uses: ministryofjustice/laa-reusable-github-actions/.github/actions/authenticate_to_cluster@feat/add-cp-functions
+        uses: ministryofjustice/laa-reusable-github-actions/.github/actions/authenticate_to_cluster@add-cp-functions
         with:
           kube-cluster: ${{ secrets.KUBE_CLUSTER }}
           kube-namespace: ${{ secrets.KUBE_NAMESPACE }}
