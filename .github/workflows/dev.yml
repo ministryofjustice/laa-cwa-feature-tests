@@ -9,7 +9,7 @@ jobs:
       helm_release_name: laa-cwa-feature-tests-${GITHUB_SHA::7}
       helm_chart: ./charts/cwa-tests
       helm_values_path: charts/cwa-tests/Values.yaml
-      helm_additional_args: "--set run=true --set global.registryAddress=${{ secrets.ECR_REGISTRY_URL }} --set global.regPath=${{ vars.ECR_REPOSITORY }} --set ecr.image.tag=${{ github.sha }}"
+      helm_additional_args: "--set run=true"
     secrets: inherit
 
   tail_and_purge:
