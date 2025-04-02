@@ -5,10 +5,11 @@ jobs:
   cp_dev_workflow:
     uses: ministryofjustice/laa-reusable-github-actions/.github/workflows/cp-build-and-deploy.yml@feat/add-cp-functions
     with:
+      environment: dev
       helm_release_name: laa-cwa-feature-tests-${GITHUB_SHA::7}
       helm_chart: ./charts/cwa-tests
       helm_values_path: charts/cwa-tests/Values.yaml
-      helm_additional_args: --set run=true --set global.registryAddress=${{ secrets.ECR_REGISTRY_URL }} --set global.regPath=${{ inputs.vars.ECR_REPOSITORY }} --set ecr.image.tag=${{ github.sha }}
+      helm_additional_args: "--set run=true --set global.registryAddress=${{ secrets.ECR_REGISTRY_URL }} --set global.regPath=${{ inputs.vars.ECR_REPOSITORY }} --set ecr.image.tag=${{ github.sha }}"
     secrets: inherit
 
   tail_and_purge:
@@ -16,6 +17,7 @@ jobs:
       id-token: write
       contents: read
     runs-on: ubuntu-latest
+    environment: dev
     steps:
       - name: Git Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #--v4.2.2
