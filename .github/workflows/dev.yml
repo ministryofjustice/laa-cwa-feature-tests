@@ -3,7 +3,7 @@ on:
 
 jobs:
   cp_build_and_deploy:
-    uses: ministryofjustice/laa-reusable-github-actions/.github/workflows/brakeman.yml@main
+    uses: ministryofjustice/laa-reusable-github-actions/.github/workflows/brakeman.yml@add-cp-functions
 
 # jobs:
 #   cp_build_and_deploy:
