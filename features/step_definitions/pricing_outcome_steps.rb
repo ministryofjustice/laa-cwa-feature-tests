@@ -130,7 +130,7 @@ Then('the Escape Fee flag is {string}') do |flag|
 end
 
 def call_assessment_value_api(ufn, ucn, account_number, period)
-  base_url = ENV['AV_API_URL'] || 'http://localhost:5000/'
+  base_url = ENV['AV_API_URL'] || 'http://localhost:8001/'
   uri = URI("#{base_url}get_assessment_value")
   params = { ucn: ucn, ufn: ufn, account_number: account_number, submission_period: period }
   uri.query = URI.encode_www_form(params)
