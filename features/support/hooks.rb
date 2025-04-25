@@ -4,6 +4,10 @@ require_relative '../pages/outcome_page.rb'
 include OutcomePage
 
 Before do
+  Capybara.current_window.resize_to(1920, 1080)
+end
+
+Before do
   @start_time = Time.now
   acknowledge_certificate if ENV['TEST_ENV'] == 'uat' && !defined?($acknowledged_cert)
   logout_from_cwa_and_portal

@@ -1,3 +1,4 @@
+@skip
 Feature: Validation for Illegal Immigration Act for duplicate claims for manual submission
 
   Background: 

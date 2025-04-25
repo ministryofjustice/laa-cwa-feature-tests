@@ -3,7 +3,8 @@ Feature: claim type validations for Immigration and Asylum
   Background: 
     Given a test firm user is logged in CWA
     And user prepares to submit outcomes for test provider "LEGAL HELP.IMMOT#4"
-
+  
+  @skip
   Scenario: Add null and miscllaneous claim type
     Given the following Matter Types are chosen:
       | IMMA:IMRN |

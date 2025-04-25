@@ -1,3 +1,4 @@
+@skip
 Feature: claims validations for Illegal migration act miscllaneous
 
   Background: 

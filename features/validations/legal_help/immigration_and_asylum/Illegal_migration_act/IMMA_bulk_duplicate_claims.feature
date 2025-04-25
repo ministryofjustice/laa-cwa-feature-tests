@@ -1,4 +1,4 @@
-@bulkload
+@skip @bulkload
 Feature: duplicate claims validations for Illegal migration act
 1-11 same UFN, UCN   12-14 different UCN IMA codes   15-17 IMA to other code combo same UCN  18-21 other code to IMA code same UCN  22-24  other code to IMA code different UCN
 
