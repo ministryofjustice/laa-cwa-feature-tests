@@ -18,7 +18,7 @@ Capybara.register_driver :firefox do |app|
   options = Selenium::WebDriver::Options.firefox(
     accept_insecure_certs: true
   )
-  options = Selenium::WebDriver::Firefox::Options.new()
+  options = Selenium::WebDriver::Firefox::Options.new
   options.add_argument('--headless') if ENV['HEADLESS'] == 'true'
   options.add_argument('--incognito')
   Capybara::Selenium::Driver.new(
@@ -30,6 +30,5 @@ end
 
 Capybara.default_driver = :firefox
 Capybara.default_max_wait_time = 5
-Capybara.current_window.resize_to(1920,1080)
 
 World(PortalEnv, CWAProvider)
