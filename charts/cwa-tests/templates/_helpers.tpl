@@ -8,5 +8,5 @@
 {{- end -}}
 
 {{- define "cwa-tests.run" -}}
-{{- include "cwa-tests.run.pod" . }}
+{{- include "cwa-tests.run.feature-test-runner" . }}
 {{- end -}}
