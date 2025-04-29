@@ -22,7 +22,7 @@ executors:
 jobs:
   generate_release_name:
     docker:
-      - image: cimg/ruby:3.3.4
+      - image: cimg/ruby:3.2
     steps:
       - checkout
       - run:
@@ -74,22 +74,7 @@ jobs:
 
       - run:
           name: Check for features.txt and push to Redis
-          command: |
-            RELEASE_NAME=$(cat release_name.txt)
-            REDIS_SERVICE="${RELEASE_NAME}-redis-service"
-            require 'redis'
-            redis = Redis.new(host: "${REDIS_SERVICE}", port: 6379)
-
-            if File.exist?('features.txt') && !File.zero?('features.txt')
-              File.readlines('features.txt').each do |line|
-                redis.lpush('mylist', line.strip)
-              end
-            else
-              feature_files = `find . -type f -name "*.feature"`.split("\n")
-              feature_files.each do |file|
-                redis.lpush('mylist', file)
-              end
-            end
+          command: ruby push_to_redis.rb
 
   deploy_test_setup:
     executor: deploy-executor
@@ -97,7 +82,7 @@ jobs:
       environment:
         description: Destination environment
         type: string
-        default: laa-cwa-test
+        default: laa-cwa-feature-tests-dev
       token:
         description: CircleCI Service account token
         type: string
@@ -138,7 +123,7 @@ jobs:
       environment:
         description: Destination environment
         type: string
-        default: laa-cwa-test
+        default: laa-cwa-feature-tests-dev
       token:
         description: CircleCI Service account token
         type: string
