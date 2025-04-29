@@ -25,17 +25,14 @@ spec:
           value: "features_list"
         - name: TEST_ENV
           value: {{ .Values.global.test_env }}
-          resources:
-        requests:
-          cpu: 1500m
-          memory: 8192Mi
-        limits:
-          cpu: 4000m
-          memory: 8192Mi
+        resources:
+          requests:
+            cpu: 1500m
+            memory: 8192Mi
+          limits:
+            cpu: 4000m
+            memory: 8192Mi
         command: ["ruby", "runner.rb"]
-        # Ensure logs are written to stdout
-        stdout: true
-        stderr: true
       restartPolicy: Never
       serviceAccountName: {{ .Values.global.serviceAccount }}
 {{- end -}}
