@@ -18,6 +18,14 @@ spec:
       containers:
       - name: laa-pcuam-cwa-tests
         image: "{{ .Values.global.registryAddress }}/{{ .Values.global.regPath }}:{{ .Values.ecr.image.tag }}"
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          seccompProfile:
+            type: "{{ .Values.securityContext.seccompProfile.type }}"
         env:
         - name: REDIS_SERVICE
           value: "redis://{{ .Release.Name }}-redis-service:6379"
