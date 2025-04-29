@@ -12,6 +12,8 @@ group :test do
   gem "timecop", "~> 0.9.8"
   gem "parallel_tests"
   gem "csv"
+  gem "redis"
+  gem "open3"
 end
 
 group :docker do
