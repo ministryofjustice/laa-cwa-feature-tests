@@ -83,7 +83,7 @@ jobs:
             fi
       - run:
           name: Save environment variables
-          command: cp $BASH_ENV workspace/bash.env
+          command: cp $BASH_ENV bash.env
       - persist_to_workspace:
           root: .
           paths:
