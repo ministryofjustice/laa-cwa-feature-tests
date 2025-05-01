@@ -41,6 +41,15 @@ jobs:
             - release_name.txt
 
   push_to_redis:
+    parameters:
+    environment:
+      description: Destination environment
+      type: string
+      default: laa-cwa-feature-tests-dev
+    token:
+      description: CircleCI Service account token
+      type: string
+      default: ${CIRCLE_CI_TOKEN} 
     docker:
       - image: cimg/ruby:3.2
     steps:
