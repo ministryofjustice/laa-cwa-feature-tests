@@ -187,7 +187,7 @@ jobs:
           destination: test-reports
       - run:
           name: Clean namespace
-          command:  helm ls -n << parameters.environment >> --short | xargs -L1 -I {} helm uninstall {} -n << parameters.pipeline.environment >>
+          command:  helm ls -n ${NAMESPACE} --short | xargs -L1 -I {} helm uninstall {} -n ${NAMESPACE}
       - slack/notify:
           channel: laa-cwa-testing
           event: pass
