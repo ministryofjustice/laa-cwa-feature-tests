@@ -169,6 +169,7 @@ jobs:
             -f charts/cwa-tests/Values.yaml \
             --set setup=true \
             --set global.registryAddress="${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com" \
+            --set redisSetup.tag="${REDIS_SETUP_IMAGE_TAG}"
             --wait --timeout 300s \
             --debug
 
@@ -207,7 +208,6 @@ jobs:
             -f charts/cwa-tests/Values.yaml \
             --set run=true \
             --set ecr.image.tag="${SANITISED_BRANCH_WITH_SHA}" \
-            --set redisSetup.image.tag="${REDIS_SETUP_IMAGE_TAG}" \
             --set global.registryAddress="${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com" \
             --set global.circle_sha1=${CIRCLE_SHA1} \
             --wait --timeout 300s \
