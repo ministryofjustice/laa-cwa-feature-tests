@@ -55,6 +55,7 @@ jobs:
       - image: cimg/ruby:3.2
     environment:
       NAMESPACE: << pipeline.parameters.namespace >>
+      KUBE_TOKEN: << pipeline.parameters.token >>
     steps:
       - checkout
       - attach_workspace:
@@ -92,6 +93,7 @@ jobs:
     executor: deploy-executor
     environment:
       NAMESPACE: << pipeline.parameters.namespace >>
+      KUBE_TOKEN: << pipeline.parameters.token >>
     steps:
       - checkout
       - attach_workspace:
@@ -126,6 +128,7 @@ jobs:
     executor: deploy-executor
     environment:
       NAMESPACE: << pipeline.parameters.namespace >>
+      KUBE_TOKEN: << pipeline.parameters.token >>
     steps:
       - attach_workspace:
           at: .
