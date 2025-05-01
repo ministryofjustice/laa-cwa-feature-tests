@@ -7,6 +7,16 @@ orbs:
   slack: circleci/slack@4.12.5
   python: circleci/python@3.0.0
 
+parameters:
+  environment:
+    description: Destination environment
+    type: string
+    default: laa-cwa-feature-tests-dev
+  token:
+    description: CircleCI Service account token
+    type: string
+    default: ${CIRCLE_CI_TOKEN} 
+
 # ------------------
 # EXECUTORS
 # ------------------
@@ -41,15 +51,6 @@ jobs:
             - release_name.txt
 
   push_to_redis:
-    parameters:
-    environment:
-      description: Destination environment
-      type: string
-      default: laa-cwa-feature-tests-dev
-    token:
-      description: CircleCI Service account token
-      type: string
-      default: ${CIRCLE_CI_TOKEN} 
     docker:
       - image: cimg/ruby:3.2
     steps:
@@ -87,15 +88,6 @@ jobs:
 
   deploy_test_setup:
     executor: deploy-executor
-    parameters:
-      environment:
-        description: Destination environment
-        type: string
-        default: laa-cwa-feature-tests-dev
-      token:
-        description: CircleCI Service account token
-        type: string
-        default: ${CIRCLE_CI_TOKEN} 
     steps:
       - checkout
       - attach_workspace:
@@ -128,15 +120,6 @@ jobs:
 
   deploy_tests_on_cloud_platform:
     executor: deploy-executor
-    parameters:
-      environment:
-        description: Destination environment
-        type: string
-        default: laa-cwa-feature-tests-dev
-      token:
-        description: CircleCI Service account token
-        type: string
-        default: ${CIRCLE_CI_TOKEN}
     steps:
       - attach_workspace:
           at: .
