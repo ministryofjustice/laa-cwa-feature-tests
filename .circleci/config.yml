@@ -7,11 +7,6 @@ orbs:
   slack: circleci/slack@4.12.5
   python: circleci/python@3.0.0
 
-parameters:
-  environment:
-    type: string
-    default: "dev"
-
 # ------------------
 # EXECUTORS
 # ------------------
@@ -47,7 +42,7 @@ jobs:
 
   push_to_redis:
     docker:
-      - image: cimg/ruby:3.3.4
+      - image: cimg/ruby:3.2
     steps:
       - checkout
       - attach_workspace:
@@ -55,11 +50,11 @@ jobs:
       - run:
           name: Authenticate with cluster
           command: |
-            echo -n ${KUBE_CERT} | base64 -d > ./ca.crt
-            kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
+            echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
+            kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=https://${K8S_CLUSTER_NAME}
             kubectl config set-credentials circleci --token=${KUBE_TOKEN}
-            kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=circleci --namespace=${KUBE_NAMESPACE}
-            kubectl config use-context ${KUBE_CLUSTER}
+            kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=<< parameters.environment >>
+            kubectl config use-context ${K8S_CLUSTER_NAME}
             kubectl get pods
       - run:
           name: Install dependencies
@@ -106,11 +101,11 @@ jobs:
       - run:
           name: Authenticate with cluster
           command: |
-            echo -n ${KUBE_CERT} | base64 -d > ./ca.crt
-            kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
+            echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
+            kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=https://${K8S_CLUSTER_NAME}
             kubectl config set-credentials circleci --token=${KUBE_TOKEN}
-            kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=circleci --namespace=${KUBE_NAMESPACE}
-            kubectl config use-context ${KUBE_CLUSTER}
+            kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=<< parameters.environment >>
+            kubectl config use-context ${K8S_CLUSTER_NAME}
             kubectl get pods
       - run:
           name: Deploy helm chart
@@ -147,11 +142,11 @@ jobs:
       - run:
           name: Authenticate with cluster
           command: |
-            echo -n ${KUBE_CERT} | base64 -d > ./ca.crt
-            kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
+            echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
+            kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=https://${K8S_CLUSTER_NAME}
             kubectl config set-credentials circleci --token=${KUBE_TOKEN}
-            kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=circleci --namespace=${KUBE_NAMESPACE}
-            kubectl config use-context ${KUBE_CLUSTER}
+            kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=<< parameters.environment >>
+            kubectl config use-context ${K8S_CLUSTER_NAME}
             kubectl get pods
       - run:
           name: Deploy helm chart
