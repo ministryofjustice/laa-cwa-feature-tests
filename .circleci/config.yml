@@ -169,7 +169,7 @@ jobs:
             -f charts/cwa-tests/Values.yaml \
             --set setup=true \
             --set global.registryAddress="${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com" \
-            --set redisSetup.tag="${REDIS_SETUP_IMAGE_TAG}"
+            --set redisSetup.tag="${REDIS_SETUP_IMAGE_TAG}" \
             --wait --timeout 300s \
             --debug
 
