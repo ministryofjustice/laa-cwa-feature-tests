@@ -11,7 +11,7 @@ parameters:
   environment:
     description: Destination environment
     type: string
-    default: laa-cwa-feature-tests-dev
+    default: "laa-cwa-feature-tests-dev"
   token:
     description: CircleCI Service account token
     type: string
@@ -53,6 +53,8 @@ jobs:
   push_to_redis:
     docker:
       - image: cimg/ruby:3.2
+    environment:
+      NAMESPACE: << parameters.pipeline.environment >>
     steps:
       - checkout
       - attach_workspace:
@@ -63,7 +65,7 @@ jobs:
             echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
             kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=https://${K8S_CLUSTER_NAME}
             kubectl config set-credentials circleci --token=${KUBE_TOKEN}
-            kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=<< parameters.pipeline.environment >>
+            kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${NAMESPACE}
             kubectl config use-context ${K8S_CLUSTER_NAME}
             kubectl get pods
       - run:
