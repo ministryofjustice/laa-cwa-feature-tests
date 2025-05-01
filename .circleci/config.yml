@@ -110,10 +110,6 @@ jobs:
             kubectl get pods
 
       - run:
-          name: Verify cluster connectivity
-          command: kubectl get nodes
-
-      - run:
           name: Deploy helm chart
           command: |
             RELEASE_NAME=$(cat release_name.txt) 
