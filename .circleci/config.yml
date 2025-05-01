@@ -91,8 +91,6 @@ jobs:
 
   deploy_test_setup:
     executor: deploy-executor
-    environment:
-      NAMESPACE: << pipeline.parameters.namespace >>
     steps:
       - checkout
       - attach_workspace:
@@ -110,7 +108,7 @@ jobs:
             echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
             kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=https://${K8S_CLUSTER_NAME}
             kubectl config set-credentials circleci --token=<< pipeline.parameters.token >>
-            kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${NAMESPACE}
+            kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=<< pipeline.parameters.namespace >>
             kubectl config use-context ${K8S_CLUSTER_NAME}
             kubectl get pods
       - run:
@@ -122,6 +120,7 @@ jobs:
             --set setup=true \
             --set global.registryAddress="${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com" \
             --wait --timeout 300s
+            --debug
 
   deploy_tests_on_cloud_platform:
     executor: deploy-executor
