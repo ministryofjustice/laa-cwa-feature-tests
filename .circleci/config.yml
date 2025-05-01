@@ -54,7 +54,7 @@ jobs:
     docker:
       - image: cimg/ruby:3.2
     environment:
-      NAMESPACE: << parameters.pipeline.namespace >>
+      NAMESPACE: << pipeline.parameters.namespace >>
     steps:
       - checkout
       - attach_workspace:
@@ -91,7 +91,7 @@ jobs:
   deploy_test_setup:
     executor: deploy-executor
     environment:
-      NAMESPACE: << parameters.pipeline.namespace >>
+      NAMESPACE: << pipeline.parameters.namespace >>
     steps:
       - checkout
       - attach_workspace:
@@ -125,7 +125,7 @@ jobs:
   deploy_tests_on_cloud_platform:
     executor: deploy-executor
     environment:
-      NAMESPACE: << parameters.pipeline.namespace >>
+      NAMESPACE: << pipeline.parameters.namespace >>
     steps:
       - attach_workspace:
           at: .
