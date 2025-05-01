@@ -90,6 +90,8 @@ jobs:
 
   deploy_test_setup:
     executor: deploy-executor
+    environment:
+      NAMESPACE: << parameters.pipeline.namespace >>
     steps:
       - checkout
       - attach_workspace:
@@ -107,7 +109,7 @@ jobs:
             echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
             kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=https://${K8S_CLUSTER_NAME}
             kubectl config set-credentials circleci --token=${KUBE_TOKEN}
-            kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=<< parameters.pipeline.environment >>
+            kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${NAMESPACE}
             kubectl config use-context ${K8S_CLUSTER_NAME}
             kubectl get pods
       - run:
@@ -122,6 +124,8 @@ jobs:
 
   deploy_tests_on_cloud_platform:
     executor: deploy-executor
+    environment:
+      NAMESPACE: << parameters.pipeline.namespace >>
     steps:
       - attach_workspace:
           at: .
@@ -139,7 +143,7 @@ jobs:
             echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
             kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=https://${K8S_CLUSTER_NAME}
             kubectl config set-credentials circleci --token=${KUBE_TOKEN}
-            kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=<< parameters.pipeline.environment >>
+            kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${NAMESPACE}
             kubectl config use-context ${K8S_CLUSTER_NAME}
             kubectl get pods
       - run:
