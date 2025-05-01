@@ -7,6 +7,13 @@ orbs:
   slack: circleci/slack@4.12.5
   python: circleci/python@3.0.0
 
+parameters:
+  environment:
+    type: enum
+    enum: [dev, tst, uat, stg]
+    default: dev
+    description: "Select the environment to deploy to"
+
 # ------------------
 # EXECUTORS
 # ------------------
@@ -256,9 +263,13 @@ workflows:
   build_and_deploy:
     jobs:
       - generate_release_name
-      - deploy_test_setup:
+      - hold_select_environment:
+          type: approval
           requires:
             - generate_release_name
+      - deploy_test_setup:
+          requires:
+            - hold_select_environment
       - push_to_redis:
           requires:
             - deploy_test_setup
