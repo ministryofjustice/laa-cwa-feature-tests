@@ -8,7 +8,7 @@ orbs:
   python: circleci/python@3.0.0
 
 parameters:
-  environment:
+  namespace:
     description: Destination environment
     type: string
     default: "laa-cwa-feature-tests-dev"
@@ -54,7 +54,7 @@ jobs:
     docker:
       - image: cimg/ruby:3.2
     environment:
-      NAMESPACE: << parameters.pipeline.environment >>
+      NAMESPACE: << parameters.pipeline.namespace >>
     steps:
       - checkout
       - attach_workspace:
