@@ -182,6 +182,7 @@ jobs:
             --set setup=true \
             --set global.registryAddress="${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com" \
             --set redisSetup.image.tag="${REDIS_SETUP_IMAGE_TAG}" \
+            --set global.circle_sha1=${CIRCLE_SHA1} \
             --wait --timeout 300s \
             --debug
       - persist_to_workspace:
