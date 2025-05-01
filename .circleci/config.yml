@@ -9,10 +9,8 @@ orbs:
 
 parameters:
   environment:
-    type: enum
-    enum: [dev, tst, uat, stg]
-    default: dev
-    description: "Select the environment to deploy to"
+    type: string
+    default: "dev"
 
 # ------------------
 # EXECUTORS
