@@ -255,6 +255,8 @@ workflows:
       - deploy_test_setup:
           requires:
             - hold_select_environment
+          environment: << pipeline.parameters.environment >>
+          token: << pipeline.parameters.token >>
       - push_to_redis:
           requires:
             - deploy_test_setup
