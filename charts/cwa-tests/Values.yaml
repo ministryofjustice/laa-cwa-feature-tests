@@ -16,7 +16,7 @@ ecr:
 
 redisSetup:
   image:
-    tag: ""
+    tag: "redis-setup:latest"
 
 securityContext:
   runAsUser: 1000
