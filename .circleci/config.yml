@@ -93,7 +93,6 @@ jobs:
     executor: deploy-executor
     environment:
       NAMESPACE: << pipeline.parameters.namespace >>
-      KUBE_TOKEN: << pipeline.parameters.token >>
     steps:
       - checkout
       - attach_workspace:
@@ -110,7 +109,7 @@ jobs:
           command: |
             echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
             kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=https://${K8S_CLUSTER_NAME}
-            kubectl config set-credentials circleci --token=${KUBE_TOKEN}
+            kubectl config set-credentials circleci --token=<< pipeline.parameters.token >>
             kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${NAMESPACE}
             kubectl config use-context ${K8S_CLUSTER_NAME}
             kubectl get pods
@@ -257,13 +256,9 @@ workflows:
   build_and_deploy:
     jobs:
       - generate_release_name
-      - hold_select_environment:
-          type: approval
-          requires:
-            - generate_release_name
       - deploy_test_setup:
           requires:
-            - hold_select_environment
+            - generate_release_name
       - push_to_redis:
           requires:
             - deploy_test_setup
