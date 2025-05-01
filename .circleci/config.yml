@@ -17,6 +17,9 @@ parameters:
     type: string
     default: ${CIRCLE_CI_TOKEN} 
 
+defaults: &defaults
+  working_directory: /tmp
+
 # ------------------
 # EXECUTORS
 # ------------------
@@ -31,10 +34,12 @@ executors:
 
 jobs:
   generate_release_name:
+    <<: *defaults
     docker:
       - image: cimg/ruby:3.2
     steps:
       - checkout
+      - run: mkdir -p workspace
       - run:
           name: Install Gem
           command: gem install petname
@@ -46,13 +51,16 @@ jobs:
           path: release_name.txt
           destination: release_name.txt
       - persist_to_workspace:
-          root: .
+          root: workspace
           paths:
             - release_name.txt
 
   check_redis_setup_docker_image:
+    <<: *defaults
     executor: build-executor
     steps:
+      - attach_workspace:
+          at: /tmp/workspace
       - checkout
       - run:
           name: Calculate checksums
@@ -81,18 +89,19 @@ jobs:
             fi
       - run:
           name: Save environment variables
-          command: cp $BASH_ENV bash.env
+          command: cp $BASH_ENV workspace/bash.env
       - persist_to_workspace:
-          root: .
+          root: workspace
           paths:
             - bash.env
 
   build_and_push_redis_setup_docker_image:
+    <<: *defaults
     executor: build-executor
     steps:
-      - checkout
       - attach_workspace:
-          at: .
+          at: /tmp/workspace
+      - checkout
       - run:
           name: Load environment variables
           command: |
@@ -100,6 +109,9 @@ jobs:
       - run: |
           # verify; this should print 'true' or 'false'
           printenv SKIP_BUILD
+      - run: |
+          # verify; this should print redis-setup-${DOCKERFILE_CHECKSUM}-${SETUP_SCRIPT_CHECKSUM}
+          printenv REDIS_SETUP_IMAGE_TAG
       - setup_remote_docker:
           docker_layer_caching: true
       - aws-cli/setup:
@@ -137,13 +149,18 @@ jobs:
             else
               echo "Skipping push"
             fi
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - bash.env
 
   deploy_test_setup:
+    <<: *defaults
     executor: deploy-executor
     steps:
-      - checkout
       - attach_workspace:
-          at: .
+          at: /tmp/workspace
+      - checkout
       - run:
           name: Load environment variables
           command: |
@@ -160,7 +177,10 @@ jobs:
             kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=<< pipeline.parameters.namespace >>
             kubectl config use-context ${K8S_CLUSTER_NAME}
             kubectl get pods
-
+      - run:
+          name: Check if REDIS_SETUP_IMAGE_TAG exists in bash_env
+          command: |
+            echo "REDIS_SETUP_IMAGE_TAG: $REDIS_SETUP_IMAGE_TAG"
       - run:
           name: Deploy helm chart
           command: |
@@ -172,15 +192,20 @@ jobs:
             --set redisSetup.tag="${REDIS_SETUP_IMAGE_TAG}" \
             --wait --timeout 300s \
             --debug
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - bash.env
 
   deploy_tests_on_cloud_platform:
+    <<: *defaults
     executor: deploy-executor
     environment:
       NAMESPACE: << pipeline.parameters.namespace >>
       KUBE_TOKEN: << pipeline.parameters.token >>
     steps:
       - attach_workspace:
-          at: .
+          at: /tmp/workspace
       - run:
           name: Load environment variables
           command: |
