@@ -17,9 +17,6 @@ parameters:
     type: string
     default: ${CIRCLE_CI_TOKEN} 
 
-defaults: &defaults
-  working_directory: /tmp
-
 # ------------------
 # EXECUTORS
 # ------------------
@@ -34,7 +31,6 @@ executors:
 
 jobs:
   generate_release_name:
-    <<: *defaults
     docker:
       - image: cimg/ruby:3.2
     steps:
@@ -56,12 +52,11 @@ jobs:
             - release_name.txt
 
   check_redis_setup_docker_image:
-    <<: *defaults
     executor: build-executor
     steps:
+      - checkout
       - attach_workspace:
           at: /tmp/workspace
-      - checkout
       - run:
           name: Calculate checksums
           command: |
@@ -96,12 +91,11 @@ jobs:
             - bash.env
 
   build_and_push_redis_setup_docker_image:
-    <<: *defaults
     executor: build-executor
     steps:
-      - attach_workspace:
-          at: /tmp/workspace
       - checkout
+      - attach_workspace:
+          at: /workspace
       - run:
           name: Load environment variables
           command: |
@@ -155,12 +149,11 @@ jobs:
             - bash.env
 
   deploy_test_setup:
-    <<: *defaults
     executor: deploy-executor
     steps:
-      - attach_workspace:
-          at: /tmp/workspace
       - checkout
+      - attach_workspace:
+          at: /workspace
       - run:
           name: Load environment variables
           command: |
@@ -198,14 +191,14 @@ jobs:
             - bash.env
 
   deploy_tests_on_cloud_platform:
-    <<: *defaults
     executor: deploy-executor
     environment:
       NAMESPACE: << pipeline.parameters.namespace >>
       KUBE_TOKEN: << pipeline.parameters.token >>
     steps:
+      - checkout
       - attach_workspace:
-          at: /tmp/workspace
+          at: /workspace
       - run:
           name: Load environment variables
           command: |
@@ -213,7 +206,6 @@ jobs:
               cat bash.env >> $BASH_ENV
               source $BASH_ENV
             fi
-      - checkout
       - run:
           name: Authenticate with cluster
           command: |
