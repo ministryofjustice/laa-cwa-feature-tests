@@ -323,13 +323,14 @@ workflows:
   build_and_deploy:
     jobs:
       - generate_release_name
-      - check_redis_setup_docker_image
+      - check_redis_setup_docker_image:
+          requires:
+            - generate_release_name
       - build_and_push_redis_setup_docker_image:
           requires:
             - check_redis_setup_docker_image
       - deploy_test_setup:
           requires:
-            - generate_release_name
             - build_and_push_redis_setup_docker_image
       - hold_test_setup:
           type: approval
