@@ -179,6 +179,10 @@ jobs:
           command: |
             echo "REDIS_SETUP_IMAGE_TAG: $REDIS_SETUP_IMAGE_TAG"
       - run:
+          name: Check if RELEASE_NAME exists in bash_env
+          command: |
+            echo "RELEASE_NAME: $RELEASE_NAME"
+      - run:
           name: Deploy helm chart
           command: |
             helm install "${RELEASE_NAME}" ./charts/cwa-tests \
