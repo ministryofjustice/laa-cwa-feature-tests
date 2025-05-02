@@ -65,6 +65,7 @@ jobs:
           name: Load environment variables
           command: |
             cat bash.env >> $BASH_ENV
+            source $BASH_ENV
       - run:
           name: Verify release name is in $BASH_ENV
           command: |
@@ -114,6 +115,7 @@ jobs:
           name: Load environment variables
           command: |
             cat bash.env >> $BASH_ENV
+            source $BASH_ENV
       - run: |
           # verify; this should print 'true' or 'false'
           echo "SKIP_BUILD=${SKIP_BUILD}"
@@ -176,6 +178,7 @@ jobs:
           name: Load environment variables
           command: |
             cat bash.env >> $BASH_ENV
+            source $BASH_ENV
       - run:
           name: Authenticate with cluster
           command: |
@@ -223,6 +226,7 @@ jobs:
           name: Load environment variables
           command: |
             cat bash.env >> $BASH_ENV
+            source $BASH_ENV
       - run:
           name: Authenticate with cluster
           command: |
@@ -293,6 +297,7 @@ jobs:
           name: Load environment variables
           command: |
             cat bash.env >> $BASH_ENV
+            source $BASH_ENV
       - run:
           name: Install git-crypt
           command: |
