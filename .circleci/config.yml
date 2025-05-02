@@ -53,7 +53,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - bash_env
+            - bash.env
 
   check_redis_setup_docker_image:
     executor: build-executor
