@@ -45,10 +45,15 @@ jobs:
       - store_artifacts:
           path: release_name.txt
           destination: release_name.txt
+      - run: 
+          name: Save environment variables
+          command: |
+            echo "export RELEASE_NAME=$(cat release_name.txt)" >> "$BASH_ENV"
+            cp $BASH_ENV bash.env
       - persist_to_workspace:
           root: .
           paths:
-            - release_name.txt
+            - bash_env
 
   check_redis_setup_docker_image:
     executor: build-executor
@@ -176,7 +181,6 @@ jobs:
       - run:
           name: Deploy helm chart
           command: |
-            RELEASE_NAME=$(cat release_name.txt) 
             helm install "${RELEASE_NAME}" ./charts/cwa-tests \
             -f charts/cwa-tests/Values.yaml \
             --set setup=true \
@@ -192,9 +196,6 @@ jobs:
 
   deploy_tests_on_cloud_platform:
     executor: deploy-executor
-    environment:
-      NAMESPACE: << pipeline.parameters.namespace >>
-      KUBE_TOKEN: << pipeline.parameters.token >>
     steps:
       - checkout
       - attach_workspace:
