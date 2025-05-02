@@ -65,7 +65,6 @@ jobs:
           name: Load environment variables
           command: |
             cat bash.env >> $BASH_ENV
-            source $BASH_ENV
       - run:
           name: Verify release name is in $BASH_ENV
           command: |
@@ -115,7 +114,6 @@ jobs:
           name: Load environment variables
           command: |
             cat bash.env >> $BASH_ENV
-            source $BASH_ENV
       - run: |
           # verify; this should print 'true' or 'false'
           echo "SKIP_BUILD=${SKIP_BUILD}"
@@ -178,7 +176,6 @@ jobs:
           name: Load environment variables
           command: |
             cat bash.env >> $BASH_ENV
-            source $BASH_ENV
       - run:
           name: Authenticate with cluster
           command: |
@@ -199,7 +196,7 @@ jobs:
       - run:
           name: Deploy helm chart
           command: |
-            helm install "${RELEASE_NAME}" ./charts/cwa-tests \
+            helm install "${RELEASE_NAME}-setup" ./charts/cwa-tests \
             -f charts/cwa-tests/Values.yaml \
             --set setup=true \
             --set global.registryAddress="${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com" \
@@ -226,7 +223,6 @@ jobs:
           name: Load environment variables
           command: |
             cat bash.env >> $BASH_ENV
-            source $BASH_ENV
       - run:
           name: Authenticate with cluster
           command: |
@@ -242,7 +238,7 @@ jobs:
             export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
             export SHORT_SHA1=$(echo "${CIRCLE_SHA1,,}" | cut -c1-7)
             export SANITISED_BRANCH_WITH_SHA="${SANITISED_BRANCH}-${SHORT_SHA1}"
-            helm install "${RELEASE_NAME}" ./charts/cwa-tests \
+            helm install "${RELEASE_NAME}-run" ./charts/cwa-tests \
             -f charts/cwa-tests/Values.yaml \
             --set run=true \
             --set ecr.image.tag="${SANITISED_BRANCH_WITH_SHA}" \
@@ -282,6 +278,10 @@ jobs:
           event: pass
           mentions: '@pcuam-devs'
           template: basic_success_1
+      - run: 
+          name: Save environment variables
+          command: |
+            cp $BASH_ENV bash.env
       - persist_to_workspace:
           root: .
           paths:
@@ -297,7 +297,6 @@ jobs:
           name: Load environment variables
           command: |
             cat bash.env >> $BASH_ENV
-            source $BASH_ENV
       - run:
           name: Install git-crypt
           command: |
@@ -319,7 +318,6 @@ jobs:
           name: Set sanitised branch name
           command: |
             echo 'export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}-$(echo ${CIRCLE_SHA1} | cut -c1-7)" | sed -r 's/[/_]+/-/g')' >> "$BASH_ENV"
-            source "$BASH_ENV"
       - aws-ecr/build-and-push-image:
           push-image: true
           tag: ${SANITISED_BRANCH}
@@ -330,6 +328,10 @@ jobs:
           event: fail
           mentions: '@pcuam-devs'
           template: basic_fail_1
+      - run: 
+          name: Save environment variables
+          command: |
+            cp $BASH_ENV bash.env
       - persist_to_workspace:
           root: .
           paths:
