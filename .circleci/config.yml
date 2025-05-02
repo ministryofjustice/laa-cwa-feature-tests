@@ -49,18 +49,11 @@ jobs:
           name: Save environment variables
           command: |
             echo "export RELEASE_NAME=$(cat release_name.txt)" >> "$BASH_ENV"
-            cp $BASH_ENV bash.env
-      - persist_to_workspace:
-          root: .
-          paths:
-            - bash.env
 
   check_redis_setup_docker_image:
     executor: build-executor
     steps:
       - checkout
-      - attach_workspace:
-          at: .
       - run:
           name: Calculate checksums
           command: |
@@ -86,24 +79,11 @@ jobs:
               echo "Image ${REDIS_SETUP_IMAGE_TAG} already exists in ECR. Skipping build."
               echo "export SKIP_BUILD=true" >> "$BASH_ENV"
             fi
-      - run:
-          name: Save environment variables
-          command: cp $BASH_ENV bash.env
-      - persist_to_workspace:
-          root: .
-          paths:
-            - bash.env
 
   build_and_push_redis_setup_docker_image:
     executor: build-executor
     steps:
       - checkout
-      - attach_workspace:
-          at: .
-      - run:
-          name: Load environment variables
-          command: |
-            cat bash.env >> $BASH_ENV
       - run: |
           # verify; this should print 'true' or 'false'
           printenv SKIP_BUILD
@@ -147,24 +127,11 @@ jobs:
             else
               echo "Skipping push"
             fi
-      - persist_to_workspace:
-          root: .
-          paths:
-            - bash.env
 
   deploy_test_setup:
     executor: deploy-executor
     steps:
       - checkout
-      - attach_workspace:
-          at: .
-      - run:
-          name: Load environment variables
-          command: |
-            if [ -f bash.env ]; then
-              cat bash.env >> $BASH_ENV
-              source $BASH_ENV
-            fi
       - run:
           name: Authenticate with cluster
           command: |
@@ -193,10 +160,6 @@ jobs:
             --set global.circle_sha1=${CIRCLE_SHA1} \
             --wait --timeout 300s \
             --debug
-      - persist_to_workspace:
-          root: .
-          paths:
-            - bash.env
 
   deploy_tests_on_cloud_platform:
     executor: deploy-executor
