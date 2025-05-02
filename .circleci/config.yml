@@ -54,6 +54,9 @@ jobs:
     executor: build-executor
     steps:
       - checkout
+      - run: |
+          # verify release name
+          echo "RELEASE_NAME=${RELEASE_NAME}"
       - run:
           name: Calculate checksums
           command: |
