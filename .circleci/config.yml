@@ -258,7 +258,7 @@ jobs:
       - run:
           name: Wait for Kubernetes Job to Finish
           command: |
-            JOB_NAME="ft-runner-job"
+            JOB_NAME="${RELEASE_NAME}-ft-runner-job"
             NAMESPACE=<< pipeline.parameters.namespace >>
             while true; do
               STATUS=$(kubectl get job $JOB_NAME -n $NAMESPACE -o jsonpath='{.status.conditions[?(@.type=="Complete")].status}')
