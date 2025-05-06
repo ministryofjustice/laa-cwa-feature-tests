@@ -41,7 +41,7 @@ spec:
       env:
         - name: COMMIT_SHA
           value: "{{ .Values.global.circle_sha1 }}"
-        - name: REDIS_HOST
+        - name: REDIS_SERVICE
           value: "redis://{{ .Release.Name }}-redis-service.{{ .Values.global.namespace }}.svc.cluster.local:6379"
       volumeMounts:
         - name: artifact-volume

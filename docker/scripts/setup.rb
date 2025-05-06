@@ -4,8 +4,7 @@ require 'redis'
 require 'json'
 
 GITHUB_REPO = "ministryofjustice/laa-cwa-feature-tests"
-REDIS_HOST = ENV['REDIS_HOST']
-REDIS_PORT = 6379
+REDIS_HOST = ENV['REDIS_SERVICE']
 REDIS_LIST_NAME = "features_list"
 
 def get_github_file(commit_sha, file_path)
@@ -20,7 +19,7 @@ def get_github_file(commit_sha, file_path)
 end
 
 def test_redis_connection
-  redis = Redis.new(host: REDIS_HOST, port: REDIS_PORT)
+  redis = Redis.new(url: redis_service)
   begin
     redis.ping
     puts "Connected to Redis successfully."
@@ -32,7 +31,7 @@ end
 def push_to_redis(data)
   test_redis_connection()
   print_redis_list()
-  redis = Redis.new(host: REDIS_HOST, port: REDIS_PORT)
+  redis = Redis.new(url: redis_service)
   data.each do |item|
     puts "Pushing item to Redis: #{item}"
     redis.rpush(REDIS_LIST_NAME, item)
@@ -41,7 +40,7 @@ def push_to_redis(data)
 end
 
 def print_redis_list
-  redis = Redis.new(host: REDIS_HOST, port: REDIS_PORT)
+  redis = Redis.new(url: redis_service)
   list_content = redis.lrange(REDIS_LIST_NAME, 0, -1)
   puts "Examining Redis list state, REDIS_LIST_NAME: #{REDIS_LIST_NAME}"
   puts "Current Redis list content: #{list_content}"
@@ -71,7 +70,7 @@ def find_feature_files(commit_sha, dir_path)
 end
 
 def verify_redis_list(expected_count)
-  redis = Redis.new(host: REDIS_HOST, port: REDIS_PORT)
+  redis = Redis.new(url: redis_service)
   actual_count = redis.llen(REDIS_LIST_NAME)
   if actual_count == expected_count
     puts "Verification successful: Redis list contains #{actual_count} items."
