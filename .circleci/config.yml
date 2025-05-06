@@ -256,18 +256,6 @@ jobs:
             --wait --timeout 300s \
             --debug
       - run:
-          name: Creating Artifacts folder
-          command: |
-            mkdir /tmp/artifacts;
-            echo "Test reports for CWA UI tests" > /tmp/artifacts/art-2;
-      - run:
-          name: Copy output file from pod
-          command: |
-            kubectl cp ${RELEASE_NAME}-redis-setup:/artifacts/feature_file_count.txt /tmp/feature_file_count.txt
-      - store_artifacts:
-          path: /tmp/feature_file_count.txt
-          destination: feature_file_count.txt
-      - run:
           name: Wait for Kubernetes Job to Finish
           command: |
             JOB_NAME="ft-runner-job"
