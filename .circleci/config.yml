@@ -176,6 +176,7 @@ jobs:
           name: Load environment variables
           command: |
             cat bash.env >> $BASH_ENV
+            export NAMESPACE=<< pipeline.parameters.namespace >>
       - run:
           name: Authenticate with cluster
           command: |
@@ -225,6 +226,7 @@ jobs:
           name: Load environment variables
           command: |
             cat bash.env >> $BASH_ENV
+            export NAMESPACE=<< pipeline.parameters.namespace >>
       - run:
           name: Authenticate with cluster
           command: |
