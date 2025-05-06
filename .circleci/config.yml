@@ -196,7 +196,7 @@ jobs:
       - run:
           name: Deploy helm chart
           command: |
-            helm install "${RELEASE_NAME}-setup" ./charts/cwa-tests \
+            helm install "${RELEASE_NAME}" ./charts/cwa-tests \
             -f charts/cwa-tests/Values.yaml \
             --set setup=true \
             --set global.registryAddress="${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com" \
@@ -238,7 +238,7 @@ jobs:
             export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
             export SHORT_SHA1=$(echo "${CIRCLE_SHA1,,}" | cut -c1-7)
             export SANITISED_BRANCH_WITH_SHA="${SANITISED_BRANCH}-${SHORT_SHA1}"
-            helm install "${RELEASE_NAME}-run" ./charts/cwa-tests \
+            helm upgrade "${RELEASE_NAME}" ./charts/cwa-tests \
             -f charts/cwa-tests/Values.yaml \
             --set run=true \
             --set ecr.image.tag="${SANITISED_BRANCH_WITH_SHA}" \
@@ -246,8 +246,6 @@ jobs:
             --set global.circle_sha1=${CIRCLE_SHA1} \
             --wait --timeout 300s \
             --debug
-            export RELEASE_NAME=$(helm list -q | tail -1)
-            kubectl logs -f ${RELEASE_NAME} &
       - run:
           name: Creating Artifacts folder
           command: |
