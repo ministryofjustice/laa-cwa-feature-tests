@@ -261,7 +261,6 @@ jobs:
           path: /tmp/feature_file_count.txt
           destination: feature_file_count.txt
       - run:
-      - run:
           name: Wait for Kubernetes Job to Finish
           command: |
             JOB_NAME="ft-runner-job"
