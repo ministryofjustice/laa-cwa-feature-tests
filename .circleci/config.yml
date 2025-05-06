@@ -202,8 +202,8 @@ jobs:
             --set setup=true \
             --set global.registryAddress="${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com" \
             --set redisSetup.image.tag="${REDIS_SETUP_IMAGE_TAG}" \
-            --set global.circle_sha1=${CIRCLE_SHA1} \
-            --set global.namespace=${NAMESPACE} \
+            --set global.circle_sha1="${CIRCLE_SHA1}" \
+            --set global.namespace="${NAMESPACE}" \
             --set global.regPath="laa-pcuam/${NAMESPACE}" \
             --wait --timeout 300s \
             --debug
@@ -247,8 +247,8 @@ jobs:
             --set run=true \
             --set ecr.image.tag="${SANITISED_BRANCH_WITH_SHA}" \
             --set global.registryAddress="${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com" \
-            --set global.circle_sha1=${CIRCLE_SHA1} \
-            --set global.namespace=${NAMESPACE} \
+            --set global.circle_sha1="${CIRCLE_SHA1}" \
+            --set global.namespace="${NAMESPACE}" \
             --set global.regPath="laa-pcuam/${NAMESPACE}" \
             --wait --timeout 300s \
             --debug
