@@ -28,7 +28,7 @@ spec:
             type: "{{ .Values.securityContext.seccompProfile.type }}"
         env:
         - name: REDIS_SERVICE
-          value: "redis://{{ .Release.Name }}-redis-service:6379"
+          value: "redis://{{ .Release.Name }}-redis-service.{{ .Values.global.namespace }}.svc.cluster.local:6379"
         - name: WORK_Q
           value: "features_list"
         - name: TEST_ENV
