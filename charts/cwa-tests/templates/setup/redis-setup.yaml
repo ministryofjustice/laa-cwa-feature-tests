@@ -42,7 +42,7 @@ spec:
         - name: COMMIT_SHA
           value: "{{ .Values.global.circle_sha1 }}"
         - name: REDIS_HOST
-          value: "{{ .Release.Name }}-redis-service"
+          value: "redis://{{ .Release.Name }}-redis-service.{{ .Values.global.namespace }}.svc.cluster.local:6379"
       volumeMounts:
         - name: artifact-volume
           mountPath: /artifacts
