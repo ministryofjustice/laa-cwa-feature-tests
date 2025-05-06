@@ -279,26 +279,6 @@ jobs:
               echo "Waiting for job $JOB_NAME to complete..."
               sleep 10
             done
-      - slack/notify:
-          channel: laa-cwa-testing
-          event: fail
-          mentions: '@pcuam-devs'
-          template: basic_fail_1
-          when: on_fail
-      - slack/notify:
-          channel: laa-cwa-testing
-          event: pass
-          mentions: '@pcuam-devs'
-          template: basic_success_1
-          when: on_success
-      - run: 
-          name: Save environment variables
-          command: |
-            cp $BASH_ENV bash.env
-      - persist_to_workspace:
-          root: .
-          paths:
-            - bash.env
 
   build_and_push_docker_image:
     executor: build-executor
