@@ -8,8 +8,8 @@ metadata:
     meta.helm.sh/release-name: {{ .Release.Name }}
     meta.helm.sh/release-namespace: {{ .Values.global.namespace }}
 spec:
-  completions: 5  # Number of pods to run in parallel
-  parallelism: 5  # Number of pods to run at the same time
+  completions: 10  # Number of pods to run in parallel
+  parallelism: 10  # Number of pods to run at the same time
   template:
     metadata:
       labels:

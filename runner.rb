@@ -18,7 +18,7 @@ loop do
 
   # Simulate running the test using sleep
   puts "Simulating test run for: #{test}"
-  sleep(5)
+  sleep(60)
   # Print a message indicating completion of the simulated test run
   puts "Completed simulated test run for: #{test}"
   
