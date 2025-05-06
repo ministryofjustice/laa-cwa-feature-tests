@@ -2,12 +2,39 @@ require 'net/http'
 require 'redis'
 require 'json'
 require 'logger'
+require 'digest'
 
 GITHUB_REPO = "ministryofjustice/laa-cwa-feature-tests"
 redis_service = ENV['REDIS_SERVICE']
 REDIS_LIST_NAME = "features_list"
 logger = Logger.new(STDOUT)
 logger.level = Logger::DEBUG
+
+# Simple in-memory cache
+$cache = {}
+
+def fetch_and_cache_directory(commit_sha, dir_path, logger)
+  url = URI("https://api.github.com/repos/#{GITHUB_REPO}/contents/#{dir_path}?ref=#{commit_sha}")
+  logger.debug("Fetching directory from URL: #{url}")
+  response = Net::HTTP.get_response(url)
+  if response.is_a?(Net::HTTPSuccess)
+    logger.info("Successfully fetched directory from GitHub.")
+    $cache[dir_path] = JSON.parse(response.body)
+  else
+    logger.error("Failed to fetch directory from GitHub: #{response.message}")
+    $cache[dir_path] = []
+  end
+end
+
+def get_cached_directory(dir_path, logger)
+  if $cache.key?(dir_path)
+    logger.debug("Cache hit for #{dir_path}")
+    return $cache[dir_path]
+  else
+    logger.error("Cache miss for #{dir_path}")
+    return []
+  end
+end
 
 def get_github_file(commit_sha, file_path, logger)
   url = URI("https://raw.githubusercontent.com/#{GITHUB_REPO}/#{commit_sha}/#{file_path}")
@@ -50,18 +77,9 @@ def print_redis_list(redis_service, logger)
   logger.debug("Current Redis list content: #{list_content}")
 end
 
-def get_github_directory(commit_sha, dir_path, logger)
-  url = URI("https://api.github.com/repos/#{GITHUB_REPO}/contents/#{dir_path}?ref=#{commit_sha}")
-  logger.debug("Fetching directory from URL: #{url}")
-  response = Net::HTTP.get_response(url)
-  logger.debug("GitHub API response: #{response}")
-  return JSON.parse(response.body) if response.is_a?(Net::HTTPSuccess)
-  logger.error("Failed to fetch directory from GitHub: #{response.message}")
-  []
-end
-
 def find_feature_files(commit_sha, dir_path, logger)
-  files = get_github_directory(commit_sha, dir_path, logger)
+  fetch_and_cache_directory(commit_sha, dir_path, logger)
+  files = get_cached_directory(dir_path, logger)
   feature_files = []
 
   files.each do |file|
@@ -93,7 +111,7 @@ def write_count_to_file(count, logger)
   end
 end
 
-def main(commit_sha, redis_service, logger)
+def main(commit_sha, logger)
   raise "COMMIT_SHA environment variable is not set" if commit_sha.nil? || commit_sha.empty?
 
   features_txt = get_github_file(commit_sha, "features.txt", logger)
@@ -123,4 +141,5 @@ end
 commit_sha = ENV['COMMIT_SHA']
 logger.debug("REDIS_HOST: #{redis_service}")
 logger.debug("COMMIT_SHA: #{commit_sha}")
-main(commit_sha, redis_service, logger)
+main(commit_sha, logger)
+
