@@ -4,7 +4,7 @@ require 'redis'
 require 'json'
 
 GITHUB_REPO = "ministryofjustice/laa-cwa-feature-tests"
-REDIS_HOST = ENV['REDIS_SERVICE']
+redis_service = ENV['REDIS_SERVICE']
 REDIS_LIST_NAME = "features_list"
 
 def get_github_file(commit_sha, file_path)
@@ -114,6 +114,6 @@ def main(commit_sha)
 end
 
 commit_sha = ENV['COMMIT_SHA']
-puts "REDIS_HOST: #{REDIS_HOST}"
+puts "REDIS_HOST: #{redis_service}"
 puts "COMMIT_SHA: #{commit_sha}"
 main(commit_sha)
