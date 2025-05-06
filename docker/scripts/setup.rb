@@ -13,25 +13,26 @@ logger.level = Logger::DEBUG
 # Simple in-memory cache
 $cache = {}
 
-def fetch_and_cache_directory(commit_sha, dir_path, logger)
-  url = URI("https://api.github.com/repos/#{GITHUB_REPO}/contents/#{dir_path}?ref=#{commit_sha}")
-  logger.debug("Fetching directory from URL: #{url}")
+def fetch_and_cache_directory_tree(commit_sha, root_dir, logger)
+  url = URI("https://api.github.com/repos/#{GITHUB_REPO}/git/trees/#{commit_sha}?recursive=1")
+  logger.debug("Fetching entire directory tree from URL: #{url}")
   response = Net::HTTP.get_response(url)
   if response.is_a?(Net::HTTPSuccess)
-    logger.info("Successfully fetched directory from GitHub.")
-    $cache[dir_path] = JSON.parse(response.body)
+    logger.info("Successfully fetched directory tree from GitHub.")
+    tree = JSON.parse(response.body)['tree']
+    $cache[root_dir] = tree.select { |item| item['path'].start_with?(root_dir) }
   else
-    logger.error("Failed to fetch directory from GitHub: #{response.message}")
-    $cache[dir_path] = []
+    logger.error("Failed to fetch directory tree from GitHub: #{response.message}")
+    $cache[root_dir] = []
   end
 end
 
-def get_cached_directory(dir_path, logger)
-  if $cache.key?(dir_path)
-    logger.debug("Cache hit for #{dir_path}")
-    return $cache[dir_path]
+def get_cached_directory_tree(root_dir, logger)
+  if $cache.key?(root_dir)
+    logger.debug("Cache hit for #{root_dir}")
+    return $cache[root_dir]
   else
-    logger.error("Cache miss for #{dir_path}")
+    logger.error("Cache miss for #{root_dir}")
     return []
   end
 end
@@ -77,20 +78,11 @@ def print_redis_list(redis_service, logger)
   logger.debug("Current Redis list content: #{list_content}")
 end
 
-def find_feature_files(commit_sha, dir_path, logger)
-  fetch_and_cache_directory(commit_sha, dir_path, logger)
-  files = get_cached_directory(dir_path, logger)
-  feature_files = []
-
-  files.each do |file|
-    if file['type'] == 'file' && file['name'].end_with?('.feature')
-      feature_files << file['path']
-    elsif file['type'] == 'dir'
-      feature_files.concat(find_feature_files(commit_sha, file['path'], logger))
-    end
-  end
-
-  feature_files
+def find_feature_files(commit_sha, root_dir, logger)
+  fetch_and_cache_directory_tree(commit_sha, root_dir, logger)
+  files = get_cached_directory_tree(root_dir, logger)
+  feature_files = files.select { |file| file['type'] == 'blob' && file['path'].end_with?('.feature') }
+  feature_files.map { |file| file['path'] }
 end
 
 def verify_redis_list(expected_count, redis_service, logger)
@@ -142,4 +134,3 @@ commit_sha = ENV['COMMIT_SHA']
 logger.debug("REDIS_HOST: #{redis_service}")
 logger.debug("COMMIT_SHA: #{commit_sha}")
 main(commit_sha, redis_service, logger)
-
