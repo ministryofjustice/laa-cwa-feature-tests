@@ -111,7 +111,7 @@ def write_count_to_file(count, logger)
   end
 end
 
-def main(commit_sha, logger)
+def main(commit_sha, redis_service, logger)
   raise "COMMIT_SHA environment variable is not set" if commit_sha.nil? || commit_sha.empty?
 
   features_txt = get_github_file(commit_sha, "features.txt", logger)
@@ -141,5 +141,5 @@ end
 commit_sha = ENV['COMMIT_SHA']
 logger.debug("REDIS_HOST: #{redis_service}")
 logger.debug("COMMIT_SHA: #{commit_sha}")
-main(commit_sha, logger)
+main(commit_sha, redis_service, logger)
 
