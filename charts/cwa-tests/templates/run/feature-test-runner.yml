@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ .Release.Name }}-laa-pcuam-cwa-tests-job
+  name: {{ .Release.Name }}-ft-runner-job
   labels:
     app.kubernetes.io/managed-by: Helm
     meta.helm.sh/release-name: {{ .Release.Name }}
@@ -13,10 +13,10 @@ spec:
   template:
     metadata:
       labels:
-        app: laa-pcuam-cwa-tests
+        app: ft-runner-job
     spec:
       containers:
-      - name: laa-pcuam-cwa-tests
+      - name: ft-runner-job
         image: "{{ .Values.global.registryAddress }}/{{ .Values.global.regPath }}:{{ .Values.ecr.image.tag }}"
         securityContext:
           runAsNonRoot: true

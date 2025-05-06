@@ -256,28 +256,42 @@ jobs:
       - run:
           name: Copy output file from pod
           command: |
-            export RELEASE_NAME=$(helm list -q | tail -1)
-            echo "Captured RELEASE_NAME=${RELEASE_NAME}"
             kubectl cp ${RELEASE_NAME}-redis-setup:/artifacts/feature_file_count.txt /tmp/feature_file_count.txt
       - store_artifacts:
           path: /tmp/feature_file_count.txt
           destination: feature_file_count.txt
       - run:
-          name: Wait for specific pod to complete
-          command: |
-            export POD_NAME=$(kubectl get pods -l meta.helm.sh/release-name=${RELEASE_NAME} -o jsonpath='{.items[?(@.metadata.name=="'${RELEASE_NAME}'-laa-pcuam-cwa-tests")].metadata.name}')
-            kubectl wait --for=condition=complete pod/${POD_NAME} --timeout=18000s
-      - store_artifacts:
-          path: reports
-          destination: test-reports
       - run:
-          name: Clean namespace
-          command:  helm ls -n ${NAMESPACE} --short | xargs -L1 -I {} helm uninstall {} -n ${NAMESPACE}
+          name: Wait for Kubernetes Job to Finish
+          command: |
+            JOB_NAME="ft-runner-job"
+            NAMESPACE=<< pipeline.parameters.namespace >>
+            while true; do
+              STATUS=$(kubectl get job $JOB_NAME -n $NAMESPACE -o jsonpath='{.status.conditions[?(@.type=="Complete")].status}')
+              if [ "$STATUS" == "True" ]; then
+                echo "Job $JOB_NAME completed successfully."
+                break
+              fi
+              STATUS=$(kubectl get job $JOB_NAME -n $NAMESPACE -o jsonpath='{.status.conditions[?(@.type=="Failed")].status}')
+              if [ "$STATUS" == "True" ]; then
+                echo "Job $JOB_NAME failed."
+                exit 1
+              fi
+              echo "Waiting for job $JOB_NAME to complete..."
+              sleep 10
+            done
+      - slack/notify:
+          channel: laa-cwa-testing
+          event: fail
+          mentions: '@pcuam-devs'
+          template: basic_fail_1
+          when: on_fail
       - slack/notify:
           channel: laa-cwa-testing
           event: pass
           mentions: '@pcuam-devs'
           template: basic_success_1
+          when: on_success
       - run: 
           name: Save environment variables
           command: |
