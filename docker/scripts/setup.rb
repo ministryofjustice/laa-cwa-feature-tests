@@ -133,4 +133,5 @@ end
 commit_sha = ENV['COMMIT_SHA']
 logger.debug("REDIS_HOST: #{redis_service}")
 logger.debug("COMMIT_SHA: #{commit_sha}")
+sleep(30.seconds)
 main(commit_sha, redis_service, logger)

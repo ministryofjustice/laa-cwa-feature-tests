@@ -207,7 +207,7 @@ jobs:
             --set global.circle_sha1="${CIRCLE_SHA1}" \
             --set global.namespace="${NAMESPACE}" \
             --set global.regPath="laa-pcuam/${NAMESPACE}" \
-            --wait --timeout 600s \
+            --wait --timeout 300s \
             --debug
       - run: 
           name: Save environment variables
