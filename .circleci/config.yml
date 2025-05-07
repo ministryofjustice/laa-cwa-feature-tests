@@ -274,6 +274,11 @@ jobs:
               echo "Waiting for job $JOB_NAME to complete..."
               sleep 10
             done
+      - run:
+          name: Cleanup Kubernetes Namespace
+          command: |
+            NAMESPACE=<< pipeline.parameters.namespace >>
+            helm uninstall "${RELEASE_NAME}" -n $NAMESPACE
 
   build_and_push_docker_image:
     executor: build-executor
