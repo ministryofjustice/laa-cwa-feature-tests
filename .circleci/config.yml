@@ -275,15 +275,33 @@ jobs:
               sleep 10
             done
 
+            # Get the start and completion times
             times=$(kubectl get job $JOB_NAME -n $NAMESPACE -o jsonpath='{.status.startTime} {.status.completionTime}')
             start_time=$(echo $times | awk '{print $1}')
             completion_time=$(echo $times | awk '{print $2}')
 
+            # Debug output for timestamps
+            echo "Start time: $start_time"
+            echo "Completion time: $completion_time"
+
+            # Convert times to seconds since epoch
             start_seconds=$(date -d "$start_time" +%s)
             completion_seconds=$(date -d "$completion_time" +%s)
 
+            # Debug output for seconds
+            echo "Start seconds: $start_seconds"
+            echo "Completion seconds: $completion_seconds"
+
+            # Calculate the duration in seconds
+            duration_seconds=$((completion_seconds - start_seconds))
+
+            # Debug output for duration in seconds
+            echo "Duration in seconds: $duration_seconds"
+
+            # Convert duration to minutes and round to the nearest minute
             duration_minutes=$(( (duration_seconds + 30) / 60 ))
 
+            # Report the duration
             echo "Job $JOB_NAME took approximately $duration_minutes minutes to run."
 
       - run:
