@@ -30,7 +30,7 @@ spec:
         - name: REDIS_SERVICE
           value: "redis://{{ .Release.Name }}-redis-service.{{ .Values.global.namespace }}.svc.cluster.local:6379"
         - name: WORK_Q
-          value: {{ .redisSetup.work_q }}
+          value: {{ .ftRunnerJob.work_q }}
         - name: TEST_ENV
           value: {{ .Values.global.test_env }}
         - name: HEADLESS 
