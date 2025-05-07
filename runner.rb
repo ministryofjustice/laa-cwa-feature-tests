@@ -17,18 +17,18 @@ loop do
 
 
   # Simulate running the test using sleep
-  puts "Simulating test run for: #{test}"
-  sleep(180)
+  #puts "Simulating test run for: #{test}"
+  #sleep(180)
   # Print a message indicating completion of the simulated test run
-  puts "Completed simulated test run for: #{test}"
+  #puts "Completed simulated test run for: #{test}"
   
   # Run the test using bundle exec cucumber
-  #command = "bundle exec cucumber #{test}"
-  #stdout, stderr, status = Open3.capture3(command)
+  command = "bundle exec cucumber #{test}"
+  stdout, stderr, status = Open3.capture3(command)
 
   # Print the output and error messages
-  #puts stdout
-  #puts stderr unless status.success?
+  puts stdout
+  puts stderr unless status.success?
 end
 
 puts "Work queue is empty. Script finished."

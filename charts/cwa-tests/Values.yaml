@@ -17,6 +17,14 @@ ecr:
 redisSetup:
   image:
     tag: ""
+  work_q: "features_list"
+
+ftRunnerJob: 
+  headless: true 
+  test_env: "dev" 
+  use_api: true
+  api_url: "cwa-test-provider-service"
+  cwa_provider_logging: true
 
 securityContext:
   runAsUser: 1000

@@ -30,9 +30,17 @@ spec:
         - name: REDIS_SERVICE
           value: "redis://{{ .Release.Name }}-redis-service.{{ .Values.global.namespace }}.svc.cluster.local:6379"
         - name: WORK_Q
-          value: "features_list"
+          value: {{ .redisSetup.work_q }}
         - name: TEST_ENV
           value: {{ .Values.global.test_env }}
+        - name: HEADLESS 
+          value: {{ .ftRunnerJob.headless }}
+        - name: USE_API 
+          value: {{ .ftRunnerJob.use_api }}
+        - name: CWA_PROVIDER_LOGGING
+          value: {{ .ftRunnerJob.cwa_provider_logging }}
+        - name: API_URL
+          value: {{ .ftRunnerJob.api_url }}
         resources:
           requests:
             cpu: 1500m
