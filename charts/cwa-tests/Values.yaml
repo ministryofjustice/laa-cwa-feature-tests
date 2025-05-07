@@ -19,12 +19,12 @@ redisSetup:
     tag: ""
 
 ftRunnerJob: 
-  headless: true 
+  headless: "true"
   test_env: "dev" 
-  use_api: true
+  use_api: "true"
   api_url: "cwa-test-provider-service"
   work_q: "features_list"
-  cwa_provider_logging: true
+  cwa_provider_logging: "true"
 
 securityContext:
   runAsUser: 1000
