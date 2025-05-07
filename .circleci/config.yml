@@ -274,6 +274,18 @@ jobs:
               echo "Waiting for job $JOB_NAME to complete..."
               sleep 10
             done
+
+            times=$(kubectl get job $JOB_NAME -n $NAMESPACE -o jsonpath='{.status.startTime} {.status.completionTime}')
+            start_time=$(echo $times | awk '{print $1}')
+            completion_time=$(echo $times | awk '{print $2}')
+
+            start_seconds=$(date -d "$start_time" +%s)
+            completion_seconds=$(date -d "$completion_time" +%s)
+
+            duration_minutes=$(( (duration_seconds + 30) / 60 ))
+
+            echo "Job $JOB_NAME took approximately $duration_minutes minutes to run."
+
       - run:
           name: Cleanup Kubernetes Namespace
           command: |
