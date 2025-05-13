@@ -1,4 +1,4 @@
-{{- define "cwa-tests.run-screenshots-pvc" -}}
+{{- define "cwa-tests.run.screenshots-pvc" -}}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
