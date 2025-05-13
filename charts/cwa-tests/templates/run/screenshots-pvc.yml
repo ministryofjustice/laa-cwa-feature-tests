@@ -2,7 +2,6 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-metadata:
   name: {{ .Release.Name }}-screenshots-pvc
   namespace: {{ .Values.global.namespace }}
   labels:
@@ -13,6 +12,5 @@ spec:
   resources:
     requests:
       storage: 100Mi
-  storageClassName: g3
 ---
 {{- end -}}
