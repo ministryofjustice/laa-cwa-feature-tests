@@ -47,5 +47,4 @@ spec:
         - name: redis-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-redis-pvc
----
 {{- end -}}
