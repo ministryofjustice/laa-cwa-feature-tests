@@ -22,7 +22,7 @@ ftRunnerJob:
   headless: "true"
   test_env: "dev" 
   use_api: "true"
-  api_url: "http://cwa-test-provider-service:8000/dev/api/"
+  api_url: "http://cwa-test-provider-service:8000/dev/api/provider"
   work_q: "features_list"
   cwa_provider_logging: "true"
 
