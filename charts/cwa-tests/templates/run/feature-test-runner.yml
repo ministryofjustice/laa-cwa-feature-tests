@@ -59,4 +59,5 @@ spec:
         - name: screenshots
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-screenshots-pvc
+---
 {{- end -}}

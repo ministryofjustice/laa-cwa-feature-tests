@@ -8,4 +8,5 @@ metadata:
 data:
   redisSetupImageTag: "{{ .Values.redisSetup.image.tag }}"
   circleSha1: "{{ .Values.global.circle_sha1 }}"
+---
 {{- end -}}
