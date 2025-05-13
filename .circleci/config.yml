@@ -241,6 +241,15 @@ jobs:
           name: Deploy helm chart
           command: |
             export NAMESPACE=<< pipeline.parameters.namespace >>
+            # Extract last 4 characters
+            SUFFIX="${NAMESPACE: -4}"
+            # Map 'test' to 'tst', otherwise use last 3 characters
+            if [ "$SUFFIX" = "test" ]; then
+              TEST_ENV="tst"
+            else
+              TEST_ENV="${NAMESPACE: -3}"
+            fi
+            echo "TEST_ENV=$TEST_ENV"
             echo $NAMESPACE
             export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
             export SHORT_SHA1=$(echo "${CIRCLE_SHA1,,}" | cut -c1-7)
@@ -252,6 +261,7 @@ jobs:
             --set global.registryAddress="${AWS_ECR_REGISTRY_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com" \
             --set global.circle_sha1="${CIRCLE_SHA1}" \
             --set global.namespace="${NAMESPACE}" \
+            --set global.test_env="${TEST_ENV}" \
             --set global.regPath="laa-pcuam/${NAMESPACE}" \
             --wait --timeout 300s \
             --debug
