@@ -19,7 +19,7 @@ redisSetup:
     tag: ""
 
 ftRunnerJob: 
-  headless: "false"
+  headless: "true"
   test_env: "devmp" 
   use_api: "true"
   api_url: "http://cwa-test-provider-service:8000/dev/api/provider"
