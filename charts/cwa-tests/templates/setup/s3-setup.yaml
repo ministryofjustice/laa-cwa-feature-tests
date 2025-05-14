@@ -24,6 +24,14 @@ spec:
         mkdir -p /tmp/.aws
         aws s3api put-object --bucket "$S3_BUCKET_NAME" --key "feature-test-runs/$RELEASE_NAME/artefacts/"
         aws s3api put-object --bucket "$S3_BUCKET_NAME" --key "feature-test-runs/$RELEASE_NAME/summary/"
+        aws s3api put-object \
+          --bucket "$S3_BUCKET_NAME" \
+          --key "feature-test-runs/$RELEASE_NAME/summary/" \
+          --body <(echo "${RELEASE_NAME}")
+        aws s3api put-object \
+          --bucket "$S3_BUCKET_NAME" \
+          --key "feature-test-runs/$RELEASE_NAME/artefacts/" \
+          --body <(echo "${RELEASE_NAME}")
     env:
     - name: HOME
       value: "/tmp"
