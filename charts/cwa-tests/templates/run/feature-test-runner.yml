@@ -33,7 +33,7 @@ spec:
         - name: WORK_Q
           value: "{{ .Values.ftRunnerJob.work_q }}"
         - name: TEST_ENV
-          value: "{{ .Values.global.test_env }}"
+          value: "{{ .Values.ftRunnerJob.test_env }}"
         - name: HEADLESS 
           value: "{{ .Values.ftRunnerJob.headless }}"
         - name: USE_API 

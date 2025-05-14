@@ -5,7 +5,7 @@ global:
   serviceAccount: "irsa-s3-laa-cwa-feature-tests-dev"
   circle_sha1: ""
   browser: chrome
-  test_env: tst
+  test_env: devmp
   registryAddress: ""
   regPath: ""
 
