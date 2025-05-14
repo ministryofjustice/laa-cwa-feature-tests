@@ -21,9 +21,12 @@ spec:
     command: ["/bin/sh", "-c"]
     args:
       - |
+        mkdir -p /tmp/.aws
         aws s3api put-object --bucket "$S3_BUCKET_NAME" --key "feature-test-runs/$RELEASE_NAME/artefacts/"
         aws s3api put-object --bucket "$S3_BUCKET_NAME" --key "feature-test-runs/$RELEASE_NAME/summary/"
     env:
+    - name: HOME
+      value: "/tmp"
     - name: S3_BUCKET_NAME
       valueFrom:
         secretKeyRef:
@@ -31,4 +34,12 @@ spec:
           key: bucket_name
     - name: RELEASE_NAME
       value: {{ .Release.Name }}
+    securityContext:
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
+      seccompProfile:
+        type: "{{ .Values.securityContext.seccompProfile.type }}"
 {{- end -}}
