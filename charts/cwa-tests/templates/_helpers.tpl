@@ -14,5 +14,4 @@
 {{- include "cwa-tests.setup.redis-deployment" . }}
 {{- include "cwa-tests.setup.redis-service" . }}
 {{- include "cwa-tests.run.feature-test-runner" . }}
-{{- include "cwa-tests.run.screenshots-pvc" . }}
 {{- end -}}

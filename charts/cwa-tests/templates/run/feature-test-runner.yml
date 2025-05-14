@@ -50,14 +50,6 @@ spec:
             cpu: 4000m
             memory: 8192Mi
         command: ["ruby", "runner.rb"]
-        volumeMounts:
-          - name: screenshots
-            mountPath: /screenshots
-      volumes:
-        - name: screenshots
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-screenshots-pvc
       restartPolicy: Never
       serviceAccountName: {{ .Values.global.serviceAccount }}
----
 {{- end -}}

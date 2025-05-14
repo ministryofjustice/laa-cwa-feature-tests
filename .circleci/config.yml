@@ -246,6 +246,8 @@ jobs:
             # Map 'test' to 'tst', otherwise use last 3 characters
             if [ "$SUFFIX" = "test" ]; then
               TEST_ENV="tst"
+            if [ "$SUFFIX" = "dev" ]; then
+              TEST_ENV="devmp"
             else
               TEST_ENV="${NAMESPACE: -3}"
             fi
