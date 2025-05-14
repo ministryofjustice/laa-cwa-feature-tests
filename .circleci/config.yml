@@ -242,15 +242,7 @@ jobs:
           command: |
             export NAMESPACE=<< pipeline.parameters.namespace >>
             # Extract last 4 characters
-            SUFFIX="${NAMESPACE: -4}"
-            # Map 'test' to 'tst', otherwise use last 3 characters
-            if [ "$SUFFIX" = "test" ]; then
-              TEST_ENV="tst"
-            if [ "$SUFFIX" = "dev" ]; then
-              TEST_ENV="devmp"
-            else
-              TEST_ENV="${NAMESPACE: -3}"
-            fi
+            export TEST_ENV="devmp"
             echo "TEST_ENV=$TEST_ENV"
             echo $NAMESPACE
             export SANITISED_BRANCH=$(echo "${CIRCLE_BRANCH,,}" | sed -r 's/[/_]+/-/g')
