@@ -26,11 +26,11 @@ spec:
         aws s3api put-object --bucket "$S3_BUCKET_NAME" --key "feature-test-runs/$RELEASE_NAME/summary/"
         aws s3api put-object \
           --bucket "$S3_BUCKET_NAME" \
-          --key "feature-test-runs/$RELEASE_NAME/summary/" \
+          --key "feature-test-runs/$RELEASE_NAME/summary/readme.txt" \
           --body <(echo "${RELEASE_NAME}")
         aws s3api put-object \
           --bucket "$S3_BUCKET_NAME" \
-          --key "feature-test-runs/$RELEASE_NAME/artefacts/" \
+          --key "feature-test-runs/$RELEASE_NAME/artefacts/readme.txt" \
           --body <(echo "${RELEASE_NAME}")
     env:
     - name: HOME
