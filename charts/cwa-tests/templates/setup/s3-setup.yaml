@@ -27,11 +27,11 @@ spec:
         aws s3api put-object \
           --bucket "$S3_BUCKET_NAME" \
           --key "feature-test-runs/$RELEASE_NAME/summary/readme.txt" \
-          --body <(echo "${RELEASE_NAME}")
+          --body <(echo "hello-world")
         aws s3api put-object \
           --bucket "$S3_BUCKET_NAME" \
           --key "feature-test-runs/$RELEASE_NAME/artefacts/readme.txt" \
-          --body <(echo "${RELEASE_NAME}")
+          --body <(echo "hello-world")
     env:
     - name: HOME
       value: "/tmp"
