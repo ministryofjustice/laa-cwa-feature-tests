@@ -36,7 +36,7 @@ Then('CWA application page is displayed') do
 
   unless cwa_window
     puts "ERROR: Could not find a window with the expected title."
-    save_screenshot("/screenshots/cwa_failure_#{Time.now.to_i}.png"
+    save_screenshot("/screenshots/cwa_failure_#{Time.now.to_i}.png")
     raise Capybara::WindowError, "CWA window not found after retries"
   end
 
