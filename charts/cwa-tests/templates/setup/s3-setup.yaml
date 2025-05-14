@@ -22,16 +22,11 @@ spec:
     args:
       - |
         mkdir -p /tmp/.aws
-        aws s3api put-object --bucket "$S3_BUCKET_NAME" --key "feature-test-runs/$RELEASE_NAME/artefacts/"
-        aws s3api put-object --bucket "$S3_BUCKET_NAME" --key "feature-test-runs/$RELEASE_NAME/summary/"
-        aws s3api put-object \
-          --bucket "$S3_BUCKET_NAME" \
-          --key "feature-test-runs/$RELEASE_NAME/summary/readme.txt" \
-          --body <(echo "hello-world")
-        aws s3api put-object \
-          --bucket "$S3_BUCKET_NAME" \
-          --key "feature-test-runs/$RELEASE_NAME/artefacts/readme.txt" \
-          --body <(echo "hello-world")
+        echo "hello-world" > /tmp/readme.txt
+        export ARTEFACTS_DIR="feature-test-runs/$RELEASE_NAME/artefacts"
+        export SUMMARY_DIR="feature-test-runs/$RELEASE_NAME/summary"
+        aws s3 cp /tmp/readme.txt s3://${S3_BUCKET_NAME}/${SUMMARY_DIR}/readme.txt
+        aws s3 cp /tmp/readme.txt s3://${S3_BUCKET_NAME}/${ARTEFACTS_DIR}/readme.txt
     env:
     - name: HOME
       value: "/tmp"

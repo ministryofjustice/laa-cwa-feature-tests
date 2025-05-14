@@ -44,7 +44,7 @@ spec:
           value: "{{ .Values.ftRunnerJob.api_url }}"
         resources:
           requests:
-            cpu: 1500m
+            cpu: 2000m
             memory: 8192Mi
           limits:
             cpu: 4000m

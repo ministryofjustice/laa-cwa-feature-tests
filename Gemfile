@@ -18,4 +18,5 @@ end
 
 group :docker do
   gem 'ruby-oci8', '~> 2.2.12'
+  gem "aws-sdk-s3"
 end

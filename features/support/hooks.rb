@@ -1,5 +1,6 @@
 # features/support/hooks.rb
 
+require 'aws-sdk-s3'
 require_relative '../pages/outcome_page.rb'
 include OutcomePage
 
@@ -54,10 +55,36 @@ After do |scenario|
   end
 end
 
+# After do |scenario|
+#   duration = Time.now - @start_time
+#   puts "The scenario '#{scenario.name}' took #{duration.round(2)} seconds to run."
+# end
+
 After do |scenario|
-  duration = Time.now - @start_time
-  puts "The scenario '#{scenario.name}' took #{duration.round(2)} seconds to run."
+  if scenario.failed?
+    timestamp = Time.now.strftime('%d%m%Y-%H%M%S')
+    filename = "#{scenario.name.gsub(/\s+/, '_')}_#{timestamp}.png"
+    local_path = "/tmp/#{filename}"
+
+    # Save screenshot locally
+    page.save_screenshot(local_path)
+    puts "Saved screenshot to #{local_path}"
+
+    # Upload to S3
+    s3 = Aws::S3::Client.new(region: ENV['AWS_REGION'])
+    bucket = ENV['BUCKET_NAME']
+    release = ENV['RELEASE_NAME']
+    key = "feature-test-runs/#{release}/artefacts/#{filename}"
+
+    begin
+      s3.put_object(bucket: bucket, key: key, body: File.open(local_path))
+      puts "Uploaded screenshot to s3://#{bucket}/#{key}"
+    rescue Aws::S3::Errors::ServiceError => e
+      puts "Failed to upload screenshot: #{e.message}"
+    end
+  end
 end
+
 
 # At exit hook
 at_exit do
