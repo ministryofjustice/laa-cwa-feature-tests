@@ -8,7 +8,7 @@ redis_service = ENV['REDIS_SERVICE']
 work_queue = ENV['WORK_Q']
 # AWS S3 setup
 region = ENV['AWS_REGION']
-bucket = ENV['BUCKET_NAME']
+bucket = ENV['S3_BUCKET_NAME']
 release = ENV['RELEASE_NAME']
 
 # Connect to Redis/AWS

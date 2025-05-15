@@ -42,6 +42,11 @@ spec:
           value: "{{ .Values.ftRunnerJob.cwa_provider_logging }}"
         - name: API_URL
           value: "{{ .Values.ftRunnerJob.api_url }}"
+        - name: S3_BUCKET_NAME
+          valueFrom:
+            secretKeyRef:
+              name: s3-bucket-output
+              key: bucket_name
         resources:
           requests:
             cpu: 2000m
