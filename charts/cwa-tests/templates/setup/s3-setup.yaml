@@ -22,11 +22,14 @@ spec:
     args:
       - |
         mkdir -p /tmp/.aws
-        echo "hello-world" > /tmp/readme.txt
+        echo $RELEASE_NAME > /tmp/release.txt
         export ARTEFACTS_DIR="feature-test-runs/$RELEASE_NAME/artefacts"
         export SUMMARY_DIR="feature-test-runs/$RELEASE_NAME/summary"
-        aws s3 cp /tmp/readme.txt s3://${S3_BUCKET_NAME}/${SUMMARY_DIR}/readme.txt
-        aws s3 cp /tmp/readme.txt s3://${S3_BUCKET_NAME}/${ARTEFACTS_DIR}/readme.txt
+        aws s3 cp /tmp/readme.txt s3://${S3_BUCKET_NAME}/${SUMMARY_DIR}/release.txt
+        aws s3 cp /tmp/readme.txt s3://${S3_BUCKET_NAME}/${ARTEFACTS_DIR}/release.txt
+        aws s3 cp /tmp/readme.txt s3://${S3_BUCKET_NAME}/${ARTEFACTS_DIR}/errors/release.txt
+        aws s3 cp /tmp/readme.txt s3://${S3_BUCKET_NAME}/${ARTEFACTS_DIR}/output/release.txt
+        aws s3 cp /tmp/readme.txt s3://${S3_BUCKET_NAME}/${ARTEFACTS_DIR}/screenshots/release.txt
         echo "Sleeping for 30 seconds..."
         sleep 30
     env:
