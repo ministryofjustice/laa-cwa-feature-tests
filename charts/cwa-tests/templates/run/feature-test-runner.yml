@@ -42,6 +42,8 @@ spec:
           value: "{{ .Values.ftRunnerJob.cwa_provider_logging }}"
         - name: API_URL
           value: "{{ .Values.ftRunnerJob.api_url }}"
+        - name: RELEASE_NAME
+          value: "{{ .Release.Name }}"
         - name: S3_BUCKET_NAME
           valueFrom:
             secretKeyRef:
