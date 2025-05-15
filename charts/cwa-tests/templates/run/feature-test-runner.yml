@@ -44,6 +44,8 @@ spec:
           value: "{{ .Values.ftRunnerJob.api_url }}"
         - name: RELEASE_NAME
           value: "{{ .Release.Name }}"
+        - name: S3
+          value: "{{ .Values.ftRunnerJob.s3 }}"
         - name: S3_BUCKET_NAME
           valueFrom:
             secretKeyRef:

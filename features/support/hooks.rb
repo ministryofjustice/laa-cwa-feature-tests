@@ -75,7 +75,7 @@ After do |scenario|
       s3 = Aws::S3::Client.new(region: ENV['AWS_REGION'])
       bucket = ENV['BUCKET_NAME']
       release = ENV['RELEASE_NAME']
-      key = "feature-test-runs/#{release}/artefacts/#{filename}"
+      key = "feature-test-runs/#{release}/artefacts/screenshots/#{filename}"
 
       begin
         s3.put_object(bucket: bucket, key: key, body: File.open(local_path))
