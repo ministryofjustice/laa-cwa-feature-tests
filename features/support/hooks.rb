@@ -70,17 +70,19 @@ After do |scenario|
     page.save_screenshot(local_path)
     puts "Saved screenshot to #{local_path}"
 
-    # Upload to S3
-    s3 = Aws::S3::Client.new(region: ENV['AWS_REGION'])
-    bucket = ENV['BUCKET_NAME']
-    release = ENV['RELEASE_NAME']
-    key = "feature-test-runs/#{release}/artefacts/#{filename}"
+    if (ENV['S3'] == 'true')
+      # Upload to S3
+      s3 = Aws::S3::Client.new(region: ENV['AWS_REGION'])
+      bucket = ENV['BUCKET_NAME']
+      release = ENV['RELEASE_NAME']
+      key = "feature-test-runs/#{release}/artefacts/#{filename}"
 
-    begin
-      s3.put_object(bucket: bucket, key: key, body: File.open(local_path))
-      puts "Uploaded screenshot to s3://#{bucket}/#{key}"
-    rescue Aws::S3::Errors::ServiceError => e
-      puts "Failed to upload screenshot: #{e.message}"
+      begin
+        s3.put_object(bucket: bucket, key: key, body: File.open(local_path))
+        puts "Uploaded screenshot to s3://#{bucket}/#{key}"
+      rescue Aws::S3::Errors::ServiceError => e
+        puts "Failed to upload screenshot: #{e.message}"
+      end
     end
   end
 end

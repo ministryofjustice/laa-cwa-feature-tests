@@ -25,6 +25,7 @@ ftRunnerJob:
   api_url: "http://cwa-test-provider-service:8000/dev/api/provider"
   work_q: "features_list"
   cwa_provider_logging: "true"
+  s3: "true"
 
 securityContext:
   runAsUser: 1000

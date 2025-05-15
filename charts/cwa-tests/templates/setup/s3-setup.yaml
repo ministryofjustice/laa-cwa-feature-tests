@@ -27,6 +27,8 @@ spec:
         export SUMMARY_DIR="feature-test-runs/$RELEASE_NAME/summary"
         aws s3 cp /tmp/readme.txt s3://${S3_BUCKET_NAME}/${SUMMARY_DIR}/readme.txt
         aws s3 cp /tmp/readme.txt s3://${S3_BUCKET_NAME}/${ARTEFACTS_DIR}/readme.txt
+        echo "Sleeping for 30 seconds..."
+        sleep 30
     env:
     - name: HOME
       value: "/tmp"
