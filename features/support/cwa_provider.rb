@@ -35,6 +35,10 @@ module CWAProvider
   }
 
   class << self
+    def logger
+      @logger ||= Logger.new(STDOUT).tap { |log| log.level = Logger::INFO }
+    end
+  
     ATTRIBUTES = [
       :feature_file,
       :area_of_law,
@@ -46,20 +50,15 @@ module CWAProvider
       :api_url,
       :locked_id
     ]
-
-    def initialize
-      @logger = Logger.new(STDOUT) # You can also log to a file
-      @logger.level = Logger::INFO
-    end
   
     attr_accessor *ATTRIBUTES
 
     def area_of_law=(new_area_of_law)
       if @area_of_law != new_area_of_law
-        @logger.info("Changing area_of_law from #{@area_of_law} to #{new_area_of_law}") if logging
+        logger.info("Changing area_of_law from #{@area_of_law} to #{new_area_of_law}") if logging
         @area_of_law = new_area_of_law
         @submissions = nil # Clear cached submissions
-        @logger.info("Cleared cached submissions") if logging
+        logger.info("Cleared cached submissions") if logging
       end
     end
 
@@ -68,26 +67,26 @@ module CWAProvider
     end
 
     def submissions
-      @logger.info("Fetching submissions for area_of_law: #{area_of_law}") if logging
+      logger.info("Fetching submissions for area_of_law: #{area_of_law}") if logging
       @submissions ||= fetch_submissions(area_of_law: area_of_law)
-      @logger.debug("Submissions fetched: #{@submissions.inspect}") if logging
-      @logger.info("Submissions fetched") if logging
+      logger.debug("Submissions fetched: #{@submissions.inspect}") if logging
+      logger.info("Submissions fetched") if logging
       @submissions
     end
 
     def submission
       case area_of_law
       when CRIME_LOWER
-        @logger.info("Fetching crime_lower_submission") if logging
+        logger.info("Fetching crime_lower_submission") if logging
         crime_lower_submission
       when LEGAL_HELP
-        @logger.info("Fetching legal_help_submission") if logging
+        logger.info("Fetching legal_help_submission") if logging
         legal_help_submission
       when MEDIATION
-        @logger.info("Fetching mediation_submission") if logging
+        logger.info("Fetching mediation_submission") if logging
         mediation_submission
       else
-        @logger.error("Invalid Area of Law #{area_of_law}")
+        logger.error("Invalid Area of Law #{area_of_law}")
         raise("Invalid Area of Law #{area_of_law}")
       end
     end
@@ -98,26 +97,26 @@ module CWAProvider
       match ? match[0].strip : nil
       self.area_of_law = match.to_s
       criteria = { id: id, area_of_law: self.area_of_law }
-      @logger.debug("criteria: #{criteria}") if logging
+      logger.debug("criteria: #{criteria}") if logging
       fetch_submissions(criteria) || raise("Missing #{ref} test submission")
     end
 
     def legal_help_submission
       if @legal_help_submission && !@legal_help_submission.to_h.empty?
-        @logger.debug("Returning memoized legal_help_submission: #{@legal_help_submission.inspect}") if logging
-        @logger.info("Returning memoized legal_help_submission") if logging
+        logger.debug("Returning memoized legal_help_submission: #{@legal_help_submission.inspect}") if logging
+        logger.info("Returning memoized legal_help_submission") if logging
       else
-        @logger.info("Calling submission_for(:legal_help)") if logging
+        logger.info("Calling submission_for(:legal_help)") if logging
         result = submission_for(:legal_help)
         if result.nil?
-          @logger.info("submission_for(:legal_help) returned nil, not creating OpenStruct") if logging
+          logger.info("submission_for(:legal_help) returned nil, not creating OpenStruct") if logging
           @legal_help_submission = nil
         else
-          @logger.debug("submission_for(:legal_help) returned: #{result.inspect}") if logging
-          @logger.info("submission_for(:legal_help) returned") if logging
+          logger.debug("submission_for(:legal_help) returned: #{result.inspect}") if logging
+          logger.info("submission_for(:legal_help) returned") if logging
           @legal_help_submission = OpenStruct.new(result)
-          @logger.debug("New legal_help_submission: #{@legal_help_submission.inspect}") if logging
-          @logger.info("New legal_help_submission") if logging
+          logger.debug("New legal_help_submission: #{@legal_help_submission.inspect}") if logging
+          logger.info("New legal_help_submission") if logging
         end
       end
       @legal_help_submission
@@ -125,20 +124,20 @@ module CWAProvider
 
     def mediation_submission
       if @mediation_submission && !@mediation_submission.to_h.empty?
-        @logger.debug("Returning memoized mediation_submission: #{@mediation_submission.inspect}") if logging
-        @logger.info("Returning memoized mediation_submission") if logging
+        logger.debug("Returning memoized mediation_submission: #{@mediation_submission.inspect}") if logging
+        logger.info("Returning memoized mediation_submission") if logging
       else
-        @logger.info("Calling submission_for(:mediation)") if logging
+        logger.info("Calling submission_for(:mediation)") if logging
         result = submission_for(:mediation)
         if result.nil?
-          @logger.info("submission_for(:mediation) returned nil, not creating OpenStruct") if logging
+          logger.info("submission_for(:mediation) returned nil, not creating OpenStruct") if logging
           @mediation_submission = nil
         else
-          @logger.debug("submission_for(:mediation) returned: #{result.inspect}") if logging
-          @logger.info("submission_for(:mediation) returned") if logging
+          logger.debug("submission_for(:mediation) returned: #{result.inspect}") if logging
+          logger.info("submission_for(:mediation) returned") if logging
           @mediation_submission = OpenStruct.new(result)
-          @logger.debug("New mediation_submission: #{@mediation_submission.inspect}") if logging
-          @logger.info("New mediation_submission") if logging
+          logger.debug("New mediation_submission: #{@mediation_submission.inspect}") if logging
+          logger.info("New mediation_submission") if logging
         end
       end
       @mediation_submission
@@ -146,42 +145,42 @@ module CWAProvider
     
     def crime_lower_submission
       if @crime_lower_submission && !@crime_lower_submission.to_h.empty?
-        @logger.debug("Returning memoized crime_lower_submission: #{@crime_lower_submission.inspect}") if logging
-        @logger.info("Returning memoized crime_lower_submission") if logging
+        logger.debug("Returning memoized crime_lower_submission: #{@crime_lower_submission.inspect}") if logging
+        logger.info("Returning memoized crime_lower_submission") if logging
       else
-        @logger.info("Calling submission_for(:crime_lower)") if logging
+        logger.info("Calling submission_for(:crime_lower)") if logging
         result = submission_for(:crime_lower)
         if result.nil?
-          @logger.info("submission_for(:crime_lower) returned nil, not creating OpenStruct") if logging
+          logger.info("submission_for(:crime_lower) returned nil, not creating OpenStruct") if logging
           @crime_lower_submission = nil
         else
-          @logger.debug("submission_for(:crime_lower) returned: #{result.inspect}") if logging
-          @logger.info("submission_for(:crime_lower) returned") if logging
+          logger.debug("submission_for(:crime_lower) returned: #{result.inspect}") if logging
+          logger.info("submission_for(:crime_lower) returned") if logging
           @crime_lower_submission = OpenStruct.new(result)
-          @logger.debug("New crime_lower_submission: #{@crime_lower_submission.inspect}") if logging
-          @logger.info("New crime_lower_submission") if logging
+          logger.debug("New crime_lower_submission: #{@crime_lower_submission.inspect}") if logging
+          logger.info("New crime_lower_submission") if logging
         end
       end
       @crime_lower_submission
     end
 
     def submission_for(area_of_law)
-      @logger.info("Inside submission_for method with area_of_law: #{area_of_law}") if logging
+      logger.info("Inside submission_for method with area_of_law: #{area_of_law}") if logging
       # Ensure submissions are initialized
       submissions
     
       if submissions.nil? || submissions.empty?
-        @logger.info("No submissions available") if logging
+        logger.info("No submissions available") if logging
         return nil
       end
     
       s = submissions
-      @logger.debug("Submissions state: #{s.inspect}") if logging
-      @logger.debug("Comparing submission area_of_law: #{s['area_of_law'].strip} with #{area_of_law.to_s.upcase.tr('_', ' ').strip}") if logging
+      logger.debug("Submissions state: #{s.inspect}") if logging
+      logger.debug("Comparing submission area_of_law: #{s['area_of_law'].strip} with #{area_of_law.to_s.upcase.tr('_', ' ').strip}") if logging
       if s['area_of_law'].strip == area_of_law.to_s.upcase.tr('_', ' ').strip
         s
       else
-        @logger.error("No matching submission for #{area_of_law}")
+        logger.error("No matching submission for #{area_of_law}")
         nil
       end
     end
@@ -205,7 +204,7 @@ module CWAProvider
 
     def unlock_by_id
       unless self.locked_id
-        @logger.warn("No locked_id, nothing to unlock, returning.")
+        logger.warn("No locked_id, nothing to unlock, returning.")
         return
       end
 
@@ -213,7 +212,7 @@ module CWAProvider
 
       # Output the curl command for debug
       curl_command = "curl -X PUT '#{url}'"
-      @logger.debug("Curl Command: #{curl_command}") if logging
+      logger.debug("Curl Command: #{curl_command}") if logging
     
       # Create a new HTTP PUT request
       http = Net::HTTP.new(url.host, url.port)
@@ -224,10 +223,10 @@ module CWAProvider
     
       # Check if the request was successful
       if response.is_a?(Net::HTTPSuccess)
-        @logger.info("Successfully unlocked ID: #{self.locked_id}") if logging
+        logger.info("Successfully unlocked ID: #{self.locked_id}") if logging
       else
-        @logger.error("Failed to unlock ID: #{self.locked_id}")
-        @logger.error("Error: #{response.code} #{response.message}")
+        logger.error("Failed to unlock ID: #{self.locked_id}")
+        logger.error("Error: #{response.code} #{response.message}")
       end
 
       submission = nil
@@ -260,32 +259,32 @@ module CWAProvider
     end
 
     def fetch_submissions(criteria = {})
-      @logger.info("Fetching submissions with criteria: #{criteria}") if logging
+      logger.info("Fetching submissions with criteria: #{criteria}") if logging
       base_submission = parse_submissions_from_yaml(criteria)
-      @logger.debug("Base submission: #{base_submission.inspect}") if logging
+      logger.debug("Base submission: #{base_submission.inspect}") if logging
       
       unless should_use_api?
         if base_submission.to_h.empty?
-          @logger.error("Unable to locate provider in the yaml file using #{criteria} for env #{environment}.")
+          logger.error("Unable to locate provider in the yaml file using #{criteria} for env #{environment}.")
         end
         if !@use_api
-          @logger.info("API usage is disabled (use_api is false), returning base submission.") if logging
+          logger.info("API usage is disabled (use_api is false), returning base submission.") if logging
         elsif DENY_LIST.include?(self.feature_file)
-          @logger.info("Feature file is on the deny list, returning base submission.") if logging
+          logger.info("Feature file is on the deny list, returning base submission.") if logging
         end
         return base_submission
       end
 
-      @logger.info("Using API, fetching submissions from API") if logging
+      logger.info("Using API, fetching submissions from API") if logging
       if area_of_law == 'LEGAL HELP'
         self.category_of_law = DIRECTORY_TO_LH_CATEGORY_MAP[self.feature_col]
       end
 
       api_overrides = fetch_submissions_from_api
 
-      @logger.debug("#{api_overrides.inspect}") if logging
+      logger.debug("#{api_overrides.inspect}") if logging
       merged_submission = merge_submissions(base_submission, api_overrides.first.data)
-      @logger.debug("merged_submission: #{merged_submission.inspect}") if logging
+      logger.debug("merged_submission: #{merged_submission.inspect}") if logging
 
       self.locked_id = merged_submission['id']
 
@@ -308,7 +307,7 @@ module CWAProvider
 
       # Output the curl command for debug
       curl_command = "curl -X GET '#{uri}'"
-      @logger.debug("Curl Command: #{curl_command}") if logging
+      logger.debug("Curl Command: #{curl_command}") if logging
 
       response = http.request(request)
     
@@ -321,7 +320,7 @@ module CWAProvider
         raise "API request failed with status: #{response.code} #{response.message}"
       end
     rescue StandardError => e
-      @logger.error("fetch_submissions_from_api: Error fetching submissions from API: #{e.message}")
+      logger.error("fetch_submissions_from_api: Error fetching submissions from API: #{e.message}")
       []
     end
 
@@ -341,8 +340,8 @@ module CWAProvider
         matching_submission.lines = fields.map { |field| OpenStruct.new(field) }
       end
     
-      @logger.debug("matching_submission: #{matching_submission}") if logging && matching_submission
-      @logger.error("No matching submission found in yaml file using #{criteria} on #{self.environment}.") if logging && matching_submission.nil?
+      logger.debug("matching_submission: #{matching_submission}") if logging && matching_submission
+      logger.error("No matching submission found in yaml file using #{criteria} on #{self.environment}.") if logging && matching_submission.nil?
 
       matching_submission || OpenStruct.new
     end
@@ -354,13 +353,13 @@ module CWAProvider
 
       if base_submission.to_h.empty?
         api_overrides_hash.each do |key, value|
-          @logger.debug("Setting #{key} to #{value}") if logging
+          logger.debug("Setting #{key} to #{value}") if logging
           base_submission[key.to_s] = value
         end
       else
         api_overrides_hash.each do |key, value|
           if fields_to_override.include?(key.to_s) && base_submission[key.to_s] != value && base_submission.respond_to?(key)
-            @logger.debug("Overriding #{key}: #{base_submission[key.to_s]} -> #{value}") if logging
+            logger.debug("Overriding #{key}: #{base_submission[key.to_s]} -> #{value}") if logging
             base_submission[key.to_s] = value
           end
         end

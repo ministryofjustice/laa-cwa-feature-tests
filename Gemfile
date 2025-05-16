@@ -14,9 +14,9 @@ group :test do
   gem "csv"
   gem "redis"
   gem "open3"
+  gem "aws-sdk-s3"
 end
 
 group :docker do
   gem 'ruby-oci8', '~> 2.2.12'
-  gem "aws-sdk-s3"
 end
