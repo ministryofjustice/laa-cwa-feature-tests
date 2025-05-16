@@ -73,7 +73,7 @@ After do |scenario|
     if (ENV['S3'] == 'true')
       # Upload to S3
       s3 = Aws::S3::Client.new(region: ENV['AWS_REGION'])
-      bucket = ENV['BUCKET_NAME']
+      bucket = ENV['S3_BUCKET_NAME']
       release = ENV['RELEASE_NAME']
       key = "feature-test-runs/#{release}/artefacts/screenshots/#{filename}"
 
