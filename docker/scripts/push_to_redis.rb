@@ -14,3 +14,6 @@ else
     redis.lpush('mylist', file)
   end
 end
+
+#sleep for 30 secs so the pod doesn't end too quickly
+sleep 30
